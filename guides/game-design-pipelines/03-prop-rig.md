@@ -30,7 +30,7 @@ Template folder: [templates/03-prop-rig](../../templates/03-prop-rig/). Install 
 3. **procedural-prop-builder:** Build a prop or rig from art references in your engine, with reproducible seeded variation and measurable clearance.
 4. **asset-lod-and-compression-pipeline:** Make simpler and smaller versions of a 3D asset for your target devices and check that its look, animation and collision still match the original.
 5. **turntable-collider-proof:** Use after building a prop or rig: prove its collision shape matches the visible model from every angle and that clearance and grounding hold in real poses.
-6. **toybox-entrance-diorama-interactivity (optional):** Only if your game has a title, menu or hub scene with decorative objects: design optional reactions and check that players can still find and use the main action.
+6. **entry-scene-optional-interactions (optional):** Only if your game has a title, menu or hub scene with decorative objects: design optional reactions and check that players can still find and use the main action.
 7. **Grade:** `node engine/lens.mjs <pack.json>`. Lead with verdict, grade and coverage, and name the rubric profile used.
 8. **Polish loop:** fix the two lowest measured lines with before and after proof, regrade, keep passing lines above level 3.
 

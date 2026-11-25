@@ -1,6 +1,6 @@
 {
   "name": "grokbot-game-templates",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Grok Bot AI gaming team kit: 15 shipping game-dev templates, 8 previews, a team map, shared memory, versioning, spec, validator and guides. Created by @meta_alchemist (https://x.com/meta_alchemist).",
   "type": "module",

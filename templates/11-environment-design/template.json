@@ -5,7 +5,7 @@
   "slug": "11-environment-design",
   "name": "Environment Design Director",
   "shortName": "Environment",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "status": "shipping",
   "summary": "Review placement, sightlines and visual cues so players can identify landmarks and navigate the spaces in your game.",
   "stage": "Production, Polish",
@@ -21,7 +21,7 @@
     "environment-set-dressing-and-grounding-director",
     "placement-and-support-surface-auditor",
     "sightline-silhouette-and-value-composition-gate",
-    "toybox-entrance-diorama-interactivity",
+    "entry-scene-optional-interactions",
     "environment-design-lens-engine"
   ],
   "routines": [

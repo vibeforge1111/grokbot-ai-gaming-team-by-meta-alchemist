@@ -1,10 +1,10 @@
 ---
-name: toybox-entrance-diorama-interactivity
+name: entry-scene-optional-interactions
 description: "If your game has a title, menu or hub scene with decorative objects, design optional reactions for them and check that players can still find and use the main action."
 ---
 
 > **Audit contract v1 (overrides everything below).** Created by @meta_alchemist (https://x.com/meta_alchemist).
-> - Score only with the rubric embedded in `engine/lens.mjs` (`LENS.rubric`, gbf-03-procedural-rig-crafter v1.3.0). `node engine/lens.mjs <pack.json>` computes the grade; this skill only gathers evidence for it and never adds points of its own.
+> - Score only with the rubric embedded in `engine/lens.mjs` (`LENS.rubric`, gbf-11-environment-design v1.2.0). `node engine/lens.mjs <pack.json>` computes the grade; this skill only gathers evidence for it and never adds points of its own.
 > - Missing evidence is UNMEASURED (0 points, not a defect). A test that did not run is NOT_RUN, never PASS. Never invent a measurement; label every worked example synthetic.
 > - Game facts and budgets come from your game profile (`pack.profile`). Treat sample numbers as illustrative. Set the frame-time budget separately for each target device in your game profile.
 > - An automated gate needs a negative fixture that fails. Receipts carry measured values, never an unconditional PASS.
@@ -27,7 +27,7 @@ Short examples (synthetic, for illustration only):
 - Farming or life sim: a farmhouse porch; the mailbox wobbles on focus. Main action: Continue.
 - Racing game: a garage; headlights flash when the car is focused. Main action: Race.
 - Turn-based strategy game: a map table; flags sway on hover. Main action: Resume campaign.
-- 3D toy-room or diorama menu: a shelf of toys; one toy spins when clicked. Main action: Play.
+- 3D menu scene: a shelf of collectibles; one spins when clicked. Main action: Play.
 
 ## 1. Design
 

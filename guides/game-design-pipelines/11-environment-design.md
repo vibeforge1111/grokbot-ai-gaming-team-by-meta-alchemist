@@ -30,7 +30,7 @@ Template folder: [templates/11-environment-design](../../templates/11-environmen
 3. **environment-set-dressing-and-grounding-director:** Place decorative detail so players can recognize landmarks, tell usable objects from decoration and read the intended routes, in 2D or 3D.
 4. **placement-and-support-surface-auditor:** Check that placed objects rest on the surface they belong on (floor, tile, shelf, terrain) and follow the project's placement rules.
 5. **sightline-silhouette-and-value-composition-gate:** Check whether important objects and actions stay readable from the cameras and routes players actually use, in 2D, top-down or 3D views.
-6. **toybox-entrance-diorama-interactivity (optional):** Only if your game has a title, menu or hub scene with decorative objects: design optional reactions and check that players can still find and use the main action.
+6. **entry-scene-optional-interactions (optional):** Only if your game has a title, menu or hub scene with decorative objects: design optional reactions and check that players can still find and use the main action.
 7. **Grade:** `node engine/lens.mjs <pack.json>`. Lead with verdict, grade and coverage, and name the rubric profile used.
 8. **Polish loop:** fix the two lowest measured lines with before and after proof, regrade, keep passing lines above level 3.
 

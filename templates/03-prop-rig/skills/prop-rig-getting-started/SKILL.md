@@ -81,7 +81,7 @@ Read the record: `verdict` (PASS, CONDITIONAL, BLOCKED or INVALID), `grade` and 
 - `procedural-prop-builder`: Build a prop or rig from art references in your engine, with reproducible variation and measurable clearance.
 - `asset-lod-and-compression-pipeline`: Make simpler and smaller versions of a 3D asset for your target devices and check that its look, animation and collision still match the original.
 - `turntable-collider-proof`: Use after building a prop or rig: prove its collision shape matches the visible model from every angle and that clearance and grounding hold in real poses.
-- `toybox-entrance-diorama-interactivity`: If your game has a title, menu or hub scene with decorative objects, design optional reactions for them and check that players can still find and use the main action.
+- `entry-scene-optional-interactions`: If your game has a title, menu or hub scene with decorative objects, design optional reactions for them and check that players can still find and use the main action.
 - `prop-rig-lens-engine`: the engine source and how to run it.
 
 ## Blockers to tell the owner about
@@ -119,7 +119,7 @@ Each output file is JSON with `artifact`, `version`, `producer` (this template's
 Shared memory:
 
 - Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
-- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-03-procedural-rig-crafter` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-03-procedural-rig-crafter` and `2.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
 - Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
 - Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
 

@@ -49,7 +49,7 @@ node engine/lens.mjs your-pack.json               # your build
 | [`environment-set-dressing-and-grounding-director`](skills/environment-set-dressing-and-grounding-director/SKILL.md) | Place decorative detail so players can recognize landmarks, tell usable objects from decoration and read the intended routes, in 2D or 3D. |
 | [`placement-and-support-surface-auditor`](skills/placement-and-support-surface-auditor/SKILL.md) | Check that placed objects rest on the surface they belong on (floor, tile, shelf, terrain) and follow the project's placement rules. |
 | [`sightline-silhouette-and-value-composition-gate`](skills/sightline-silhouette-and-value-composition-gate/SKILL.md) | Check whether important objects and actions stay readable from the cameras and routes players actually use, in 2D, top-down or 3D views. |
-| [`toybox-entrance-diorama-interactivity`](skills/toybox-entrance-diorama-interactivity/SKILL.md) | Only if your game has a title, menu or hub scene with decorative objects: design optional reactions for them and check that players can still find and use the main action. Shared with Prop & Rig Director (03). |
+| [`entry-scene-optional-interactions`](skills/entry-scene-optional-interactions/SKILL.md) | Only if your game has a title, menu or hub scene with decorative objects: design optional reactions for them and check that players can still find and use the main action. Shared with Prop & Rig Director (03). |
 | [`environment-design-lens-engine`](skills/environment-design-lens-engine/SKILL.md) | Use when you need to grade an Environment Design Director evidence pack: write the engine files from this skill and run them. |
 
 ## Rubric
@@ -108,7 +108,7 @@ Each output file is JSON with `artifact`, `version`, `producer` (this template's
 Shared memory:
 
 - Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
-- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-11-environment-design` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-11-environment-design` and `2.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
 - Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
 - Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
 

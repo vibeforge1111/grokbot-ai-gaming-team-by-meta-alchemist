@@ -6,6 +6,12 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-25
+
+### Changed
+
+- 03 Prop and Rig and 11 Environment Design are now 2.0.0: their shared optional entry-scene skill is renamed `entry-scene-optional-interactions` (same method; the old name carried an internal codename). Re-save it under the new name if you installed it.
+
 ## [1.0.0] - 2026-11-25
 
 First public release.

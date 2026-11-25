@@ -56,10 +56,10 @@ Grade <pack.json> with the prop-rig-lens-engine engine. Lead with verdict, grade
   Use the turntable-collider-proof skill on <build, file or capture>. Gather evidence for the matching rubric lines, then tell me which lines it moves and what is still unmeasured.
   ```
 
-- **toybox-entrance-diorama-interactivity** (only if your game has a title, menu or hub scene with decorative objects): design optional reactions for them and check that players can still find and use the main action.
+- **entry-scene-optional-interactions** (only if your game has a title, menu or hub scene with decorative objects): design optional reactions for them and check that players can still find and use the main action.
 
   ```
-  Use the toybox-entrance-diorama-interactivity skill on <entry scene build or capture>. The main action on that screen is <for example Continue, Play or Start>. Tell me whether the results feed scene-budget:1 or stay a local review note.
+  Use the entry-scene-optional-interactions skill on <entry scene build or capture>. The main action on that screen is <for example Continue, Play or Start>. Tell me whether the results feed scene-budget:1 or stay a local review note.
   ```
 
 ## 4. Polish loop prompt

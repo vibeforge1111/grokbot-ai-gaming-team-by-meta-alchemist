@@ -42,7 +42,7 @@ const bodies = names.map(name => {
     return [`<!-- embed ${source} -->`, fence, rd(source).trimEnd(), "```", "<!-- end embed -->"].join("\n");
   });
   if (content !== rd(file)) wr(file, content);
-  if (name === "toybox-entrance-diorama-interactivity" && man.slug === "11-environment-design") {
+  if (name === "entry-scene-optional-interactions" && man.slug === "11-environment-design") {
     const canonical = path.join(ROOT, "templates/03-prop-rig", file);
     if (fs.existsSync(canonical)) {
       const body = fs.readFileSync(canonical, "utf8").match(/^# Make an interactive entry scene[\s\S]*$/m);

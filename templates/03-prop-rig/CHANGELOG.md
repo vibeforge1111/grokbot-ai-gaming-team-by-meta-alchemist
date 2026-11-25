@@ -6,6 +6,12 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-11-25
+
+### Breaking
+
+- The optional entry-scene skill (interactive decorations on a title, menu or hub screen) is renamed `entry-scene-optional-interactions`; the old name carried an internal codename. The method is the same. Save the skill again under its new name and update any routine or prompt that names it.
+
 ## [1.0.0] - 2026-11-25
 
 ### Added

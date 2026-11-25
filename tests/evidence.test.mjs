@@ -75,7 +75,7 @@ test("presentation switches require explicit opt-in and entry movement respects 
   }
   assert.equal(effect(true, true), true);
   for (const number of ["03", "11"]) {
-    const motion = skillExample(number, "toybox", "entranceMotion");
+    const motion = skillExample(number, "entry-scene", "entranceMotion");
     assert.equal(motion(true, true, false), true);
     for (const value of [undefined, false, "on"]) assert.equal(motion(true, value, false), false);
     assert.equal(motion(true, true, true), false);
