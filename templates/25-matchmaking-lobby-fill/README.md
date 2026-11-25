@@ -1,0 +1,53 @@
+# Matchmaking and Region Lobby Fill
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+**Status: preview, not shipping.** This template works and its tests pass, but it is not yet held to the kit's release standard.
+
+Before it can ship:
+
+- Move to the kit's shared lens engine. This template still carries its own lens kit 1.1.0, which trusts the metrics a pack declares and never checks artifact bytes or a producer receipt.
+- A pack producer with receipts: `mm/scenario.mjs` prints a pack from your input but writes no artifact files, digests or producer receipt.
+- Average over the profile's full window and count missing hours as zero, with a silent-region fixture. Today averages use observed hours only, so a region silent for 23 of 24 hours can read as full.
+- Compute `device.inputQueueOptionConsidered` from the plan; it is a constant today.
+- Base bot labelling on an observed lobby capture, or say in the anchor that bot-honesty:1 is a configuration claim.
+- Earn points from the game: the safety-and-privacy lines probe this template's own code and planted rows, not the game.
+
+Measure queue fill, wait times and bot representation and draft alternatives for a human queue owner. Start with [HOW-TO-USE.md](HOW-TO-USE.md).
+
+## Domain tools
+
+Three files in `mm/`:
+
+- `fill.mjs` is the engine. It refuses any seat row that is not anonymous (seat keys are the kit's salted subject ids, sub_ plus 32 hex), counts humans and bots per region and hour, finds thin regions, and proposes merges inside the ping cap, labelled bot fill or a peak window. Every proposal is frozen with status PROPOSED and needs the owner.
+- `scenario.mjs` prints a pack from your input file, or the report with `--report`. Without a file it runs the synthetic worked example.
+- `import-counts.mjs` turns saved aggregate count snapshots (players per server or per queue) into a pack. Counts alone cannot measure bot share, waits or missing hours, so those lines stay U.
+
+```sh
+node mm/scenario.mjs input.json --report
+node mm/scenario.mjs input.json > pack.json
+node mm/import-counts.mjs snapshots.json --profile profile.json --pack-id <id> --git-sha <sha> --live-sha <sha>
+```
+
+Set `profile.primaryInput` and `profile.comparisonInput` to your own input or device codes; there are no defaults, and without them the wait gap stays unmeasured. Summaries cover observed hours only (see the blockers above).
+
+## Evidence and grading
+
+A grade describes the evidence supplied by the pack writer. For each group provide a cited artifact and the positive count or nonempty sample listed in `node engine/lens.mjs --meta`. Treat measured zero defects separately from zero cases examined. Missing build identity invalidates the pack. The worked example is synthetic.
+
+| Rubric line | Observations |
+|---|---|
+| fill-measurement:1 | fill.botsCountedAsHumans, fill.regionHoursMeasured, fill.regions |
+| fill-measurement:2 | fill.thinListed, fill.thinMismatch |
+| proposals:1 | latency.pairs, merge.overCap, merge.unknownPingProposed |
+| proposals:2 | merge.proposals, merge.thinRegions, merge.thinWithAlternatives |
+| bot-honesty:1 | bots.countedInPlayerCount, bots.labelShown |
+| bot-honesty:2 | bots.overCapWithoutProposal |
+| wait-and-devices:1 | wait.p50S, wait.p90S |
+| wait-and-devices:2 | device.inputQueueOptionConsidered, device.primaryInputWaitGapS |
+| safety-and-privacy:1 | authority.forbiddenAttempted, authority.forbiddenSucceeded, authority.liveChanges |
+| safety-and-privacy:2 | privacy.piiFieldsAccepted, privacy.rawIdsInOutputs, privacy.schemaRejectsPlanted |
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.

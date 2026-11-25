@@ -1,0 +1,119 @@
+# Live Service, Payments and Trust
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Review progress saves, entitlements and recovery after service failures. Include payment checks when your game sells items or access.
+
+## What every game gets, and what selling adds
+
+| Your game has | What this template checks | Rubric lines |
+|---|---|---|
+| Player progress (every game that saves) | Saves survive storage failures, corrupted or old saves, crashes and interruptions | `durability-and-recovery:1`, `durability-and-recovery:2` |
+| A build players can get (every shipped game) | The graded build is the build in the store or on the servers | `operations:1` |
+| Any player data, assets or audience (every game) | Privacy and retention records; rights, age rating, safety and support records, reviewed by a qualified person | `privacy-age-rights-safety-and-support:1`, `privacy-age-rights-safety-and-support:2` |
+| Accounts or an online service | One player cannot reach another's data or make a forbidden change; resent requests are refused; request rates are bounded | `authorization-and-abuse-boundaries:1`, `authorization-and-abuse-boundaries:2` |
+| A running service (servers, a backend, a deployed web build) | Health signals, an incident drill and an exercised rollback | `operations:2` |
+| Something sold for real money | Failed, duplicate and out-of-order purchases never lose or double an item; restore gives back everything owned | `transactions-and-entitlements:1`, `transactions-and-entitlements:2` |
+
+A game that sells nothing still gets saves, recovery, build identity, privacy, rights, age and support checks, plus account and replay checks if players sign in. With the owner's approval before scoring it selects the `no-store` profile (`"rubricProfile": ["no-store"]` in the game profile): both transaction lines read N/A, their 20 points are shared over the other eight lines (12.5 each), the three paid-item release blockers no longer apply, and the verdict can reach PASS.
+
+Words used here: an entitlement is something a player owns or has unlocked. Idempotent means a request sent twice has the same effect as once. Fault injection means causing a failure on purpose in a disposable test copy. A replay is the same request sent again. Reconciliation means checking that the store's record, the saved state and the number on screen agree.
+
+Payments stay with the owner: the owner runs every test purchase in an isolated sandbox; the bot only reviews the results and never makes a charge, refund or grant. Legal sign-off stays with a qualified person.
+
+Rubric: `gbf-22-live-service-trust` v1.2.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `transactions-and-entitlements:1` | Failed, duplicate and reordered operations | computed | `tx.isolated`, `tx.injectedCases`, `tx.lostPaid`, `tx.duplicatedPaid`, `receipts.transactionOutcomes` | `tx.isolated` is true, `tx.injectedCases covers ["failure","duplicate","reorder"]`, `tx.lostPaid == 0`, `tx.duplicatedPaid == 0`, approved receipt cases pass |
+| `transactions-and-entitlements:2` | Restore and reconciliation | computed | `tx.lostPaid`, `restore.restored`, `restore.expected`, `restore.displayVsAuthoritativeMismatch` | tx.lostPaid == 0; restore.restored == restore.expected; restore.displayVsAuthoritativeMismatch == 0 (hard: level 1 on failure) |
+| `authorization-and-abuse-boundaries:1` | Access isolation and state transitions | computed | `authz.forbiddenTransitionsAttempted`, `authz.forbiddenTransitionsSucceeded`, `authz.crossAccountReads` | authz.forbiddenTransitionsAttempted >= 1; authz.forbiddenTransitionsSucceeded == 0 (hard: level 1 on failure); authz.crossAccountReads == 0 (hard: level 1 on failure) |
+| `authorization-and-abuse-boundaries:2` | Replay resistance and bounded resources | computed | `replay.replaysAttempted`, `replay.replaysAccepted`, `replay.peakRequestsPerMinute` | replay.replaysAttempted >= 1; replay.replaysAccepted == 0 (hard: level 1 on failure); replay.peakRequestsPerMinute <= P.maxRequestsPerMinute |
+| `durability-and-recovery:1` | Storage failure and migration | computed | `storage.cases`, `storage.stateLost`, `receipts.storageOutcomes` | `storage.cases covers P.storageCases`, `storage.stateLost == 0`, approved receipt cases pass |
+| `durability-and-recovery:2` | Crash, concurrent sessions and deployment interruption | computed | `recovery.cases`, `recovery.unrecovered`, `receipts.recoveryOutcomes` | `recovery.cases covers P.recoveryCases`, `recovery.unrecovered == 0`, approved receipt cases pass |
+| `operations:1` | Live build vs graded build | computed | `live.liveShaRecorded`, `live.liveBehindRecorded`, `live.runningConfigRecorded`, `receipts.runningBuild` | `live.liveShaRecorded`, `live.liveBehindRecorded` and `live.runningConfigRecorded` are true, approved receipt cases pass |
+| `operations:2` | Service health, incident drill and rollback | computed | `ops.healthSignals`, `ops.incidentDrill`, `ops.rollbackExercised`, `receipts.rollback` | `ops.healthSignals`, `ops.incidentDrill` and `ops.rollbackExercised` are true, approved receipt cases pass |
+| `privacy-age-rights-safety-and-support:1` | Privacy and data handling | computed | `privacy.dataHandlingDoc`, `privacy.retentionDoc`, `receipts.privacyReview` | `privacy.dataHandlingDoc` and `privacy.retentionDoc` are true, approved receipt cases pass |
+| `privacy-age-rights-safety-and-support:2` | Rights, age, safety and support | computed | `rights.rightsInventory`, `rights.qualifiedReviewRecorded`, `rights.agentLegalSignoff`, `receipts.rightsReview` | `rights.rightsInventory` and `rights.qualifiedReviewRecorded` are true, `rights.agentLegalSignoff` is false, approved receipt cases pass |
+
+## Growth checks (reported beside the grade, not scored)
+
+`store-policy` applies only to a game that sells something: the store rules and required disclosures (for example random item odds or subscription terms) were checked for every platform the game ships on. `contest-rules` applies only to a contest or prize event: rules, eligibility and judging are published and a qualified person reviewed them.
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `store-policy` | store-policy | `storePolicy.checked`, `storePolicy.platforms`, `storePolicy.disclosuresPresent` | missing(storePolicy.checked,storePolicy.platforms) == 0 (hard: level 1 on failure); storePolicy.disclosuresPresent is true |
+| `contest-rules` | contest-rules | `contestRules.rulesPublished`, `contestRules.eligibilityStated`, `contestRules.judgingDisclosed`, `contestRules.qualifiedReviewRecorded` | contestRules.rulesPublished is true; contestRules.eligibilityStated is true; contestRules.judgingDisclosed is true; contestRules.qualifiedReviewRecorded is true |
+
+## Adapt to your game
+
+Use this specialist for the saves, network services and purchases your game actually offers. Short examples (illustrative only):
+
+- Offline narrative adventure, no store: save slots, crash recovery, build identity, privacy (even a one-line "we collect nothing"), music and font licences, age rating. The approved `no-store` profile marks the payment lines N/A; the account and service lines do not apply and stay U.
+- Mobile puzzle game with cloud save and a coin shop: everything, including sandbox purchase drills and restore on a new phone.
+- Free web game with accounts and no store: saves, account isolation, replay and rate limits, deployment rollback, privacy and support.
+- Co-op farming sim with a dedicated server: server saves, two devices on one account, update during play, chat safety.
+- Online arena game with a season pass: all lines, plus the contest rules check if it runs prize events.
+
+Then:
+
+- `no-store` is this rubric's only profile (see [docs/RUBRIC_GUIDE.md](../../docs/RUBRIC_GUIDE.md#applicability)). The owner approves it before scoring for a game that sells nothing; `tx`, `restore` and `receipts.transactionOutcomes` can then be left out. Name it next to the grade.
+- Accounts, an online service and a running service have no profile. A game without them leaves those groups out: `authorization-and-abuse-boundaries:1` and `:2` and `operations:2` stay U and are reported as "does not apply", the replay blocker stays unmeasured, and the verdict stays CONDITIONAL.
+- Review owner-run failure, duplicate and reorder cases from an approved isolated test service. Use read-only production evidence.
+- Record the qualified reviewer for rights and age; the agent only checks completeness.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+## Owner calls
+
+- Who is the qualified person (for example a lawyer or a privacy lead) who reviews privacy, rights and age?
+- Does the game sell anything for real money, and if so, which isolated sandbox will you use for the purchase drills? If not, approve the `no-store` profile before scoring.
+- Which save failures and interruptions must the game survive?
+
+## Blockers
+
+PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 (a top-severity issue) blocks. Each confirmed release blocker sets verdict BLOCKED and grade 0. Supported points, coverage and the evidence interval (the grade range from counting U lines as 0 up to counting them as full marks) keep their uncapped values. Unmeasured safety evidence prevents PASS.
+
+- Confirmed paid-item loss blocks release (a player paid and did not get the item).
+- A duplicate paid grant blocks release (one payment granted the item twice).
+- A measured entitlement shortfall after restore blocks release (restoring purchases gave back less than the player owns).
+- An accepted transaction replay blocks release (a resent request was accepted again).
+
+The first three apply to every game that sells something; under the approved `no-store` profile they do not apply. The replay blocker applies to any game with an online service and has no profile. A blocker that applies but cannot be measured keeps the verdict at CONDITIONAL; it never turns into a pass.
+
+- Legal sign-off is never given by the agent; it needs a qualified person.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

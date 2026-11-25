@@ -1,0 +1,166 @@
+{
+  "lensVersion": "2.0.0",
+  "lines": {
+    "opening:1": {
+      "kind": "computed",
+      "why": "Code an unaided readback against the goal in the profile before giving a hint.",
+      "miss": "goal.samples",
+      "neg": [
+        {
+          "metrics.goal.samples": [
+            {
+              "caseId": "goal-1",
+              "expected": "connect exits",
+              "readback": "collect tiles"
+            }
+          ]
+        }
+      ]
+    },
+    "opening:2": {
+      "kind": "computed",
+      "why": "Record opening and first meaningful input timestamps in seconds for the same attempt.",
+      "miss": "action.samples",
+      "neg": [
+        {
+          "metrics.action.samples": [
+            {
+              "caseId": "action-1",
+              "startS": 3,
+              "actionS": 39
+            }
+          ]
+        }
+      ]
+    },
+    "consequence:1": {
+      "kind": "computed",
+      "why": "Record the intended transition before input and read the resulting state from the same trace.",
+      "miss": "state.samples",
+      "neg": [
+        {
+          "metrics.state.samples": [
+            {
+              "caseId": "state-1",
+              "expected": "connected",
+              "actual": "unchanged"
+            }
+          ]
+        }
+      ]
+    },
+    "consequence:2": {
+      "kind": "computed",
+      "why": "Ask what changed immediately after the cue and code the answer using the agreed consequence key.",
+      "miss": "feedback.samples",
+      "neg": [
+        {
+          "metrics.feedback.samples": [
+            {
+              "caseId": "feedback-1",
+              "expected": "route opened",
+              "readback": "no change"
+            }
+          ]
+        }
+      ]
+    },
+    "pacing:1": {
+      "kind": "computed",
+      "why": "Mark the previous resolution and the first newly available choice in seconds, excluding owner-defined pauses.",
+      "miss": "beat.samples",
+      "neg": [
+        {
+          "metrics.beat.samples": [
+            {
+              "caseId": "beat-1",
+              "resolvedS": 12,
+              "choiceS": 41
+            }
+          ]
+        }
+      ]
+    },
+    "pacing:2": {
+      "kind": "computed",
+      "why": "Exercise the approved setback, undo or retry point and timestamp the next useful input opportunity.",
+      "miss": "recovery.samples",
+      "neg": [
+        {
+          "metrics.recovery.samples": [
+            {
+              "caseId": "recovery-1",
+              "setbackS": 14,
+              "controlS": 42
+            }
+          ]
+        }
+      ]
+    },
+    "agency:1": {
+      "kind": "computed",
+      "why": "Replay the same starting state with the baseline and alternate choice. Record the expected and observed differential outcome.",
+      "miss": "choice.samples",
+      "neg": [
+        {
+          "metrics.choice.samples": [
+            {
+              "caseId": "choice-1",
+              "expected": "alternate route",
+              "actual": "same route"
+            }
+          ]
+        }
+      ]
+    },
+    "agency:2": {
+      "kind": "computed",
+      "why": "Observe a deliberate stop or decline at the agreed boundary and record whether another cycle was forced.",
+      "miss": "exit.samples",
+      "neg": [
+        {
+          "metrics.exit.samples": [
+            {
+              "caseId": "exit-1",
+              "honored": false
+            }
+          ]
+        }
+      ]
+    },
+    "replay:1": {
+      "kind": "computed",
+      "why": "Code a neutral post-loop answer using the owner's reason key. Include indifference and obligation as measured alternatives.",
+      "miss": "reason.samples",
+      "neg": [
+        {
+          "metrics.reason.samples": [
+            {
+              "caseId": "reason-1",
+              "intrinsic": false
+            }
+          ]
+        }
+      ]
+    },
+    "replay:2": {
+      "kind": "computed",
+      "why": "Close the profile window and record an accepted or declined invitation once per eligible opportunity.",
+      "miss": "return.samples",
+      "neg": [
+        {
+          "metrics.return.samples": [
+            {
+              "caseId": "offer-board",
+              "offerRef": "offer-board",
+              "cohort": "first session",
+              "window": "next optional board offered before the session closes",
+              "windowClosed": true,
+              "returned": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,398 @@
+{
+ "packId": "example-19-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "viewports": [
+   "desktop",
+   "phone"
+  ],
+  "requiredMeta": [
+   "title",
+   "description",
+   "og:title",
+   "og:image",
+   "twitter:card"
+  ],
+  "minStoreArtContrast": 4.5,
+  "cases": {
+   "destinationFormats": [
+    {
+     "id": "web-wide",
+     "destination": "web",
+     "format": "wide",
+     "version": "sample-web-v1",
+     "width": 800,
+     "height": 450
+    },
+    {
+     "id": "web-square",
+     "destination": "web",
+     "format": "square",
+     "version": "sample-web-v1",
+     "width": 400,
+     "height": 400
+    },
+    {
+     "id": "store-wide",
+     "destination": "store",
+     "format": "wide",
+     "version": "sample-store-v2",
+     "width": 800,
+     "height": 450
+    },
+    {
+     "id": "store-square",
+     "destination": "store",
+     "format": "square",
+     "version": "sample-store-v2",
+     "width": 400,
+     "height": 400
+    }
+   ],
+   "archiveReview": [
+    {
+     "id": "final"
+    }
+   ],
+   "decodedMedia": [
+    {
+     "id": "preview",
+     "item": "preview"
+    },
+    {
+     "id": "still",
+     "item": "still"
+    }
+   ],
+   "hookPreviews": [
+    {
+     "id": "desktop",
+     "viewport": "desktop",
+     "previewVersion": "sample-preview-v1"
+    },
+    {
+     "id": "phone",
+     "viewport": "phone",
+     "previewVersion": "sample-preview-v1"
+    }
+   ]
+  }
+ },
+ "artifacts": [
+  {
+   "id": "art-entrance",
+   "kind": "capture",
+   "path": "captures/firstScreen.json",
+   "sha256": null
+  },
+  {
+   "id": "art-copy",
+   "kind": "static",
+   "path": "static/copy.json",
+   "sha256": null
+  },
+  {
+   "id": "art-meta",
+   "kind": "trace",
+   "path": "traces/meta.json",
+   "sha256": null
+  },
+  {
+   "id": "art-cards",
+   "kind": "capture",
+   "path": "captures/linkPreviews.json",
+   "sha256": null
+  },
+  {
+   "id": "art-icons",
+   "kind": "trace",
+   "path": "traces/icons.json",
+   "sha256": null
+  },
+  {
+   "id": "art-storeArt",
+   "kind": "capture",
+   "path": "captures/storeArt.json",
+   "sha256": null
+  },
+  {
+   "id": "art-media",
+   "kind": "capture",
+   "path": "captures/media.json",
+   "sha256": null
+  },
+  {
+   "id": "art-capsules",
+   "kind": "capture",
+   "path": "captures/storeArtFormats.json",
+   "sha256": null
+  },
+  {
+   "id": "art-presskit",
+   "kind": "static",
+   "path": "static/presskit.json",
+   "sha256": null
+  },
+  {
+   "id": "art-obligations",
+   "kind": "static",
+   "path": "static/obligations.json",
+   "sha256": null
+  },
+  {
+   "id": "art-locClaims",
+   "kind": "static",
+   "path": "static/locClaims.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-destinationFormats-web-wide",
+   "kind": "capture",
+   "path": "receipts/destinationFormats/web-wide.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-destinationFormats-web-square",
+   "kind": "capture",
+   "path": "receipts/destinationFormats/web-square.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-destinationFormats-store-wide",
+   "kind": "capture",
+   "path": "receipts/destinationFormats/store-wide.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-destinationFormats-store-square",
+   "kind": "capture",
+   "path": "receipts/destinationFormats/store-square.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-archiveReview-final",
+   "kind": "static",
+   "path": "receipts/archiveReview/final.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-decodedMedia-preview",
+   "kind": "capture",
+   "path": "receipts/decodedMedia/preview.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-decodedMedia-still",
+   "kind": "capture",
+   "path": "receipts/decodedMedia/still.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-hookPreviews-desktop",
+   "kind": "capture",
+   "path": "receipts/hookPreviews/desktop.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-hookPreviews-phone",
+   "kind": "capture",
+   "path": "receipts/hookPreviews/phone.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "firstScreen": {
+   "artifact": "art-entrance",
+   "viewports": [
+    "desktop",
+    "phone"
+   ],
+   "freshBuild": true,
+   "hookVisibleByViewport": [
+    true,
+    true
+   ]
+  },
+  "copy": {
+   "artifact": "art-copy",
+   "features": 6,
+   "featuresWithEvidence": 6
+  },
+  "meta": {
+   "artifact": "art-meta",
+   "present": [
+    "title",
+    "description",
+    "og:title",
+    "og:image",
+    "twitter:card",
+    "og:url"
+   ]
+  },
+  "linkPreviews": {
+   "artifact": "art-cards",
+   "destinationsPreviewed": 3,
+   "renderedOk": 3
+  },
+  "icons": {
+   "artifact": "art-icons",
+   "urls": 6,
+   "decodedLive": 6
+  },
+  "storeArt": {
+   "artifact": "art-storeArt",
+   "textPairs": [
+    [
+     "#ffffff",
+     "#202833"
+    ],
+    [
+     "#ffe066",
+     "#30261a"
+    ]
+   ]
+  },
+  "media": {
+   "artifact": "art-media",
+   "items": 2,
+   "decodedCurrentBuild": 2
+  },
+  "storeArtFormats": {
+   "artifact": "art-capsules",
+   "formatsChecked": 4,
+   "formatsPassing": 4
+  },
+  "presskit": {
+   "artifact": "art-presskit",
+   "has": [
+    "press-page",
+    "factsheet",
+    "logo-pack"
+   ],
+   "archiveScanClean": true
+  },
+  "obligations": {
+   "artifact": "art-obligations",
+   "rightsRecords": true,
+   "linksToTrustRecords": [
+    "age",
+    "privacy",
+    "support"
+   ],
+   "measuredCases": 1
+  },
+  "locClaims": {
+   "artifact": "art-locClaims",
+   "advertisedLocales": [
+    "en"
+   ],
+   "shippedLocales": [
+    "en"
+   ]
+  }
+ },
+ "receipts": {
+  "destinationFormats": [
+   {
+    "id": "web-wide",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-destinationFormats-web-wide",
+    "destination": "web",
+    "format": "wide",
+    "version": "sample-web-v1",
+    "width": 800,
+    "height": 450,
+    "safeZoneClear": true
+   },
+   {
+    "id": "web-square",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-destinationFormats-web-square",
+    "destination": "web",
+    "format": "square",
+    "version": "sample-web-v1",
+    "width": 400,
+    "height": 400,
+    "safeZoneClear": true
+   },
+   {
+    "id": "store-wide",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-destinationFormats-store-wide",
+    "destination": "store",
+    "format": "wide",
+    "version": "sample-store-v2",
+    "width": 800,
+    "height": 450,
+    "safeZoneClear": true
+   },
+   {
+    "id": "store-square",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-destinationFormats-store-square",
+    "destination": "store",
+    "format": "square",
+    "version": "sample-store-v2",
+    "width": 400,
+    "height": 400,
+    "safeZoneClear": true
+   }
+  ],
+  "archiveReview": [
+   {
+    "id": "final",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-archiveReview-final",
+    "finalDigest": "0eb3e36bfb24dcd9bb1d1bece1531216b59539a8fde17ee80224af0653c92aa3",
+    "scannedDigest": "0eb3e36bfb24dcd9bb1d1bece1531216b59539a8fde17ee80224af0653c92aa3",
+    "members": 3,
+    "scanned": 3,
+    "metadataHits": 0,
+    "contentHits": 0,
+    "reviewer": "review-role"
+   }
+  ],
+  "decodedMedia": [
+   {
+    "id": "preview",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-decodedMedia-preview",
+    "item": "preview",
+    "decodedBuild": "example-live-sha",
+    "license": "art-obligations",
+    "decoded": true
+   },
+   {
+    "id": "still",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-decodedMedia-still",
+    "item": "still",
+    "decodedBuild": "example-live-sha",
+    "license": "art-obligations",
+    "decoded": true
+   }
+  ],
+  "hookPreviews": [
+   {
+    "id": "desktop",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-hookPreviews-desktop",
+    "viewport": "desktop",
+    "previewVersion": "sample-preview-v1",
+    "visible": true
+   },
+   {
+    "id": "phone",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-hookPreviews-phone",
+    "viewport": "phone",
+    "previewVersion": "sample-preview-v1",
+    "visible": true
+   }
+  ]
+ }
+}

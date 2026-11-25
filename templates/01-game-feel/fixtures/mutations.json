@@ -1,0 +1,721 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "response:1#empty-latency.devices",
+   "line": "response:1",
+   "expect": "U",
+   "set": {
+    "metrics.latency.devices": []
+   }
+  },
+  {
+   "id": "response:1#empty-latency.runs",
+   "line": "response:1",
+   "expect": "U",
+   "set": {
+    "metrics.latency.runs": 0
+   }
+  },
+  {
+   "id": "response:1#neg1",
+   "line": "response:1",
+   "expect": "fail",
+   "areas": [
+    "input-devices"
+   ],
+   "set": {
+    "metrics.latency.devices": [
+     "mouse"
+    ]
+   }
+  },
+  {
+   "id": "response:1#missing",
+   "line": "response:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.latency.devices"
+   ]
+  },
+  {
+   "id": "response:2#empty-heldInput.bufferedPressHonored",
+   "line": "response:2",
+   "expect": "U",
+   "set": {
+    "metrics.heldInput.bufferedPressHonored": []
+   }
+  },
+  {
+   "id": "response:2#empty-heldInput.heldRateDeltaPct",
+   "line": "response:2",
+   "expect": "U",
+   "set": {
+    "metrics.heldInput.heldRateDeltaPct": []
+   }
+  },
+  {
+   "id": "response:2#neg1",
+   "line": "response:2",
+   "expect": "fail",
+   "areas": [
+    "input-devices"
+   ],
+   "set": {
+    "metrics.heldInput.bufferedPressHonored": [
+     true,
+     false,
+     true,
+     true
+    ]
+   }
+  },
+  {
+   "id": "response:2#neg2",
+   "line": "response:2",
+   "expect": "fail",
+   "areas": [
+    "input-devices"
+   ],
+   "set": {
+    "metrics.heldInput.onlineMatchesOffline": false
+   }
+  },
+  {
+   "id": "response:2#missing",
+   "line": "response:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.heldInput.bufferedPressHonored"
+   ]
+  },
+  {
+   "id": "readable-feedback:1#empty-hitFeedback.visualByDevice",
+   "line": "readable-feedback:1",
+   "expect": "U",
+   "set": {
+    "metrics.hitFeedback.visualByDevice": []
+   }
+  },
+  {
+   "id": "readable-feedback:1#empty-hitFeedback.audioByDevice",
+   "line": "readable-feedback:1",
+   "expect": "U",
+   "set": {
+    "metrics.hitFeedback.audioByDevice": []
+   }
+  },
+  {
+   "id": "readable-feedback:1#empty-hitFeedback.cueLatencyMs",
+   "line": "readable-feedback:1",
+   "expect": "U",
+   "set": {
+    "metrics.hitFeedback.cueLatencyMs": []
+   }
+  },
+  {
+   "id": "readable-feedback:1#neg1",
+   "line": "readable-feedback:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.hitFeedback.visualByDevice": [
+     true,
+     false,
+     true
+    ]
+   }
+  },
+  {
+   "id": "readable-feedback:1#missing",
+   "line": "readable-feedback:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.hitFeedback.visualByDevice"
+   ]
+  },
+  {
+   "id": "readable-feedback:2#empty-readyCue.emitCounts",
+   "line": "readable-feedback:2",
+   "expect": "U",
+   "set": {
+    "metrics.readyCue.emitCounts": []
+   }
+  },
+  {
+   "id": "readable-feedback:2#neg1",
+   "line": "readable-feedback:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.readyCue.emitCounts": [
+     1,
+     2,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "readable-feedback:2#neg2",
+   "line": "readable-feedback:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.readyCue.emitCounts": [
+     1,
+     0,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  },
+  {
+   "id": "readable-feedback:2#missing",
+   "line": "readable-feedback:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.readyCue.emitCounts"
+   ]
+  },
+  {
+   "id": "control-intent:1#empty-tasks.devices",
+   "line": "control-intent:1",
+   "expect": "U",
+   "set": {
+    "metrics.tasks.devices": []
+   }
+  },
+  {
+   "id": "control-intent:1#neg1",
+   "line": "control-intent:1",
+   "expect": "fail",
+   "areas": [
+    "input-devices"
+   ],
+   "set": {
+    "metrics.tasks.deviceSwitchOk": false
+   }
+  },
+  {
+   "id": "control-intent:1#missing",
+   "line": "control-intent:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.tasks.devices"
+   ]
+  },
+  {
+   "id": "control-intent:2#empty-targeting.errorDegP95",
+   "line": "control-intent:2",
+   "expect": "U",
+   "set": {
+    "metrics.targeting.errorDegP95": []
+   }
+  },
+  {
+   "id": "control-intent:2#neg1",
+   "line": "control-intent:2",
+   "expect": "fail",
+   "areas": [
+    "input-devices"
+   ],
+   "set": {
+    "metrics.targeting.padAssist": 0.45
+   }
+  },
+  {
+   "id": "control-intent:2#missing",
+   "line": "control-intent:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.targeting.errorDegP95"
+   ]
+  },
+  {
+   "id": "camera-comfort:1#empty-camera.viewports",
+   "line": "camera-comfort:1",
+   "expect": "U",
+   "set": {
+    "metrics.camera.viewports": []
+   }
+  },
+  {
+   "id": "camera-comfort:1#neg1",
+   "line": "camera-comfort:1",
+   "expect": "fail",
+   "areas": [
+    "camera"
+   ],
+   "set": {
+    "metrics.camera.hazardsOffscreen": 2
+   }
+  },
+  {
+   "id": "camera-comfort:1#neg2",
+   "line": "camera-comfort:1",
+   "expect": "fail",
+   "areas": [
+    "camera"
+   ],
+   "set": {
+    "metrics.camera.edgeHazardVisibleRatio": 0.8
+   }
+  },
+  {
+   "id": "camera-comfort:1#missing",
+   "line": "camera-comfort:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.camera.viewports"
+   ]
+  },
+  {
+   "id": "camera-comfort:2#empty-reducedMotion.applied",
+   "line": "camera-comfort:2",
+   "expect": "U",
+   "set": {
+    "metrics.reducedMotion.applied": []
+   }
+  },
+  {
+   "id": "camera-comfort:2#empty-reducedMotion.promised",
+   "line": "camera-comfort:2",
+   "expect": "U",
+   "set": {
+    "metrics.reducedMotion.promised": []
+   }
+  },
+  {
+   "id": "camera-comfort:2#neg1",
+   "line": "camera-comfort:2",
+   "expect": "fail",
+   "areas": [
+    "camera"
+   ],
+   "set": {
+    "metrics.reducedMotion.applied": [
+     "flash",
+     "zoom"
+    ]
+   }
+  },
+  {
+   "id": "camera-comfort:2#missing",
+   "line": "camera-comfort:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.reducedMotion.applied"
+   ]
+  },
+  {
+   "id": "parity:1#empty-simTiming.measuredCases",
+   "line": "parity:1",
+   "expect": "U",
+   "set": {
+    "metrics.simTiming.measuredCases": 0
+   }
+  },
+  {
+   "id": "parity:1#neg1",
+   "line": "parity:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.simTiming.predictedWithFx": "sha:ff"
+   }
+  },
+  {
+   "id": "parity:1#missing",
+   "line": "parity:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.simTiming.offlineWithFx"
+   ]
+  },
+  {
+   "id": "parity:2#empty-style.measuredCases",
+   "line": "parity:2",
+   "expect": "U",
+   "set": {
+    "metrics.style.measuredCases": 0
+   }
+  },
+  {
+   "id": "parity:2#neg1",
+   "line": "parity:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.style.deductionsAgainstOwnerChoices": 1
+   }
+  },
+  {
+   "id": "parity:2#missing",
+   "line": "parity:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.style.designContractPresent"
+   ]
+  },
+  {
+   "line": "response:1",
+   "expect": "U",
+   "id": "deviceLatency#missing-row",
+   "set": {
+    "receipts.deviceLatency": [
+     {
+      "id": "mouse-1",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-mouse-1",
+      "device": "mouse",
+      "run": "run-1",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       43,
+       20,
+       30,
+       35,
+       45
+      ]
+     },
+     {
+      "id": "mouse-2",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-mouse-2",
+      "device": "mouse",
+      "run": "run-2",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       46,
+       20,
+       30,
+       35,
+       45
+      ]
+     },
+     {
+      "id": "touch-0",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-touch-0",
+      "device": "touch",
+      "run": "run-0",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       59,
+       20,
+       30,
+       35,
+       45
+      ]
+     },
+     {
+      "id": "touch-1",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-touch-1",
+      "device": "touch",
+      "run": "run-1",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       64,
+       20,
+       30,
+       35,
+       45
+      ]
+     },
+     {
+      "id": "touch-2",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-touch-2",
+      "device": "touch",
+      "run": "run-2",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       68,
+       20,
+       30,
+       35,
+       45
+      ]
+     },
+     {
+      "id": "pad-0",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-pad-0",
+      "device": "pad",
+      "run": "run-0",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       48,
+       20,
+       30,
+       35,
+       45
+      ]
+     },
+     {
+      "id": "pad-1",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-pad-1",
+      "device": "pad",
+      "run": "run-1",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       51,
+       20,
+       30,
+       35,
+       45
+      ]
+     },
+     {
+      "id": "pad-2",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-deviceLatency-pad-2",
+      "device": "pad",
+      "run": "run-2",
+      "seed": "sample",
+      "samples": 5,
+      "latencyMs": [
+       53,
+       20,
+       30,
+       35,
+       45
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "line": "response:1",
+   "expect": "U",
+   "id": "deviceLatency#stale",
+   "set": {
+    "receipts.deviceLatency.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "response:1",
+   "expect": "U",
+   "id": "deviceLatency#artifact",
+   "set": {
+    "receipts.deviceLatency.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "readable-feedback:2",
+   "expect": "U",
+   "id": "readyEmissions#missing-row",
+   "set": {
+    "receipts.readyEmissions": [
+     {
+      "id": "1",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-readyEmissions-1",
+      "caller": "cooldown-completed",
+      "sourceLine": 4,
+      "emits": 1
+     },
+     {
+      "id": "2",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-readyEmissions-2",
+      "caller": "cooldown-completed",
+      "sourceLine": 4,
+      "emits": 1
+     },
+     {
+      "id": "3",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-readyEmissions-3",
+      "caller": "cooldown-completed",
+      "sourceLine": 4,
+      "emits": 1
+     },
+     {
+      "id": "4",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-readyEmissions-4",
+      "caller": "cooldown-completed",
+      "sourceLine": 4,
+      "emits": 1
+     },
+     {
+      "id": "5",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-readyEmissions-5",
+      "caller": "cooldown-completed",
+      "sourceLine": 4,
+      "emits": 1
+     }
+    ]
+   }
+  },
+  {
+   "line": "readable-feedback:2",
+   "expect": "U",
+   "id": "readyEmissions#stale",
+   "set": {
+    "receipts.readyEmissions.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "readable-feedback:2",
+   "expect": "U",
+   "id": "readyEmissions#artifact",
+   "set": {
+    "receipts.readyEmissions.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "control-intent:1",
+   "expect": "U",
+   "id": "inputTasks#missing-row",
+   "set": {
+    "receipts.inputTasks": [
+     {
+      "id": "touch",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-inputTasks-touch",
+      "device": "touch",
+      "task": "place",
+      "completed": true
+     },
+     {
+      "id": "pad",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-inputTasks-pad",
+      "device": "pad",
+      "task": "place",
+      "completed": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "control-intent:1",
+   "expect": "U",
+   "id": "inputTasks#stale",
+   "set": {
+    "receipts.inputTasks.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "control-intent:1",
+   "expect": "U",
+   "id": "inputTasks#artifact",
+   "set": {
+    "receipts.inputTasks.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "parity:1",
+   "expect": "U",
+   "id": "pairedTiming#missing-row",
+   "set": {
+    "receipts.pairedTiming": [
+     {
+      "id": "predicted",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-pairedTiming-predicted",
+      "device": "desktop",
+      "onSeed": "sample-seed",
+      "offSeed": "sample-seed",
+      "onRun": "predicted",
+      "offRun": "predicted",
+      "onTicks": 60,
+      "offTicks": 60,
+      "offArtifact": "art-simTiming",
+      "onHash": "22e12554dd26b5bf8a0db41fdd8b0afb4dd299a56e058716db7a71b15bd34dd8",
+      "offHash": "22e12554dd26b5bf8a0db41fdd8b0afb4dd299a56e058716db7a71b15bd34dd8"
+     }
+    ]
+   }
+  },
+  {
+   "line": "parity:1",
+   "expect": "U",
+   "id": "pairedTiming#stale",
+   "set": {
+    "receipts.pairedTiming.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "parity:1",
+   "expect": "U",
+   "id": "pairedTiming#artifact",
+   "set": {
+    "receipts.pairedTiming.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "deviceLatency#slow",
+   "expect": 2,
+   "set": {
+    "receipts.deviceLatency.0.latencyMs": [
+     120,
+     140,
+     160,
+     180,
+     200
+    ]
+   },
+   "line": "response:1"
+  },
+  {
+   "id": "readyEmissions#double",
+   "expect": 0,
+   "set": {
+    "receipts.readyEmissions.0.emits": 2
+   },
+   "line": "readable-feedback:2"
+  },
+  {
+   "id": "inputTasks#missed-task",
+   "expect": 1,
+   "set": {
+    "receipts.inputTasks.0.completed": false
+   },
+   "line": "control-intent:1"
+  },
+  {
+   "id": "pairedTiming#unequal-run",
+   "expect": 1,
+   "set": {
+    "receipts.pairedTiming.0.offTicks": 59
+   },
+   "line": "parity:1"
+  },
+  {
+   "id": "pairedTiming#other-seed",
+   "expect": 1,
+   "set": {
+    "receipts.pairedTiming.0.offSeed": "another"
+   },
+   "line": "parity:1"
+  }
+ ]
+}

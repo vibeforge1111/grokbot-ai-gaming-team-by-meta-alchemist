@@ -1,0 +1,123 @@
+# How to use: Store Page & Presskit Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Prepare store copy, screenshots and press assets that show what players actually do in your game, then check each destination's requirements.
+
+- **Pipeline stage:** Ship
+- **When:** Before a store page goes up and before each big update.
+- **You provide:** The list of destinations (for example a PC store such as Steam, itch.io, a console store, a mobile app store or your own website), the store art each one asks for, store copy, the trailer and screenshots.
+- **You get:** A store art format audit per destination, a hook and claims check, page metadata and share preview checks, and a presskit archive with a leak check.
+- **Takes from:** Stream-to-Devlog & Trailer Cut Director, template 10 (final cuts and stills), and HUD, template 09 (screenshots).
+- **Hands to:** Streamer Scout and Patch Notes, template 20 (the press kit link for creator outreach drafts).
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the store-presskit-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/19-presskit-director
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`store-presskit-getting-started`](skills/store-presskit-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Store Page & Presskit Director grade. |
+| [`store-copy-and-metadata-checker`](skills/store-copy-and-metadata-checker/SKILL.md) | Use when writing or checking store and landing page copy: the hook shows on the first screen, every advertised feature has current build evidence, and page metadata and share previews work where you control the page. |
+| [`store-art-format-auditor`](skills/store-art-format-auditor/SKILL.md) | Use when checking store art for every destination (a PC store such as Steam, itch.io, a console store, a mobile app store or your own website): each required format against that store's current spec, text contrast at displayed size, safe zones and icons. |
+| [`presskit-zip-zero-leak-compiler`](skills/presskit-zip-zero-leak-compiler/SKILL.md) | Use when assembling a presskit: factsheet, logos and media from the current build, rights records, and nothing private inside the archive. |
+| [`store-presskit-lens-engine`](skills/store-presskit-lens-engine/SKILL.md) | Use when you need to grade a Store Page & Presskit Director evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-19-store-presskit-director` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `entrance-and-copy:1` | Store page first screen | 10 | capture |
+| `entrance-and-copy:2` | Storefront hook copy | 10 | static |
+| `share-metadata:1` | Page metadata on pages you control | 10 | trace |
+| `share-metadata:2` | Link preview cards | 10 | capture |
+| `icons-and-install:1` | Required icons load and decode | 10 | trace |
+| `icons-and-install:2` | Contrast and legibility | 10 | capture |
+| `media:1` | Screenshot and GIF readiness | 10 | capture |
+| `media:2` | Store art and logo formats | 10 | capture |
+| `presskit-and-obligations:1` | Presskit completeness | 10 | static |
+| `presskit-and-obligations:2` | Rights, age, privacy and support links | 10 | static |
+
+## Decisions only you make
+
+- Which destinations the game will be listed on (for example a PC store such as Steam, itch.io, a console store, a mobile app store or your own website), and which spec version of each destination's asset guidelines applies.
+- Whether the `no-own-web-page` profile applies, approved before scoring and set as `rubricProfile` in the game profile.
+
+## Known limits
+
+- Share card previews need the real destinations; the agent never publishes or shares on its own.
+- A game with no web page you control uses the `no-own-web-page` profile: the owner approves it before scoring and sets `rubricProfile` in the game profile. Both `share-metadata` lines then read N/A, their 20 points are shared over the other eight lines, and the verdict can reach PASS. Any other line that cannot apply to your destinations has no profile: it stays U, lower coverage, never a defect, and the verdict stays CONDITIONAL.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `media-export-manifest` (optional, ^1.0.0) | 10 Trailer | `.grokbot-team/artifacts/media-export-manifest/` | Continue: decode media from the current build yourself; media:1 stays unmeasured until you do. Never reuse unreviewed exports. |
+| `clip-list` (optional, ^1.0.0) | 10 Trailer | `.grokbot-team/artifacts/clip-list/` | Continue without it. Start the report with "ASSUMPTION: no clip-list available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `hud-capture-set` (optional, ^1.0.0) | 09 HUD | `.grokbot-team/artifacts/hud-capture-set/` | Continue without it. Start the report with "ASSUMPTION: no hud-capture-set available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `access-report` (optional, ^1.0.0) | 21 Access | `.grokbot-team/artifacts/access-report/` | Continue: make no accessibility claim on the store page, and write "ASSUMPTION: no access-report available" in the report. |
+| `trust-records` (optional, ^1.0.0) | 22 Live Service | `.grokbot-team/artifacts/trust-records/` | Continue: presskit-and-obligations:2 stays unmeasured; never invent links. |
+| `pitch-draft` (optional, ^1.0.0) | 12 Producer | `.grokbot-team/artifacts/pitch-draft/` | Continue without it. Start the report with "ASSUMPTION: no pitch-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `atlas-manifest` (optional, ^1.0.0) | 17 Sprites | `.grokbot-team/artifacts/atlas-manifest/` | Continue without it. Start the report with "ASSUMPTION: no atlas-manifest available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `store-asset-manifest` 1.0.0 | JSON manifest plus the store copy, art and archive files | `.grokbot-team/artifacts/store-asset-manifest/` | 20 Patch Notes, 28 App Store |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-19-store-presskit-director` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

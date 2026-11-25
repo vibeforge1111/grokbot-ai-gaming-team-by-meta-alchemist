@@ -1,0 +1,96 @@
+{
+  "kitVersion": 1,
+  "id": "gbf-25-matchmaking-lobby-fill",
+  "slug": "25-matchmaking-lobby-fill",
+  "name": "Matchmaking and Region Lobby Fill",
+  "shortName": "Matchmaking",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Measure queue fill, wait times and bot representation and draft alternatives for a human queue owner.",
+  "stage": "Multiplayer operations",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": null,
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "lobby-fill-getting-started",
+  "skills": [
+    "lobby-fill-getting-started",
+    "lobby-fill-weekly-proposals",
+    "lobby-fill-count-snapshots",
+    "lobby-fill-bot-honesty-check",
+    "file-to-shared-ledger",
+    "lobby-fill-lens-engine",
+    "lobby-fill-domain-engine"
+  ],
+  "routines": [
+    "lobby-fill-weekly",
+    "lobby-fill-daily-snapshot",
+    "lobby-fill-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-25-matchmaking-lobby-fill",
+    "version": "1.2.0",
+    "hash": "sha256:f79e06c8a8fb224341b91dd02f0be638e81dc4f8ddd485df58acb8b992bc0d78"
+  },
+  "engine": {
+    "cmd": [
+      "node",
+      "engine/lens.mjs"
+    ],
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "lobby-fill-proposal",
+      "version": "1.0.0",
+      "format": "JSON plan plus a Markdown proposal draft",
+      "schema": "spec/artifacts/lobby-fill-proposal.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "releases"
+    ],
+    "writes": [
+      "decisions",
+      "regions"
+    ]
+  }
+}

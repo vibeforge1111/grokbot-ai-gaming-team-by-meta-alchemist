@@ -1,0 +1,107 @@
+{
+  "packId": "synthetic-lobby-fill-001",
+  "status": "VALID",
+  "synthetic": true,
+  "gitSha": "synthetic",
+  "liveSha": "synthetic",
+  "profile": {
+    "minHumansPerHour": 4,
+    "pingCapMs": 120,
+    "maxBotShare": 0.6,
+    "maxWaitS": 45,
+    "maxWaitP90S": 90,
+    "primaryInput": "input-a",
+    "comparisonInput": "input-b",
+    "maxInputWaitGapS": 15,
+    "inputQueueMinShare": 0.6,
+    "minRegionHours": 24,
+    "minProbeAttempts": 12
+  },
+  "artifacts": [
+    {
+      "id": "seat-events",
+      "kind": "trace"
+    },
+    {
+      "id": "rtt-matrix",
+      "kind": "trace"
+    },
+    {
+      "id": "lobby-config",
+      "kind": "static"
+    },
+    {
+      "id": "authority-probe",
+      "kind": "trace"
+    },
+    {
+      "id": "privacy-probe",
+      "kind": "trace"
+    },
+    {
+      "id": "proposal-report",
+      "kind": "static"
+    }
+  ],
+  "metrics": {
+    "fill": {
+      "artifact": "seat-events",
+      "regions": 5,
+      "regionHoursMeasured": 240,
+      "botsCountedAsHumans": 0,
+      "thinMismatch": 0,
+      "thinListed": true
+    },
+    "merge": {
+      "directionalPairs": 8,
+      "artifactsByLine": {
+        "proposals:1": "rtt-matrix"
+      },
+      "artifact": "proposal-report",
+      "proposals": 2,
+      "overCap": 0,
+      "thinRegions": 2,
+      "thinWithAlternatives": 2,
+      "unknownPingProposed": 0
+    },
+    "authority": {
+      "artifact": "authority-probe",
+      "forbiddenAttempted": 14,
+      "forbiddenSucceeded": 0,
+      "liveChanges": 0
+    },
+    "privacy": {
+      "measuredCases": 4,
+      "artifact": "privacy-probe",
+      "piiFieldsAccepted": 0,
+      "rawIdsInOutputs": 0,
+      "schemaRejectsPlanted": true
+    },
+    "wait": {
+      "measuredCases": 1404,
+      "artifact": "seat-events",
+      "p50S": 24,
+      "p90S": 53
+    },
+    "device": {
+      "measuredCases": 5,
+      "artifact": "seat-events",
+      "primaryInputWaitGapS": 7,
+      "inputQueueOptionConsidered": true
+    },
+    "bots": {
+      "measuredCases": 5,
+      "artifactsByLine": {
+        "bot-honesty:2": "seat-events"
+      },
+      "artifact": "lobby-config",
+      "labelShown": true,
+      "countedInPlayerCount": false,
+      "overCapWithoutProposal": 0
+    },
+    "latency": {
+      "artifact": "rtt-matrix",
+      "pairs": 8
+    }
+  }
+}

@@ -1,0 +1,646 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "authentic-gameplay:1#empty-shots.total",
+   "line": "authentic-gameplay:1",
+   "expect": "U",
+   "set": {
+    "metrics.shots.total": 0
+   }
+  },
+  {
+   "id": "authentic-gameplay:1#neg1",
+   "line": "authentic-gameplay:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.shots.fromGradedBuild": 12
+   }
+  },
+  {
+   "id": "authentic-gameplay:1#missing",
+   "line": "authentic-gameplay:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.shots.fromGradedBuild"
+   ]
+  },
+  {
+   "id": "authentic-gameplay:2#empty-claims.claimsChecked",
+   "line": "authentic-gameplay:2",
+   "expect": "U",
+   "set": {
+    "metrics.claims.claimsChecked": 0
+   }
+  },
+  {
+   "id": "authentic-gameplay:2#neg1",
+   "line": "authentic-gameplay:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.claims.unavailableImplied": 1
+   }
+  },
+  {
+   "id": "authentic-gameplay:2#missing",
+   "line": "authentic-gameplay:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.claims.claimsChecked"
+   ]
+  },
+  {
+   "id": "readable-story:1#empty-edl.decisionsRecorded",
+   "line": "readable-story:1",
+   "expect": "U",
+   "set": {
+    "metrics.edl.decisionsRecorded": 0
+   }
+  },
+  {
+   "id": "readable-story:1#empty-shots.total",
+   "line": "readable-story:1",
+   "expect": "U",
+   "set": {
+    "metrics.shots.total": 0
+   }
+  },
+  {
+   "id": "readable-story:1#neg1",
+   "line": "readable-story:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.edl.decisionsRecorded": 2
+   }
+  },
+  {
+   "id": "readable-story:1#missing",
+   "line": "readable-story:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.edl.sourceClipsRecorded"
+   ]
+  },
+  {
+   "id": "readable-story:2#empty",
+   "line": "readable-story:2",
+   "expect": "U",
+   "set": {
+    "judgements.readable-story:2.evidenceIds": []
+   }
+  },
+  {
+   "id": "composition:1#empty-cropFraming.shots",
+   "line": "composition:1",
+   "expect": "U",
+   "set": {
+    "metrics.cropFraming.shots": 0
+   }
+  },
+  {
+   "id": "composition:1#neg1",
+   "line": "composition:1",
+   "expect": "fail",
+   "areas": [
+    "safe-zones"
+   ],
+   "set": {
+    "metrics.cropFraming.shotsWithActionPoint": 9
+   }
+  },
+  {
+   "id": "composition:1#missing",
+   "line": "composition:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.cropFraming.shotsWithActionPoint"
+   ]
+  },
+  {
+   "id": "composition:2#empty-redaction.framesScanned",
+   "line": "composition:2",
+   "expect": "U",
+   "set": {
+    "metrics.redaction.framesScanned": 0
+   }
+  },
+  {
+   "id": "composition:2#empty-redaction.totalFrames",
+   "line": "composition:2",
+   "expect": "U",
+   "set": {
+    "metrics.redaction.totalFrames": 0
+   }
+  },
+  {
+   "id": "composition:2#neg1",
+   "line": "composition:2",
+   "expect": "fail",
+   "areas": [
+    "redaction"
+   ],
+   "set": {
+    "metrics.redaction.namesVisibleUnredacted": 1
+   }
+  },
+  {
+   "id": "composition:2#neg2",
+   "line": "composition:2",
+   "expect": "fail",
+   "areas": [
+    "redaction"
+   ],
+   "set": {
+    "metrics.redaction.framesScanned": 2399
+   }
+  },
+  {
+   "id": "composition:2#missing",
+   "line": "composition:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.redaction.framesScanned"
+   ]
+  },
+  {
+   "id": "technical-export:1#empty-exports.measuredCases",
+   "line": "technical-export:1",
+   "expect": "U",
+   "set": {
+    "metrics.exports.measuredCases": 0
+   }
+  },
+  {
+   "id": "technical-export:1#neg1",
+   "line": "technical-export:1",
+   "expect": "fail",
+   "areas": [
+    "platform-exports",
+    "export-decode-sync"
+   ],
+   "set": {
+    "metrics.exports.avSyncMs": 120
+   }
+  },
+  {
+   "id": "technical-export:1#missing",
+   "line": "technical-export:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.exports.rendered"
+   ]
+  },
+  {
+   "id": "technical-export:2#empty-recovery.interruptionsInjected",
+   "line": "technical-export:2",
+   "expect": "U",
+   "set": {
+    "metrics.recovery.interruptionsInjected": 0
+   }
+  },
+  {
+   "id": "technical-export:2#neg1",
+   "line": "technical-export:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.recovery.corruptedOutputs": 1
+   }
+  },
+  {
+   "id": "technical-export:2#missing",
+   "line": "technical-export:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.recovery.interruptionsInjected"
+   ]
+  },
+  {
+   "id": "accessible-delivery:1#empty-captions.totalCues",
+   "line": "accessible-delivery:1",
+   "expect": "U",
+   "set": {
+    "metrics.captions.totalCues": 0
+   }
+  },
+  {
+   "id": "accessible-delivery:1#neg1",
+   "line": "accessible-delivery:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.captions.matchedCues": 0,
+    "receipts.captionAlignment.0.caption": "wrong",
+    "receipts.captionAlignment.1.caption": "wrong"
+   }
+  },
+  {
+   "id": "accessible-delivery:1#neg2",
+   "line": "accessible-delivery:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.captions.matchedCues": 3
+   }
+  },
+  {
+   "id": "accessible-delivery:1#missing",
+   "line": "accessible-delivery:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.captions.matchedCues"
+   ]
+  },
+  {
+   "id": "accessible-delivery:2#empty-sound.measuredCases",
+   "line": "accessible-delivery:2",
+   "expect": "U",
+   "set": {
+    "metrics.sound.measuredCases": 0
+   }
+  },
+  {
+   "id": "accessible-delivery:2#neg1",
+   "line": "accessible-delivery:2",
+   "expect": "fail",
+   "areas": [
+    "loudness"
+   ],
+   "set": {
+    "metrics.sound.integratedLufs": -8
+   }
+  },
+  {
+   "id": "accessible-delivery:2#missing",
+   "line": "accessible-delivery:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.sound.checkedOnDecodedFile"
+   ]
+  },
+  {
+   "id": "licensed-music#empty-licensing.tracks",
+   "line": "licensed-music",
+   "expect": "U",
+   "set": {
+    "metrics.licensing.tracks": 0
+   }
+  },
+  {
+   "id": "licensed-music#neg1",
+   "line": "licensed-music",
+   "expect": "fail",
+   "areas": [
+    "licensing"
+   ],
+   "set": {
+    "metrics.licensing.licensedTracks": 0
+   }
+  },
+  {
+   "id": "licensed-music#missing",
+   "line": "licensed-music",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.licensing.licensedTracks"
+   ]
+  },
+  {
+   "line": "readable-story:1",
+   "expect": "U",
+   "id": "editDecisions#missing-row",
+   "set": {
+    "receipts.editDecisions": [
+     {
+      "id": "play",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-editDecisions-play",
+      "shot": "play",
+      "sourceBuild": "example-live-sha",
+      "sourceClip": "art-shots",
+      "inFrame": 15,
+      "outFrame": 90,
+      "decision": "keep"
+     },
+     {
+      "id": "close",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-editDecisions-close",
+      "shot": "close",
+      "sourceBuild": "example-live-sha",
+      "sourceClip": "art-shots",
+      "inFrame": 15,
+      "outFrame": 90,
+      "decision": "keep"
+     }
+    ]
+   }
+  },
+  {
+   "line": "readable-story:1",
+   "expect": "U",
+   "id": "editDecisions#stale",
+   "set": {
+    "receipts.editDecisions.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "readable-story:1",
+   "expect": "U",
+   "id": "editDecisions#artifact",
+   "set": {
+    "receipts.editDecisions.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "composition:2",
+   "expect": "U",
+   "id": "finalReview#missing-row",
+   "set": {
+    "receipts.finalReview": [
+     {
+      "id": "wide-audio",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-wide-audio",
+      "cut": "wide",
+      "channel": "audio",
+      "expectedUnits": 60,
+      "checkedUnits": 60,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "wide-captions",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-wide-captions",
+      "cut": "wide",
+      "channel": "captions",
+      "expectedUnits": 30,
+      "checkedUnits": 30,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "wide-title",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-wide-title",
+      "cut": "wide",
+      "channel": "title",
+      "expectedUnits": 1,
+      "checkedUnits": 1,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "wide-filename",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-wide-filename",
+      "cut": "wide",
+      "channel": "filename",
+      "expectedUnits": 1,
+      "checkedUnits": 1,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "wide-metadata",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-wide-metadata",
+      "cut": "wide",
+      "channel": "metadata",
+      "expectedUnits": 1,
+      "checkedUnits": 1,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "vertical-picture",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-vertical-picture",
+      "cut": "vertical",
+      "channel": "picture",
+      "expectedUnits": 1200,
+      "checkedUnits": 1200,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "vertical-audio",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-vertical-audio",
+      "cut": "vertical",
+      "channel": "audio",
+      "expectedUnits": 60,
+      "checkedUnits": 60,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "vertical-captions",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-vertical-captions",
+      "cut": "vertical",
+      "channel": "captions",
+      "expectedUnits": 30,
+      "checkedUnits": 30,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "vertical-title",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-vertical-title",
+      "cut": "vertical",
+      "channel": "title",
+      "expectedUnits": 1,
+      "checkedUnits": 1,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "vertical-filename",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-vertical-filename",
+      "cut": "vertical",
+      "channel": "filename",
+      "expectedUnits": 1,
+      "checkedUnits": 1,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     },
+     {
+      "id": "vertical-metadata",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-finalReview-vertical-metadata",
+      "cut": "vertical",
+      "channel": "metadata",
+      "expectedUnits": 1,
+      "checkedUnits": 1,
+      "hits": 0,
+      "reviewer": "review-role",
+      "deliverable": "art-exports"
+     }
+    ]
+   }
+  },
+  {
+   "line": "composition:2",
+   "expect": "U",
+   "id": "finalReview#stale",
+   "set": {
+    "receipts.finalReview.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "composition:2",
+   "expect": "U",
+   "id": "finalReview#artifact",
+   "set": {
+    "receipts.finalReview.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "technical-export:1",
+   "expect": "U",
+   "id": "decodedCuts#missing-row",
+   "set": {
+    "receipts.decodedCuts": [
+     {
+      "id": "vertical",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-decodedCuts-vertical",
+      "width": 1080,
+      "height": 1920,
+      "fps": 30,
+      "codec": "sample-codec",
+      "decoder": "independent-reader",
+      "rights": "art-licensing"
+     }
+    ]
+   }
+  },
+  {
+   "line": "technical-export:1",
+   "expect": "U",
+   "id": "decodedCuts#stale",
+   "set": {
+    "receipts.decodedCuts.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "technical-export:1",
+   "expect": "U",
+   "id": "decodedCuts#artifact",
+   "set": {
+    "receipts.decodedCuts.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "accessible-delivery:1",
+   "expect": "U",
+   "id": "captionAlignment#missing-row",
+   "set": {
+    "receipts.captionAlignment": [
+     {
+      "id": "close",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-captionAlignment-close",
+      "cue": "close",
+      "caption": "close",
+      "offsetMs": 20
+     }
+    ]
+   }
+  },
+  {
+   "line": "accessible-delivery:1",
+   "expect": "U",
+   "id": "captionAlignment#stale",
+   "set": {
+    "receipts.captionAlignment.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "accessible-delivery:1",
+   "expect": "U",
+   "id": "captionAlignment#artifact",
+   "set": {
+    "receipts.captionAlignment.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "editDecisions#empty-segment",
+   "expect": 1,
+   "set": {
+    "receipts.editDecisions.0.outFrame": 10
+   },
+   "line": "readable-story:1"
+  },
+  {
+   "id": "finalReview#unscanned",
+   "expect": 1,
+   "set": {
+    "receipts.finalReview.0.checkedUnits": 1199
+   },
+   "line": "composition:2"
+  },
+  {
+   "id": "finalReview#sensitive-hit",
+   "expect": 0,
+   "set": {
+    "receipts.finalReview.0.hits": 1
+   },
+   "line": "composition:2"
+  },
+  {
+   "id": "decodedCuts#wrong-size",
+   "expect": 1,
+   "set": {
+    "receipts.decodedCuts.0.width": 120
+   },
+   "line": "technical-export:1"
+  },
+  {
+   "id": "captionAlignment#wrong-caption",
+   "expect": 1,
+   "set": {
+    "receipts.captionAlignment.0.caption": "other",
+    "metrics.captions.matchedCues": 1
+   },
+   "line": "accessible-delivery:1"
+  },
+  {
+   "id": "caption-match-at-approved-floor",
+   "expect": 3,
+   "set": {
+    "receipts.captionAlignment.0.caption": "other",
+    "metrics.captions.matchedCues": 1,
+    "profile.minCaptionMatch": 0.5
+   },
+   "line": "accessible-delivery:1"
+  }
+ ]
+}

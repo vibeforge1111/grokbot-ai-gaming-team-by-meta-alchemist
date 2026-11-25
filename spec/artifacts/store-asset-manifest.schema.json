@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/store-asset-manifest.schema.json",
+  "title": "Store asset manifest (team artifact)",
+  "description": "Store copy, key art, screenshots and press kit contents from Presskit Director, per destination. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "store-asset-manifest"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One asset for one destination.",
+      "items": {
+        "type": "object",
+        "required": [
+          "destination",
+          "assetKind",
+          "path",
+          "reviewed"
+        ],
+        "properties": {
+          "destination": {
+            "type": "string",
+            "description": "Store or site, for example a PC store, a console store, a mobile store or the game's own site."
+          },
+          "assetKind": {
+            "type": "string",
+            "description": "copy, key-art, screenshot, trailer, presskit-archive."
+          },
+          "path": {
+            "type": "string",
+            "description": "Relative file path."
+          },
+          "specVersion": {
+            "type": "string",
+            "description": "Destination spec version checked."
+          },
+          "reviewed": {
+            "type": "boolean",
+            "description": "True once a human reviewed it."
+          }
+        }
+      }
+    }
+  }
+}

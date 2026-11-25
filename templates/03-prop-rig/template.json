@@ -1,0 +1,105 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-03-procedural-rig-crafter",
+  "slug": "03-prop-rig",
+  "name": "Prop & Rig Director",
+  "shortName": "Prop and Rig",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Build and optimize props and rigs for your runtime. Compare their appearance, animation and collision shapes with your art and performance targets.",
+  "stage": "Production",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "prop-rig-getting-started",
+  "skills": [
+    "prop-rig-getting-started",
+    "procedural-prop-builder",
+    "asset-lod-and-compression-pipeline",
+    "turntable-collider-proof",
+    "toybox-entrance-diorama-interactivity",
+    "prop-rig-lens-engine"
+  ],
+  "routines": [
+    "prop-rig-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-03-procedural-rig-crafter",
+    "version": "1.3.0",
+    "hash": "sha256:18c7a65ccec58d7330a34fbfba8716afa4e2b84871a78a8cb61283515dafbb3a"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 80,
+    "externalReviewMin": 4,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Art references, Environment Design requests.",
+    "handsTo": "Material artists, Environment Design and the team measuring asset performance."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "layout-brief": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "asset-budget-report",
+      "version": "1.0.0",
+      "format": "JSON",
+      "schema": "spec/artifacts/asset-budget-report.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "layout-brief",
+      "required": false,
+      "schema": "spec/artifacts/layout-brief.schema.json",
+      "whenMissing": "Continue: take the asset list from the owner and write \"ASSUMPTION: no layout-brief available; asset list from the owner\" in the report."
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

@@ -1,0 +1,322 @@
+{
+ "packId": "example-13-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "maxColdAudioBytes": 6000000,
+  "maxAudioStartMs": 150,
+  "maxFirstInputHandlerMs": 50,
+  "targetLufs": -16,
+  "lufsTolerance": 2,
+  "maxTruePeakDb": -1,
+  "maxSameCuePerSecond": 6,
+  "minCueSeparationDb": 6,
+  "audioDevice": "handheld",
+  "voiceCap": 32,
+  "maxScheduleErrorMs": 12,
+  "maxGainJumpDb": 2,
+  "minDuckDb": 5,
+  "maxCaptionOffsetMs": 80,
+  "cases": {
+   "transitions": [
+    {
+     "id": "start",
+     "fromState": "browse",
+     "toState": "build",
+     "interruption": false
+    },
+    {
+     "id": "interrupt",
+     "fromState": "build",
+     "toState": "browse",
+     "interruption": true
+    }
+   ],
+   "voiceStress": [
+    {
+     "id": "overlap"
+    }
+   ],
+   "captionEvents": [
+    {
+     "id": "arrival",
+     "cue": "arrival",
+     "caption": "arrival"
+    },
+    {
+     "id": "selection",
+     "cue": "selection",
+     "caption": "selection"
+    }
+   ],
+   "mixedPeak": [
+    {
+     "id": "mixed"
+    }
+   ]
+  },
+  "minSpatialDirectionLow": 0.8
+ },
+ "artifacts": [
+  {
+   "id": "art-load",
+   "kind": "trace",
+   "path": "traces/load.json",
+   "sha256": null
+  },
+  {
+   "id": "art-gesture",
+   "kind": "trace",
+   "path": "traces/gesture.json",
+   "sha256": null
+  },
+  {
+   "id": "art-music",
+   "kind": "capture",
+   "path": "captures/music.json",
+   "sha256": null
+  },
+  {
+   "id": "art-mix",
+   "kind": "capture",
+   "path": "captures/mix.json",
+   "sha256": null
+  },
+  {
+   "id": "art-loudness",
+   "kind": "capture",
+   "path": "captures/loudness.json",
+   "sha256": null
+  },
+  {
+   "id": "art-voices",
+   "kind": "trace",
+   "path": "traces/voices.json",
+   "sha256": null
+  },
+  {
+   "id": "art-spatial",
+   "kind": "capture",
+   "path": "captures/spatial.json",
+   "sha256": null
+  },
+  {
+   "id": "art-variety",
+   "kind": "capture",
+   "path": "captures/variety.json",
+   "sha256": null
+  },
+  {
+   "id": "art-captions",
+   "kind": "trace",
+   "path": "traces/captions.json",
+   "sha256": null
+  },
+  {
+   "id": "art-lifecycle",
+   "kind": "capture",
+   "path": "captures/lifecycle.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-transitions-start",
+   "kind": "capture",
+   "path": "receipts/transitions/start.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-transitions-interrupt",
+   "kind": "capture",
+   "path": "receipts/transitions/interrupt.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-voiceStress-overlap",
+   "kind": "trace",
+   "path": "receipts/voiceStress/overlap.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-captionEvents-arrival",
+   "kind": "trace",
+   "path": "receipts/captionEvents/arrival.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-captionEvents-selection",
+   "kind": "trace",
+   "path": "receipts/captionEvents/selection.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-mixedPeak-mixed",
+   "kind": "capture",
+   "path": "receipts/mixedPeak/mixed.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "load": {
+   "artifact": "art-load",
+   "coldBytes": 4200000,
+   "warmBytes": 0,
+   "startLatencyMs": [
+    60,
+    80,
+    95,
+    110
+   ]
+  },
+  "gesture": {
+   "artifact": "art-gesture",
+   "device": "handheld",
+   "firstInputHandlerMs": [
+    12,
+    18,
+    22,
+    27
+   ]
+  },
+  "music": {
+   "artifact": "art-music",
+   "statesSpecified": [
+    "browse",
+    "build"
+   ],
+   "statesObserved": [
+    "browse",
+    "build"
+   ],
+   "duckingObserved": true
+  },
+  "mix": {
+   "artifact": "art-mix",
+   "worstCaseRecordings": 3,
+   "essentialCueMarginDb": [
+    8.5,
+    7.2,
+    9.1
+   ]
+  },
+  "loudness": {
+   "artifact": "art-loudness",
+   "freshRecording": true,
+   "integratedLufs": -15.4,
+   "truePeakDb": -1.6,
+   "measuredCases": 1
+  },
+  "voices": {
+   "artifact": "art-voices",
+   "device": "handheld",
+   "peakVoices": [
+    18,
+    24,
+    27,
+    22
+   ]
+  },
+  "spatial": {
+   "artifact": "art-spatial",
+   "directionCorrect": 38,
+   "directionTrials": 40
+  },
+  "variety": {
+   "artifact": "art-variety",
+   "sameCuePerSecondMax": 3,
+   "measuredCases": 1
+  },
+  "captions": {
+   "artifact": "art-captions",
+   "spokenLines": 2,
+   "captionedMatching": 2
+  },
+  "lifecycle": {
+   "artifact": "art-lifecycle",
+   "resumeAfterBackground": true,
+   "muteRespected": true,
+   "startBlockedHandled": true,
+   "leakedNodesAfterRepeatedSessions": 0,
+   "measuredCases": 1
+  },
+  "micFallback": {
+   "artifact": "art-lifecycle",
+   "tested": [
+    "denied",
+    "revoked"
+   ],
+   "openTracksAfterStop": 0,
+   "baselineAction": "open",
+   "deniedAction": "open",
+   "revokedAction": "open"
+  }
+ },
+ "receipts": {
+  "transitions": [
+   {
+    "id": "start",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-transitions-start",
+    "fromState": "browse",
+    "toState": "build",
+    "interruption": false,
+    "scheduleErrorMs": 4,
+    "gainJumpDb": 0.5,
+    "duckDb": 7
+   },
+   {
+    "id": "interrupt",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-transitions-interrupt",
+    "fromState": "build",
+    "toState": "browse",
+    "interruption": true,
+    "scheduleErrorMs": 4,
+    "gainJumpDb": 0.5,
+    "duckDb": 7
+   }
+  ],
+  "voiceStress": [
+   {
+    "id": "overlap",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-voiceStress-overlap",
+    "attempted": 36,
+    "cap": 32,
+    "peak": 32,
+    "stolen": 4,
+    "activeAfterStop": 0
+   }
+  ],
+  "captionEvents": [
+   {
+    "id": "arrival",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-captionEvents-arrival",
+    "cue": "arrival",
+    "caption": "arrival",
+    "offsetMs": 24
+   },
+   {
+    "id": "selection",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-captionEvents-selection",
+    "cue": "selection",
+    "caption": "selection",
+    "offsetMs": 24
+   }
+  ],
+  "mixedPeak": [
+   {
+    "id": "mixed",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-mixedPeak-mixed",
+    "meter": "sample-true-peak-meter",
+    "simultaneous": 4,
+    "truePeakDb": -2
+   }
+  ]
+ }
+}

@@ -1,0 +1,560 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "reproducibility:1#empty-repro.highPriority",
+   "line": "reproducibility:1",
+   "expect": "U",
+   "set": {
+    "metrics.repro.highPriority": []
+   }
+  },
+  {
+   "id": "reproducibility:1#neg1",
+   "line": "reproducibility:1",
+   "expect": "fail",
+   "areas": [
+    "qa-automation"
+   ],
+   "set": {
+    "metrics.repro.highPriority.0.replayed": false
+   }
+  },
+  {
+   "id": "reproducibility:1#missing",
+   "line": "reproducibility:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.repro.highPriority"
+   ]
+  },
+  {
+   "id": "reproducibility:2#empty-flaky.flakyReports",
+   "line": "reproducibility:2",
+   "expect": "U",
+   "set": {
+    "metrics.flaky.flakyReports": 0
+   }
+  },
+  {
+   "id": "reproducibility:2#neg1",
+   "line": "reproducibility:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.flaky.fixedBelowCriterion": 1
+   }
+  },
+  {
+   "id": "reproducibility:2#missing",
+   "line": "reproducibility:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.flaky.fixedBelowCriterion"
+   ]
+  },
+  {
+   "id": "evidence-completeness:1#empty-captures.playFindings",
+   "line": "evidence-completeness:1",
+   "expect": "U",
+   "set": {
+    "metrics.captures.playFindings": 0
+   }
+  },
+  {
+   "id": "evidence-completeness:1#neg1",
+   "line": "evidence-completeness:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.captures.playFindingsWithActionCapture": 3
+   }
+  },
+  {
+   "id": "evidence-completeness:1#missing",
+   "line": "evidence-completeness:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.captures.playFindingsWithActionCapture"
+   ]
+  },
+  {
+   "id": "evidence-completeness:2#empty-liveBehind.measuredCases",
+   "line": "evidence-completeness:2",
+   "expect": "U",
+   "set": {
+    "metrics.liveBehind.measuredCases": 0
+   }
+  },
+  {
+   "id": "evidence-completeness:2#neg1",
+   "line": "evidence-completeness:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.liveBehind.recorded": false
+   }
+  },
+  {
+   "id": "evidence-completeness:2#missing",
+   "line": "evidence-completeness:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.liveBehind.recorded"
+   ]
+  },
+  {
+   "id": "correct-dedup:1#empty-dedup.distinctPairs",
+   "line": "correct-dedup:1",
+   "expect": "U",
+   "set": {
+    "metrics.dedup.distinctPairs": 0
+   }
+  },
+  {
+   "id": "correct-dedup:1#empty-dedup.sameRoot",
+   "line": "correct-dedup:1",
+   "expect": "U",
+   "set": {
+    "metrics.dedup.sameRoot": 0
+   }
+  },
+  {
+   "id": "correct-dedup:1#empty-dedup.pairs",
+   "line": "correct-dedup:1",
+   "expect": "U",
+   "set": {
+    "metrics.dedup.pairs": []
+   }
+  },
+  {
+   "id": "correct-dedup:1#neg1",
+   "line": "correct-dedup:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.dedup.distinctPairsKeptSeparate": 3
+   }
+  },
+  {
+   "id": "correct-dedup:1#missing",
+   "line": "correct-dedup:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.dedup.distinctPairsKeptSeparate"
+   ]
+  },
+  {
+   "id": "correct-dedup:2#empty-dedup.pairs",
+   "line": "correct-dedup:2",
+   "expect": "U",
+   "set": {
+    "metrics.dedup.pairs": []
+   }
+  },
+  {
+   "id": "correct-dedup:2#empty-dedup.distinctPairs",
+   "line": "correct-dedup:2",
+   "expect": "U",
+   "set": {
+    "metrics.dedup.distinctPairs": 0
+   }
+  },
+  {
+   "id": "correct-dedup:2#empty-dedup.sameRoot",
+   "line": "correct-dedup:2",
+   "expect": "U",
+   "set": {
+    "metrics.dedup.sameRoot": 0
+   }
+  },
+  {
+   "id": "correct-dedup:2#neg1",
+   "line": "correct-dedup:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.dedup.pairs": [
+     {
+      "sameRoot": false,
+      "autoMerged": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "correct-dedup:2#missing",
+   "line": "correct-dedup:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.dedup.pairs"
+   ]
+  },
+  {
+   "id": "severity:1#empty-severity.tickets",
+   "line": "severity:1",
+   "expect": "U",
+   "set": {
+    "metrics.severity.tickets": []
+   }
+  },
+  {
+   "id": "severity:1#empty-severity.p0ScopesUsed",
+   "line": "severity:1",
+   "expect": "U",
+   "set": {
+    "metrics.severity.p0ScopesUsed": []
+   }
+  },
+  {
+   "id": "severity:1#neg1",
+   "line": "severity:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.severity.p0ScopesUsed": [
+     "payments",
+     "ui"
+    ]
+   }
+  },
+  {
+   "id": "severity:1#missing",
+   "line": "severity:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.severity.tickets"
+   ]
+  },
+  {
+   "id": "severity:2#empty-routing.auditDefects",
+   "line": "severity:2",
+   "expect": "U",
+   "set": {
+    "metrics.routing.auditDefects": 0
+   }
+  },
+  {
+   "id": "severity:2#neg1",
+   "line": "severity:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.routing.routedToAuditList": 0
+   }
+  },
+  {
+   "id": "severity:2#missing",
+   "line": "severity:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.routing.routedToAuditList"
+   ]
+  },
+  {
+   "id": "closure-quality:1#empty-closure.closures",
+   "line": "closure-quality:1",
+   "expect": "U",
+   "set": {
+    "metrics.closure.closures": []
+   }
+  },
+  {
+   "id": "closure-quality:1#neg1",
+   "line": "closure-quality:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.closure.closures.0.verifier": "fix-role"
+   }
+  },
+  {
+   "id": "closure-quality:1#missing",
+   "line": "closure-quality:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.closure.closures"
+   ]
+  },
+  {
+   "id": "closure-quality:2#empty-mismatch.measuredCases",
+   "line": "closure-quality:2",
+   "expect": "U",
+   "set": {
+    "metrics.mismatch.measuredCases": 0
+   }
+  },
+  {
+   "id": "closure-quality:2#neg1",
+   "line": "closure-quality:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.mismatch.mismatchClosuresAllowed": 1
+   }
+  },
+  {
+   "id": "closure-quality:2#missing",
+   "line": "closure-quality:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.mismatch.mismatchClosuresAllowed"
+   ]
+  },
+  {
+   "id": "p0-response#empty-sla.measuredCases",
+   "line": "p0-response",
+   "expect": "U",
+   "set": {
+    "metrics.sla.measuredCases": 0
+   }
+  },
+  {
+   "id": "p0-response#neg1",
+   "line": "p0-response",
+   "expect": "fail",
+   "areas": [
+    "triage-speed"
+   ],
+   "set": {
+    "metrics.sla.p0OpenHoursMax": 70
+   }
+  },
+  {
+   "id": "p0-response#missing",
+   "line": "p0-response",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.sla.p0OpenHoursMax"
+   ]
+  },
+  {
+   "id": "crash-intake#empty-crashIntake.received",
+   "line": "crash-intake",
+   "expect": "U",
+   "set": {
+    "metrics.crashIntake.received": 0
+   }
+  },
+  {
+   "id": "crash-intake#neg1",
+   "line": "crash-intake",
+   "expect": "fail",
+   "areas": [
+    "crash-intake"
+   ],
+   "set": {
+    "metrics.crashIntake.withBuildSha": 10
+   }
+  },
+  {
+   "id": "crash-intake#missing",
+   "line": "crash-intake",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.crashIntake"
+   ]
+  },
+  {
+   "id": "share-link-intake#empty-shareIntake.reports",
+   "line": "share-link-intake",
+   "expect": "U",
+   "set": {
+    "metrics.shareIntake.reports": 0
+   }
+  },
+  {
+   "id": "share-link-intake#neg1",
+   "line": "share-link-intake",
+   "expect": "fail",
+   "areas": [
+    "share-link-intake"
+   ],
+   "set": {
+    "metrics.shareIntake.withLinkSample": 1
+   }
+  },
+  {
+   "id": "share-link-intake#missing",
+   "line": "share-link-intake",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.shareIntake"
+   ]
+  },
+  {
+   "line": "reproducibility:1",
+   "expect": "U",
+   "id": "intakeReplay#missing-row",
+   "set": {
+    "receipts.intakeReplay": [
+     {
+      "id": "B-2",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-intakeReplay-B-2",
+      "ticket": "B-2",
+      "signature": "route-B-2",
+      "attempts": 2,
+      "reproduced": true,
+      "rewind": "art-repro",
+      "acceptance": "replay expected route"
+     }
+    ]
+   }
+  },
+  {
+   "line": "reproducibility:1",
+   "expect": "U",
+   "id": "intakeReplay#stale",
+   "set": {
+    "receipts.intakeReplay.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "reproducibility:1",
+   "expect": "U",
+   "id": "intakeReplay#artifact",
+   "set": {
+    "receipts.intakeReplay.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "evidence-completeness:2",
+   "expect": "U",
+   "id": "buildLag#missing-row",
+   "set": {
+    "receipts.buildLag": []
+   }
+  },
+  {
+   "line": "evidence-completeness:2",
+   "expect": "U",
+   "id": "buildLag#stale",
+   "set": {
+    "receipts.buildLag.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "evidence-completeness:2",
+   "expect": "U",
+   "id": "buildLag#artifact",
+   "set": {
+    "receipts.buildLag.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "closure-quality:1",
+   "expect": "U",
+   "id": "closureReview#missing-row",
+   "set": {
+    "receipts.closureReview": [
+     {
+      "id": "B-2",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-closureReview-B-2",
+      "ticket": "B-2",
+      "fixer": "fix-role",
+      "verifier": "review-role",
+      "fixedBuild": "example-live-sha",
+      "replay": "art-closure",
+      "acceptance": "expected task finishes",
+      "passed": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "closure-quality:1",
+   "expect": "U",
+   "id": "closureReview#stale",
+   "set": {
+    "receipts.closureReview.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "closure-quality:1",
+   "expect": "U",
+   "id": "closureReview#artifact",
+   "set": {
+    "receipts.closureReview.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "intakeReplay#unreproduced",
+   "expect": 1,
+   "set": {
+    "receipts.intakeReplay.0.reproduced": false
+   },
+   "line": "reproducibility:1"
+  },
+  {
+   "id": "intakeReplay#stale-export",
+   "expect": "U",
+   "set": {
+    "populations.intakeReplay.liveSha": "other"
+   },
+   "line": "reproducibility:1"
+  },
+  {
+   "id": "buildLag#uncapped",
+   "expect": 1,
+   "set": {
+    "receipts.buildLag.0.capped": false
+   },
+   "line": "evidence-completeness:2"
+  },
+  {
+   "id": "aligned-build-needs-no-cap",
+   "expect": 4,
+   "set": {
+    "gitSha": "example-live-sha",
+    "receipts.buildLag.0.source": "example-live-sha",
+    "receipts.buildLag.0.capped": false,
+    "receipts.buildLag.0.sourceHistory": [
+     "example-live-sha"
+    ]
+   },
+   "line": "evidence-completeness:2"
+  },
+  {
+   "id": "unrelated-deployment-history",
+   "expect": "U",
+   "set": {
+    "receipts.buildLag.0.sourceHistory": [
+     "other",
+     "example-git-sha"
+    ]
+   },
+   "line": "evidence-completeness:2"
+  },
+  {
+   "id": "closureReview#self-verified",
+   "expect": 1,
+   "set": {
+    "receipts.closureReview.0.verifier": "fix-role"
+   },
+   "line": "closure-quality:1"
+  },
+  {
+   "id": "closureReview#stale-export",
+   "expect": "U",
+   "set": {
+    "populations.closureReview.liveSha": "other"
+   },
+   "line": "closure-quality:1"
+  }
+ ]
+}

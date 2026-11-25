@@ -1,0 +1,111 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-11-environment-design",
+  "slug": "11-environment-design",
+  "name": "Environment Design Director",
+  "shortName": "Environment",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Review placement, sightlines and visual cues so players can identify landmarks and navigate the spaces in your game.",
+  "stage": "Production, Polish",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "environment-design-getting-started",
+  "skills": [
+    "environment-design-getting-started",
+    "environment-set-dressing-and-grounding-director",
+    "placement-and-support-surface-auditor",
+    "sightline-silhouette-and-value-composition-gate",
+    "toybox-entrance-diorama-interactivity",
+    "environment-design-lens-engine"
+  ],
+  "routines": [
+    "environment-design-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-11-environment-design",
+    "version": "1.2.0",
+    "hash": "sha256:c39d308c9db01955615bd3b3f3d8345e033fe243539837526c93c7210ace45a6"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 74,
+    "externalReviewMin": 4.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Layouts from the level design team.",
+    "handsTo": "Prop and Rig, material artists and playtesters."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "asset-budget-report": "^1.0.0",
+      "hud-capture-set": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "layout-brief",
+      "version": "1.0.0",
+      "format": "JSON plus a Markdown draft",
+      "schema": "spec/artifacts/layout-brief.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "asset-budget-report",
+      "required": false,
+      "schema": "spec/artifacts/asset-budget-report.schema.json",
+      "whenMissing": "Continue: dress scenes without making budget claims, and write \"ASSUMPTION: no asset-budget-report available\" in the report."
+    },
+    {
+      "artifact": "hud-capture-set",
+      "required": false,
+      "schema": "spec/artifacts/hud-capture-set.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

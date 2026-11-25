@@ -1,0 +1,79 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "kit-00-starter-template",
+  "slug": "00-starter-template",
+  "name": "First Session Director (starter)",
+  "shortName": "Starter",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Starter example: grades the first session of a game for time to fun, clarity, friction, stability and a reason to return.",
+  "stage": "Prototype, Playtest",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "starter-template-getting-started",
+  "skills": [
+    "starter-template-getting-started",
+    "starter-template-first-session-capture",
+    "starter-template-lens-engine"
+  ],
+  "routines": [
+    "starter-template-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "kit-00-starter-template",
+    "version": "1.0.1",
+    "hash": "sha256:1e6b912ce6b887ffc4b6d96fdaeebda69d1ecd524dc5ff202d7780a0f2c5836d"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

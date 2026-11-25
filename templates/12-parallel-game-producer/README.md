@@ -1,0 +1,136 @@
+# Parallel Game Producer and Pitch Architect
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Plan parallel work against actual capacity, reconcile ticket rows and turn verified project evidence into a local pitch deck draft. The owner gets a local wave plan, dependency exceptions, a ledger rollup, a go or hold recommendation and a slide-by-slide pitch draft.
+
+The short name is Producer (12). It works for any team and any game: a solo developer splitting their own week between code and art, a small studio with a few roles, or a larger team. The game can be a puzzle game, a platformer, a strategy game, a racing game, a narrative adventure or anything else; the producer reads tasks, tickets, gate results and approved facts, not genre.
+
+[Install and run](HOW-TO-USE.md) | [Prompts](PROMPTS.md) | [Frozen rubric](RUBRIC.md)
+
+Rubric: `gbf-12-parallel-game-producer` v2.0.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+Run these in this folder (Node 18 or later):
+
+```sh
+node engine/plan.mjs fixtures/project.json --plan     # waves, ledger rollup and go or hold decision (JSON)
+node engine/plan.mjs fixtures/project.json --deck     # the six-slide local pitch draft (Markdown)
+node engine/plan.mjs fixtures/project.json --pack     # the evidence pack the engine grades
+node engine/lens.mjs fixtures/good-pack.json          # grade the synthetic pack: PASS, 100
+node engine/lens.mjs --meta                           # every line, its fields and profile values
+node tests/lens-negative-fixtures.mjs                 # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                     # rubric, recipe embed and text checks
+```
+
+To rebuild the installed recipe after editing a skill, memory fact or routine, run `node scripts/build-recipe.mjs templates/12-parallel-game-producer` from the repository root.
+
+## Words used here
+
+- **Project file (`project.json`):** one local snapshot of the milestone: tasks, run receipts, tickets, gates, risks, approved facts, slides and the deck review. The planner (`engine/plan.mjs`) reads it and writes nothing but standard output.
+- **Wave:** a group of tasks that can run at the same time. A task joins a wave only when everything it needs has finished and it shares no locked resource with another task in that wave.
+- **Role:** an anonymous label for who does the work (`design`, `art`, `capture`, `producer`). Never a person's name.
+- **Lock:** an exclusive resource key, such as a level file, a rules sheet or a build machine, that only one task may change at a time. A role is also a lock: one role cannot do two tasks in the same wave.
+- **Run receipt:** the record that a task actually ran: its wave, its source, both build ids, whether it passed and, optionally, when it expires (`expiresAtTick`, compared with the snapshot's `reviewTick`; a tick is any counter the team agrees on, such as a day or sprint number).
+- **Ledger:** the ticket rows from your tracker export. Totals are always derived from the rows, never copied from a brief.
+- **Gate:** a check that must pass before the go or hold decision, for example another template's grade record or a playable build check.
+- **Fact and slide:** a fact is an owner-approved sentence with a source, marked `observed` or `proposal`. A slide claim must equal its fact word for word.
+- **Deck review:** a reviewer's sign-off, per topic, on one exact version of the slides. The planner prints a digest (a fingerprint) of the slide content, audience and ask; editing any slide changes it and voids the old review.
+- **Evidence pack, game profile, U and NOT_RUN:** the pack is the JSON the engine grades; the profile (`pack.profile`) holds the owner's settings; U means no usable evidence (0 points, not a defect); NOT_RUN means a planned run did not happen.
+- **gitSha and liveSha:** the source revision you are reviewing, and the build players or testers actually run.
+
+## How the engine decides a level
+
+For each line the engine takes the rows in its sample group, checks each row against the line's condition and divides the cases that met it by all observed cases. Then 0 when no case met it; 1 below `bands.floor`; 2 at or above the floor, below `bands.pass`; 3 at or above the pass share, below `bands.target`; 4 at or above the target. Example (illustrative bands 0.5, 0.75 and 1): 3 of 4 tasks with acceptance evidence is level 3.
+
+A row the planner cannot decide (for example a task with no current run receipt) makes its line U. A measured failure stays in the share. A consumer that ran before its predecessor passed, two tasks in one wave holding the same lock, a failed required gate, or an open P0 ticket sets the grade to 0 (BLOCKED). Read the grade with its supported points and its interval (the lowest and highest grade the U lines allow).
+
+## Evidence contract
+
+Supply an owner-approved ledger export, task graph, time and capacity estimates, discipline receipts, approved pitch facts and a reviewed local deck, all in one project file. Build the pack with `node engine/plan.mjs project.json --pack`. The lens compares counts; only the planner derives them from ticket rows.
+
+Copy the structure of [the synthetic project](fixtures/project.json) and replace its profile, build ids and rows with your own. Set `synthetic` to false only for your own project. Use anonymous role labels and stable local task and ticket keys. Every run, gate, verification and review row must carry the pack's `gitSha` and `liveSha`, the profile `scope` and a non-empty `source`; a row from another build or scope is not current and leaves its case unmeasured. Each receipt in the pack pins `milestone`, `audience` and `ask` from the profile in its `context`.
+
+| Line | Group (evidence) | Row fields | The planner derives it from | Meets the condition when |
+|---|---|---|---|---|
+| `milestone:1` Milestone work has acceptance evidence | `scope` (static) | `{caseId, testable}` | Each task's `role`, `accept` and `proof`, and its current run receipt | role, done condition and proof are written and the task's current run cites `proof` as its `source` |
+| `milestone:2` Role load fits wave capacity | `capacity` (config) | `{caseId, role, hours}` | Task `hours` summed per role and observed wave | `hours` is at most `profile.hoursByRole[role]` |
+| `workstreams:1` Predecessor receipts precede handoff | `dependency` (trace) | `{caseId, ready}` | Each edge from a predecessor to its consumer, with both run receipts | the predecessor passed, has not expired and ran in an earlier wave. A miss is a release blocker. |
+| `workstreams:2` Parallel tasks respect exclusive locks | `locks` (trace) | `{caseId, conflictFree}` | Observed waves and each task's `role` and `locks` | no other task in the same wave shares a lock or role. A clash is a release blocker. |
+| `ledger:1` Backlog counts reconcile to ticket rows | `counts` (static) | `{caseId, derived, reported}` | Open ticket rows per severity, and `reportedCounts` from the brief | `derived` equals `reported` |
+| `ledger:2` Closure has independent live verification | `closure` (trace) | `{caseId, verified}` | Each closed ticket's `sourceFix`, `verification` and `configState` | a source fix, a current passing verification by a different role, and config `verified` or `unneeded` |
+| `release-decision:1` Required discipline gates pass | `gate` (trace) | `{caseId, passed}` | Each id in `profile.requiredGates` and its current gate row | `passed` is true. A measured failure is a release blocker. |
+| `release-decision:2` Risks have owned decision paths | `risk` (static) | `{caseId, actionable}` | Each risk's `role`, `trigger`, `fallback` and `decision` | all four are written |
+| `pitch:1` Pitch claims trace to approved facts | `claims` (static) | `{caseId, grounded}` | Each required topic's slide and its fact | the fact is approved, has a source, is `observed` or `proposal`, and the slide claim equals it |
+| `pitch:2` Deck covers the reviewed decision | `review` (capture) | `{caseId, reviewed}` | `deckReview` for the current slide digest | the reviewer approved that topic on this digest, the claim is grounded and the slide has a speaker note |
+
+The planner also counts `openP0`: every open P0 ticket, plus every closed P0 ticket without a verified closure.
+
+## The project file
+
+- **Top level:** `synthetic`, `packId`, `gitSha`, `liveSha`, `profile`, `snapshot`, and for a real project `artifactFiles` and `producerReceipt` (see "First real pack" in [HOW-TO-USE.md](HOW-TO-USE.md)).
+- **`profile`:** `scope`, `bands`, `milestone`, `audience`, `ask`, `hoursByRole`, `firstTask` (the evidence capture every task waits for), `decisionTask` (the final go or hold, which waits for every task), `severities` (must include `P0`), `requiredGates` and `requiredTopics` (the slide topics).
+- **`snapshot`:** `gitSha`, `liveSha`, `scope`, `source`, `reviewTick`, then `tasks`, `runs`, `tickets`, `reportedCounts`, `gates`, `risks`, `facts`, `slides` and `deckReview`. The [synthetic project](fixtures/project.json) shows every field.
+
+## Adapt to your game
+
+Choose the milestone, the gates and the ask that fit your game. Examples (illustrative):
+
+- **Mobile puzzle game:** milestone "first 30 levels playable"; gates: the Game Loop Alchemist (05) grade record for the opening and the HUD Designer (09) grade record for touch targets; ask "approve the soft-launch art pass".
+- **2D platformer:** milestone "world 1 vertical slice"; gate: the Game Feel (01) grade record; ask "approve world 2".
+- **Turn-based strategy game:** milestone "skirmish mode"; gates: Economy Director (06) and no open P0 in Bug Desk (18); ask "add a short campaign".
+- **Racing game:** milestone "three tracks with time trials"; gates: Game Feel (01) and Access, Input and Localization (21); ask "add online races".
+- **Narrative adventure:** milestone "chapter one with voice"; gates: Living AI NPC and Lore (14), Audio Director (13) and Access, Input and Localization (21); ask "fund chapter two".
+- **Management sim (the worked example):** milestone "one playable shift"; ask "authorize a second shift prototype".
+
+A solo developer can use roles such as `code` and `art` with their own weekly hours. A team without a tracker can keep tickets in a spreadsheet; export it to the ticket row shape.
+
+## Owner decisions
+
+- The milestone, its audience and the decision requested (the ask).
+- Which claims are approved for the pitch, and which work is cut if the ask is declined.
+- Each role's hours per wave (`hoursByRole`) and which resources are locked.
+- The required gates, and the build every receipt must match.
+- The bands.
+
+## Worked example
+
+Synthetic management simulation: one shift is playable. A capture task comes first, a design model and a cue review run in parallel in the second wave, and the producer decision closes the third. The ledger has two open tickets and one verified closure. The proposed second shift appears in the scope and ask slides as a proposal. Grade 100, verdict PASS.
+
+- [fixtures/project.json](fixtures/project.json): the standalone project.
+- [fixtures/good-pack.json](fixtures/good-pack.json): the pack the planner builds from it.
+- [fixtures/pitch-draft.md](fixtures/pitch-draft.md): the six-slide local pitch draft it renders.
+
+## Team handoffs
+
+Files are exchanged locally under `.grokbot-team/artifacts/<artifact-id>/` in your game project. Nothing is sent anywhere.
+
+| Artifact | Direction | Required | Other end | If it is missing |
+|---|---|---|---|---|
+| `game-profile` | consumes | required | The owner, via the getting-started skill | Run the getting-started skill first |
+| `tracker-export` | consumes | required | The owner's tracker | `ledger:1` and `ledger:2` stay U; ask for a read-only export |
+| `ticket-draft` | consumes | optional | Bug Desk (18); P0 drafts also from Streamer and Patch Notes (20), Access, Input and Localization (21) and Live Service Trust (22) | Use the tracker export alone; ask the owner about known P0s |
+| `grade-record` | consumes | optional | Any other template, used as a required gate | That gate stays unmeasured and the decision holds |
+| `work-plan` | produces | required | The owner; Streamer and Patch Notes (20) | The owner plans from the tracker alone; patch notes are written without the release plan |
+| `pitch-draft` | produces | optional | The owner; after human review, Trailer Director (10) and Store Page and Presskit Director (19) | They draft their copy from their own approved facts |
+| `grade-record` | produces | required | The owner | Nothing to compare at the next milestone; run the planner and engine again |
+
+The wave plan, ledger rollup and go or hold recommendation are saved as a local `work-plan`, and the slides as a local `pitch-draft`. Both are drafts for the owner. Only claims the owner approved after review should reach Trailer Director (10) or Store Page and Presskit Director (19).
+
+## Known limits
+
+- `release-decision:2` checks that each risk names a role, trigger, fallback and decision point; it does not judge whether the fallback is realistic. Review that by hand.
+- One observed case can earn level 4 on a line. Read lines backed by one or two tasks or tickets as thin evidence.
+- Needs your own project snapshot; the worked example is synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `-lens-engine` skill carries the engine source; the `parallel-handoffs` skill carries the planner and the example project.
+- `engine/plan.mjs`: the planner (no dependencies, Node 18+). `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine. `engine/team-memory.mjs`: the shared team memory helper.
+- `fixtures/project.json`, `fixtures/good-pack.json`, `fixtures/pitch-draft.md`: the worked example. `fixtures/mutations.json`: negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.
+
+[MIT license](../../LICENSE).

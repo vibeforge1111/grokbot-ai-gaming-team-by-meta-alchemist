@@ -1,0 +1,39 @@
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Validate templates against the spec
+        run: node scripts/validate.mjs
+      - name: Scrub check (public safety)
+        run: node scripts/scrub-check.mjs
+      - name: Local links resolve
+        run: node scripts/check-links.mjs
+      - name: Team map is up to date
+        run: node scripts/build-team.mjs --check
+      - name: Compatibility of every exchanging pair (fails on BREAK)
+        run: node scripts/compat-check.mjs
+      - name: Tests
+        run: node --test tests/*.test.mjs
+      - name: Per template engine tests
+        run: |
+          for d in templates/*/ starter/*/; do
+            [ -f "$d/template.json" ] || continue
+            (cd "$d" && node tests/test-lens-contract.mjs && node tests/lens-negative-fixtures.mjs) || exit 1
+          done
+      - name: Catalog is up to date
+        run: |
+          node scripts/build-catalog.mjs
+          git diff --exit-code TEMPLATES.md

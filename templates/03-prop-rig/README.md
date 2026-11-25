@@ -1,0 +1,104 @@
+# Prop & Rig Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Build and optimize props and rigs for your runtime. Compare their appearance, animation and collision shapes with your art and performance targets.
+
+A prop is any modelled object in the game world: furniture, vehicles, plants, tools, creatures, buildings, doors or held items. A rig is the set of joints that lets it animate. The template works with any 3D pipeline (Unity, Unreal, Godot, Blender export, Three.js and others); the bot asks which one you use before giving setup steps. For flat 2D sprites, use template 17 (2D Sprite Atlas & Hitbox Packer).
+
+Rubric: `gbf-03-procedural-rig-crafter` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks (one measured row per agreed test case, stored under `pack.receipts`) have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population (the list of measured cases) required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `silhouette:1` | Readable silhouettes at the gameplay camera | computed | `silhouette.viewports`, `silhouette.minContrast`, `silhouette.minHeightPx`, `silhouette.unreadableMembers` | silhouette.viewports covers P.viewports; silhouette.minContrast >= P.minSilhouetteContrast; silhouette.minHeightPx >= P.minSilhouettePx; silhouette.unreadableMembers == 0 |
+| `silhouette:2` | Held or attached prop silhouette at extreme poses | computed | `attachedPropSilhouette.extremesChecked`, `attachedPropSilhouette.unreadableAtExtremes` | attachedPropSilhouette.extremesChecked covers P.requiredExtremes; attachedPropSilhouette.unreadableAtExtremes == 0 |
+| `animation-and-weapon-clearance:1` | Clip capture of extreme poses | computed | `clearance.penetrationCm`, `clearance.posesChecked`, `receipts.poseSweep` | `max(clearance.penetrationCm) <= P.maxPenetrationCm`, `clearance.posesChecked >= P.minimumPoses`, approved receipt cases pass |
+| `animation-and-weapon-clearance:2` | Grounding on slopes | computed | `grounding.footGapCm`, `grounding.slopeDegTested`, `receipts.slopeContacts` | `max(grounding.footGapCm) <= P.maxFootGapCm`, `grounding.slopeDegTested covers P.requiredSlopesDeg`, approved receipt cases pass |
+| `collider-agreement:1` | Visible shape vs collision shape overlay | computed | `colliders.iou`, `receipts.colliderViews` | `min(colliders.iou) >= P.minColliderIoU`, approved receipt cases pass |
+| `collider-agreement:2` | Floor probe cost | computed | `probe.msPerFrame`, `probe.allocBytesPerFrame` | p95(probe.msPerFrame) <= P.floorProbeBudgetMs; probe.allocBytesPerFrame == 0 |
+| `scene-budget:1` | Full-scene draw and CPU cost | computed | `scene.frameMs`, `scene.drawCalls` | p95(scene.frameMs) <= P.frameP95BudgetMs; scene.drawCalls <= P.maxDrawCalls |
+| `scene-budget:2` | LOD transitions | computed | `lod.swapsPerSecondMax`, `lod.popEventsAtGameplayDistance` | lod.swapsPerSecondMax <= P.maxLodSwapsPerSecond; lod.popEventsAtGameplayDistance == 0 |
+| `visual-consistency:1` | One current art reference | computed | `artRef.paletteDeltaE`, `artRef.scaleRefMismatch`, `artRef.referenceVersion` | max(artRef.paletteDeltaE) <= P.maxPaletteDeltaE; artRef.scaleRefMismatch == 0; artRef.referenceVersion is nonEmpty |
+| `visual-consistency:2` | Reproducible variation | computed | `variation.sameSeedHashes`, `receipts.seedRuns` | `allEq(variation.sameSeedHashes) true `, approved receipt cases pass |
+
+## Growth checks (reported beside the grade, not scored)
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `animation-foot-slide` | animation | `animation.clipsWithFootSlide` | animation.clipsWithFootSlide == 0 |
+
+## Adapt to your game
+
+Use this template when your project has 3D assets. The engine only reads numbers from the pack, so any pipeline works. Tell the bot which one you use first; it then uses only the matching row. These are examples, not requirements:
+
+| Pipeline | Parent node for a prop | Show collision shapes | Levels of detail and compression | Measure frame cost |
+|---|---|---|---|---|
+| Unity | prefab with child GameObjects | Physics Debugger window or Gizmos | LOD Group, Mesh Compression import setting | Profiler, Frame Debugger |
+| Unreal | Blueprint actor or Static Mesh with sockets | `show collision` | Static Mesh LOD settings, Nanite where supported | Unreal Insights, `stat unit` |
+| Godot | scene with a Node3D root | Debug, Visible Collision Shapes | LOD generation on import | Profiler and Monitors |
+| Blender export (FBX or glTF) | Empty parent with child objects | collision meshes named for your engine's import rules (for example a `UCX_` prefix for Unreal or a `-col` suffix for Godot) | Decimate modifier on a copy | measured in the target engine |
+| Three.js with glTF | `THREE.Group` | wireframe helper over the mesh | glTF Transform `simplify`, then `draco` or `meshopt` if the decoder ships | `renderer.info`, browser performance trace |
+
+- Export collider IoU (intersection over union, how well the collision shape overlaps the visible shape), penetration depth and foot gap from your editor script or test scene into the pack metrics. The floor probe in `collider-agreement:2` is the ray or shape cast that finds the ground under a character or prop each frame.
+- Record the current art reference version and palette deltaE (colour distance) per asset group.
+- Some line names say "weapon" or "equipped", and the metric group is called `attachedPropSilhouette`. They cover any held or attached prop: a tool, a lantern, a fishing rod, a backpack, a saddle or a weapon.
+- A game on flat ground can set `requiredSlopesDeg` to `[0]`.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+### Lines that may not apply
+
+One approved profile in `RUBRIC.json` covers props that never move. The owner approves it before scoring and sets it in the game profile, `"rubricProfile": ["static-props"]` in `pack.profile`:
+
+| Profile | Use when | Lines that read N/A | Lines that take each pillar's 20 points | Groups you can leave out |
+|---|---|---|---|---|
+| `static-props` | Props are never held, attached or animated through extreme poses | `silhouette:2`, `animation-and-weapon-clearance:1` | `silhouette:1`, `animation-and-weapon-clearance:2` | `attachedPropSilhouette`, `clearance` and `receipts.poseSweep` |
+
+An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can be PASS. Name the profile next to the grade.
+
+The other lines have no profile. A line you cannot measure stays U (0 points, lower coverage, never a defect) and the verdict stays CONDITIONAL. Say so in the report, and never fill a line with made-up values.
+
+## Decisions only you make
+
+- How closely must collision shapes match the visible model (`minColliderIoU`), and how deep may an attached part pass into the body (`maxPenetrationCm`)?
+- Which art reference is current?
+- Do any props attach to an animated character or move through extreme poses? If none do, approve the `static-props` profile before scoring.
+
+## Blockers
+
+- Silhouette and palette numbers need captures from your gameplay camera; the worked example is synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

@@ -1,0 +1,335 @@
+{
+  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+  "cases": [
+    {
+      "id": "privacy-in:1#empty-privacy.measuredCases",
+      "line": "privacy-in:1",
+      "expect": "U",
+      "set": {
+        "metrics.privacy.measuredCases": 0
+      }
+    },
+    {
+      "id": "privacy-in:1#neg1",
+      "line": "privacy-in:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.privacy.piiAccepted": 3
+      }
+    },
+    {
+      "id": "privacy-in:1#neg2",
+      "line": "privacy-in:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.privacy.plantedRejected": false
+      }
+    },
+    {
+      "id": "privacy-in:1#missing",
+      "line": "privacy-in:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.privacy.piiAccepted"
+      ]
+    },
+    {
+      "id": "privacy-in:2#empty-output.measuredCases",
+      "line": "privacy-in:2",
+      "expect": "U",
+      "set": {
+        "metrics.output.measuredCases": 0
+      }
+    },
+    {
+      "id": "privacy-in:2#neg1",
+      "line": "privacy-in:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.output.idsInOutputs": 4
+      }
+    },
+    {
+      "id": "privacy-in:2#neg2",
+      "line": "privacy-in:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.output.smallCellsShown": 1
+      }
+    },
+    {
+      "id": "privacy-in:2#missing",
+      "line": "privacy-in:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.output.idsInOutputs"
+      ]
+    },
+    {
+      "id": "correctness:1#empty-math.cohorts",
+      "line": "correctness:1",
+      "expect": "U",
+      "set": {
+        "metrics.math.cohorts": 0
+      }
+    },
+    {
+      "id": "correctness:1#neg1",
+      "line": "correctness:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.math.oracleMismatches": 1
+      }
+    },
+    {
+      "id": "correctness:1#neg2",
+      "line": "correctness:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.math.cohorts": 1
+      }
+    },
+    {
+      "id": "correctness:1#missing",
+      "line": "correctness:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.math.oracleMismatches"
+      ]
+    },
+    {
+      "id": "correctness:2#empty-math.cohorts",
+      "line": "correctness:2",
+      "expect": "U",
+      "set": {
+        "metrics.math.cohorts": 0
+      }
+    },
+    {
+      "id": "correctness:2#neg1",
+      "line": "correctness:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.math.immatureCounted": 40
+      }
+    },
+    {
+      "id": "correctness:2#missing",
+      "line": "correctness:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.math.immatureCounted"
+      ]
+    },
+    {
+      "id": "confidence:1#empty-conf.rates",
+      "line": "confidence:1",
+      "expect": "U",
+      "set": {
+        "metrics.conf.rates": 0
+      }
+    },
+    {
+      "id": "confidence:1#neg1",
+      "line": "confidence:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.conf.ratesWithInterval": 2
+      }
+    },
+    {
+      "id": "confidence:1#missing",
+      "line": "confidence:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.conf.ratesWithInterval"
+      ]
+    },
+    {
+      "id": "confidence:2#empty-data.players",
+      "line": "confidence:2",
+      "expect": "U",
+      "set": {
+        "metrics.data.players": 0
+      }
+    },
+    {
+      "id": "confidence:2#empty-data.daysCovered",
+      "line": "confidence:2",
+      "expect": "U",
+      "set": {
+        "metrics.data.daysCovered": 0
+      }
+    },
+    {
+      "id": "confidence:2#neg1",
+      "line": "confidence:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.data.players": 40
+      }
+    },
+    {
+      "id": "confidence:2#neg2",
+      "line": "confidence:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.data.daysCovered": 5
+      }
+    },
+    {
+      "id": "confidence:2#missing",
+      "line": "confidence:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.data.players"
+      ]
+    },
+    {
+      "id": "retention:1#empty-ret.measuredCases",
+      "line": "retention:1",
+      "expect": "U",
+      "set": {
+        "metrics.ret.measuredCases": 0
+      }
+    },
+    {
+      "id": "retention:1#neg1",
+      "line": "retention:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.ret.d1": 0.1
+      }
+    },
+    {
+      "id": "retention:1#neg2",
+      "line": "retention:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.ret.d7": 0.02
+      }
+    },
+    {
+      "id": "retention:1#missing",
+      "line": "retention:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.ret.d1"
+      ]
+    },
+    {
+      "id": "retention:2#empty-ret30.measuredCases",
+      "line": "retention:2",
+      "expect": "U",
+      "set": {
+        "metrics.ret30.measuredCases": 0
+      }
+    },
+    {
+      "id": "retention:2#neg1",
+      "line": "retention:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.ret30.d30": 0.005
+      }
+    },
+    {
+      "id": "retention:2#missing",
+      "line": "retention:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.ret30.d30"
+      ]
+    },
+    {
+      "id": "reporting:1#empty-authority.forbiddenAttempted",
+      "line": "reporting:1",
+      "expect": "U",
+      "set": {
+        "metrics.authority.forbiddenAttempted": 0
+      }
+    },
+    {
+      "id": "reporting:1#empty-output.measuredCases",
+      "line": "reporting:1",
+      "expect": "U",
+      "set": {
+        "metrics.output.measuredCases": 0
+      }
+    },
+    {
+      "id": "reporting:1#neg1",
+      "line": "reporting:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.authority.forbiddenSucceeded": 1
+      }
+    },
+    {
+      "id": "reporting:1#neg2",
+      "line": "reporting:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.authority.writes": 1
+      }
+    },
+    {
+      "id": "reporting:1#missing",
+      "line": "reporting:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.authority.forbiddenSucceeded"
+      ]
+    },
+    {
+      "id": "reporting:2#empty-segments.compared",
+      "line": "reporting:2",
+      "expect": "U",
+      "set": {
+        "metrics.segments.compared": 0
+      }
+    },
+    {
+      "id": "reporting:2#neg1",
+      "line": "reporting:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.segments.compared": 1
+      }
+    },
+    {
+      "id": "reporting:2#missing",
+      "line": "reporting:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.segments.compared"
+      ]
+    }
+  ]
+}

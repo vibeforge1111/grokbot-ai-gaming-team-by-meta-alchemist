@@ -1,0 +1,185 @@
+{
+ "templateId": "gbf-09-hud-ui-designer",
+ "rubricVersion": "1.2.0",
+ "rubricHash": "sha256:be3ed5b4badfd5254011e55efeab926074c12e8af7803501fae1944466f90f8d",
+ "engine": {
+  "kit": "1.3.0",
+  "lens": "1.1.0"
+ },
+ "evidenceNote": "Synthetic examples use declared artifacts. For a real pack the engine checks local artifact bytes and the producer receipt. Measurements and producer identity still require owner review.",
+ "packId": "pixel-pantry-09-0.3.1",
+ "gitSha": "pp-031-git",
+ "liveSha": "pp-031-live",
+ "synthetic": true,
+ "applicable": true,
+ "lines": [
+  {
+   "id": "information-priority:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-priority"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "information-priority:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-strings"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "readable-combat-states:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-contrast",
+    "sample-elementContrast-text-0",
+    "sample-elementContrast-text-1",
+    "sample-elementContrast-text-2",
+    "sample-elementContrast-text-3",
+    "sample-elementContrast-graphic-0",
+    "sample-elementContrast-graphic-1",
+    "sample-elementContrast-graphic-2",
+    "sample-elementContrast-graphic-3",
+    "sample-elementContrast-focus-0",
+    "sample-elementContrast-focus-1",
+    "sample-elementContrast-focus-2",
+    "sample-elementContrast-focus-3"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "readable-combat-states:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-cvd"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "operability:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-focus",
+    "sample-actionBounds-keyboard-select-desktop-1280",
+    "sample-actionBounds-keyboard-select-phone-portrait",
+    "sample-actionBounds-keyboard-select-phone-landscape",
+    "sample-actionBounds-pad-select-desktop-1280",
+    "sample-actionBounds-pad-select-phone-portrait",
+    "sample-actionBounds-pad-select-phone-landscape",
+    "sample-actionBounds-touch-select-desktop-1280",
+    "sample-actionBounds-touch-select-phone-portrait",
+    "sample-actionBounds-touch-select-phone-landscape",
+    "sample-actionBounds-keyboard-dismiss-desktop-1280",
+    "sample-actionBounds-keyboard-dismiss-phone-portrait",
+    "sample-actionBounds-keyboard-dismiss-phone-landscape",
+    "sample-actionBounds-pad-dismiss-desktop-1280",
+    "sample-actionBounds-pad-dismiss-phone-portrait",
+    "sample-actionBounds-pad-dismiss-phone-landscape",
+    "sample-actionBounds-touch-dismiss-desktop-1280",
+    "sample-actionBounds-touch-dismiss-phone-portrait",
+    "sample-actionBounds-touch-dismiss-phone-landscape"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "operability:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-touch"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "responsive-behaviour:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-text"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "responsive-behaviour:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-orientation"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "measured-ui-cost:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-uiCost"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "measured-ui-cost:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-expansion"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  }
+ ],
+ "supportedPoints": 100,
+ "coverage": 1,
+ "grade": 100,
+ "verdict": "PASS",
+ "interval": {
+  "low": 100,
+  "high": 100,
+  "note": "low treats UNMEASURED as 0, high as full credit"
+ },
+ "checks": [
+  {
+   "id": "hud-chrome-coverage",
+   "areas": [
+    "hud-clarity"
+   ],
+   "pass": true,
+   "level": 4,
+   "evidenceIds": [
+    "art-hudChrome"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "optional-retry",
+   "areas": [
+    "navigation"
+   ],
+   "pass": true,
+   "level": 4,
+   "evidenceIds": [
+    "art-focus"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  }
+ ],
+ "tickets": []
+}

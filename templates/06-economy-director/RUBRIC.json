@@ -1,0 +1,452 @@
+{
+  "id": "gbf-06-game-economy-director",
+  "version": "1.3.0",
+  "migration": "1.0.0 to 1.1.0: anchors made game-agnostic (constants live in the game profile), lens gates added; ids, weights and passAt unchanged; 1.1.0 to 1.1.1: gameProfile generalized to your-game-profile for the public kit and hash recomputed with the documented kit algorithm (spec/RUBRIC_HASH.md); ids, weights, anchors and passAt unchanged; 1.1.1 to 1.1.2: Clarified the public rubric wording and evidence descriptions. Scoring rules and pack fields are unchanged. 1.1.2 to 1.1.3: Evidence descriptions and fixture working directories now refer to the distributed kit. 1.1.3 to 1.1.4: Empty samples and zero case counts earn U. Computed lines require the declared evidence type. 1.1.4 to 1.1.5: Adds model selection, seeded storage comparison and isolated entitlement drill receipts. 1.1.5 to 1.2.0: Line, pillar and anchor wording made genre-neutral (ids, weights, conditions and pass marks unchanged); adds owner-selected not-applicable profiles no-combat, no-store. 1.2.0 to 1.3.0: Evidence pack names made genre-neutral (perWeaponP50S to perAttackP50S; maxFocusFireErrS to maxMultiAttackerErrS; focusFire to multiAttacker; ttkBandS to timeToDefeatBandS; maxLootIntervalWidth to maxRewardIntervalWidth; maxTierDays to maxProgressStepDays; tierDaysEstimate to stepDaysEstimate; minF2pShareOfPaid to minFreeShareOfPaid; freeItemsPerSeason to freeItemsPerPeriod; paidItemsPerSeason to paidItemsPerPeriod; passEdge to paidEdge; passItems to paidOfferItems; pass-paid-edge to paid-advantage; ttk to timeToDefeat; loot to randomRewards; f2p to freeVsPaid). Scoring, weights, conditions and pass marks unchanged; rename these fields in packs made for 1.2.0.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "pillars": [
+    {
+      "id": "combat-balance",
+      "name": "Combat balance",
+      "points": 20
+    },
+    {
+      "id": "loot-access",
+      "name": "Rewards and goal access",
+      "points": 20
+    },
+    {
+      "id": "progression",
+      "name": "Progression",
+      "points": 20
+    },
+    {
+      "id": "reward-fairness",
+      "name": "Reward fairness",
+      "points": 20
+    },
+    {
+      "id": "entitlement-consistency",
+      "name": "Entitlement consistency",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "combat-balance:1",
+      "pillar": "Combat balance",
+      "name": "Time to defeat a target (only with combat)",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Time to defeat estimated from averages, or with an attacker multiplier the game does not use",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Per-weapon or per-attack time-to-defeat distributions simulated from the build's definitions, labelled simulated, checked against recorded fights",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line combat-balance:1",
+        "cwd": "templates/06-economy-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "combat-balance:2",
+      "pillar": "Combat balance",
+      "name": "Multi-attacker damage follows the build's rules",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A damping factor or multiplier the game does not have is used",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Multi-attacker examples follow the implemented cadence and hit model (no damper the game does not have). All approved `modelInputs` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line combat-balance:2",
+        "cwd": "templates/06-economy-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "modelInputs",
+          "description": "Link the versioned build configuration and an independently recorded timing trace. Export effective post-rounding damage and timestamps for each staggered contribution.",
+          "fields": {
+            "config": "artifact:config",
+            "timingTrace": "artifact:trace",
+            "seed": "text",
+            "rounding": "text",
+            "cadence": "text",
+            "reload": "text",
+            "routing": "text"
+          },
+          "tests": [
+            [
+              "routing",
+              "==",
+              "case.routing",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loot-access:1",
+      "pillar": "Rewards and goal access",
+      "name": "Random reward rates reported with intervals",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Random reward rates claimed without intervals",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Reward rates from the reward table source are reported with probability intervals",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line loot-access:1",
+        "cwd": "templates/06-economy-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "loot-access:2",
+      "pillar": "Rewards and goal access",
+      "name": "No unreachable required path",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A required path is unreachable",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "No required progression path becomes unreachable",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line loot-access:2",
+        "cwd": "templates/06-economy-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "progression:1",
+      "pillar": "Progression",
+      "name": "Time to the next progression step states its assumptions",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Completion time claimed without assumptions",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Estimates of time to the next progression step state daily play and success assumptions. Every approved simulationRun case passes.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line progression:1",
+        "cwd": "templates/06-economy-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      },
+      "receipts": [
+        {
+          "name": "simulationRun",
+          "description": "Save the seeded cohort, action schedule, horizon and model inputs with replicate count and estimated interval.",
+          "fields": {
+            "cohort": "text",
+            "seed": "text",
+            "horizon": "positive",
+            "repetitions": "positive",
+            "config": "artifact:config",
+            "lowDays": "number",
+            "estimateDays": "number",
+            "highDays": "number"
+          },
+          "tests": [
+            [
+              "lowDays",
+              "<=",
+              "row.estimateDays",
+              1
+            ],
+            [
+              "highDays",
+              ">=",
+              "row.estimateDays",
+              1
+            ],
+            [
+              "estimateDays",
+              "<=",
+              "profile.maxProgressStepDays",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "progression:2",
+      "pillar": "Progression",
+      "name": "Progress consistency across save paths",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Save paths disagree",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each supported save path counts progress identically. All approved `storageReplay` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line progression:2",
+        "cwd": "templates/06-economy-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "storageReplay",
+          "description": "Replay the same seeded operation sequence using each approved storage path and compare authoritative terminal state.",
+          "fields": {
+            "path": "text",
+            "seed": "text",
+            "operationDigest": "sha256",
+            "stateDigest": "sha256"
+          },
+          "tests": [
+            [
+              "path",
+              "==",
+              "case.path",
+              1
+            ],
+            [
+              "seed",
+              "==",
+              "case.seed",
+              1
+            ],
+            [
+              "operationDigest",
+              "==",
+              "case.operationDigest",
+              1
+            ],
+            [
+              "stateDigest",
+              "==",
+              "case.stateDigest",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reward-fairness:1",
+      "pillar": "Reward fairness",
+      "name": "Idempotent reward counting",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A retry double-counts or drops a reward",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Reward counting stays idempotent on every supported save path under retry",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reward-fairness:1",
+        "cwd": "templates/06-economy-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "reward-fairness:2",
+      "pillar": "Reward fairness",
+      "name": "Free and paid paths compared (only if the game sells something)",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Paid advantage claimed or denied without data",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Free and paid paths are compared with stated assumptions",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reward-fairness:2",
+        "cwd": "templates/06-economy-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "entitlement-consistency:1",
+      "pillar": "Entitlement consistency",
+      "name": "Payment safety fails closed",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "An isolated entitlement drill produces an authoritative quantity different from the expected quantity.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Failure-path tests prove a failed or duplicate payment never grants or loses an item; without them this line fails closed. All approved `entitlementDrills` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line entitlement-consistency:1",
+        "cwd": "templates/06-economy-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "entitlementDrills",
+          "description": "Use owner-run isolated cases. Compare authoritative state with expected post-retry and post-rollback quantities.",
+          "fields": {
+            "isolated": "bool",
+            "expected": "count",
+            "observed": "count",
+            "snapshot": "artifact:trace"
+          },
+          "tests": [
+            [
+              "isolated",
+              "==",
+              true,
+              1
+            ],
+            [
+              "observed",
+              "==",
+              "row.expected",
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "entitlement-consistency:2",
+      "pillar": "Entitlement consistency",
+      "name": "Displayed vs authoritative balance",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Displayed balance diverges from server state",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Displayed balances match server state after every operation",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line entitlement-consistency:2",
+        "cwd": "templates/06-economy-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "source": "Resource definitions, session logs, simulated distributions and reconciliation tests from your game.",
+  "hash": "sha256:3b51548e25131d097b6fde7b4a445d5b9cc1a0a531da214e9d22dc03e13d36aa",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty inputs or zero measured cases earn U and zero points. A measured zero failures is valid.",
+  "sampleFields": {
+    "timeToDefeat": [
+      "perAttackP50S"
+    ],
+    "multiAttacker": [
+      "examples"
+    ],
+    "randomRewards": [
+      "drops"
+    ],
+    "reachability": [
+      "requiredPaths"
+    ],
+    "progression": [
+      "assumptionsStated"
+    ],
+    "storage": [
+      "pathACounts"
+    ],
+    "rewards": [
+      "retriesSimulated"
+    ],
+    "freeVsPaid": [
+      "paidItemsPerPeriod"
+    ],
+    "payments": [
+      "failurePathTests"
+    ],
+    "balance": [
+      "operations"
+    ],
+    "storePricing": [
+      "items"
+    ],
+    "paidEdge": [
+      "paidOfferItems",
+      "reviewedItems"
+    ]
+  },
+  "profiles": {
+    "no-combat": {
+      "reason": "The game has no combat; its 20 points are shared over the other lines. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "combat-balance:1": 0,
+        "combat-balance:2": 0,
+        "loot-access:1": 12.5,
+        "loot-access:2": 12.5,
+        "progression:1": 12.5,
+        "progression:2": 12.5,
+        "reward-fairness:1": 12.5,
+        "reward-fairness:2": 12.5,
+        "entitlement-consistency:1": 12.5,
+        "entitlement-consistency:2": 12.5
+      }
+    },
+    "no-store": {
+      "reason": "The game sells nothing (no paid items, currency or access). Select only after the owner approves it, before scoring.",
+      "weights": {
+        "reward-fairness:1": 20,
+        "reward-fairness:2": 0,
+        "entitlement-consistency:1": 0,
+        "entitlement-consistency:2": 20
+      }
+    }
+  }
+}

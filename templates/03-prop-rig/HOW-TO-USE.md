@@ -1,0 +1,120 @@
+# How to use: Prop & Rig Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Build and optimize props and rigs for your runtime. Compare their appearance, animation and collision shapes with your art and performance targets.
+
+- **Pipeline stage:** Production
+- **When:** When you add or replace 3D props, characters or vehicles: furniture, plants, tools, creatures, buildings, held items and similar.
+- **Works with:** any 3D pipeline, for example Unity, Unreal, Godot, Blender export (FBX or glTF) or Three.js. The bot asks which one you use before giving setup steps.
+- **You provide:** Reference images or source assets, plus geometry, frame-time and texture budgets in your game profile.
+- **You get:** Reusable prop setups (prefabs, scenes or groups, depending on your engine), optimized assets, turntable captures and collider overlays.
+- **Takes from:** Art references, Environment Design requests.
+- **Hands to:** Material artists, Environment Design and the team measuring asset performance.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the prop-rig-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/03-prop-rig
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`prop-rig-getting-started`](skills/prop-rig-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Prop & Rig Director grade. |
+| [`procedural-prop-builder`](skills/procedural-prop-builder/SKILL.md) | Build a prop or rig from art references in your engine, with reproducible seeded variation and measurable clearance. |
+| [`asset-lod-and-compression-pipeline`](skills/asset-lod-and-compression-pipeline/SKILL.md) | Make simpler and smaller versions of a 3D asset for your target devices and check that its look, animation and collision still match the original. |
+| [`turntable-collider-proof`](skills/turntable-collider-proof/SKILL.md) | Use after building a prop or rig: prove its collision shape matches the visible model from every angle and that clearance and grounding hold in real poses. |
+| [`toybox-entrance-diorama-interactivity`](skills/toybox-entrance-diorama-interactivity/SKILL.md) | Only if your game has a title, menu or hub scene with decorative objects: design optional reactions for them and check that players can still find and use the main action. Shared with Environment Design Director (11). |
+| [`prop-rig-lens-engine`](skills/prop-rig-lens-engine/SKILL.md) | Use when you need to grade a Prop & Rig Director evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-03-procedural-rig-crafter` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md). "Equipped" and "weapon" in the line names cover any held or attached prop (a tool, a lantern, a backpack, a saddle or a weapon).
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `silhouette:1` | Readable silhouettes at the gameplay camera | 10 | capture |
+| `silhouette:2` | Held or attached prop silhouette at extreme poses | 10 | capture |
+| `animation-and-weapon-clearance:1` | Clip capture of extreme poses | 10 | capture |
+| `animation-and-weapon-clearance:2` | Grounding on slopes | 10 | capture |
+| `collider-agreement:1` | Visible shape vs collision shape overlay | 10 | capture |
+| `collider-agreement:2` | Floor probe cost | 10 | trace |
+| `scene-budget:1` | Full-scene draw and CPU cost | 10 | trace |
+| `scene-budget:2` | LOD transitions | 10 | capture |
+| `visual-consistency:1` | One current art reference | 10 | capture |
+| `visual-consistency:2` | Reproducible variation | 10 | static |
+
+## Decisions only you make
+
+- How closely must collision shapes match the visible model (`minColliderIoU`), and how deep may an attached part pass into the body (`maxPenetrationCm`)?
+- Which art reference is current?
+- Do any props attach to an animated character or move through extreme poses? If none do, approve the `static-props` profile before scoring and set `"rubricProfile": ["static-props"]` in the game profile.
+
+## Known limits
+
+- Silhouette and palette numbers need captures from your gameplay camera; the worked example is synthetic.
+- With `static-props`, `silhouette:2` and `animation-and-weapon-clearance:1` read N/A, their partner lines take each pillar's 20 points, and the verdict can reach PASS. Other lines have no profile: a line you cannot measure stays U and the verdict stays CONDITIONAL.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `layout-brief` (optional, ^1.0.0) | 11 Environment | `.grokbot-team/artifacts/layout-brief/` | Continue: take the asset list from the owner and write "ASSUMPTION: no layout-brief available; asset list from the owner" in the report. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `asset-budget-report` 1.0.0 | JSON | `.grokbot-team/artifacts/asset-budget-report/` | 11 Environment |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-03-procedural-rig-crafter` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

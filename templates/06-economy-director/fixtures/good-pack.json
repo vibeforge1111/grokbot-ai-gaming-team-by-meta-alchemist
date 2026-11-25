@@ -1,0 +1,358 @@
+{
+ "packId": "example-06-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "timeToDefeatBandS": [
+   1.2,
+   6
+  ],
+  "maxMultiAttackerErrS": 0.05,
+  "maxRewardIntervalWidth": 0.05,
+  "maxProgressStepDays": 45,
+  "minFreeShareOfPaid": 0.6,
+  "maxModelDeltaS": 0.5,
+  "combatModel": "simultaneous",
+  "cases": {
+   "modelInputs": [
+    {
+     "id": "boundary",
+     "routing": "approved-route"
+    }
+   ],
+   "storageReplay": [
+    {
+     "id": "primary",
+     "path": "primary",
+     "seed": "sample-seed",
+     "operationDigest": "74de07c4e919534b1b460e3465bb216ce0cc2bd458e42abaf0f22448da08d063",
+     "stateDigest": "60e0b9b14540af0cbeb5255ac71b2f842c5130f748e3ae2358145d6d8d005c76"
+    },
+    {
+     "id": "fallback",
+     "path": "fallback",
+     "seed": "sample-seed",
+     "operationDigest": "74de07c4e919534b1b460e3465bb216ce0cc2bd458e42abaf0f22448da08d063",
+     "stateDigest": "60e0b9b14540af0cbeb5255ac71b2f842c5130f748e3ae2358145d6d8d005c76"
+    }
+   ],
+   "entitlementDrills": [
+    {
+     "id": "failed"
+    },
+    {
+     "id": "duplicate"
+    },
+    {
+     "id": "rollback"
+    }
+   ],
+   "simulationRun": [
+    {
+     "id": "cohort"
+    }
+   ]
+  }
+ },
+ "artifacts": [
+  {
+   "id": "art-ttk",
+   "kind": "trace",
+   "path": "traces/timeToDefeat.json",
+   "sha256": null
+  },
+  {
+   "id": "art-multiAttacker",
+   "kind": "static",
+   "path": "static/multiAttacker.json",
+   "sha256": null
+  },
+  {
+   "id": "art-loot",
+   "kind": "static",
+   "path": "static/randomRewards.json",
+   "sha256": null
+  },
+  {
+   "id": "art-reachability",
+   "kind": "trace",
+   "path": "traces/reachability.json",
+   "sha256": null
+  },
+  {
+   "id": "art-progression",
+   "kind": "static",
+   "path": "static/progression.json",
+   "sha256": null
+  },
+  {
+   "id": "art-storage",
+   "kind": "trace",
+   "path": "traces/storage.json",
+   "sha256": null
+  },
+  {
+   "id": "art-rewards",
+   "kind": "trace",
+   "path": "traces/rewards.json",
+   "sha256": null
+  },
+  {
+   "id": "art-f2p",
+   "kind": "static",
+   "path": "static/freeVsPaid.json",
+   "sha256": null
+  },
+  {
+   "id": "art-payments",
+   "kind": "trace",
+   "path": "traces/payments.json",
+   "sha256": null
+  },
+  {
+   "id": "art-balance",
+   "kind": "trace",
+   "path": "traces/balance.json",
+   "sha256": null
+  },
+  {
+   "id": "art-storePricing",
+   "kind": "static",
+   "path": "static/storePricing.json",
+   "sha256": null
+  },
+  {
+   "id": "art-paidEdge",
+   "kind": "static",
+   "path": "static/paidEdge.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-combat-config",
+   "kind": "config",
+   "path": "receipts/combat-config.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-storageReplay-primary",
+   "kind": "trace",
+   "path": "receipts/storageReplay/primary.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-storageReplay-fallback",
+   "kind": "trace",
+   "path": "receipts/storageReplay/fallback.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-entitlementDrills-failed",
+   "kind": "trace",
+   "path": "receipts/entitlementDrills/failed.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-entitlementDrills-duplicate",
+   "kind": "trace",
+   "path": "receipts/entitlementDrills/duplicate.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-entitlementDrills-rollback",
+   "kind": "trace",
+   "path": "receipts/entitlementDrills/rollback.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-simulationRun-cohort",
+   "kind": "static",
+   "path": "receipts/simulationRun/cohort.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "timeToDefeat": {
+   "artifact": "art-ttk",
+   "label": "sim",
+   "perAttackP50S": [
+    1.8,
+    2.6,
+    3.4,
+    4.1
+   ],
+   "simVsRecordedMaxDeltaS": 0.2
+  },
+  "multiAttacker": {
+   "artifact": "art-multiAttacker",
+   "examples": [
+    {
+     "hp": 100,
+     "damage": 20,
+     "attackers": 2,
+     "intervalS": 0.5,
+     "reportedTtkS": 1,
+     "model": "simultaneous"
+    },
+    {
+     "hp": 150,
+     "damage": 25,
+     "attackers": 3,
+     "intervalS": 0.4,
+     "reportedTtkS": 0.4,
+     "model": "simultaneous"
+    }
+   ]
+  },
+  "randomRewards": {
+   "artifact": "art-loot",
+   "drops": 20000,
+   "rare": 1000,
+   "intervalsReported": true
+  },
+  "reachability": {
+   "artifact": "art-reachability",
+   "requiredPaths": 14,
+   "unreachable": 0
+  },
+  "progression": {
+   "artifact": "art-progression",
+   "assumptionsStated": [
+    "daily-minutes",
+    "success-rate"
+   ],
+   "stepDaysEstimate": 32
+  },
+  "storage": {
+   "artifact": "art-storage",
+   "pathACounts": [
+    3,
+    7,
+    12
+   ],
+   "pathBCounts": [
+    3,
+    7,
+    12
+   ]
+  },
+  "rewards": {
+   "artifact": "art-rewards",
+   "retriesSimulated": 50,
+   "duplicateGrantsA": 0,
+   "duplicateGrantsB": 0
+  },
+  "freeVsPaid": {
+   "artifact": "art-f2p",
+   "assumptionsStated": true,
+   "freeItemsPerPeriod": 42,
+   "paidItemsPerPeriod": 60
+  },
+  "payments": {
+   "artifact": "art-payments",
+   "failurePathTests": 6,
+   "failedPaymentGrants": 0,
+   "duplicatePaymentGrants": 0,
+   "lostItems": 0
+  },
+  "balance": {
+   "artifact": "art-balance",
+   "operations": 120,
+   "mismatches": 0
+  },
+  "storePricing": {
+   "artifact": "art-storePricing",
+   "items": 12,
+   "pricedFromTable": 12,
+   "priceChangesLogged": true
+  },
+  "paidEdge": {
+   "artifact": "art-paidEdge",
+   "paidOfferItems": 20,
+   "reviewedItems": 20,
+   "paidPowerItems": 0
+  }
+ },
+ "receipts": {
+  "modelInputs": [
+   {
+    "id": "boundary",
+    "liveSha": "example-live-sha",
+    "artifact": "art-multiAttacker",
+    "config": "sample-combat-config",
+    "timingTrace": "art-ttk",
+    "seed": "sample-seed",
+    "rounding": "floor per contribution",
+    "cadence": "config interval",
+    "reload": "config schedule",
+    "routing": "approved-route"
+   }
+  ],
+  "storageReplay": [
+   {
+    "id": "primary",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-storageReplay-primary",
+    "path": "primary",
+    "seed": "sample-seed",
+    "operationDigest": "74de07c4e919534b1b460e3465bb216ce0cc2bd458e42abaf0f22448da08d063",
+    "stateDigest": "60e0b9b14540af0cbeb5255ac71b2f842c5130f748e3ae2358145d6d8d005c76"
+   },
+   {
+    "id": "fallback",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-storageReplay-fallback",
+    "path": "fallback",
+    "seed": "sample-seed",
+    "operationDigest": "74de07c4e919534b1b460e3465bb216ce0cc2bd458e42abaf0f22448da08d063",
+    "stateDigest": "60e0b9b14540af0cbeb5255ac71b2f842c5130f748e3ae2358145d6d8d005c76"
+   }
+  ],
+  "entitlementDrills": [
+   {
+    "id": "failed",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-entitlementDrills-failed",
+    "isolated": true,
+    "expected": 0,
+    "observed": 0,
+    "snapshot": "art-payments"
+   },
+   {
+    "id": "duplicate",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-entitlementDrills-duplicate",
+    "isolated": true,
+    "expected": 1,
+    "observed": 1,
+    "snapshot": "art-payments"
+   },
+   {
+    "id": "rollback",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-entitlementDrills-rollback",
+    "isolated": true,
+    "expected": 0,
+    "observed": 0,
+    "snapshot": "art-payments"
+   }
+  ],
+  "simulationRun": [
+   {
+    "id": "cohort",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-simulationRun-cohort",
+    "cohort": "returning",
+    "seed": "sample-seed",
+    "horizon": 60,
+    "repetitions": 50,
+    "config": "sample-combat-config",
+    "lowDays": 18,
+    "estimateDays": 22,
+    "highDays": 28
+   }
+  ]
+ }
+}

@@ -1,0 +1,364 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "milestone:1#empty-scope.samples",
+   "line": "milestone:1",
+   "expect": "U",
+   "set": {
+    "metrics.scope.samples": []
+   }
+  },
+  {
+   "id": "milestone:1#neg1",
+   "line": "milestone:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.scope.samples": [
+     {
+      "caseId": "scope-1",
+      "testable": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "milestone:1#missing",
+   "line": "milestone:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.scope.samples"
+   ]
+  },
+  {
+   "id": "milestone:2#empty-capacity.samples",
+   "line": "milestone:2",
+   "expect": "U",
+   "set": {
+    "metrics.capacity.samples": []
+   }
+  },
+  {
+   "id": "milestone:2#neg1",
+   "line": "milestone:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.capacity.samples": [
+     {
+      "caseId": "capacity-1",
+      "hours": 12,
+      "role": "design"
+     }
+    ]
+   }
+  },
+  {
+   "id": "milestone:2#missing",
+   "line": "milestone:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.capacity.samples"
+   ]
+  },
+  {
+   "id": "workstreams:1#empty-dependency.samples",
+   "line": "workstreams:1",
+   "expect": "U",
+   "set": {
+    "metrics.dependency.samples": []
+   }
+  },
+  {
+   "id": "workstreams:1#neg1",
+   "line": "workstreams:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.dependency.samples": [
+     {
+      "caseId": "dependency-1",
+      "ready": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "workstreams:1#missing",
+   "line": "workstreams:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.dependency.samples"
+   ]
+  },
+  {
+   "id": "workstreams:2#empty-locks.samples",
+   "line": "workstreams:2",
+   "expect": "U",
+   "set": {
+    "metrics.locks.samples": []
+   }
+  },
+  {
+   "id": "workstreams:2#neg1",
+   "line": "workstreams:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.locks.samples": [
+     {
+      "caseId": "locks-1",
+      "conflictFree": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "workstreams:2#missing",
+   "line": "workstreams:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.locks.samples"
+   ]
+  },
+  {
+   "id": "ledger:1#empty-counts.samples",
+   "line": "ledger:1",
+   "expect": "U",
+   "set": {
+    "metrics.counts.samples": []
+   }
+  },
+  {
+   "id": "ledger:1#neg1",
+   "line": "ledger:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.counts.samples": [
+     {
+      "caseId": "counts-1",
+      "derived": 2,
+      "reported": 7
+     }
+    ]
+   }
+  },
+  {
+   "id": "ledger:1#missing",
+   "line": "ledger:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.counts.samples"
+   ]
+  },
+  {
+   "id": "ledger:2#empty-closure.samples",
+   "line": "ledger:2",
+   "expect": "U",
+   "set": {
+    "metrics.closure.samples": []
+   }
+  },
+  {
+   "id": "ledger:2#neg1",
+   "line": "ledger:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.closure.samples": [
+     {
+      "caseId": "closure-1",
+      "verified": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "ledger:2#missing",
+   "line": "ledger:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.closure.samples"
+   ]
+  },
+  {
+   "id": "release-decision:1#empty-gate.samples",
+   "line": "release-decision:1",
+   "expect": "U",
+   "set": {
+    "metrics.gate.samples": []
+   }
+  },
+  {
+   "id": "release-decision:1#neg1",
+   "line": "release-decision:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.gate.samples": [
+     {
+      "caseId": "gate-1",
+      "passed": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "release-decision:1#missing",
+   "line": "release-decision:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.gate.samples"
+   ]
+  },
+  {
+   "id": "release-decision:2#empty-risk.samples",
+   "line": "release-decision:2",
+   "expect": "U",
+   "set": {
+    "metrics.risk.samples": []
+   }
+  },
+  {
+   "id": "release-decision:2#neg1",
+   "line": "release-decision:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.risk.samples": [
+     {
+      "caseId": "risk-1",
+      "actionable": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "release-decision:2#missing",
+   "line": "release-decision:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.risk.samples"
+   ]
+  },
+  {
+   "id": "pitch:1#empty-claims.samples",
+   "line": "pitch:1",
+   "expect": "U",
+   "set": {
+    "metrics.claims.samples": []
+   }
+  },
+  {
+   "id": "pitch:1#neg1",
+   "line": "pitch:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.claims.samples": [
+     {
+      "caseId": "claims-1",
+      "grounded": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "pitch:1#missing",
+   "line": "pitch:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.claims.samples"
+   ]
+  },
+  {
+   "id": "pitch:2#empty-review.samples",
+   "line": "pitch:2",
+   "expect": "U",
+   "set": {
+    "metrics.review.samples": []
+   }
+  },
+  {
+   "id": "pitch:2#neg1",
+   "line": "pitch:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.review.samples": [
+     {
+      "caseId": "review-1",
+      "reviewed": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "pitch:2#missing",
+   "line": "pitch:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.review.samples"
+   ]
+  },
+  {
+   "id": "invalid-handoff",
+   "line": "workstreams:1",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.dependency.samples": [
+     {
+      "caseId": "capture-to-review",
+      "ready": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "overlapping-lock",
+   "line": "workstreams:2",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.locks.samples": [
+     {
+      "caseId": "locks-1",
+      "conflictFree": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "failed-gate",
+   "line": "release-decision:1",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.gate.samples": [
+     {
+      "caseId": "gate-1",
+      "passed": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "open-p0",
+   "line": null,
+   "expect": "BLOCKED",
+   "set": {
+    "openP0": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,121 @@
+# How to use: Stream-to-Devlog & Trailer Cut Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Turn recorded gameplay into a devlog or trailer. Choose moments that show the player experience, frame them for each destination and check the cut for sensitive information.
+
+- **Pipeline stage:** Ship, Live
+- **When:** For every trailer, devlog, highlight reel or short.
+- **You provide:** Gameplay recordings or streams of the build, brand rules, and the delivery formats you need (for example wide 16:9 and vertical 9:16).
+- **You get:** Ranked moments, an edit list, one export per approved format, and a final review report (redaction, captions, loudness).
+- **Takes from:** playtest captures and live streams of the build.
+- **Hands to:** Store Page & Presskit Director, template 19 (local store media drafts), and Streamer Scout and Patch Notes, template 20 (local post drafts).
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the trailer-director-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/10-trailer-director
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`trailer-director-getting-started`](skills/trailer-director-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Stream-to-Devlog & Trailer Cut Director grade. |
+| [`gameplay-moment-finder`](skills/gameplay-moment-finder/SKILL.md) | Use when picking moments for a trailer, devlog or short from recorded gameplay: rank candidates from the game's own events and the footage, with a hand-picked fallback when no event fits. |
+| [`multi-aspect-smart-framing-exporter`](skills/multi-aspect-smart-framing-exporter/SKILL.md) | Use when reframing gameplay for each approved delivery format (wide, vertical, square or feed) so the subject, essential UI and captions stay visible, then exporting and decoding every cut. |
+| [`beat-sync-and-secret-redaction-gate`](skills/beat-sync-and-secret-redaction-gate/SKILL.md) | Use when timing a cut to its music or voice and checking every final export for sensitive or unlicensed material, captions and loudness before the human hands it on. |
+| [`trailer-director-lens-engine`](skills/trailer-director-lens-engine/SKILL.md) | Use when you need to grade a Stream-to-Devlog & Trailer Cut Director evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-10-trailer-cut-director` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `authentic-gameplay:1` | Build-bound shots | 10 | capture |
+| `authentic-gameplay:2` | No unavailable features implied | 10 | static |
+| `readable-story:1` | Edit decisions recorded | 10 | static |
+| `readable-story:2` | Action readable in the main wide cut | 10 | capture |
+| `composition:1` | Action and essential UI kept in the approved crop | 10 | capture |
+| `composition:2` | Sensitive information redacted | 10 | capture |
+| `technical-export:1` | Approved delivery cuts exported and decoded | 10 | capture |
+| `technical-export:2` | Recovery after interruption | 10 | capture |
+| `accessible-delivery:1` | Captions | 10 | capture |
+| `accessible-delivery:2` | Sound check | 10 | capture |
+
+## Decisions only you make
+
+- Which delivery formats you need, and the loudness target, true-peak limit (`maxTruePeakDb`) and maximum length for each platform.
+- Who reviews the story in each delivery format.
+
+## Known limits
+
+- Action readable in the main wide cut (`readable-story:2`) needs a person to watch the wide cut; it stays U until a named reviewer records a judgement.
+- Lines with nothing to measure in your game (for example no speech to caption) stay U: lower coverage, never a defect.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `hud-capture-set` (optional, ^1.0.0) | 09 HUD | `.grokbot-team/artifacts/hud-capture-set/` | Continue: mark the essential UI by hand while framing, and write "ASSUMPTION: no hud-capture-set available" in the report. |
+| `audio-mix-report` (optional, ^1.0.0) | 13 Audio | `.grokbot-team/artifacts/audio-mix-report/` | Continue: measure loudness on the decoded file yourself, and write "ASSUMPTION: no audio-mix-report available" in the report. |
+| `change-list` (optional, ^1.0.0) | the owner, 18 Bug Desk | `.grokbot-team/artifacts/change-list/` | Continue: check every feature claim directly against the build, and write "ASSUMPTION: no change-list available" in the report. |
+| `pitch-draft` (optional, ^1.0.0) | 12 Producer | `.grokbot-team/artifacts/pitch-draft/` | Continue without it. Start the report with "ASSUMPTION: no pitch-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `clip-list` 1.0.0 | JSON | `.grokbot-team/artifacts/clip-list/` | 19 Store Page, 20 Patch Notes |
+| `media-export-manifest` 1.0.0 | JSON manifest plus the exported video and still files | `.grokbot-team/artifacts/media-export-manifest/` | 19 Store Page, 20 Patch Notes |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-10-trailer-cut-director` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

@@ -1,0 +1,586 @@
+{
+  "id": "gbf-05-game-loop-alchemist",
+  "version": "2.0.0",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "migration": "Replaces mechanic-specific milestones and inherited stopwatch values with current-build choice, feedback and replay receipts. Start a new baseline at this version.",
+  "contribution": "weight x level / 4",
+  "gameProfile": "Owner-approved pack.profile defines the game facts, scope and budgets",
+  "receiptPolicy": "build-scope-line-v1",
+  "receiptFields": [
+    "cohort",
+    "window",
+    "action",
+    "outcome"
+  ],
+  "levels": "Score the share of observed cases meeting each condition against the profile floor, pass share and target.",
+  "verdict": "Open P0s and confirmed release blockers set the grade to 0. Missing observations reduce coverage. Invalid packs have a null grade.",
+  "samplePolicy": "Every line reads uniquely keyed sample rows from its own receipt. Empty lists and zero measured cases give U and earn 0 points. Fractions use all eligible observed opportunities.",
+  "source": "Timestamped first-session traces, anonymous playtest observations and return opportunities from a closed observation window.",
+  "pillars": [
+    {
+      "id": "opening",
+      "name": "Opening",
+      "points": 20
+    },
+    {
+      "id": "consequence",
+      "name": "Consequence",
+      "points": 20
+    },
+    {
+      "id": "pacing",
+      "name": "Pacing",
+      "points": 20
+    },
+    {
+      "id": "agency",
+      "name": "Agency",
+      "points": 20
+    },
+    {
+      "id": "replay",
+      "name": "Replay",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "opening:1",
+      "pillar": "Opening",
+      "name": "Opening goal understood",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(goal.samples,\"expected\",\"readback\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(goal.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(goal.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(goal.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the unaided readback identifies the intended goal.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the unaided readback identifies the intended goal.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line opening:1"
+      }
+    },
+    {
+      "id": "opening:2",
+      "pillar": "Opening",
+      "name": "Time to meaningful action",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "elapsedShare(action.samples,\"startS\",\"actionS\",P.actionBudgetS)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "elapsedShare(action.samples,\"startS\",\"actionS\",P.actionBudgetS)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "elapsedShare(action.samples,\"startS\",\"actionS\",P.actionBudgetS)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "elapsedShare(action.samples,\"startS\",\"actionS\",P.actionBudgetS)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the first meaningful action falls within the action budget.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the first meaningful action falls within the action budget.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line opening:2"
+      }
+    },
+    {
+      "id": "consequence:1",
+      "pillar": "Consequence",
+      "name": "Action produces its intended state",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(state.samples,\"expected\",\"actual\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(state.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(state.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(state.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the observed state matches the profile's expected consequence.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the observed state matches the profile's expected consequence.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line consequence:1"
+      }
+    },
+    {
+      "id": "consequence:2",
+      "pillar": "Consequence",
+      "name": "Feedback explains the consequence",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(feedback.samples,\"expected\",\"readback\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(feedback.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(feedback.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(feedback.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the participant can explain what changed from the feedback.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the participant can explain what changed from the feedback.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line consequence:2"
+      }
+    },
+    {
+      "id": "pacing:1",
+      "pillar": "Pacing",
+      "name": "Time between decisions",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "elapsedShare(beat.samples,\"resolvedS\",\"choiceS\",P.beatBudgetS)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "elapsedShare(beat.samples,\"resolvedS\",\"choiceS\",P.beatBudgetS)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "elapsedShare(beat.samples,\"resolvedS\",\"choiceS\",P.beatBudgetS)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "elapsedShare(beat.samples,\"resolvedS\",\"choiceS\",P.beatBudgetS)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the next decision becomes available within the beat budget.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the next decision becomes available within the beat budget.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line pacing:1"
+      }
+    },
+    {
+      "id": "pacing:2",
+      "pillar": "Pacing",
+      "name": "Time to regain agency",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "elapsedShare(recovery.samples,\"setbackS\",\"controlS\",P.recoveryBudgetS)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "elapsedShare(recovery.samples,\"setbackS\",\"controlS\",P.recoveryBudgetS)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "elapsedShare(recovery.samples,\"setbackS\",\"controlS\",P.recoveryBudgetS)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "elapsedShare(recovery.samples,\"setbackS\",\"controlS\",P.recoveryBudgetS)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: control returns within the approved recovery budget.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: control returns within the approved recovery budget.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line pacing:2"
+      }
+    },
+    {
+      "id": "agency:1",
+      "pillar": "Agency",
+      "name": "A choice changes the next beat",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(choice.samples,\"expected\",\"actual\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(choice.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(choice.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(choice.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the alternative input leads to its intended distinct state.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the alternative input leads to its intended distinct state.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line agency:1"
+      }
+    },
+    {
+      "id": "agency:2",
+      "pillar": "Agency",
+      "name": "An explicit stop is honored",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(exit.samples,\"honored\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(exit.samples,\"honored\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(exit.samples,\"honored\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(exit.samples,\"honored\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: an explicit stop ends the loop at the promised boundary.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: an explicit stop ends the loop at the promised boundary.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line agency:2"
+      }
+    },
+    {
+      "id": "replay:1",
+      "pillar": "Replay",
+      "name": "Reason to replay is intrinsic",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(reason.samples,\"intrinsic\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(reason.samples,\"intrinsic\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(reason.samples,\"intrinsic\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(reason.samples,\"intrinsic\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the participant identifies an enjoyable choice, challenge or discovery.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the participant identifies an enjoyable choice, challenge or discovery.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line replay:1"
+      }
+    },
+    {
+      "id": "replay:2",
+      "pillar": "Replay",
+      "name": "Voluntary replay after an opportunity",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(return.samples,\"returned\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(return.samples,\"returned\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(return.samples,\"returned\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(return.samples,\"returned\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the participant voluntarily takes another eligible turn within the window.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the participant voluntarily takes another eligible turn within the window.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/05-game-loop-alchemist",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line replay:2"
+      },
+      "rowBinding": {
+        "group": "return",
+        "fields": [
+          "offerRef"
+        ],
+        "profile": {
+          "cohort": "cohort",
+          "window": "window"
+        },
+        "values": {
+          "windowClosed": true
+        }
+      }
+    }
+  ],
+  "sampleFields": {
+    "goal": [
+      "samples"
+    ],
+    "action": [
+      "samples"
+    ],
+    "state": [
+      "samples"
+    ],
+    "feedback": [
+      "samples"
+    ],
+    "beat": [
+      "samples"
+    ],
+    "recovery": [
+      "samples"
+    ],
+    "choice": [
+      "samples"
+    ],
+    "exit": [
+      "samples"
+    ],
+    "reason": [
+      "samples"
+    ],
+    "return": [
+      "samples"
+    ]
+  },
+  "releaseBlockers": [
+    {
+      "id": "forced-continuation",
+      "line": "agency:2",
+      "evidence": "capture",
+      "reason": "A witnessed stop request forced another cycle.",
+      "condition": [
+        "observedFailure(exit.samples,\"honored\",false)",
+        "false"
+      ],
+      "fixture": {
+        "metrics.exit.samples": [
+          {
+            "caseId": "exit-1",
+            "honored": false
+          }
+        ]
+      }
+    }
+  ],
+  "hash": "sha256:c7916c67867c9ceeefee9f490730a995a56ad0297124a9e73664bb8c7bbb6d19"
+}

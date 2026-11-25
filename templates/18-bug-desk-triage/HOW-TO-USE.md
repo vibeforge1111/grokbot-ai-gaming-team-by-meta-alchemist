@@ -1,0 +1,123 @@
+# How to use: Playtest Bug Desk & Repro Triage Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Turn playtest observations into reproducible local issue drafts, group duplicate reports and verify fixes against the affected build.
+
+- **Pipeline stage:** Playtest, Live
+- **When:** From the first outside playtest onward, every day.
+- **You provide:** Player reports, crash logs, reproduction evidence from playtests or CI, your tracker export.
+- **You get:** Local ticket drafts with severity and confidence, minimal repros, candidate duplicate groups and closure checks. Nothing is filed until you file it.
+- **Takes from:** Manual or CI playtests, accessibility reviews and service logs where applicable.
+- **Hands to:** The owner, who reviews local drafts, sets priority and updates the tracker.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+New to terms such as evidence pack, receipt, liveSha or flaky? See [Words used here](README.md#words-used-here).
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the bug-desk-triage-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/18-bug-desk-triage
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when | Feeds rubric lines |
+|---|---|---|
+| [`bug-desk-triage-getting-started`](skills/bug-desk-triage-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Playtest Bug Desk & Repro Triage Director grade. | all (setup) |
+| [`duplicate-report-grouping`](skills/duplicate-report-grouping/SKILL.md) | Many crash reports, error logs, player reports or findings from other templates may describe the same bug. It proposes candidate groups for you to confirm and never merges different root causes on its own. | `correct-dedup:1`, `correct-dedup:2` |
+| [`minimal-repro-builder`](skills/minimal-repro-builder/SKILL.md) | A crash, desync or player report needs a replay that fails on the affected build, shrunk to the smallest input that still fails. Also checks that captures show real play and when a flaky bug may leave flaky status. | `reproducibility:1`, `reproducibility:2`, `evidence-completeness:1` |
+| [`severity-and-regression-bisect`](skills/severity-and-regression-bisect/SKILL.md) | You set severity and confidence, keep P0 to the scopes in your profile, send grading mistakes to the audit fix list, and bisect a working repro to the change that caused the bug. | `severity:1`, `severity:2` |
+| [`issue-draft-and-fix-verification`](skills/issue-draft-and-fix-verification/SKILL.md) | You write a reproducible bug report as a local draft for any tracker, record which build players actually run, and check that a fix was verified on the right build by someone other than the fixer. | `closure-quality:1`, `closure-quality:2`, `evidence-completeness:2` |
+| [`bug-desk-triage-lens-engine`](skills/bug-desk-triage-lens-engine/SKILL.md) | Use when you need to grade a Playtest Bug Desk & Repro Triage Director evidence pack: write the engine files from this skill and run them. | all (grading) |
+
+## Rubric
+
+`gbf-18-bug-desk-triage` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence | In plain words |
+|---|---|---|---|---|
+| `reproducibility:1` | High-priority reports replay | 10 | trace | Every high-priority ticket has a replay that fails on the affected build. |
+| `reproducibility:2` | Flaky status kept | 10 | trace | A bug that only happens sometimes stays "flaky" until it passes your repeated-run count. |
+| `evidence-completeness:1` | Captures show real play | 10 | trace | Findings about play have a capture of real play (a level, race, puzzle board or chapter), not only menus or loading. |
+| `evidence-completeness:2` | Build lag recorded and applied | 10 | config | You recorded whether the build players run is older than the source, and capped scores read from its logs when it is. |
+| `correct-dedup:1` | Dedup key and owner confirmation | 10 | trace | Different bugs with similar messages stay separate; one root cause reported from several templates is merged by a person. |
+| `correct-dedup:2` | Similarity cutoff is a candidate generator | 10 | static | Similarity scores only suggest duplicates; nothing is merged automatically. |
+| `severity:1` | Severity vs confidence | 10 | static | Severity and confidence are separate fields, and P0 is used only for the scopes in your profile. |
+| `severity:2` | Review mistakes kept off the game bug list | 10 | static | Mistakes in the review itself go to an audit fix list, not the game bug list. |
+| `closure-quality:1` | Verifier is not the fixer | 10 | trace | Someone other than the fixer verifies the fix, with the raw capture or log kept. |
+| `closure-quality:2` | Artifact mismatch blocks closure | 10 | trace | A capture from the wrong build, or one that does not match the claim, stops the ticket from closing. |
+
+## Decisions only you make
+
+- Which kinds of bug may be P0 for your game (`p0Scopes`). An online game with purchases might pick payments, entitlements and saved state; a single-player offline game might pick only lost saves and crashes on start.
+- How many clean runs in a row a flaky bug must pass before it counts as fixed (`flakyRunsRequired`).
+- Whether your game has share, invite or referral links. If not, leave `shareIntake` out of the pack; that growth check reads U and never changes the grade.
+
+## Known limits
+
+- Needs your real ticket export; the worked example is synthetic.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `tracker-export` (optional, ^1.0.0) | the owner | `.grokbot-team/artifacts/tracker-export/` | Continue: intake and closure receipts are NOT_RUN and their lines stay unmeasured; write "ASSUMPTION: no tracker-export available" in the report and ask the owner for a read-only export. |
+| `ticket-draft` (optional, ^1.0.0) | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 09 HUD, 10 Trailer, 11 Environment, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 17 Sprites, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 00 Starter | `.grokbot-team/artifacts/ticket-draft/` | Continue: group only crash and player reports, and say cross-template grouping was not measured. |
+| `incident-report` (optional, ^1.0.0) | 22 Live Service | `.grokbot-team/artifacts/incident-report/` | Continue without it. Start the report with "ASSUMPTION: no incident-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `support-case-draft` (optional, ^1.0.0) | 23 Support Desk | `.grokbot-team/artifacts/support-case-draft/` | Continue without it. Start the report with "ASSUMPTION: no support-case-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer |
+| `change-list` 1.0.0 | JSON (closures verified on the fixed build) | `.grokbot-team/artifacts/change-list/` | 06 Economy, 10 Trailer, 20 Patch Notes |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `incidents`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`, `releases`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-18-bug-desk-triage` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

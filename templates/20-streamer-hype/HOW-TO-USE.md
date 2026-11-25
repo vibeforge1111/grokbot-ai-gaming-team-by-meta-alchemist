@@ -1,0 +1,127 @@
+# How to use: Streamer Scout, Patch Notes & Update Hype Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Match creators to your intended audience and turn verified build changes into patch notes and updates for players.
+
+- **Pipeline stage:** Ship, Live
+- **When:** Every patch, and when planning creator outreach.
+- **You provide:** A change list, intended audience and update schedule, and, if your game has them, its recording, streamer mode, share links and spectator view.
+- **You get:** Patch notes drafts, a creator shortlist with outreach drafts, and a review of your stream, replay and (if your game has one) spectator features.
+- **Takes from:** a verified change list from your repo or Bug Desk (template 18), Economy Director (template 06, economy changes to explain), Stream-to-Devlog & Trailer Cut Director (template 10, clips) and Store Page & Presskit Director (template 19, the press kit link).
+- **Hands to:** The owner (every post and DM stays a draft).
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the streamer-hype-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/20-streamer-hype
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`streamer-hype-getting-started`](skills/streamer-hype-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Streamer Scout, Patch Notes & Update Hype Director grade. |
+| [`creator-shortlist-scout`](skills/creator-shortlist-scout/SKILL.md) | Use when shortlisting streamers and creators to contact: fit with the game, audience, safety and a clear reason, without inventing audience numbers, with outreach kept as local drafts. |
+| [`git-diff-patch-notes-hype-compiler`](skills/git-diff-patch-notes-hype-compiler/SKILL.md) | Use when writing patch notes from commits: every line maps to a commit, and every claim matches the code that shipped. |
+| [`stream-and-replay-features-review`](skills/stream-and-replay-features-review/SKILL.md) | Use when your game has recording, replays, a streamer mode, share links or a spectator view: check each works, hides private information, keeps any required stream delay and cannot change results. |
+| [`streamer-hype-lens-engine`](skills/streamer-hype-lens-engine/SKILL.md) | Use when you need to grade a Streamer Scout, Patch Notes & Update Hype Director evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-20-streamer-hype-director` v1.4.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `capture-reliability:1` | Recording replays and exports | 10 | capture |
+| `capture-reliability:2` | Capture performance budget | 10 | trace |
+| `spectator-comprehension:1` | Spectator view shows only allowed information | 10 | capture |
+| `spectator-comprehension:2` | Spectator view readable at stream resolutions | 10 | capture |
+| `creator-controls:1` | Streamer mode and redaction | 10 | capture |
+| `creator-controls:2` | Share links | 10 | trace |
+| `truthful-claims:1` | Patch notes checked against commits | 10 | static |
+| `truthful-claims:2` | Technical claims match the code | 10 | static |
+| `player-safety:1` | Creator and viewer features cannot change results | 10 | trace |
+| `player-safety:2` | Test results carry measured values | 10 | static |
+
+## Decisions only you make
+
+- How much frame time recording may add on each device (the capture overhead budget).
+- If your game has a spectator or streaming mode: what a spectator may see, and the minimum stream delay.
+- Which rubric profiles apply (`no-spectator-mode`, `no-share-links`, `no-streamer-mode`), approved before scoring and set as `rubricProfile` in the game profile.
+
+## Known limits
+
+- Recording checks need a real capture of your build; nothing is published by the agent.
+- Spectator, streamer-mode and season parts apply only if your game has them. A game without a spectator mode or share links selects `no-spectator-mode` or `no-share-links` once the owner approves it: those lines read N/A, their points move to the other lines, the spectator blockers no longer apply, and the verdict can reach PASS.
+- A game without a streamer mode or on-screen names selects `no-streamer-mode` once the owner approves it: `creator-controls:1` reads N/A, its redaction blockers no longer apply, and the verdict can reach PASS.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `change-list` (optional, ^1.0.0) | the owner, 18 Bug Desk | `.grokbot-team/artifacts/change-list/` | Continue: build the change list from the repository history for the shipped range; without repository access, record NOT_RUN for patch notes. |
+| `economy-change-list` (optional, ^1.0.0) | 06 Economy | `.grokbot-team/artifacts/economy-change-list/` | Continue without it. Start the report with "ASSUMPTION: no economy-change-list available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `balance-patch-draft` (optional, ^1.0.0) | 26 Balance Patch | `.grokbot-team/artifacts/balance-patch-draft/` | Continue without it. Start the report with "ASSUMPTION: no balance-patch-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `clip-list` (optional, ^1.0.0) | 10 Trailer | `.grokbot-team/artifacts/clip-list/` | Continue without it. Start the report with "ASSUMPTION: no clip-list available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `media-export-manifest` (optional, ^1.0.0) | 10 Trailer | `.grokbot-team/artifacts/media-export-manifest/` | Continue without it. Start the report with "ASSUMPTION: no media-export-manifest available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `store-asset-manifest` (optional, ^1.0.0) | 19 Store Page | `.grokbot-team/artifacts/store-asset-manifest/` | Continue: outreach drafts leave out the press kit link and say so. |
+| `fairness-findings` (optional, ^1.0.0) | 15 Server Fairness | `.grokbot-team/artifacts/fairness-findings/` | Continue without it. Start the report with "ASSUMPTION: no fairness-findings available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `work-plan` (optional, ^1.0.0) | 12 Producer | `.grokbot-team/artifacts/work-plan/` | Continue without it. Start the report with "ASSUMPTION: no work-plan available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `patch-notes-draft` 1.0.0 | Markdown draft plus a JSON map from each line to its change | `.grokbot-team/artifacts/patch-notes-draft/` | 23 Support Desk |
+| `creator-shortlist` 1.0.0 | JSON with outreach drafts | `.grokbot-team/artifacts/creator-shortlist/` | the owner |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases`, `balance` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`, `releases`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-20-streamer-hype-director` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

@@ -1,0 +1,542 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "capture-reliability:1#empty-recording.measuredCases",
+   "line": "capture-reliability:1",
+   "expect": "U",
+   "set": {
+    "metrics.recording.measuredCases": 0
+   }
+  },
+  {
+   "id": "capture-reliability:1#neg1",
+   "line": "capture-reliability:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.recording.attributionOk": false
+   }
+  },
+  {
+   "id": "capture-reliability:1#missing",
+   "line": "capture-reliability:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.recording.replayed"
+   ]
+  },
+  {
+   "id": "capture-reliability:2#empty-captureCost.frameMsOn",
+   "line": "capture-reliability:2",
+   "expect": "U",
+   "set": {
+    "metrics.captureCost.frameMsOn": []
+   }
+  },
+  {
+   "id": "capture-reliability:2#empty-captureCost.frameMsOff",
+   "line": "capture-reliability:2",
+   "expect": "U",
+   "set": {
+    "metrics.captureCost.frameMsOff": []
+   }
+  },
+  {
+   "id": "capture-reliability:2#neg1",
+   "line": "capture-reliability:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.captureCost.frameMsOn": [
+     10,
+     11,
+     12.5
+    ]
+   }
+  },
+  {
+   "id": "capture-reliability:2#missing",
+   "line": "capture-reliability:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.captureCost.frameMsOn"
+   ]
+  },
+  {
+   "id": "spectator-comprehension:1#empty-spectatorPolicy.measuredCases",
+   "line": "spectator-comprehension:1",
+   "expect": "U",
+   "set": {
+    "metrics.spectatorPolicy.measuredCases": 0
+   }
+  },
+  {
+   "id": "spectator-comprehension:1#neg1",
+   "line": "spectator-comprehension:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.spectatorPolicy.policyViolations": 1
+   }
+  },
+  {
+   "id": "spectator-comprehension:1#missing",
+   "line": "spectator-comprehension:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.spectatorPolicy.policyViolations"
+   ]
+  },
+  {
+   "id": "spectator-comprehension:2#empty-spectatorRead.resolutionsChecked",
+   "line": "spectator-comprehension:2",
+   "expect": "U",
+   "set": {
+    "metrics.spectatorRead.resolutionsChecked": []
+   }
+  },
+  {
+   "id": "spectator-comprehension:2#neg1",
+   "line": "spectator-comprehension:2",
+   "expect": "fail",
+   "areas": [
+    "spectator-camera"
+   ],
+   "set": {
+    "metrics.spectatorRead.unreadable": 2
+   }
+  },
+  {
+   "id": "spectator-comprehension:2#missing",
+   "line": "spectator-comprehension:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.spectatorRead.resolutionsChecked"
+   ]
+  },
+  {
+   "id": "creator-controls:1#empty-streamerMode.measuredCases",
+   "line": "creator-controls:1",
+   "expect": "U",
+   "set": {
+    "metrics.streamerMode.measuredCases": 0
+   }
+  },
+  {
+   "id": "creator-controls:1#neg1",
+   "line": "creator-controls:1",
+   "expect": "fail",
+   "areas": [
+    "redaction",
+    "streamer-mode"
+   ],
+   "set": {
+    "metrics.streamerMode.namesLeaked": 1
+   }
+  },
+  {
+   "id": "creator-controls:1#missing",
+   "line": "creator-controls:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.streamerMode.namesLeaked"
+   ]
+  },
+  {
+   "id": "creator-controls:2#empty-links.links",
+   "line": "creator-controls:2",
+   "expect": "U",
+   "set": {
+    "metrics.links.links": []
+   }
+  },
+  {
+   "id": "creator-controls:2#neg1",
+   "line": "creator-controls:2",
+   "expect": "fail",
+   "areas": [
+    "share-links"
+   ],
+   "set": {
+    "metrics.links.links": [
+     "https://example.game/",
+     "https://example.game/?from=share"
+    ]
+   }
+  },
+  {
+   "id": "creator-controls:2#neg2",
+   "line": "creator-controls:2",
+   "expect": "fail",
+   "areas": [
+    "share-links"
+   ],
+   "set": {
+    "metrics.links.links": [
+     "https://example.org/from=clip",
+     "https://example.org/?other=from=clip"
+    ]
+   }
+  },
+  {
+   "id": "creator-controls:2#missing",
+   "line": "creator-controls:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.links.links"
+   ]
+  },
+  {
+   "id": "truthful-claims:1#empty-notes.lines",
+   "line": "truthful-claims:1",
+   "expect": "U",
+   "set": {
+    "metrics.notes.lines": 0
+   }
+  },
+  {
+   "id": "truthful-claims:1#neg1",
+   "line": "truthful-claims:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.notes.mappedToCommits": 9
+   }
+  },
+  {
+   "id": "truthful-claims:1#missing",
+   "line": "truthful-claims:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.notes.mappedToCommits"
+   ]
+  },
+  {
+   "id": "truthful-claims:2#empty-claims.claims",
+   "line": "truthful-claims:2",
+   "expect": "U",
+   "set": {
+    "metrics.claims.claims": 0
+   }
+  },
+  {
+   "id": "truthful-claims:2#neg1",
+   "line": "truthful-claims:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.claims.matchingCode": 3
+   }
+  },
+  {
+   "id": "truthful-claims:2#missing",
+   "line": "truthful-claims:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.claims.matchingCode"
+   ]
+  },
+  {
+   "id": "player-safety:1#empty-fairness.measuredCases",
+   "line": "player-safety:1",
+   "expect": "U",
+   "set": {
+    "metrics.fairness.measuredCases": 0
+   }
+  },
+  {
+   "id": "player-safety:1#neg1",
+   "line": "player-safety:1",
+   "expect": "fail",
+   "areas": [
+    "creator-safety"
+   ],
+   "set": {
+    "metrics.fairness.creatorFeatureOutcomeEffects": 1
+   }
+  },
+  {
+   "id": "player-safety:1#missing",
+   "line": "player-safety:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.fairness.creatorFeatureOutcomeEffects"
+   ]
+  },
+  {
+   "id": "player-safety:2#empty-receipts.measuredCases",
+   "line": "player-safety:2",
+   "expect": "U",
+   "set": {
+    "metrics.receipts.measuredCases": 0
+   }
+  },
+  {
+   "id": "player-safety:2#neg1",
+   "line": "player-safety:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.receipts.unconditionalPassAccepted": true
+   }
+  },
+  {
+   "id": "player-safety:2#missing",
+   "line": "player-safety:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.receipts.unconditionalPassAccepted"
+   ]
+  },
+  {
+   "id": "spectator-links#empty-spectatorLinks.tested",
+   "line": "spectator-links",
+   "expect": "U",
+   "set": {
+    "metrics.spectatorLinks.tested": 0
+   }
+  },
+  {
+   "id": "spectator-links#neg1",
+   "line": "spectator-links",
+   "expect": "fail",
+   "areas": [
+    "spectator-links"
+   ],
+   "set": {
+    "metrics.spectatorLinks.openedIntendedView": 3
+   }
+  },
+  {
+   "id": "spectator-links#neg2",
+   "line": "spectator-links",
+   "expect": "fail",
+   "areas": [
+    "spectator-links"
+   ],
+   "set": {
+    "metrics.spectatorLinks.respectsDelay": false
+   }
+  },
+  {
+   "id": "spectator-links#missing",
+   "line": "spectator-links",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.spectatorLinks"
+   ]
+  },
+  {
+   "id": "creator-sources#empty-creatorLog.choices",
+   "line": "creator-sources",
+   "expect": "U",
+   "set": {
+    "metrics.creatorLog.choices": []
+   }
+  },
+  {
+   "id": "creator-sources#neg1",
+   "line": "creator-sources",
+   "expect": "fail",
+   "areas": [
+    "creator-research"
+   ],
+   "set": {
+    "metrics.creatorLog.choices.0.reviewed": false
+   }
+  },
+  {
+   "id": "creator-sources#missing",
+   "line": "creator-sources",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.creatorLog.choices"
+   ]
+  },
+  {
+   "line": "capture-reliability:2",
+   "expect": "U",
+   "id": "capturePairs#missing-row",
+   "set": {
+    "receipts.capturePairs": []
+   }
+  },
+  {
+   "line": "capture-reliability:2",
+   "expect": "U",
+   "id": "capturePairs#stale",
+   "set": {
+    "receipts.capturePairs.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "capture-reliability:2",
+   "expect": "U",
+   "id": "capturePairs#artifact",
+   "set": {
+    "receipts.capturePairs.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "spectator-comprehension:1",
+   "expect": "U",
+   "id": "partnerFeeds#missing-row",
+   "set": {
+    "receipts.partnerFeeds": [
+     {
+      "id": "partner",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-partnerFeeds-partner",
+      "feed": "partner",
+      "delayMs": 900,
+      "restrictedFields": 0,
+      "opened": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "spectator-comprehension:1",
+   "expect": "U",
+   "id": "partnerFeeds#stale",
+   "set": {
+    "receipts.partnerFeeds.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "spectator-comprehension:1",
+   "expect": "U",
+   "id": "partnerFeeds#artifact",
+   "set": {
+    "receipts.partnerFeeds.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "truthful-claims:1",
+   "expect": "U",
+   "id": "shippedClaims#missing-row",
+   "set": {
+    "receipts.shippedClaims": [
+     {
+      "id": "overlay",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-shippedClaims-overlay",
+      "claim": "overlay",
+      "commit": "sample-change-overlay",
+      "switchEnabled": true,
+      "buildReceipt": "art-recording"
+     }
+    ]
+   }
+  },
+  {
+   "line": "truthful-claims:1",
+   "expect": "U",
+   "id": "shippedClaims#stale",
+   "set": {
+    "receipts.shippedClaims.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "truthful-claims:1",
+   "expect": "U",
+   "id": "shippedClaims#artifact",
+   "set": {
+    "receipts.shippedClaims.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "capturePairs#unpaired",
+   "expect": 1,
+   "set": {
+    "receipts.capturePairs.0.replayOff": "other"
+   },
+   "line": "capture-reliability:2"
+  },
+  {
+   "id": "capturePairs#overhead",
+   "expect": 2,
+   "set": {
+    "receipts.capturePairs.0.onP95Ms": 16
+   },
+   "line": "capture-reliability:2"
+  },
+  {
+   "id": "partnerFeeds#early",
+   "expect": 0,
+   "set": {
+    "receipts.partnerFeeds.0.delayMs": 100
+   },
+   "line": "spectator-comprehension:1"
+  },
+  {
+   "id": "partnerFeeds#disclosure",
+   "expect": 0,
+   "set": {
+    "receipts.partnerFeeds.0.restrictedFields": 1
+   },
+   "line": "spectator-comprehension:1"
+  },
+  {
+   "id": "shippedClaims#disabled",
+   "expect": 0,
+   "set": {
+    "receipts.shippedClaims.0.switchEnabled": false
+   },
+   "line": "truthful-claims:1"
+  },
+  {
+   "id": "spectator-policy",
+   "line": "spectator-comprehension:1",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.spectatorPolicy.policyViolations": 1
+   }
+  },
+  {
+   "id": "stream-delay",
+   "line": "spectator-links",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.spectatorLinks.respectsDelay": false
+   }
+  },
+  {
+   "id": "redaction-namesLeaked",
+   "line": "creator-controls:1",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.streamerMode.namesLeaked": 1
+   }
+  },
+  {
+   "id": "redaction-sensitiveLeaked",
+   "line": "creator-controls:1",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.streamerMode.sensitiveLeaked": 1
+   }
+  },
+  {
+   "id": "spectator-feed",
+   "line": "spectator-links",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.spectatorLinks.openedIntendedView": 4
+   }
+  }
+ ]
+}

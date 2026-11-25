@@ -1,0 +1,41 @@
+{
+  "cmd": [
+    "node",
+    "engine/lens.mjs"
+  ],
+  "meta": [
+    "node",
+    "engine/lens.mjs",
+    "--meta"
+  ],
+  "embed": [
+    "engine/lens-kit.mjs",
+    "engine/lens.mjs",
+    "engine/team-memory.mjs"
+  ],
+  "domain": [
+    "mobile/check.mjs",
+    "mobile/review.mjs",
+    "mobile/run.mjs",
+    "mobile/fixture/AndroidManifest.xml",
+    "mobile/fixture/Info.plist",
+    "mobile/fixture/PrivacyInfo.xcprivacy",
+    "mobile/fixture/answers.json",
+    "mobile/fixture/app-build.gradle",
+    "mobile/fixture/capacitor.config.ts",
+    "mobile/fixture/project.pbxproj",
+    "mobile/fixture/tree.json",
+    "mobile/fixture/variables.gradle",
+    "tests/test-safety.mjs"
+  ],
+  "contract": [
+    "engine/ENGINE.json",
+    "RUBRIC.json",
+    "fixtures/good-pack.json",
+    "fixtures/mutations.json",
+    "tests/test-lens-contract.mjs",
+    "tests/lens-negative-fixtures.mjs",
+    "tests/test-empty-sample.mjs",
+    "tests/run-all.mjs"
+  ]
+}

@@ -1,0 +1,494 @@
+{
+  "id": "gbf-17-sprite-hitbox-packer",
+  "version": "1.3.0",
+  "migration": "1.0.0 to 1.1.0: anchors made game-agnostic (constants live in the game profile), lens gates added; ids, weights and passAt unchanged; 1.1.0 to 1.1.1: gameProfile generalized to your-game-profile for the public kit and hash recomputed with the documented kit algorithm (spec/RUBRIC_HASH.md); ids, weights, anchors and passAt unchanged. 1.1.1 to 1.1.3: Evidence descriptions and fixture working directories now refer to the distributed kit. 1.1.3 to 1.1.4: Empty samples and zero case counts earn U. Computed lines require the declared evidence type. The profile supplies reward size, occupancy and padding targets. 1.1.4 to 1.1.5: Adds a per-combination atlas matrix, frame and pivot comparisons on the damage path, and a separate tier separation check. 1.1.5 to 1.2.0: Line, pillar and anchor wording made genre-neutral (ids, weights, conditions and pass marks unchanged); adds owner-selected not-applicable profiles no-height-layer, no-item-tiers, no-install-icons, no-hit-shapes. 1.2.0 to 1.3.0: Evidence pack names made genre-neutral (rewardArt to itemArt; maxRarityDeltaE to maxTierPaletteDeltaE; minRewardPx to minItemArtPx; rarity to tierPalette; elevation to heightLayer; damage-path to gameplay-path). Scoring, weights, conditions and pass marks unchanged; rename these fields in packs made for 1.2.0.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "pillars": [
+    {
+      "id": "icons",
+      "name": "Icons",
+      "points": 20
+    },
+    {
+      "id": "install-icons",
+      "name": "Install icons",
+      "points": 20
+    },
+    {
+      "id": "reward-art",
+      "name": "Item and tier art",
+      "points": 20
+    },
+    {
+      "id": "texture-weight",
+      "name": "Texture weight",
+      "points": 20
+    },
+    {
+      "id": "hit-shape",
+      "name": "Hit shape",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "icons:1",
+      "pillar": "Icons",
+      "name": "Small icons readable at real scale",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Icons bleed or blur",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Small icons readable without bleed at real scale on every device",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line icons:1",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "icons:2",
+      "pillar": "Icons",
+      "name": "Atlas integrity across mips and filters",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "A tested delivery combination exhibits visible texture bleed.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every mip, filter and device combination checked. All approved `atlasMatrix` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line icons:2",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "atlasMatrix",
+          "description": "Capture each approved device, size, filter and mip combination, including the border pixels used to count bleed.",
+          "fields": {
+            "device": "text",
+            "sizePx": "positive",
+            "filter": "text",
+            "mip": "count",
+            "bleedPixels": "count"
+          },
+          "tests": [
+            [
+              "device",
+              "==",
+              "case.device",
+              1
+            ],
+            [
+              "sizePx",
+              "==",
+              "case.sizePx",
+              1
+            ],
+            [
+              "filter",
+              "==",
+              "case.filter",
+              1
+            ],
+            [
+              "mip",
+              "==",
+              "case.mip",
+              1
+            ],
+            [
+              "bleedPixels",
+              "==",
+              0,
+              0
+            ]
+          ],
+          "population": "metrics.atlas.combosRequired",
+          "axes": {
+            "device": "profile.devices",
+            "sizePx": "profile.atlasSizes",
+            "filter": "profile.atlasFilters",
+            "mip": "profile.atlasMips"
+          }
+        }
+      ]
+    },
+    {
+      "id": "install-icons:1",
+      "pillar": "Install icons",
+      "name": "Manifest and install icons resolve",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "An install icon fails to load in the running build",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every icon URL resolves and decodes in the running build; a running build that lags the source is reported separately from a source failure",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line install-icons:1",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "install-icons:2",
+      "pillar": "Install icons",
+      "name": "Icon set completeness",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Required size missing",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "All required sizes present in the build",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line install-icons:2",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "reward-art:1",
+      "pillar": "Item and tier art",
+      "name": "Item art readable",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Item art unreadable",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Item and reward art reads at displayed size",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reward-art:1",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "reward-art:2",
+      "pillar": "Item and tier art",
+      "name": "Tier colours consistent and distinct",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Tier art inconsistent",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Tier art matches palette rules. All approved `tierSeparation` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reward-art:2",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "tierSeparation",
+          "description": "Measure separation between distinct tiers independently of same-tier colour drift.",
+          "fields": {
+            "first": "color",
+            "second": "color"
+          },
+          "tests": [
+            [
+              "distance",
+              ">=",
+              "profile.minTierDeltaE",
+              2
+            ]
+          ],
+          "derive": {
+            "distance": [
+              "deltaE",
+              "first",
+              "second"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "texture-weight:1",
+      "pillar": "Texture weight",
+      "name": "Asset bytes per scene",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Over budget",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Texture bytes within the delivery budget",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line texture-weight:1",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "texture-weight:2",
+      "pillar": "Texture weight",
+      "name": "Every referenced asset decodes",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A referenced asset fails",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every referenced required asset resolves and decodes in a complete build",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line texture-weight:2",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "hit-shape:1",
+      "pillar": "Hit shape",
+      "name": "Hit shapes traced to the gameplay code that uses them",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A debug or diagnostic shape is cited as gameplay logic",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Hit shape claims trace the function that resolves the interaction (damage, collision, pickup or click), not a diagnostics helper. All approved `frameColliders` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line hit-shape:1",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "frameColliders",
+          "description": "Match the frame and collider actually consumed by the damage path to the exported frame manifest. Frames may share pixels while retaining distinct pivots.",
+          "fields": {
+            "sourceWidth": "positive",
+            "sourceHeight": "positive",
+            "trimX": "count",
+            "trimY": "count",
+            "rotated": "bool",
+            "frame": "text",
+            "collider": "text",
+            "pixels": "sha256",
+            "pivotX": "number",
+            "pivotY": "number"
+          },
+          "tests": [
+            [
+              "frame",
+              "==",
+              "case.frame",
+              1
+            ],
+            [
+              "collider",
+              "==",
+              "case.collider",
+              1
+            ],
+            [
+              "pixels",
+              "==",
+              "case.pixels",
+              1
+            ],
+            [
+              "pivotX",
+              "==",
+              "case.pivotX",
+              1
+            ],
+            [
+              "pivotY",
+              "==",
+              "case.pivotY",
+              1
+            ],
+            [
+              "sourceWidth",
+              "==",
+              "case.sourceWidth",
+              1
+            ],
+            [
+              "sourceHeight",
+              "==",
+              "case.sourceHeight",
+              1
+            ],
+            [
+              "trimX",
+              "==",
+              "case.trimX",
+              1
+            ],
+            [
+              "trimY",
+              "==",
+              "case.trimY",
+              1
+            ],
+            [
+              "rotated",
+              "==",
+              "case.rotated",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hit-shape:2",
+      "pillar": "Hit shape",
+      "name": "Height or depth layer repro",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "No height or depth repro",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Two objects at different heights or depths resolve by the declared model in a repro",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line hit-shape:2",
+        "cwd": "templates/17-sprite-hitbox-packer",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "source": "Decoded assets, atlas samples and hit-shape overlays captured at gameplay scale.",
+  "hash": "sha256:75bfa2006a56e06a3d5713fb9035b1a09edad21eb9fa51f3eab37008f83494e6",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty inputs or zero measured cases earn U and zero points. A measured zero failures is valid.",
+  "sampleFields": {
+    "icons": [
+      "devices"
+    ],
+    "atlas": [
+      "combosRequired",
+      "combosChecked"
+    ],
+    "install": [
+      "urls"
+    ],
+    "iconSet": [
+      "sizesPresent"
+    ],
+    "tierPalette": [
+      "pairs"
+    ],
+    "weight": [
+      "bytesPerScene"
+    ],
+    "decode": [
+      "referenced"
+    ],
+    "heightLayer": [
+      "reproCases"
+    ]
+  },
+  "profiles": {
+    "no-height-layer": {
+      "reason": "The game has no height or depth layer for overlapping objects. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "hit-shape:1": 20,
+        "hit-shape:2": 0
+      }
+    },
+    "no-item-tiers": {
+      "reason": "Items have no colour tiers or rarity levels. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "reward-art:1": 20,
+        "reward-art:2": 0
+      }
+    },
+    "no-install-icons": {
+      "reason": "The game ships no installable web or app icons from this atlas; their 20 points are shared over the other lines. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "icons:1": 12.5,
+        "icons:2": 12.5,
+        "install-icons:1": 0,
+        "install-icons:2": 0,
+        "reward-art:1": 12.5,
+        "reward-art:2": 12.5,
+        "texture-weight:1": 12.5,
+        "texture-weight:2": 12.5,
+        "hit-shape:1": 12.5,
+        "hit-shape:2": 12.5
+      }
+    },
+    "no-hit-shapes": {
+      "reason": "Sprites carry no gameplay hit, collision or click shapes; their 20 points are shared over the other lines. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "icons:1": 12.5,
+        "icons:2": 12.5,
+        "install-icons:1": 12.5,
+        "install-icons:2": 12.5,
+        "reward-art:1": 12.5,
+        "reward-art:2": 12.5,
+        "texture-weight:1": 12.5,
+        "texture-weight:2": 12.5,
+        "hit-shape:1": 0,
+        "hit-shape:2": 0
+      }
+    }
+  }
+}

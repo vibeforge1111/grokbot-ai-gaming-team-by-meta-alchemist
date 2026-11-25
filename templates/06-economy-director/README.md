@@ -1,0 +1,126 @@
+# Game Economy Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Model sources and sinks for a currency or reward, compare progression paths, and simulate how balance changes affect player choices.
+
+It works for any game where players earn and spend something: a farming or life sim, a city builder, a card game, a mobile puzzle game with boosters, a turn-based strategy game, a free game with no store at all, and also games with combat. Combat timing and payment checks are optional modules: a game without combat or without a store skips them and leaves their lines unmeasured.
+
+Rubric: `gbf-06-game-economy-director` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## What it checks, by system
+
+| Your game has | Rubric lines | Skill |
+|---|---|---|
+| Anything players earn and spend (every game this template fits) | `progression:1`, `progression:2`, `reward-fairness:1`, `entitlement-consistency:2`, `loot-access:2` | `resource-sources-and-sinks-model`, `monte-carlo-meta-balancer` |
+| Random rewards (drops, card packs, chests, random harvests) | `loot-access:1` | `resource-sources-and-sinks-model` |
+| Something sold for real money | `reward-fairness:2`, `entitlement-consistency:1`, growth checks `store-pricing` and `paid-advantage` | `monte-carlo-meta-balancer`, owner-run store sandbox drills |
+| Combat | `combat-balance:1`, `combat-balance:2` | `combat-timing-auditor` |
+
+Words used here: a source adds a resource (a harvest, a quest reward), a sink removes it (an upgrade, upkeep, a crafting cost). An entitlement is something a player owns or has unlocked. Idempotent reward counting means a claim that is retried still grants the reward exactly once. The authoritative balance is the value in the save or on the server, as opposed to the number shown on screen.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks (one row per owner-approved test case) have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U. All ten lines in this rubric are computed.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample size (population) required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Needs | Reads | Passes when |
+|---|---|---|---|---|
+| `combat-balance:1` | Time to defeat a target (only with combat) | combat | `timeToDefeat.label`, `timeToDefeat.perAttackP50S`, `timeToDefeat.simVsRecordedMaxDeltaS` | timeToDefeat.label is nonEmpty; min(timeToDefeat.perAttackP50S) >= P.timeToDefeatBandS.0; max(timeToDefeat.perAttackP50S) <= P.timeToDefeatBandS.1; timeToDefeat.simVsRecordedMaxDeltaS <= P.maxModelDeltaS (needed for level 4 only) |
+| `combat-balance:2` | Multi-attacker damage follows the build's rules | combat | `multiAttacker.examples`, `receipts.modelInputs` | `focusFireMaxErr(multiAttacker.examples,P.combatModel) <= P.maxMultiAttackerErrS`, approved receipt cases pass |
+| `loot-access:1` | Random reward rates reported with intervals | random rewards | `randomRewards.intervalsReported`, `randomRewards.rare`, `randomRewards.drops` | randomRewards.intervalsReported is true (hard: level 1 on failure); wilsonWidth(randomRewards.rare,randomRewards.drops) <= P.maxRewardIntervalWidth |
+| `loot-access:2` | No unreachable required path | any game (also reads `randomRewards` today) | `randomRewards.intervalsReported`, `reachability.unreachable` | randomRewards.intervalsReported is true; reachability.unreachable == 0 (hard: level 1 on failure) |
+| `progression:1` | Time to the next progression step states its assumptions | any game | `progression.assumptionsStated`, `progression.stepDaysEstimate`, `receipts.simulationRun` | `len(progression.assumptionsStated) >= 2`, `progression.stepDaysEstimate <= P.maxProgressStepDays`, approved receipt cases pass |
+| `progression:2` | Progress consistency across save paths | two or more save paths | `storage.pathACounts`, `storage.pathBCounts`, `receipts.storageReplay` | `storage.pathACounts == storage.pathBCounts`, approved receipt cases pass |
+| `reward-fairness:1` | Idempotent reward counting | any game | `rewards.retriesSimulated`, `rewards.duplicateGrantsA`, `rewards.duplicateGrantsB` | rewards.retriesSimulated >= 10; rewards.duplicateGrantsA == 0 (hard: level 1 on failure); rewards.duplicateGrantsB == 0 (hard: level 1 on failure) |
+| `reward-fairness:2` | Free and paid paths compared (only if the game sells something) | something for sale | `freeVsPaid.assumptionsStated`, `freeVsPaid.freeItemsPerPeriod`, `freeVsPaid.paidItemsPerPeriod` | freeVsPaid.assumptionsStated is true (hard: level 1 on failure); ratio(freeVsPaid.freeItemsPerPeriod,freeVsPaid.paidItemsPerPeriod) >= P.minFreeShareOfPaid |
+| `entitlement-consistency:1` | Payment safety fails closed | something for sale | `payments.failurePathTests`, `payments.failedPaymentGrants`, `payments.duplicatePaymentGrants`, `payments.lostItems`, `receipts.entitlementDrills` | `payments.failurePathTests >= 1`, `payments.failedPaymentGrants == 0`, `payments.duplicatePaymentGrants == 0`, `payments.lostItems == 0`, approved receipt cases pass |
+| `entitlement-consistency:2` | Displayed vs authoritative balance | any game | `balance.operations`, `balance.mismatches` | balance.operations >= 20; balance.mismatches == 0 (hard: level 1 on failure) |
+
+In plain words: "time to kill" is how long a fight takes; "focus fire" is several attackers on one target; "rarity probabilities with intervals" means random reward rates reported with a 95 percent range; a "tier" is any step of progression (a level, a farm upgrade, a city tier); "per season" means per fixed period your game uses (a week, an update). "Fails closed" means the line never passes without the failure tests.
+
+## Growth checks (reported beside the grade, not scored)
+
+Both apply only to a game that sells something. A game without a store leaves them out of the pack.
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `store-pricing` | store-pricing | `storePricing.pricedFromTable`, `storePricing.items`, `storePricing.priceChangesLogged` | storePricing.pricedFromTable == storePricing.items; storePricing.priceChangesLogged is true |
+| `paid-advantage` | paid-advantage | `paidEdge.paidPowerItems`, `paidEdge.reviewedItems`, `paidEdge.paidOfferItems` | paidEdge.paidPowerItems == 0 (hard: level 1 on failure); paidEdge.reviewedItems >= paidEdge.paidOfferItems |
+
+`store-pricing`: every item for sale takes its price from one price table, and price changes are logged. `paid-advantage`: every paid or pass-only item was reviewed and none gives a gameplay advantage a player who never pays cannot get (for example a stronger weapon, a faster crop or an extra card copy).
+
+## Adapt to your game
+
+Define what a resource, a choice and a progression goal mean in your game. A few short examples (illustrative only):
+
+- Farming or life sim: coins, seeds and energy; goal: the barn upgrade; no combat, so the owner approves the `no-combat` profile.
+- City builder: taxes, upkeep and building materials; goal: unlocking the next district; check that no required road or bridge becomes unaffordable.
+- Card game: packs, crafting dust and cards; random rewards from packs feed `loot-access:1`.
+- Mobile puzzle game with boosters: coins, boosters and lives; if boosters are sold, run the payment drills in the store sandbox.
+- Free game with no store: every earned resource still gets sources, sinks, progression and reward counting checks; the owner approves the `no-store` profile.
+- 3D arena game with combat: add the `combat-timing-auditor` module for time to defeat a target.
+
+Then:
+
+- If the game has combat, export a timing simulation for each weapon or attack from the build rules and label the results as simulated. If it has none, select `no-combat` (below) and leave the `timeToDefeat` and `multiAttacker` groups out.
+- If the game sells anything, point the payment failure-path tests at your store sandbox. The owner runs them; the bot only reviews the results and never makes a charge, refund or grant. Without these tests the entitlement line fails closed by design.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+### Lines that may not apply
+
+Two approved profiles in `RUBRIC.json` cover games without combat or without a store. The owner approves them before scoring and sets them in the game profile, for example `"rubricProfile": ["no-combat", "no-store"]` in `pack.profile`:
+
+| Profile | Use when | Lines that read N/A | Lines that take the points | Groups you can leave out |
+|---|---|---|---|---|
+| `no-combat` | The game has no combat | `combat-balance:1`, `combat-balance:2` | the pillar's 20 points are shared over the other eight lines (12.5 each) | `timeToDefeat`, `multiAttacker`, `receipts.modelInputs` |
+| `no-store` | The game sells nothing (no paid items, currency or access) | `reward-fairness:2`, `entitlement-consistency:1` | `reward-fairness:1` and `entitlement-consistency:2` take 20 each | `freeVsPaid`, `payments`, `receipts.entitlementDrills`, and the `storePricing` and `paidEdge` checks |
+
+An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can be PASS. See [docs/RUBRIC_GUIDE.md](../../docs/RUBRIC_GUIDE.md#applicability) for how points move when profiles are combined. Name the profiles next to the grade.
+
+These lines have no profile. When your game lacks the system, leave the group out; the line grades U (0 points, lower coverage) and the verdict stays CONDITIONAL. Say in the report that it does not apply, and never fill a line with made-up values:
+
+| Line | Applies when your game has | If it does not, leave out |
+|---|---|---|
+| `loot-access:1` | Random rewards | `randomRewards` (`loot-access:2` also reads `randomRewards.intervalsReported` today) |
+| `progression:2` | Two or more save paths | `storage` and `receipts.storageReplay` |
+
+## Owner calls
+
+- How long should a typical player take to reach the next step of progression, and, if you sell anything, how close should a player who never pays get to a paying player?
+- Does your game take real money at all, and if so, which store sandbox will you use for the failure tests? If it sells nothing, approve the `no-store` profile; if it has no combat, approve `no-combat`.
+
+## Blockers
+
+- For a game with purchases, payment failure evidence needs a sandbox account; the worked example is synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

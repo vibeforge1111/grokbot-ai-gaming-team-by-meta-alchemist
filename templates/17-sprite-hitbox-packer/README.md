@@ -1,0 +1,106 @@
+# 2D Sprite Atlas & Hitbox Packer
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Pack sprites into atlases and check their silhouettes, hitboxes, palettes and memory use on your target devices.
+
+An atlas (or sprite sheet) is one large image that holds many small ones. A hitbox (or hit shape) is the invisible shape the game uses to decide what touches what: an attack, the ground under a platformer character, a pickup, or the area a click or tap lands on. Despite "Pixel" in the name, the template works for pixel art and for smooth high-resolution art.
+
+Rubric: `gbf-17-sprite-hitbox-packer` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks (one measured row per agreed test case, stored under `pack.receipts`) have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population (the list of measured cases) required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `icons:1` | Small icons readable at real scale | computed | `icons.devices`, `icons.minDisplayedPx`, `icons.bleedPixels` | icons.devices covers P.devices; icons.minDisplayedPx >= P.minIconPx; icons.bleedPixels == 0 |
+| `icons:2` | Atlas integrity across mips and filters | computed | `atlas.combosChecked`, `atlas.combosRequired`, `atlas.bleedFailures`, `receipts.atlasMatrix` | `atlas.combosChecked >= atlas.combosRequired`, `atlas.bleedFailures == 0`, approved receipt cases pass |
+| `install-icons:1` | Manifest and install icons resolve | computed | `install.resolvedAndDecoded`, `install.urls`, `install.liveBehindSeparated` | install.resolvedAndDecoded == install.urls (hard: level 1 on failure); install.liveBehindSeparated is true |
+| `install-icons:2` | Icon set completeness | computed | `iconSet.sizesPresent` | missing(iconSet.sizesPresent,P.requiredIconSizes) == 0 |
+| `reward-art:1` | Item art readable | computed | `itemArt.minDisplayedPx`, `itemArt.unreadable` | itemArt.minDisplayedPx >= P.minItemArtPx; itemArt.unreadable == 0 |
+| `reward-art:2` | Tier colours consistent and distinct | computed | `tierPalette.pairs`, `receipts.tierSeparation` | `deltaEMax(tierPalette.pairs) <= P.maxTierPaletteDeltaE`, approved receipt cases pass |
+| `texture-weight:1` | Asset bytes per scene | computed | `weight.bytesPerScene` | max(weight.bytesPerScene) <= P.maxTextureBytesPerScene |
+| `texture-weight:2` | Every referenced asset decodes | computed | `decode.completeBuild`, `decode.decoded`, `decode.referenced` | decode.completeBuild is true (hard: level 1 on failure); decode.decoded == decode.referenced (hard: level 1 on failure) |
+| `hit-shape:1` | Hit shapes traced to the gameplay code that uses them | computed | `hitShape.tracedCaller`, `hitShape.diagnosticsOnly`, `receipts.frameColliders` | `hitShape.tracedCaller == "gameplay-path"`, `hitShape.diagnosticsOnly false `, approved receipt cases pass |
+| `hit-shape:2` | Height or depth layer repro | computed | `heightLayer.reproCases`, `heightLayer.resolvedByDeclaredModel` | heightLayer.reproCases >= 1; heightLayer.resolvedByDeclaredModel == heightLayer.reproCases |
+
+## Growth checks (reported beside the grade, not scored)
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `atlas-packing` | atlas-packing | `packing.occupancy`, `packing.paddingPx` | packing.occupancy >= P.minPackingOccupancy; packing.paddingPx >= P.minPaddingPx |
+
+## Adapt to your game
+
+Use the atlas and palette skills for sprites, icons or interface art in a 2D or 3D project. Hit-shape checks apply only to assets that take part in gameplay collision. Examples (pick what fits, ignore the rest):
+
+| Game | Art style and filter | Hit shapes worth checking | Tiers or install icons |
+|---|---|---|---|
+| Pixel-art platformer | pixel art, `nearest`, no mips | body box on ground and one-way platforms | none: `no-item-tiers` profile |
+| Mobile puzzle game | smooth art, `linear`, mips | tap areas on pieces | booster icons; app icon set |
+| Point-and-click adventure | painted art, `linear` | hotspots on scene objects | none |
+| Top-down farming sim | pixel art, `nearest` | pickup and harvest areas; jumping over fences is a height case | crop quality stars |
+| Card game | smooth art, `linear`, mips | card click areas | rarity gems |
+| Fighting or action game | either | hurt, push and hit boxes per frame | none |
+| 3D game with 2D interface | smooth icons, `linear` | none: `no-hit-shapes` profile | item rarity frames; store icons |
+
+- For gameplay hit shapes, trace the outcome to the game logic that really decides it (local or on a server) and record that function. The engine expects `hitShape.tracedCaller` to be the fixed value `"gameplay-path"`; it means "traced to the real gameplay code", even when that code handles collision, pickups or clicks rather than damage.
+- `hit-shape:2` (Height or depth layer repro) applies only if the game has a height or depth layer, for example jumping over a hazard in a top-down game or stacked clickable objects. Otherwise select the `no-height-layer` profile.
+- List required install icon sizes for the platforms you ship to. A game with no install icons selects the `no-install-icons` profile.
+- "Reward" and "tierPalette" lines cover any item, collectible or medal art told apart by colour tiers. A game without colour tiers selects the `no-item-tiers` profile.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+### Lines that may not apply
+
+Four approved profiles in `RUBRIC.json` mark lines not applicable. The owner approves them before scoring and sets them in the game profile, for example `"rubricProfile": ["no-item-tiers", "no-install-icons"]` in `pack.profile`:
+
+| Profile | Use when | Lines that read N/A | Lines that take the points | Groups you can leave out |
+|---|---|---|---|---|
+| `no-height-layer` | No height or depth layer for overlapping objects | `hit-shape:2` | `hit-shape:1` takes the pillar's 20 | `heightLayer` |
+| `no-item-tiers` | Items have no colour tiers or rarity levels | `reward-art:2` | `reward-art:1` takes the pillar's 20 | `tierPalette` |
+| `no-install-icons` | No installable web or app icons from this atlas | `install-icons:1`, `install-icons:2` | the other eight lines, 12.5 each | `install`, `iconSet` |
+| `no-hit-shapes` | Sprites carry no gameplay hit, collision or click shapes | `hit-shape:1`, `hit-shape:2` | the other eight lines, 12.5 each | `hitShape`, `heightLayer` |
+
+An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can be PASS. Name the profiles next to the grade. A line with no profile stays U when your game lacks the feature, for example `reward-art:1` in a game with no item or collectible art at all: 0 points, never a defect, and the verdict stays CONDITIONAL.
+
+## Decisions only you make
+
+- What is your texture budget per scene, and which install icon sizes do your platforms require?
+- Which rubric profiles apply (`no-hit-shapes`, `no-height-layer`, `no-install-icons`, `no-item-tiers`), approved before scoring and set as `rubricProfile` in the game profile.
+
+## Blockers
+
+- Icon readability needs device captures; the worked example is synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

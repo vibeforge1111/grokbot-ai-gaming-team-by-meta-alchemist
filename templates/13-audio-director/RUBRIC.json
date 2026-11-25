@@ -1,0 +1,467 @@
+{
+  "id": "gbf-13-audio-director",
+  "version": "1.3.0",
+  "migration": "1.0.0 to 1.1.0: anchors made game-agnostic (constants live in the game profile), lens gates added; ids, weights and passAt unchanged; 1.1.0 to 1.1.1: gameProfile generalized to your-game-profile for the public kit and hash recomputed with the documented kit algorithm (spec/RUBRIC_HASH.md); ids, weights, anchors and passAt unchanged; 1.1.1 to 1.1.2: Updated the public source note. Scoring rules and pack fields are unchanged. 1.1.2 to 1.1.3: Evidence descriptions and fixture working directories now refer to the distributed kit. 1.1.3 to 1.1.4: Empty samples and zero case counts earn U. Computed lines require the declared evidence type. 1.1.4 to 1.1.5: Adds per-transition, voice stress and timed caption receipts with device and mix budgets. 1.1.5 to 1.2.0: Line, pillar and anchor wording made genre-neutral (ids, weights, conditions and pass marks unchanged); adds owner-selected not-applicable profiles no-music, no-spoken-lines, no-spatial-audio. 1.2.0 to 1.3.0: Evidence pack names made genre-neutral (maxFirstTapHandlerMs to maxFirstInputHandlerMs; firstTapHandlerMs to firstInputHandlerMs; announcerLines to spokenLines; leakedNodesAfter10Matches to leakedNodesAfterRepeatedSessions; autoplayBlockedHandled to startBlockedHandled). Scoring, weights, conditions and pass marks unchanged; rename these fields in packs made for 1.2.0.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "pillars": [
+    {
+      "id": "load-and-start",
+      "name": "Load and start",
+      "points": 20
+    },
+    {
+      "id": "music-and-mix",
+      "name": "Music and mix",
+      "points": 20
+    },
+    {
+      "id": "loudness-and-voices",
+      "name": "Loudness and voices",
+      "points": 20
+    },
+    {
+      "id": "space-and-variety",
+      "name": "Space and variety",
+      "points": 20
+    },
+    {
+      "id": "voice-and-lifecycle",
+      "name": "Voice and lifecycle",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "load-and-start:1",
+      "pillar": "Load and start",
+      "name": "Load cost and asset streaming",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Loading audio exceeds the startup budget for the first playable session",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Cold and warm audio bytes and latency within budget from the pack",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line load-and-start:1",
+        "cwd": "templates/13-audio-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "load-and-start:2",
+      "pillar": "Load and start",
+      "name": "Audio start on first input",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Starting audio blocks the first player input",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "First input handler meets the approved device budget",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line load-and-start:2",
+        "cwd": "templates/13-audio-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "music-and-mix:1",
+      "pillar": "Music and mix",
+      "name": "Music system",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Music fails its design in a capture",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Music behaves per design in captures (state changes, ducking); stem count is not mandated. All approved `transitions` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line music-and-mix:1",
+        "cwd": "templates/13-audio-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "transitions",
+          "description": "Capture the scheduled beat, measured start, gain change at the splice and ducking depth, including an interrupted fade.",
+          "fields": {
+            "fromState": "text",
+            "toState": "text",
+            "interruption": "bool",
+            "scheduleErrorMs": "count",
+            "gainJumpDb": "number",
+            "duckDb": "number"
+          },
+          "tests": [
+            [
+              "fromState",
+              "==",
+              "case.fromState",
+              1
+            ],
+            [
+              "toState",
+              "==",
+              "case.toState",
+              1
+            ],
+            [
+              "interruption",
+              "==",
+              "case.interruption",
+              1
+            ],
+            [
+              "scheduleErrorMs",
+              "<=",
+              "profile.maxScheduleErrorMs",
+              1
+            ],
+            [
+              "gainJumpDb",
+              "<=",
+              "profile.maxGainJumpDb",
+              1
+            ],
+            [
+              "duckDb",
+              ">=",
+              "profile.minDuckDb",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "music-and-mix:2",
+      "pillar": "Music and mix",
+      "name": "Mix and bus structure",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "A cue is masked in a recording",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Essential cues stay distinguishable in the busiest representative recordings",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line music-and-mix:2",
+        "cwd": "templates/13-audio-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "loudness-and-voices:1",
+      "pillar": "Loudness and voices",
+      "name": "Loudness and true-peak limiting",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "The decoded overlapping-cue recording exceeds the approved true-peak ceiling.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Loudness and true peak measured from a fresh recording in the pack. Every approved mixedPeak case passes.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line loudness-and-voices:1",
+        "cwd": "templates/13-audio-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      },
+      "receipts": [
+        {
+          "name": "mixedPeak",
+          "description": "Decode the recorded output from a worst-case overlapping cue burst. Measure true peak with the declared meter and keep the recording.",
+          "fields": {
+            "meter": "text",
+            "simultaneous": "positive",
+            "truePeakDb": "number"
+          },
+          "tests": [
+            [
+              "simultaneous",
+              ">",
+              1,
+              1
+            ],
+            [
+              "truePeakDb",
+              "<=",
+              "profile.maxTruePeakDb",
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "loudness-and-voices:2",
+      "pillar": "Loudness and voices",
+      "name": "Active voice cap and stealing on the target device",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Voice count unmeasured or above the cap",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Peak active voices stay within the approved device cap. All approved `voiceStress` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line loudness-and-voices:2",
+        "cwd": "templates/13-audio-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "voiceStress",
+          "description": "Trigger overlapping cues beyond the cap. Record admitted, stolen and remaining voices from the mixer trace.",
+          "fields": {
+            "attempted": "positive",
+            "cap": "positive",
+            "peak": "positive",
+            "stolen": "count",
+            "activeAfterStop": "count"
+          },
+          "tests": [
+            [
+              "cap",
+              "==",
+              "profile.voiceCap",
+              1
+            ],
+            [
+              "attempted",
+              ">",
+              "row.cap",
+              1
+            ],
+            [
+              "peak",
+              "<=",
+              "row.cap",
+              1
+            ],
+            [
+              "stolen",
+              ">",
+              0,
+              1
+            ],
+            [
+              "activeAfterStop",
+              "==",
+              0,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "space-and-variety:1",
+      "pillar": "Space and variety",
+      "name": "Spatial audio and occlusion",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Spatial cues misleading",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Direction and distance read in recordings",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line space-and-variety:1",
+        "cwd": "templates/13-audio-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "space-and-variety:2",
+      "pillar": "Space and variety",
+      "name": "SFX variety and procedural pooling",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Cue storm in a recording",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "No repeated cue storm in recordings",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line space-and-variety:2",
+        "cwd": "templates/13-audio-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "voice-and-lifecycle:1",
+      "pillar": "Voice and lifecycle",
+      "name": "Spoken lines and captions",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A traced utterance is paired with the wrong caption.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Captions checked event by event against spoken lines. All approved `captionEvents` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line voice-and-lifecycle:1",
+        "cwd": "templates/13-audio-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "captionEvents",
+          "description": "Match each scheduled utterance to its caption and measured absolute onset offset.",
+          "fields": {
+            "cue": "text",
+            "caption": "text",
+            "offsetMs": "count"
+          },
+          "tests": [
+            [
+              "cue",
+              "==",
+              "case.cue",
+              1
+            ],
+            [
+              "caption",
+              "==",
+              "case.caption",
+              0
+            ],
+            [
+              "offsetMs",
+              "<=",
+              "profile.maxCaptionOffsetMs",
+              1
+            ]
+          ],
+          "population": "metrics.captions.spokenLines"
+        }
+      ]
+    },
+    {
+      "id": "voice-and-lifecycle:2",
+      "pillar": "Voice and lifecycle",
+      "name": "Lifecycle (mute, backgrounding, start rules, memory)",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Audio lost after resume",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Audio starts and resumes correctly after backgrounding and interruption",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line voice-and-lifecycle:2",
+        "cwd": "templates/13-audio-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "source": "Audio evidence includes asset and startup costs, mix measurements, voice usage and playback lifecycle.",
+  "hash": "sha256:f2a4ca49a3558221e0623ba23f9fd4c11a36f9d9cf12a382794a11cfe31bad99",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty inputs or zero measured cases earn U and zero points. A measured zero failures is valid.",
+  "sampleFields": {
+    "load": [
+      "startLatencyMs"
+    ],
+    "gesture": [
+      "firstInputHandlerMs"
+    ],
+    "music": [
+      "statesSpecified"
+    ],
+    "mix": [
+      "worstCaseRecordings"
+    ],
+    "voices": [
+      "peakVoices"
+    ],
+    "spatial": [
+      "directionTrials"
+    ],
+    "captions": [
+      "spokenLines"
+    ],
+    "micFallback": [
+      "tested"
+    ]
+  },
+  "profiles": {
+    "no-music": {
+      "reason": "The game has no music system. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "music-and-mix:1": 0,
+        "music-and-mix:2": 20
+      }
+    },
+    "no-spoken-lines": {
+      "reason": "The game has no spoken lines. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "voice-and-lifecycle:1": 0,
+        "voice-and-lifecycle:2": 20
+      }
+    },
+    "no-spatial-audio": {
+      "reason": "The game has no positional or occluded sound. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "space-and-variety:1": 0,
+        "space-and-variety:2": 20
+      }
+    }
+  }
+}

@@ -1,0 +1,128 @@
+# How to use: Parallel Game Producer and Pitch Architect
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Plan parallel work against actual capacity, reconcile ticket rows and turn verified project evidence into a local pitch deck draft.
+
+The short name is Producer (12). It works for a solo developer or a team, in any genre, engine or platform.
+
+- **Pipeline stage:** Milestone planning and pitch review.
+- **When:** At each milestone cut, before a go or hold decision, and before a pitch review.
+- **You provide:** An owner-approved ledger export, task graph, time and capacity estimates, discipline receipts (the gates), approved pitch facts and a reviewed local deck, in one project file; your game profile (`game-profile`).
+- **You get:** A local wave plan, dependency exceptions, a ledger rollup and a go or hold recommendation (`work-plan`), a slide-by-slide pitch draft in Markdown (`pitch-draft`), and a 100-point grade (`grade-record`). Nothing is sent or filed until you do it.
+- **Takes from:** A read-only tracker export (`tracker-export`) and ticket drafts from Bug Desk (18); grade records (`grade-record`) from any other template, used as gates; P0 ticket drafts from Bug Desk (18), Streamer and Patch Notes (20), Access, Input and Localization (21) and Live Service Trust (22); the owner's approved pitch facts.
+- **Hands to:** The owner: the work plan (waves, ledger rollup, go or hold, as `work-plan`, which Streamer and Patch Notes (20) can also read) and the Markdown pitch draft (`pitch-draft`). After human review, approved claims can feed Store Page and Presskit Director (19) and Trailer Director (10). Its own grade record. See Team handoffs in [README.md](README.md#team-handoffs).
+
+New to terms such as wave, lock, run receipt, gate or deck review? See [Words used here](README.md#words-used-here).
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents. Both work offline with the local files.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the [`parallel-game-producer-lens-engine`](skills/parallel-game-producer-lens-engine/SKILL.md) skill, then the [`parallel-game-producer-getting-started`](skills/parallel-game-producer-getting-started/SKILL.md) skill, then the five evidence skills below. The `parallel-handoffs` skill carries the planner.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. When the owner picks a cadence, create the routine from section 2 of [PROMPTS.md](PROMPTS.md): "Create a routine with this prompt: ...". Replace `<cadence>` first.
+4. Say: "Run the parallel-game-producer-getting-started skill." It runs the synthetic example first, then helps you build your own project file.
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the planner and the engine, or let the agent write them from the `-lens-engine` and `parallel-handoffs` skills. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/12-parallel-game-producer
+node engine/plan.mjs fixtures/project.json --plan  # waves, ledger and decision for the synthetic project
+node engine/plan.mjs fixtures/project.json --deck  # the local pitch draft
+node engine/lens.mjs fixtures/good-pack.json       # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs              # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                  # rubric, recipe embed and text checks
+```
+
+For your own project: `node engine/plan.mjs your-project.json --pack > your-pack.json`, then `node engine/lens.mjs your-pack.json`.
+
+## Skills
+
+| Skill | Use it when | Feeds rubric lines |
+|---|---|---|
+| [`parallel-game-producer-getting-started`](skills/parallel-game-producer-getting-started/SKILL.md) | First run with a new owner: agree the milestone, the ask and the profile one question at a time, and run the first plan and grade. | all (setup) |
+| [`milestone-scope`](skills/milestone-scope/SKILL.md) | A milestone needs a bounded list of deliverables, each with a role, a done condition, a proof and an hours estimate. | `milestone:1`, `milestone:2` |
+| [`parallel-handoffs`](skills/parallel-handoffs/SKILL.md) | Overlapping work needs a dependency order, lock checks and the planner. Carries `engine/plan.mjs` and the example project. | `workstreams:1`, `workstreams:2` |
+| [`ledger-reconciliation`](skills/ledger-reconciliation/SKILL.md) | A milestone brief quotes backlog totals or claims a fix is closed. Maps Bug Desk (18) fields onto ticket rows. | `ledger:1`, `ledger:2` |
+| [`decision-gates`](skills/decision-gates/SKILL.md) | The owner needs a go or hold decision: required gates (including other templates' grade records) and owned risks. | `release-decision:1`, `release-decision:2` |
+| [`evidence-pitch`](skills/evidence-pitch/SKILL.md) | The team needs a local pitch deck for a named audience and decision, built only from approved facts. | `pitch:1`, `pitch:2` |
+| [`parallel-game-producer-lens-engine`](skills/parallel-game-producer-lens-engine/SKILL.md) | You need to grade a pack: write the engine files from this skill and run them. | all (grading) |
+
+## First real pack
+
+1. Agree the profile with the getting-started skill. Copy `fixtures/project.json`, set `synthetic` to false, and replace every value with your own snapshot.
+2. Keep each evidence file (the tracker export, gate records, run notes, the deck review) on disk next to the project file. In `artifactFiles`, give one entry per metric group with a relative `path` under the project directory and the hex SHA-256 of its bytes.
+3. Run `node engine/plan.mjs your-project.json --pack` and give the output to the evidence producer (the person or tool that vouches for the files). They return a `game-evidence-v1` producer receipt in `project.producerReceipt`:
+   - The receipt names `producer`, `profileId`, `device`, `hook`, and a capture or trace ID in `gameplayArtifact`. Set `schema` to `game-evidence-v1` and include the matching `packId`, `gitSha` and `liveSha`.
+   - Its `profileSha256`, `artifactsSha256` and `observationsSha256` cover the profile, the artifact array and the array `[metrics, receipts, judgements, populations, openP0]`, using an empty object for absent collections and zero for an absent openP0.
+   - Hash UTF-8 JSON with recursively sorted object keys and no whitespace.
+4. Run the planner again with the receipt in place. The engine checks the digests and the local files; an unverified pack returns an INVALID decision with the reason. Keep its plan and slides local while the owner resolves the missing evidence.
+
+Keep the worked example labelled synthetic. Never copy a synthetic row into a real project.
+
+## Decisions only you make
+
+- The milestone, its audience and the ask. For example "first 30 levels playable" for a puzzle game, asking a publisher to approve the soft-launch art pass; or "chapter one with voice" for a narrative adventure, asking to fund chapter two.
+- Which claims are approved for the pitch, and which work is cut if the ask is declined.
+- Each role's hours per wave and which resources only one task may change at a time.
+- The required gates. A gate can be another template's grade record, a playable build check or a sign-off.
+- The build every receipt must match, and the bands.
+
+## Known limits
+
+- Risk rows are checked for an owner, trigger, fallback and decision point, not for whether the fallback is realistic.
+- One observed case can earn level 4 on a line.
+- Needs your own project snapshot; the worked example is synthetic.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `tracker-export` (optional, ^1.0.0) | the owner | `.grokbot-team/artifacts/tracker-export/` | Continue: count only the tickets in the owner's project file, and write "ASSUMPTION: no tracker-export available" in the report; reconciliation lines stay unmeasured. |
+| `grade-record` (optional, ^1.0.0) | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 09 HUD, 10 Trailer, 11 Environment, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 17 Sprites, 18 Bug Desk, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 00 Starter | `.grokbot-team/artifacts/grade-record/` | Continue: a gate with no grade record from the other template stays unmeasured; never mark it passed. |
+| `ticket-draft` (optional, ^1.0.0) | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 09 HUD, 10 Trailer, 11 Environment, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 17 Sprites, 18 Bug Desk, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 00 Starter | `.grokbot-team/artifacts/ticket-draft/` | Continue without it. Start the report with "ASSUMPTION: no ticket-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `cohort-report` (optional, ^1.0.0) | 27 Retention | `.grokbot-team/artifacts/cohort-report/` | Continue without it. Start the report with "ASSUMPTION: no cohort-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `store-submission-checklist` (optional, ^1.0.0) | 28 App Store | `.grokbot-team/artifacts/store-submission-checklist/` | Continue without it. Start the report with "ASSUMPTION: no store-submission-checklist available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `work-plan` 1.0.0 | JSON plus a Markdown plan draft | `.grokbot-team/artifacts/work-plan/` | 20 Patch Notes |
+| `pitch-draft` 1.0.0 | Markdown slide draft plus a JSON claim list | `.grokbot-team/artifacts/pitch-draft/` | 10 Trailer, 19 Store Page |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | the owner |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `incidents`, `entitlements`, `balance`, `regions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`, `releases`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-12-parallel-game-producer` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.
+- Roles are anonymous labels; no names, accounts or emails in the project file. The planner writes only to standard output.

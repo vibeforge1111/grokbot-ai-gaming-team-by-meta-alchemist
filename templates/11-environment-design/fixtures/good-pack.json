@@ -1,0 +1,215 @@
+{
+ "packId": "example-11-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "minLandmarkPx": 18,
+  "maxArtDeltaE": 8,
+  "maxOccludedCueFrames": 0,
+  "devices": [
+   "desktop",
+   "phone"
+  ],
+  "overlayStates": [
+   "browse",
+   "place"
+  ],
+  "landmarkDevice": "handheld",
+  "cases": {
+   "sightlines": [
+    {
+     "id": "approach",
+     "seed": "sample-seed",
+     "route": "approach",
+     "camera": "overview",
+     "expectedVisible": true
+    },
+    {
+     "id": "exit",
+     "seed": "sample-seed",
+     "route": "exit",
+     "camera": "overview",
+     "expectedVisible": true
+    }
+   ]
+  }
+ },
+ "artifacts": [
+  {
+   "id": "art-landmarks",
+   "kind": "capture",
+   "path": "captures/landmarks.json",
+   "sha256": null
+  },
+  {
+   "id": "art-locationOverlays",
+   "kind": "trace",
+   "path": "traces/locationOverlays.json",
+   "sha256": null
+  },
+  {
+   "id": "art-occlusionProbe",
+   "kind": "trace",
+   "path": "traces/occlusionProbe.json",
+   "sha256": null
+  },
+  {
+   "id": "art-occlusion",
+   "kind": "capture",
+   "path": "captures/occlusion.json",
+   "sha256": null
+  },
+  {
+   "id": "art-consistency",
+   "kind": "capture",
+   "path": "captures/consistency.json",
+   "sha256": null
+  },
+  {
+   "path": "captures/cap-states.json",
+   "sha256": null,
+   "id": "cap-states",
+   "kind": "capture"
+  },
+  {
+   "path": "captures/cap-routes.json",
+   "sha256": null,
+   "id": "cap-routes",
+   "kind": "capture"
+  },
+  {
+   "path": "captures/cap-art-ref.json",
+   "sha256": null,
+   "id": "cap-art-ref",
+   "kind": "capture"
+  },
+  {
+   "id": "sample-sightlines-approach",
+   "kind": "trace",
+   "path": "receipts/sightlines/approach.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-sightlines-exit",
+   "kind": "trace",
+   "path": "receipts/sightlines/exit.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "landmarks": {
+   "artifact": "art-landmarks",
+   "landmarksChecked": 9,
+   "device": "handheld",
+   "minOnScreenPx": 22
+  },
+  "locationOverlays": {
+   "artifact": "art-locationOverlays",
+   "statesObserved": [
+    "browse",
+    "place"
+   ],
+   "unexpectedOverlays": 0,
+   "measuredCases": 2
+  },
+  "occlusionProbe": {
+   "artifact": "art-occlusionProbe",
+   "probesRun": 240
+  },
+  "occlusion": {
+   "artifact": "art-occlusion",
+   "routes": 6,
+   "occludedCueFrames": 0
+  },
+  "consistency": {
+   "artifact": "art-consistency",
+   "devices": [
+    "desktop",
+    "phone"
+   ],
+   "pairs": [
+    [
+     "#5b7f4a",
+     "#5d824c"
+    ],
+    [
+     "#c2b280",
+     "#c0af7d"
+    ]
+   ]
+  }
+ },
+ "judgements": {
+  "scene-composition:1": {
+   "level": 3,
+   "judge": "art-director",
+   "evidenceIds": [
+    "cap-states"
+   ],
+   "note": "Example only."
+  },
+  "scene-composition:2": {
+   "level": 3,
+   "judge": "art-director",
+   "evidenceIds": [
+    "cap-routes"
+   ],
+   "note": "Example only."
+  },
+  "traversal-affordance:1": {
+   "level": 3,
+   "judge": "playtest-panel",
+   "evidenceIds": [
+    "cap-routes"
+   ],
+   "note": "Example only."
+  },
+  "traversal-affordance:2": {
+   "level": 4,
+   "judge": "art-director",
+   "evidenceIds": [
+    "cap-routes"
+   ],
+   "note": "Example only."
+  },
+  "environment-consistency:1": {
+   "level": 3,
+   "judge": "art-director",
+   "evidenceIds": [
+    "cap-art-ref"
+   ],
+   "note": "Example only."
+  }
+ },
+ "receipts": {
+  "sightlines": [
+   {
+    "id": "approach",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-sightlines-approach",
+    "schema": "sightline-v1",
+    "seed": "sample-seed",
+    "route": "approach",
+    "camera": "overview",
+    "expectedVisible": true,
+    "rayVisible": true,
+    "cueOccludedFrames": 0
+   },
+   {
+    "id": "exit",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-sightlines-exit",
+    "schema": "sightline-v1",
+    "seed": "sample-seed",
+    "route": "exit",
+    "camera": "overview",
+    "expectedVisible": true,
+    "rayVisible": true,
+    "cueOccludedFrames": 0
+   }
+  ]
+ }
+}

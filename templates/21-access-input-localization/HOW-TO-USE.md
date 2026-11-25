@@ -1,0 +1,126 @@
+# How to use: Access, Input and Localization QA
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Check whether players can navigate, read and control your game across supported inputs, languages and accessibility settings.
+
+- **Pipeline stage:** Polish, Ship
+- **When:** Before any wider release and when you add a platform or language.
+- **You provide:** Captures on supported inputs, a string inventory and caption evidence.
+- **You get:** Input journey checks, readability report, motion and flash check (flashing above your limit blocks release), string inventory and locale readiness, and local finding drafts. Nothing is filed until you file it.
+- **Takes from:** HUD Designer and the playtest team.
+- **Hands to:** Bug Desk (local ticket drafts).
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+New to terms such as journey task, approved profile, release blocker or pseudo-locale? See [Words used here](README.md#words-used-here).
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the access-input-localization-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/21-access-input-localization
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when | Feeds rubric lines |
+|---|---|---|
+| [`access-input-localization-getting-started`](skills/access-input-localization-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Access, Input and Localization QA grade. | all (setup) |
+| [`input-navigation-and-device-switch-audit`](skills/input-navigation-and-device-switch-audit/SKILL.md) | You check that players can finish the game's required tasks with every supported input, and that remapping, button prompts, controller disconnects and menu focus recover. | `input:1`, `input:2` |
+| [`readability-and-caption-evidence`](skills/readability-and-caption-evidence/SKILL.md) | You measure text size and contrast over real scenes, check meaning without colour, match required sounds to on-time captions, and check menus and error messages. | `readability:1`, `readability:2`, `captions-and-assistive-info:1`, `captions-and-assistive-info:2` |
+| [`motion-flash-comfort-check`](skills/motion-flash-comfort-check/SKILL.md) | You check reduced motion, camera shake, flash safety (a release blocker) and hold or toggle alternatives with paired captures. | `motion-and-flash-comfort:1`, `motion-and-flash-comfort:2` |
+| [`string-inventory-and-pseudo-locale`](skills/string-inventory-and-pseudo-locale/SKILL.md) | You build the inventory of player-facing text and the guard against new hard-coded text (single-language games too), and, once a second language is planned, run pseudo-locale and supported-locale captures. | `localization-readiness:1`, `localization-readiness:2` |
+| [`file-to-shared-ledger`](skills/file-to-shared-ledger/SKILL.md) | You turn a confirmed finding into a local ticket draft, or a proposed change to an existing ticket, for the human to review and file. | none (drafts findings) |
+| [`access-input-localization-lens-engine`](skills/access-input-localization-lens-engine/SKILL.md) | Use when you need to grade an Access, Input and Localization QA evidence pack: write the engine files from this skill and run them. | all (grading) |
+
+## Rubric
+
+`gbf-21-access-input-localization` v1.2.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence | In plain words |
+|---|---|---|---|---|
+| `input:1` | Required tasks across supported inputs | 10 | capture | Every supported input finishes every required journey task (for example title screen, settings, pause menu, one core play task, save or results). Worth 20 points under the single-input profile. |
+| `input:2` | Remapping, prompts and device switching | 10 | capture | Controls can be remapped, button prompts match the device, and disconnects and menu focus recover. N/A under the single-input profile. |
+| `readability:1` | Text size and contrast over real scenes | 10 | capture | The smallest text and the weakest contrast, measured over real game scenes, meet your profile. |
+| `readability:2` | Meaning without colour | 10 | capture | Anything shown by colour is also shown by shape, label, pattern or sound. |
+| `captions-and-assistive-info:1` | Caption event log | 10 | trace | Every sound the player needs has the right caption, on time, checked event by event. |
+| `captions-and-assistive-info:2` | Menus and error messages | 10 | capture | Menus work without a mouse or touch, and error messages say what to do. |
+| `motion-and-flash-comfort:1` | Reduced motion respected everywhere | 10 | capture | Each promised reduction visibly applies in paired captures with the setting off and on. |
+| `motion-and-flash-comfort:2` | Flash safety and hold/toggle alternatives | 10 | capture | No flashing above your safety limit (a release blocker), and every hold action has a toggle or alternative. |
+| `localization-readiness:1` | String inventory | 10 | static | Every player-facing string is listed, and a build guard rejects new hard-coded text. Worth 20 points under the single-language profile. |
+| `localization-readiness:2` | Locale tests (N/A under the single-language profile) | 10 | capture | Pseudo-locale and supported-locale captures show no cut-off text or missing glyphs. N/A under the single-language profile. |
+
+## Decisions only you make
+
+- Does this release ship in one language? If so, approve the `single-language` profile (`profile.rubricProfile: "single-language"`) and record who approved it, for which build and why. The locale tests line becomes N/A and the string inventory line is worth 20 points. Switch back to the default profile as soon as a second language enters scope.
+- Which flash safety limit to follow (`maxFlashesPerSecond`). Flashing above it blocks release under every profile.
+- Does the game support only one input method (for example touch only)? If so, approve the `single-input` profile the same way, alone or with the language one (`"rubricProfile": ["single-language", "single-input"]`). Remapping, prompts and device switching (`input:2`) become N/A and the required tasks line is worth 20 points.
+- Which input devices and journey tasks count as supported. A feature your game does not have and no profile covers stays U (unmeasured), never a pass.
+
+## Known limits
+
+- Capture the player journey on each supported input device; the worked example is synthetic.
+- `single-language` and `single-input` are the only profiles. Other missing features (no sound that needs a caption, no reduced-motion promise, no keyboard or gamepad menus) leave their line U and the verdict CONDITIONAL; the report says the line does not apply.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `hud-capture-set` (optional, ^1.0.0) | 09 HUD | `.grokbot-team/artifacts/hud-capture-set/` | Continue: capture text and contrast states yourself, or leave readability:1 and readability:2 unmeasured, and write "ASSUMPTION: no hud-capture-set available". |
+| `audio-mix-report` (optional, ^1.0.0) | 13 Audio | `.grokbot-team/artifacts/audio-mix-report/` | Continue: build the cue list from the game's event log, or leave captions-and-assistive-info:1 unmeasured. |
+| `tracker-export` (optional, ^1.0.0) | the owner | `.grokbot-team/artifacts/tracker-export/` | Continue without it. Start the report with "ASSUMPTION: no tracker-export available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `dialogue-draft` (optional, ^1.0.0) | 14 NPC and Lore | `.grokbot-team/artifacts/dialogue-draft/` | Continue without it. Start the report with "ASSUMPTION: no dialogue-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `access-report` 1.0.0 | JSON plus a Markdown summary | `.grokbot-team/artifacts/access-report/` | 14 NPC and Lore, 19 Store Page, 28 App Store |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-21-access-input-localization` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

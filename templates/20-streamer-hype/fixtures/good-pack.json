@@ -1,0 +1,291 @@
+{
+ "packId": "example-20-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "maxCaptureOverheadMs": 1.5,
+  "streamResolutions": [
+   "1920x1080",
+   "1280x720"
+  ],
+  "shareTag": "from=",
+  "minStreamDelayMs": 800,
+  "cases": {
+   "partnerFeeds": [
+    {
+     "id": "public",
+     "feed": "public"
+    },
+    {
+     "id": "partner",
+     "feed": "partner"
+    }
+   ],
+   "capturePairs": [
+    {
+     "id": "desktop",
+     "device": "desktop"
+    }
+   ],
+   "shippedClaims": [
+    {
+     "id": "replay",
+     "claim": "replay",
+     "commit": "sample-change-replay"
+    },
+    {
+     "id": "overlay",
+     "claim": "overlay",
+     "commit": "sample-change-overlay"
+    }
+   ]
+  }
+ },
+ "artifacts": [
+  {
+   "id": "art-recording",
+   "kind": "capture",
+   "path": "captures/recording.json",
+   "sha256": null
+  },
+  {
+   "id": "art-captureCost",
+   "kind": "trace",
+   "path": "traces/captureCost.json",
+   "sha256": null
+  },
+  {
+   "id": "art-spectate",
+   "kind": "capture",
+   "path": "captures/spectatorPolicy.json",
+   "sha256": null
+  },
+  {
+   "id": "art-spectatorRead",
+   "kind": "capture",
+   "path": "captures/spectatorRead.json",
+   "sha256": null
+  },
+  {
+   "id": "art-streamerMode",
+   "kind": "capture",
+   "path": "captures/streamerMode.json",
+   "sha256": null
+  },
+  {
+   "id": "art-links",
+   "kind": "trace",
+   "path": "traces/links.json",
+   "sha256": null
+  },
+  {
+   "id": "art-notes",
+   "kind": "static",
+   "path": "static/notes.json",
+   "sha256": null
+  },
+  {
+   "id": "art-claims",
+   "kind": "static",
+   "path": "static/claims.json",
+   "sha256": null
+  },
+  {
+   "id": "art-fairness",
+   "kind": "trace",
+   "path": "traces/fairness.json",
+   "sha256": null
+  },
+  {
+   "id": "art-receipts",
+   "kind": "static",
+   "path": "static/receipts.json",
+   "sha256": null
+  },
+  {
+   "id": "art-spectatorLinks",
+   "kind": "capture",
+   "path": "captures/spectatorLinks.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-partnerFeeds-public",
+   "kind": "capture",
+   "path": "receipts/partnerFeeds/public.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-partnerFeeds-partner",
+   "kind": "capture",
+   "path": "receipts/partnerFeeds/partner.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-capturePairs-desktop",
+   "kind": "trace",
+   "path": "receipts/capturePairs/desktop.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-shippedClaims-replay",
+   "kind": "static",
+   "path": "receipts/shippedClaims/replay.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-shippedClaims-overlay",
+   "kind": "static",
+   "path": "receipts/shippedClaims/overlay.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "recording": {
+   "artifact": "art-recording",
+   "replayed": true,
+   "exported": true,
+   "soundOk": true,
+   "attributionOk": true,
+   "measuredCases": 1
+  },
+  "captureCost": {
+   "artifact": "art-captureCost",
+   "frameMsOff": [
+    7.8,
+    8.4,
+    9
+   ],
+   "frameMsOn": [
+    8.5,
+    9.1,
+    9.9
+   ]
+  },
+  "spectatorPolicy": {
+   "artifact": "art-spectate",
+   "policyViolations": 0,
+   "measuredCases": 1
+  },
+  "spectatorRead": {
+   "artifact": "art-spectatorRead",
+   "resolutionsChecked": [
+    "1920x1080",
+    "1280x720"
+   ],
+   "unreadable": 0
+  },
+  "streamerMode": {
+   "artifact": "art-streamerMode",
+   "namesLeaked": 0,
+   "sensitiveLeaked": 0,
+   "measuredCases": 1
+  },
+  "links": {
+   "artifact": "art-links",
+   "links": [
+    "https://example.game/?from=clip",
+    "https://example.game/?from=share"
+   ],
+   "resolved": 2
+  },
+  "notes": {
+   "artifact": "art-notes",
+   "lines": 2,
+   "mappedToCommits": 2
+  },
+  "claims": {
+   "artifact": "art-claims",
+   "claims": 4,
+   "matchingCode": 4
+  },
+  "fairness": {
+   "artifact": "art-fairness",
+   "creatorFeatureOutcomeEffects": 0,
+   "measuredCases": 1
+  },
+  "receipts": {
+   "artifact": "art-receipts",
+   "unconditionalPassAccepted": false,
+   "measuredValuesPresent": true,
+   "measuredCases": 1
+  },
+  "spectatorLinks": {
+   "artifact": "art-spectatorLinks",
+   "tested": 5,
+   "openedIntendedView": 5,
+   "respectsDelay": true
+  },
+  "creatorLog": {
+   "artifact": "art-notes",
+   "choices": [
+    {
+     "observedOn": "15 Jan 2026",
+     "sourceRef": "local-source-note",
+     "reason": "recent genre coverage",
+     "sourceOpened": true,
+     "reviewed": true
+    }
+   ]
+  }
+ },
+ "receipts": {
+  "partnerFeeds": [
+   {
+    "id": "public",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-partnerFeeds-public",
+    "feed": "public",
+    "delayMs": 900,
+    "restrictedFields": 0,
+    "opened": true
+   },
+   {
+    "id": "partner",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-partnerFeeds-partner",
+    "feed": "partner",
+    "delayMs": 900,
+    "restrictedFields": 0,
+    "opened": true
+   }
+  ],
+  "capturePairs": [
+   {
+    "id": "desktop",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-capturePairs-desktop",
+    "device": "desktop",
+    "replayOn": "route",
+    "replayOff": "route",
+    "ticksOn": 120,
+    "ticksOff": 120,
+    "onP95Ms": 12,
+    "offP95Ms": 11,
+    "offArtifact": "art-captureCost"
+   }
+  ],
+  "shippedClaims": [
+   {
+    "id": "replay",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-shippedClaims-replay",
+    "claim": "replay",
+    "commit": "sample-change-replay",
+    "switchEnabled": true,
+    "buildReceipt": "art-recording"
+   },
+   {
+    "id": "overlay",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-shippedClaims-overlay",
+    "claim": "overlay",
+    "commit": "sample-change-overlay",
+    "switchEnabled": true,
+    "buildReceipt": "art-recording"
+   }
+  ]
+ }
+}

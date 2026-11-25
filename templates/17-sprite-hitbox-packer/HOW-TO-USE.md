@@ -1,0 +1,117 @@
+# How to use: 2D Sprite Atlas & Hitbox Packer
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Pack sprites into atlases and check their silhouettes, hitboxes, palettes and memory use on your target devices.
+
+- **Pipeline stage:** Production
+- **When:** Whenever sprites, icons, interface art or animations change, in a 2D game or in the 2D art of a 3D game. Pixel art and smooth high-resolution art both work.
+- **You provide:** Sprite frames, animation lists, palette files, and the art style (pixel art or smooth) and packing tool you use.
+- **You get:** Packed atlas, hitbox data, palette variants, a size report.
+- **Takes from:** Art pipeline.
+- **Hands to:** Game Feel and the team validating the animation in play.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the sprite-hitbox-packer-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/17-sprite-hitbox-packer
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`sprite-hitbox-packer-getting-started`](skills/sprite-hitbox-packer-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first 2D Sprite Atlas & Hitbox Packer grade. |
+| [`sprite-atlas-packer`](skills/sprite-atlas-packer/SKILL.md) | Pack sprites, icons or interface art into atlases with padding and extruded edges so filtering never bleeds, for pixel art or smooth art, and prove they render clean on every device. Also covers install icons if your game ships them. |
+| [`sprite-hit-shape-checker`](skills/sprite-hit-shape-checker/SKILL.md) | Check the shapes the game uses to decide what touches what (attack hitboxes, platform collision, pickups, click or tap areas) against the code that really uses them, frame by frame. |
+| [`sprite-palette-and-readability-checker`](skills/sprite-palette-and-readability-checker/SKILL.md) | Check that reward, item or collectible art reads at its displayed size and that colour tiers and palette swaps stay distinct and match the palette rules. |
+| [`sprite-hitbox-packer-lens-engine`](skills/sprite-hitbox-packer-lens-engine/SKILL.md) | Use when you need to grade a 2D Sprite Atlas & Hitbox Packer evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-17-sprite-hitbox-packer` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md). "Damage caller" means the gameplay code that really uses a hit shape (damage, collision, pickups or clicks). "Reward" and "tierPalette" cover any item, collectible or medal art told apart by colour tiers.
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `icons:1` | Small icons readable at real scale | 10 | capture |
+| `icons:2` | Atlas integrity across mips and filters | 10 | capture |
+| `install-icons:1` | Manifest and install icons resolve | 10 | trace |
+| `install-icons:2` | Icon set completeness | 10 | static |
+| `reward-art:1` | Item art readable | 10 | capture |
+| `reward-art:2` | Tier colours consistent and distinct | 10 | capture |
+| `texture-weight:1` | Asset bytes per scene | 10 | trace |
+| `texture-weight:2` | Every referenced asset decodes | 10 | trace |
+| `hit-shape:1` | Hit shapes traced to the gameplay code that uses them | 10 | trace |
+| `hit-shape:2` | Height or depth layer repro | 10 | capture |
+
+## Decisions only you make
+
+- What is your texture budget per scene, and which install icon sizes do your platforms require?
+- Which rubric profiles apply, approved before scoring and set as `rubricProfile` in the game profile: `no-hit-shapes`, `no-height-layer`, `no-install-icons`, `no-item-tiers`. For example a puzzle game with no height layer selects `no-height-layer`. A selected line reads N/A (not U, not a defect), the points move to the lines that still apply, and the verdict can reach PASS. A missing feature with no profile, such as item art in a game with none, leaves its line U and the verdict CONDITIONAL.
+
+## Known limits
+
+- Icon readability needs device captures; the worked example is synthetic.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `feel-findings` (optional, ^1.0.0) | 01 Game Feel | `.grokbot-team/artifacts/feel-findings/` | Continue: work from the animation list, and write "ASSUMPTION: no feel-findings available" in the report. |
+| `fairness-findings` (optional, ^1.0.0) | 15 Server Fairness | `.grokbot-team/artifacts/fairness-findings/` | Continue without it. Start the report with "ASSUMPTION: no fairness-findings available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `atlas-manifest` 1.0.0 | JSON plus the packed atlas images | `.grokbot-team/artifacts/atlas-manifest/` | 01 Game Feel, 09 HUD, 19 Store Page |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-17-sprite-hitbox-packer` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

@@ -1,0 +1,101 @@
+{
+  "packId": "synthetic-ledger-001",
+  "status": "VALID",
+  "synthetic": true,
+  "gitSha": "synthetic",
+  "liveSha": "synthetic",
+  "gameProfile": "synthetic",
+  "artifacts": [
+    {
+      "id": "ledger-export",
+      "kind": "trace"
+    },
+    {
+      "id": "authority-probe",
+      "kind": "trace"
+    },
+    {
+      "id": "wallet-checks",
+      "kind": "trace"
+    },
+    {
+      "id": "entitlement-read",
+      "kind": "trace"
+    },
+    {
+      "id": "digest",
+      "kind": "static"
+    }
+  ],
+  "profile": {
+    "minProbeAttempts": 18,
+    "slaDays": 3,
+    "maxOverdue": 0,
+    "maxRefundsOwed": 2,
+    "maxReportedOnly": 0,
+    "addressPattern": "^0x[0-9a-fA-F]{40}$",
+    "maskHead": 6,
+    "maskTail": 4
+  },
+  "metrics": {
+    "ledger": {
+      "artifact": "ledger-export",
+      "rows": 17,
+      "unknownState": 0,
+      "confirmedWithoutEvidence": 0,
+      "approvedWithoutDecision": 0,
+      "doubleGrants": 0
+    },
+    "authority": {
+      "artifact": "authority-probe",
+      "forbiddenAttempted": 18,
+      "forbiddenSucceeded": 0,
+      "valueMovingFunctions": 0
+    },
+    "eligibility": {
+      "measuredCases": 13,
+      "artifact": "ledger-export",
+      "ineligibleProposedOrApproved": 0,
+      "redirectsWithoutDecision": 0,
+      "notWinnerAccepted": 0
+    },
+    "wallet": {
+      "artifact": "wallet-checks",
+      "unmaskedInOutputs": 0,
+      "poisonPlanted": 1,
+      "poisonCaught": 1,
+      "exchangePlanted": 1,
+      "exchangeCaught": 1,
+      "flaggedProposed": 0
+    },
+    "refunds": {
+      "artifact": "ledger-export",
+      "measuredCases": 5,
+      "owed": 1
+    },
+    "sla": {
+      "measuredCases": 8,
+      "artifact": "ledger-export",
+      "approvedNotConfirmed": 0,
+      "overdue": 0,
+      "maxWaitDays": 0,
+      "refundsOwed": 1,
+      "deadlineSet": true
+    },
+    "recon": {
+      "measuredCases": 5,
+      "artifact": "entitlement-read",
+      "snapshotPresent": true,
+      "mismatches": 0,
+      "unrecorded": 0,
+      "confirmedReportedOnly": 0
+    },
+    "ops": {
+      "measuredCases": 17,
+      "artifact": "digest",
+      "digestBuilt": true,
+      "digestHasFullAddress": false,
+      "deadlineAlert": true
+    }
+  }
+}

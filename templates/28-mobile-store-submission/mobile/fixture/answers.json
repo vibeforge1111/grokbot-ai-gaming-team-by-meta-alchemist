@@ -1,0 +1,17 @@
+{
+ "collectsAccountData": true,
+ "privacyPolicyUrl": "https://example.com/privacy",
+ "sellsDigitalItemsOutsideStoreBilling": false,
+ "thirdPartyLoginOnly": true,
+ "guestPlayWithoutAccount": true,
+ "offersAppleOrEquivalentLogin": false,
+ "accountDeletionInApp": true,
+ "ownerHoldsSigning": true,
+ "listing": {
+  "screenshots": true,
+  "description": true,
+  "ageRating": true,
+  "dataSafetyForm": true,
+  "appPrivacyLabels": true
+ }
+}

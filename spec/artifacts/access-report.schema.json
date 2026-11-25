@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/access-report.schema.json",
+  "title": "Access report (team artifact)",
+  "description": "Input, readability, motion, caption and locale findings from Access, Input and Localization. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "access-report"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One finding.",
+      "items": {
+        "type": "object",
+        "required": [
+          "area",
+          "finding",
+          "blocker"
+        ],
+        "properties": {
+          "area": {
+            "type": "string",
+            "description": "input, readability, motion, captions or locale.",
+            "enum": [
+              "input",
+              "readability",
+              "motion",
+              "captions",
+              "locale"
+            ]
+          },
+          "device": {
+            "type": "string",
+            "description": "Device or input method."
+          },
+          "locale": {
+            "type": "string",
+            "description": "Locale, when relevant."
+          },
+          "finding": {
+            "type": "string",
+            "description": "What was observed."
+          },
+          "blocker": {
+            "type": "boolean",
+            "description": "True for a release blocker such as a flash safety failure."
+          }
+        }
+      }
+    }
+  }
+}

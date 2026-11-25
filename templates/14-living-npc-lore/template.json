@@ -1,0 +1,97 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-14-living-npc-lore",
+  "slug": "14-living-npc-lore",
+  "name": "Living AI NPC and Lore Architect",
+  "shortName": "NPC and Lore",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Design what an NPC can remember, how it responds and which version of a world fact it may reveal. Audit those decisions against scoped transcripts and traces.",
+  "stage": "Narrative prototyping and playtest",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "living-npc-lore-getting-started",
+  "skills": [
+    "living-npc-lore-getting-started",
+    "canon-reconciliation",
+    "npc-dialogue-repair",
+    "npc-memory-boundaries",
+    "npc-replay-panel",
+    "npc-viewpoint",
+    "living-npc-lore-lens-engine"
+  ],
+  "routines": [
+    "living-npc-lore-review"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-14-living-npc-lore",
+    "version": "2.0.0",
+    "hash": "sha256:20ef0214590da4ecbf06925c74370f0f19fcf12fb8e39816c5b0663e4c1c05c8"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "access-report": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "dialogue-draft",
+      "version": "1.0.0",
+      "format": "JSON plus a Markdown dialogue draft",
+      "schema": "spec/artifacts/dialogue-draft.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "access-report",
+      "required": false,
+      "schema": "spec/artifacts/access-report.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  },
+  "license": "MIT"
+}

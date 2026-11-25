@@ -1,0 +1,626 @@
+{
+ "packId": "example-10-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "maxLengthS": 90,
+  "targetLufs": -14,
+  "lufsTolerance": 1,
+  "maxAvSyncMs": 45,
+  "minCaptionMatch": 0.95,
+  "cases": {
+   "finalReview": [
+    {
+     "id": "wide-picture",
+     "cut": "wide",
+     "channel": "picture",
+     "expectedUnits": 1200
+    },
+    {
+     "id": "wide-audio",
+     "cut": "wide",
+     "channel": "audio",
+     "expectedUnits": 60
+    },
+    {
+     "id": "wide-captions",
+     "cut": "wide",
+     "channel": "captions",
+     "expectedUnits": 30
+    },
+    {
+     "id": "wide-title",
+     "cut": "wide",
+     "channel": "title",
+     "expectedUnits": 1
+    },
+    {
+     "id": "wide-filename",
+     "cut": "wide",
+     "channel": "filename",
+     "expectedUnits": 1
+    },
+    {
+     "id": "wide-metadata",
+     "cut": "wide",
+     "channel": "metadata",
+     "expectedUnits": 1
+    },
+    {
+     "id": "vertical-picture",
+     "cut": "vertical",
+     "channel": "picture",
+     "expectedUnits": 1200
+    },
+    {
+     "id": "vertical-audio",
+     "cut": "vertical",
+     "channel": "audio",
+     "expectedUnits": 60
+    },
+    {
+     "id": "vertical-captions",
+     "cut": "vertical",
+     "channel": "captions",
+     "expectedUnits": 30
+    },
+    {
+     "id": "vertical-title",
+     "cut": "vertical",
+     "channel": "title",
+     "expectedUnits": 1
+    },
+    {
+     "id": "vertical-filename",
+     "cut": "vertical",
+     "channel": "filename",
+     "expectedUnits": 1
+    },
+    {
+     "id": "vertical-metadata",
+     "cut": "vertical",
+     "channel": "metadata",
+     "expectedUnits": 1
+    }
+   ],
+   "decodedCuts": [
+    {
+     "id": "wide",
+     "width": 1920,
+     "height": 1080,
+     "fps": 30,
+     "codec": "sample-codec"
+    },
+    {
+     "id": "vertical",
+     "width": 1080,
+     "height": 1920,
+     "fps": 30,
+     "codec": "sample-codec"
+    }
+   ],
+   "captionAlignment": [
+    {
+     "id": "intro",
+     "cue": "intro",
+     "caption": "intro",
+     "maxOffsetMs": 90
+    },
+    {
+     "id": "close",
+     "cue": "close",
+     "caption": "close",
+     "maxOffsetMs": 90
+    }
+   ],
+   "editDecisions": [
+    {
+     "id": "opening",
+     "shot": "opening"
+    },
+    {
+     "id": "play",
+     "shot": "play"
+    },
+    {
+     "id": "close",
+     "shot": "close"
+    }
+   ]
+  },
+  "deliveryCuts": [
+   "wide",
+   "vertical"
+  ],
+  "reviewChannels": [
+   "picture",
+   "audio",
+   "captions",
+   "title",
+   "filename",
+   "metadata"
+  ],
+  "maxTruePeakDb": -1
+ },
+ "artifacts": [
+  {
+   "id": "art-shots",
+   "kind": "capture",
+   "path": "captures/shots.json",
+   "sha256": null
+  },
+  {
+   "id": "art-claims",
+   "kind": "static",
+   "path": "static/claims.json",
+   "sha256": null
+  },
+  {
+   "id": "art-edl",
+   "kind": "static",
+   "path": "static/edl.json",
+   "sha256": null
+  },
+  {
+   "id": "art-cropFraming",
+   "kind": "capture",
+   "path": "captures/cropFraming.json",
+   "sha256": null
+  },
+  {
+   "id": "art-redaction",
+   "kind": "capture",
+   "path": "captures/redaction.json",
+   "sha256": null
+  },
+  {
+   "id": "art-exports",
+   "kind": "capture",
+   "path": "captures/exports.json",
+   "sha256": null
+  },
+  {
+   "id": "art-recovery",
+   "kind": "capture",
+   "path": "captures/recovery.json",
+   "sha256": null
+  },
+  {
+   "id": "art-captions",
+   "kind": "capture",
+   "path": "captures/captions.json",
+   "sha256": null
+  },
+  {
+   "id": "art-sound",
+   "kind": "capture",
+   "path": "captures/sound.json",
+   "sha256": null
+  },
+  {
+   "id": "art-licensing",
+   "kind": "static",
+   "path": "static/licensing.json",
+   "sha256": null
+  },
+  {
+   "path": "captures/cap-169-review.json",
+   "sha256": null,
+   "id": "cap-169-review",
+   "kind": "capture"
+  },
+  {
+   "id": "sample-finalReview-wide-picture",
+   "kind": "capture",
+   "path": "receipts/finalReview/wide-picture.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-wide-audio",
+   "kind": "capture",
+   "path": "receipts/finalReview/wide-audio.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-wide-captions",
+   "kind": "capture",
+   "path": "receipts/finalReview/wide-captions.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-wide-title",
+   "kind": "capture",
+   "path": "receipts/finalReview/wide-title.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-wide-filename",
+   "kind": "capture",
+   "path": "receipts/finalReview/wide-filename.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-wide-metadata",
+   "kind": "capture",
+   "path": "receipts/finalReview/wide-metadata.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-vertical-picture",
+   "kind": "capture",
+   "path": "receipts/finalReview/vertical-picture.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-vertical-audio",
+   "kind": "capture",
+   "path": "receipts/finalReview/vertical-audio.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-vertical-captions",
+   "kind": "capture",
+   "path": "receipts/finalReview/vertical-captions.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-vertical-title",
+   "kind": "capture",
+   "path": "receipts/finalReview/vertical-title.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-vertical-filename",
+   "kind": "capture",
+   "path": "receipts/finalReview/vertical-filename.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-finalReview-vertical-metadata",
+   "kind": "capture",
+   "path": "receipts/finalReview/vertical-metadata.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-decodedCuts-wide",
+   "kind": "capture",
+   "path": "receipts/decodedCuts/wide.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-decodedCuts-vertical",
+   "kind": "capture",
+   "path": "receipts/decodedCuts/vertical.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-captionAlignment-intro",
+   "kind": "capture",
+   "path": "receipts/captionAlignment/intro.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-captionAlignment-close",
+   "kind": "capture",
+   "path": "receipts/captionAlignment/close.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-editDecisions-opening",
+   "kind": "static",
+   "path": "receipts/editDecisions/opening.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-editDecisions-play",
+   "kind": "static",
+   "path": "receipts/editDecisions/play.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-editDecisions-close",
+   "kind": "static",
+   "path": "receipts/editDecisions/close.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "shots": {
+   "artifact": "art-shots",
+   "total": 3,
+   "fromGradedBuild": 3,
+   "namedInPack": 3
+  },
+  "claims": {
+   "artifact": "art-claims",
+   "claimsChecked": 9,
+   "unavailableImplied": 0
+  },
+  "edl": {
+   "artifact": "art-edl",
+   "sourceClipsRecorded": true,
+   "decisionsRecorded": 3
+  },
+  "cropFraming": {
+   "artifact": "art-cropFraming",
+   "shotsWithActionPoint": 14,
+   "shots": 14,
+   "hudContextKept": true,
+   "cut": "vertical"
+  },
+  "redaction": {
+   "artifact": "art-redaction",
+   "namesVisibleUnredacted": 0,
+   "framesScanned": 2400,
+   "totalFrames": 2400
+  },
+  "exports": {
+   "artifact": "art-exports",
+   "lengthS": 62,
+   "independentDecodeOk": true,
+   "avSyncMs": 18,
+   "rendered": true,
+   "measuredCases": 1
+  },
+  "recovery": {
+   "artifact": "art-recovery",
+   "interruptionsInjected": 2,
+   "corruptedOutputs": 0
+  },
+  "captions": {
+   "artifact": "art-captions",
+   "matchedCues": 2,
+   "totalCues": 2
+  },
+  "sound": {
+   "artifact": "art-sound",
+   "integratedLufs": -14.2,
+   "truePeakDb": -1.2,
+   "checkedOnDecodedFile": true,
+   "measuredCases": 1
+  },
+  "licensing": {
+   "artifact": "art-licensing",
+   "tracks": 1,
+   "licensedTracks": 1
+  }
+ },
+ "judgements": {
+  "readable-story:2": {
+   "level": 3,
+   "judge": "owner-review",
+   "evidenceIds": [
+    "cap-169-review"
+   ],
+   "note": "Example only: a named reviewer watched the 16:9 cut."
+  }
+ },
+ "receipts": {
+  "finalReview": [
+   {
+    "id": "wide-picture",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-wide-picture",
+    "cut": "wide",
+    "channel": "picture",
+    "expectedUnits": 1200,
+    "checkedUnits": 1200,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "wide-audio",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-wide-audio",
+    "cut": "wide",
+    "channel": "audio",
+    "expectedUnits": 60,
+    "checkedUnits": 60,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "wide-captions",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-wide-captions",
+    "cut": "wide",
+    "channel": "captions",
+    "expectedUnits": 30,
+    "checkedUnits": 30,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "wide-title",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-wide-title",
+    "cut": "wide",
+    "channel": "title",
+    "expectedUnits": 1,
+    "checkedUnits": 1,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "wide-filename",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-wide-filename",
+    "cut": "wide",
+    "channel": "filename",
+    "expectedUnits": 1,
+    "checkedUnits": 1,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "wide-metadata",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-wide-metadata",
+    "cut": "wide",
+    "channel": "metadata",
+    "expectedUnits": 1,
+    "checkedUnits": 1,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "vertical-picture",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-vertical-picture",
+    "cut": "vertical",
+    "channel": "picture",
+    "expectedUnits": 1200,
+    "checkedUnits": 1200,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "vertical-audio",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-vertical-audio",
+    "cut": "vertical",
+    "channel": "audio",
+    "expectedUnits": 60,
+    "checkedUnits": 60,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "vertical-captions",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-vertical-captions",
+    "cut": "vertical",
+    "channel": "captions",
+    "expectedUnits": 30,
+    "checkedUnits": 30,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "vertical-title",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-vertical-title",
+    "cut": "vertical",
+    "channel": "title",
+    "expectedUnits": 1,
+    "checkedUnits": 1,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "vertical-filename",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-vertical-filename",
+    "cut": "vertical",
+    "channel": "filename",
+    "expectedUnits": 1,
+    "checkedUnits": 1,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   },
+   {
+    "id": "vertical-metadata",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-finalReview-vertical-metadata",
+    "cut": "vertical",
+    "channel": "metadata",
+    "expectedUnits": 1,
+    "checkedUnits": 1,
+    "hits": 0,
+    "reviewer": "review-role",
+    "deliverable": "art-exports"
+   }
+  ],
+  "decodedCuts": [
+   {
+    "id": "wide",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-decodedCuts-wide",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "codec": "sample-codec",
+    "decoder": "independent-reader",
+    "rights": "art-licensing"
+   },
+   {
+    "id": "vertical",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-decodedCuts-vertical",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "codec": "sample-codec",
+    "decoder": "independent-reader",
+    "rights": "art-licensing"
+   }
+  ],
+  "captionAlignment": [
+   {
+    "id": "intro",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-captionAlignment-intro",
+    "cue": "intro",
+    "caption": "intro",
+    "offsetMs": 20
+   },
+   {
+    "id": "close",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-captionAlignment-close",
+    "cue": "close",
+    "caption": "close",
+    "offsetMs": 20
+   }
+  ],
+  "editDecisions": [
+   {
+    "id": "opening",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-editDecisions-opening",
+    "shot": "opening",
+    "sourceBuild": "example-live-sha",
+    "sourceClip": "art-shots",
+    "inFrame": 15,
+    "outFrame": 90,
+    "decision": "keep"
+   },
+   {
+    "id": "play",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-editDecisions-play",
+    "shot": "play",
+    "sourceBuild": "example-live-sha",
+    "sourceClip": "art-shots",
+    "inFrame": 15,
+    "outFrame": 90,
+    "decision": "keep"
+   },
+   {
+    "id": "close",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-editDecisions-close",
+    "shot": "close",
+    "sourceBuild": "example-live-sha",
+    "sourceClip": "art-shots",
+    "inFrame": 15,
+    "outFrame": 90,
+    "decision": "keep"
+   }
+  ]
+ }
+}

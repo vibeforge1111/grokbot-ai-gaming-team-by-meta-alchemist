@@ -1,0 +1,104 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-05-game-loop-alchemist",
+  "slug": "05-game-loop-alchemist",
+  "name": "Game Loop Alchemist",
+  "shortName": "Game Loop",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Map what the player chooses, what changes, and why the next turn is worth taking. Measure the core loop, its pace and the freedom to stop.",
+  "stage": "Prototype and playtest",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "game-loop-alchemist-getting-started",
+  "skills": [
+    "game-loop-alchemist-getting-started",
+    "decision-pacing",
+    "loop-agency",
+    "loop-consequence",
+    "opening-playtest",
+    "voluntary-replay",
+    "game-loop-alchemist-lens-engine"
+  ],
+  "routines": [
+    "game-loop-alchemist-review"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-05-game-loop-alchemist",
+    "version": "2.0.0",
+    "hash": "sha256:c7916c67867c9ceeefee9f490730a995a56ad0297124a9e73664bb8c7bbb6d19"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "feel-findings": "^1.0.0",
+      "cohort-report": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "loop-report",
+      "version": "1.0.0",
+      "format": "JSON plus a Markdown loop map draft",
+      "schema": "spec/artifacts/loop-report.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "feel-findings",
+      "required": false,
+      "schema": "spec/artifacts/feel-findings.schema.json"
+    },
+    {
+      "artifact": "cohort-report",
+      "required": false,
+      "schema": "spec/artifacts/cohort-report.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases",
+      "balance"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  },
+  "license": "MIT"
+}

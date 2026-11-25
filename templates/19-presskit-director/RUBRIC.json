@@ -1,0 +1,474 @@
+{
+  "id": "gbf-19-store-presskit-director",
+  "version": "1.3.0",
+  "migration": "1.0.0 to 1.1.0: anchors made game-agnostic (constants live in the game profile), lens gates added; ids, weights and passAt unchanged; 1.1.0 to 1.1.1: gameProfile generalized to your-game-profile for the public kit and hash recomputed with the documented kit algorithm (spec/RUBRIC_HASH.md); ids, weights, anchors and passAt unchanged; 1.1.1 to 1.1.2: Updated the public source note. Scoring rules and pack fields are unchanged. 1.1.2 to 1.1.3: Evidence descriptions and fixture working directories now refer to the distributed kit. 1.1.3 to 1.1.4: Empty samples and zero case counts earn U. Computed lines require the declared evidence type. Check hook visibility on each viewport and the packaged archive scan. 1.1.4 to 1.1.5: Pins destination, spec and format per preview, tests post-packaging scans and links decoded media to rights receipts. 1.1.5 to 1.2.0: Line, pillar and anchor wording made genre-neutral (ids, weights, conditions and pass marks unchanged); adds owner-selected not-applicable profiles no-own-web-page. Rubric id renamed from gbf-19-steam-presskit-director. 1.2.0 to 1.3.0: Evidence pack names made genre-neutral (capsules to storeArtFormats; entrance to firstScreen; cards to linkPreviews). Scoring, weights, conditions and pass marks unchanged; rename these fields in packs made for 1.2.0.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "pillars": [
+    {
+      "id": "entrance-and-copy",
+      "name": "First screen and copy",
+      "points": 20
+    },
+    {
+      "id": "share-metadata",
+      "name": "Share metadata",
+      "points": 20
+    },
+    {
+      "id": "icons-and-install",
+      "name": "Icons and install",
+      "points": 20
+    },
+    {
+      "id": "media",
+      "name": "Media",
+      "points": 20
+    },
+    {
+      "id": "presskit-and-obligations",
+      "name": "Presskit and obligations",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "entrance-and-copy:1",
+      "pillar": "First screen and copy",
+      "name": "Store page first screen",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "First screen judged from documents instead of a capture",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Fresh build capture of each store page's first screen on every approved viewport. Every approved hookPreviews case passes.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line entrance-and-copy:1",
+        "cwd": "templates/19-presskit-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      },
+      "receipts": [
+        {
+          "name": "hookPreviews",
+          "description": "Inspect hook visibility for each named viewport in a local or approved preview.",
+          "fields": {
+            "viewport": "text",
+            "visible": "bool",
+            "previewVersion": "text"
+          },
+          "tests": [
+            [
+              "viewport",
+              "==",
+              "case.viewport",
+              1
+            ],
+            [
+              "previewVersion",
+              "==",
+              "case.previewVersion",
+              1
+            ],
+            [
+              "visible",
+              "==",
+              true,
+              1
+            ]
+          ],
+          "axes": {
+            "viewport": "profile.viewports"
+          }
+        }
+      ]
+    },
+    {
+      "id": "entrance-and-copy:2",
+      "pillar": "First screen and copy",
+      "name": "Storefront hook copy",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Copy claims an unverified feature",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every advertised feature has current evidence (controller badge only after a pad capture)",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line entrance-and-copy:2",
+        "cwd": "templates/19-presskit-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "share-metadata:1",
+      "pillar": "Share metadata",
+      "name": "Page metadata on pages you control",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A required tag is missing on a live page you control",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Metadata on every live page you control is complete",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line share-metadata:1",
+        "cwd": "templates/19-presskit-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "share-metadata:2",
+      "pillar": "Share metadata",
+      "name": "Link preview cards",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Card broken in a preview",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Cards render in real destination previews",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line share-metadata:2",
+        "cwd": "templates/19-presskit-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "icons-and-install:1",
+      "pillar": "Icons and install",
+      "name": "Required icons load and decode",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A required icon fails to load or decode",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every required icon loads and decodes on the live destination",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line icons-and-install:1",
+        "cwd": "templates/19-presskit-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "icons-and-install:2",
+      "pillar": "Icons and install",
+      "name": "Contrast and legibility",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Illegible at displayed size",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Store art text legible at displayed size",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line icons-and-install:2",
+        "cwd": "templates/19-presskit-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "media:1",
+      "pillar": "Media",
+      "name": "Screenshot and GIF readiness",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Media from an old build",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Decoded current-build media at destination sizes. All approved `decodedMedia` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line media:1",
+        "cwd": "templates/19-presskit-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "decodedMedia",
+          "description": "Match the decoded media and rights reference to each final deliverable.",
+          "fields": {
+            "item": "text",
+            "decodedBuild": "text",
+            "license": "artifact:static",
+            "decoded": "bool"
+          },
+          "tests": [
+            [
+              "item",
+              "==",
+              "case.item",
+              1
+            ],
+            [
+              "decodedBuild",
+              "==",
+              "pack.liveSha",
+              1
+            ],
+            [
+              "decoded",
+              "==",
+              true,
+              1
+            ]
+          ],
+          "population": "metrics.media.items"
+        }
+      ]
+    },
+    {
+      "id": "media:2",
+      "pillar": "Media",
+      "name": "Store art and logo formats",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Formats from a frozen list",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every required image format for each destination is checked against its recorded spec version, not a frozen list. All approved `destinationFormats` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line media:2",
+        "cwd": "templates/19-presskit-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "destinationFormats",
+          "description": "Check each required format for each destination against its own spec version. Keep a local preview artifact for the reviewed bytes.",
+          "fields": {
+            "destination": "text",
+            "format": "text",
+            "version": "text",
+            "width": "positive",
+            "height": "positive",
+            "safeZoneClear": "bool"
+          },
+          "tests": [
+            [
+              "destination",
+              "==",
+              "case.destination",
+              1
+            ],
+            [
+              "format",
+              "==",
+              "case.format",
+              1
+            ],
+            [
+              "version",
+              "==",
+              "case.version",
+              1
+            ],
+            [
+              "width",
+              "==",
+              "case.width",
+              1
+            ],
+            [
+              "height",
+              "==",
+              "case.height",
+              1
+            ],
+            [
+              "safeZoneClear",
+              "==",
+              true,
+              1
+            ]
+          ],
+          "population": "metrics.storeArtFormats.formatsChecked"
+        }
+      ]
+    },
+    {
+      "id": "presskit-and-obligations:1",
+      "pillar": "Presskit and obligations",
+      "name": "Presskit completeness",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "The final archive scan finds disclosed content or metadata.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Press page, factsheet and logo pack present. All approved `archiveReview` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line presskit-and-obligations:1",
+        "cwd": "templates/19-presskit-director",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "archiveReview",
+          "description": "Identify the final archive by digest and count scanned members and metadata hits after extraction.",
+          "fields": {
+            "finalDigest": "sha256",
+            "scannedDigest": "sha256",
+            "members": "positive",
+            "scanned": "positive",
+            "metadataHits": "count",
+            "contentHits": "count",
+            "reviewer": "text"
+          },
+          "tests": [
+            [
+              "scannedDigest",
+              "==",
+              "row.finalDigest",
+              1
+            ],
+            [
+              "scanned",
+              "==",
+              "row.members",
+              1
+            ],
+            [
+              "metadataHits",
+              "==",
+              0,
+              0
+            ],
+            [
+              "contentHits",
+              "==",
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "presskit-and-obligations:2",
+      "pillar": "Presskit and obligations",
+      "name": "Rights, age, privacy and support links",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "No rights or support record",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Rights records present; the age rating, privacy policy and support pages are linked from the published records",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line presskit-and-obligations:2",
+        "cwd": "templates/19-presskit-director",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "source": "Use media from the reviewed build, decoded delivery files, destination previews and rights records.",
+  "hash": "sha256:1fe127411d0378a34102114652b4f71d4142390674aea70be8d2256c7517083a",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty inputs or zero measured cases earn U and zero points. A measured zero failures is valid.",
+  "sampleFields": {
+    "firstScreen": [
+      "viewports"
+    ],
+    "copy": [
+      "features"
+    ],
+    "meta": [
+      "present"
+    ],
+    "linkPreviews": [
+      "destinationsPreviewed"
+    ],
+    "icons": [
+      "urls"
+    ],
+    "storeArt": [
+      "textPairs"
+    ],
+    "media": [
+      "items"
+    ],
+    "storeArtFormats": [
+      "formatsChecked"
+    ],
+    "presskit": [
+      "has"
+    ],
+    "locClaims": [
+      "advertisedLocales"
+    ]
+  },
+  "profiles": {
+    "no-own-web-page": {
+      "reason": "The game has no web page the owner controls; its 20 points are shared over the other lines. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "entrance-and-copy:1": 12.5,
+        "entrance-and-copy:2": 12.5,
+        "share-metadata:1": 0,
+        "share-metadata:2": 0,
+        "icons-and-install:1": 12.5,
+        "icons-and-install:2": 12.5,
+        "media:1": 12.5,
+        "media:2": 12.5,
+        "presskit-and-obligations:1": 12.5,
+        "presskit-and-obligations:2": 12.5
+      }
+    }
+  }
+}

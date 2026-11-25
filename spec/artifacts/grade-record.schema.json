@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/grade-record.schema.json",
+  "title": "Grade record (team artifact)",
+  "description": "The engine output for one pack, saved as written by node engine/lens.mjs <pack.json>. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "grade-record"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One grade record.",
+      "items": {
+        "type": "object",
+        "required": [
+          "templateId",
+          "rubricVersion",
+          "rubricHash",
+          "packId",
+          "verdict",
+          "coverage"
+        ],
+        "properties": {
+          "templateId": {
+            "type": "string",
+            "description": "Template id."
+          },
+          "rubricVersion": {
+            "type": "string",
+            "description": "Rubric version."
+          },
+          "rubricHash": {
+            "type": "string",
+            "description": "Rubric hash."
+          },
+          "packId": {
+            "type": "string",
+            "description": "Pack id."
+          },
+          "gitSha": {
+            "type": "string",
+            "description": "Source build."
+          },
+          "liveSha": {
+            "type": "string",
+            "description": "Running build."
+          },
+          "grade": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Grade out of 100, null when INVALID."
+          },
+          "coverage": {
+            "type": "number",
+            "description": "Share of rubric weight measured, 0 to 1."
+          },
+          "verdict": {
+            "type": "string",
+            "description": "PASS, CONDITIONAL, BLOCKED or INVALID.",
+            "enum": [
+              "PASS",
+              "CONDITIONAL",
+              "BLOCKED",
+              "INVALID"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "description": "Relative path of the full record."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+# Live-Ops Balance Patch Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+**Status: preview, not shipping.** This template works and its tests pass, but it is not yet held to the kit's release standard.
+
+Before it can ship:
+
+- Move to the kit's shared lens engine. This template still carries its own lens kit 1.1.0, which trusts the metrics a pack declares and never checks artifact bytes or a producer receipt.
+- A pack producer with receipts: `balance/run.mjs` prints a pack but writes no artifact files, digests or producer receipt.
+- Check predictions against the next build's measured outcomes. Today evidence:1 compares the model with itself, and `outliersListed`, `withRollback`, `withAlternatives` and `withFollowUp` are true by construction, so those checks cannot fail.
+- An owner selection input for the patch notes, and a post-release compare tool (both are prompts today).
+- Earn points from the game: the authority lines probe this template's own code.
+
+Compare configurable numeric parameters with observed outcomes and draft bounded, reversible changes. Start with [HOW-TO-USE.md](HOW-TO-USE.md).
+
+## Domain tools
+
+Two files in `balance/`:
+
+- `director.mjs` resolves each requested label to one parameter, holds when the label is ambiguous or the observations are stale or too small, and builds three options (hold, decrease, increase) one `profile.stepPct` step apart, never more than `profile.maxStepPct`. The model scales the observed value by the parameter change, so choose measures for which that holds. Every option rolls back to today's value.
+- `run.mjs` checks the input, runs the director and prints a pack, the proposal with `--md`, or a notes draft with `--notes`.
+
+```sh
+node balance/run.mjs input.json --md
+node balance/run.mjs input.json --notes
+node balance/run.mjs input.json > pack.json
+```
+
+The synthetic example in `balance/data/fixture-ledger.json` spans puzzle turns, a farming interval and hint timing.
+
+## Evidence and grading
+
+A grade describes the evidence supplied by the pack writer. For each group provide a cited artifact and the positive count or nonempty sample listed in `node engine/lens.mjs --meta`. Treat measured zero defects separately from zero cases examined. Missing build identity invalidates the pack. The worked example is synthetic.
+
+| Rubric line | Observations |
+|---|---|
+| data-fidelity:1 | defs.parsedParameters, defs.sourceShaSet, defs.valueMismatches |
+| data-fidelity:2 | map.ambiguous, map.ambiguousFlagged, map.unresolvedProposedAsSure |
+| evidence:1 | math.itemsComputed, math.oracleMismatches |
+| evidence:2 | telemetry.ageDays, telemetry.observations, telemetry.outliersListed |
+| proposals:1 | proposals.items, proposals.leversRecommended, proposals.maxStepPct, proposals.withRollback |
+| proposals:2 | proposals.items, proposals.withAlternatives, proposals.withFollowUp, proposals.withPrediction |
+| authority:1 | authority.forbiddenAttempted, authority.forbiddenSucceeded, authority.repoWrites |
+| authority:2 | authority.defsMutated |
+| patch-notes:1 | notes.dashes, notes.datesOrPrices, notes.draftLabelled |
+| patch-notes:2 | proposals.changesOnStaleEvidence, proposals.items |
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.

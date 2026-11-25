@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/work-plan.schema.json",
+  "title": "Work plan (team artifact)",
+  "description": "Waves, dependency exceptions, ledger rollup and the go or hold recommendation from Parallel Game Producer. A draft for the owner. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "work-plan"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One task or decision.",
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "summary"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "description": "task, wave, exception, rollup or decision."
+          },
+          "summary": {
+            "type": "string",
+            "description": "Plain description."
+          },
+          "wave": {
+            "type": "number",
+            "description": "Wave number for tasks."
+          },
+          "role": {
+            "type": "string",
+            "description": "Role, never a person's name."
+          },
+          "dependsOn": {
+            "type": "array",
+            "description": "Task ids it waits for.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "decision": {
+            "type": "string",
+            "description": "go or hold, for the decision item."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "synthetic": true,
+  "packId": "synthetic-parallel-game-producer",
+  "gitSha": "synthetic-source-parallel-game-producer",
+  "liveSha": "synthetic-build-parallel-game-producer",
+  "profile": {
+    "scope": "management-prototype-review-a",
+    "genre": "management simulation",
+    "bands": {
+      "floor": 0.5,
+      "pass": 0.75,
+      "target": 1
+    },
+    "milestone": "one playable shift",
+    "audience": "prototype review group",
+    "ask": "authorize a second shift prototype",
+    "hoursByRole": {
+      "capture": 4,
+      "design": 6,
+      "art": 5,
+      "producer": 3
+    },
+    "reviewWindow": "one planning wave",
+    "firstTask": "capture",
+    "decisionTask": "decision",
+    "severities": [
+      "P0",
+      "P1",
+      "P2"
+    ],
+    "requiredGates": [
+      "playable",
+      "readability"
+    ],
+    "requiredTopics": [
+      "promise",
+      "proof",
+      "scope",
+      "dependencies",
+      "risk",
+      "ask"
+    ]
+  },
+  "snapshot": {
+    "gitSha": "synthetic-source-parallel-game-producer",
+    "liveSha": "synthetic-build-parallel-game-producer",
+    "scope": "management-prototype-review-a",
+    "source": "fixtures/project.json#/snapshot",
+    "reviewTick": 8,
+    "tasks": [
+      {
+        "id": "capture",
+        "role": "capture",
+        "needs": [],
+        "locks": [
+          "session trace"
+        ],
+        "hours": 2,
+        "accept": "Complete a shift and record its final state.",
+        "proof": "shift trace"
+      },
+      {
+        "id": "model",
+        "role": "design",
+        "needs": [
+          "capture"
+        ],
+        "locks": [
+          "shift rules"
+        ],
+        "hours": 5,
+        "accept": "Reconcile final shift totals with the model.",
+        "proof": "balance worksheet"
+      },
+      {
+        "id": "cue",
+        "role": "art",
+        "needs": [
+          "capture"
+        ],
+        "locks": [
+          "shift cues"
+        ],
+        "hours": 3,
+        "accept": "Locate the end-of-shift cue at display scale.",
+        "proof": "readability capture"
+      },
+      {
+        "id": "decision",
+        "role": "producer",
+        "needs": [
+          "model",
+          "cue"
+        ],
+        "locks": [
+          "review brief"
+        ],
+        "hours": 2,
+        "accept": "Review both receipts and the scope cut.",
+        "proof": "decision note"
+      }
+    ],
+    "runs": [
+      {
+        "id": "capture",
+        "gitSha": "synthetic-source-parallel-game-producer",
+        "liveSha": "synthetic-build-parallel-game-producer",
+        "scope": "management-prototype-review-a",
+        "source": "shift trace",
+        "wave": 0,
+        "passed": true,
+        "expiresAtTick": 12
+      },
+      {
+        "id": "model",
+        "gitSha": "synthetic-source-parallel-game-producer",
+        "liveSha": "synthetic-build-parallel-game-producer",
+        "scope": "management-prototype-review-a",
+        "source": "balance worksheet",
+        "wave": 1,
+        "passed": true,
+        "expiresAtTick": 12
+      },
+      {
+        "id": "cue",
+        "gitSha": "synthetic-source-parallel-game-producer",
+        "liveSha": "synthetic-build-parallel-game-producer",
+        "scope": "management-prototype-review-a",
+        "source": "readability capture",
+        "wave": 1,
+        "passed": true,
+        "expiresAtTick": 12
+      },
+      {
+        "id": "decision",
+        "gitSha": "synthetic-source-parallel-game-producer",
+        "liveSha": "synthetic-build-parallel-game-producer",
+        "scope": "management-prototype-review-a",
+        "source": "decision note",
+        "wave": 2,
+        "passed": true,
+        "expiresAtTick": 12
+      }
+    ],
+    "tickets": [
+      {
+        "id": "cue-density",
+        "severity": "P1",
+        "state": "open"
+      },
+      {
+        "id": "handover-wording",
+        "severity": "P2",
+        "state": "open"
+      },
+      {
+        "id": "shift-total",
+        "severity": "P2",
+        "state": "closed",
+        "sourceFix": "model correction",
+        "fixRole": "design",
+        "configState": "unneeded",
+        "verification": {
+          "gitSha": "synthetic-source-parallel-game-producer",
+          "liveSha": "synthetic-build-parallel-game-producer",
+          "scope": "management-prototype-review-a",
+          "source": "closing trace",
+          "role": "capture",
+          "passed": true
+        }
+      }
+    ],
+    "reportedCounts": {
+      "P0": 0,
+      "P1": 1,
+      "P2": 1
+    },
+    "gates": [
+      {
+        "id": "playable",
+        "gitSha": "synthetic-source-parallel-game-producer",
+        "liveSha": "synthetic-build-parallel-game-producer",
+        "scope": "management-prototype-review-a",
+        "source": "playable receipt",
+        "passed": true
+      },
+      {
+        "id": "readability",
+        "gitSha": "synthetic-source-parallel-game-producer",
+        "liveSha": "synthetic-build-parallel-game-producer",
+        "scope": "management-prototype-review-a",
+        "source": "readability receipt",
+        "passed": true
+      }
+    ],
+    "risks": [
+      {
+        "id": "density",
+        "role": "art",
+        "trigger": "queue cue obscured in the dense arrival case",
+        "fallback": "retain the current arrival pattern",
+        "decision": "second shift review"
+      }
+    ],
+    "facts": [
+      {
+        "id": "promise",
+        "text": "Each shift asks the player to balance queues against available staff.",
+        "kind": "observed",
+        "source": "design brief, shift loop",
+        "approved": true
+      },
+      {
+        "id": "proof",
+        "text": "A local trace follows a shift from opening through handover.",
+        "kind": "observed",
+        "source": "shift trace, closing state",
+        "approved": true
+      },
+      {
+        "id": "scope",
+        "text": "The next prototype would vary arrivals while retaining the current staffing rules.",
+        "kind": "proposal",
+        "source": "scope draft, proposed change",
+        "approved": true
+      },
+      {
+        "id": "dependencies",
+        "text": "The model and cue reviews depend on the capture and use separate resources.",
+        "kind": "observed",
+        "source": "task graph, model and cue",
+        "approved": true
+      },
+      {
+        "id": "risk",
+        "text": "A denser arrival pattern could obscure the queue cue.",
+        "kind": "proposal",
+        "source": "risk sheet, cue density",
+        "approved": true
+      },
+      {
+        "id": "ask",
+        "text": "Authorize a second shift prototype under the agreed role capacities.",
+        "kind": "proposal",
+        "source": "owner brief, decision requested",
+        "approved": true
+      }
+    ],
+    "slides": [
+      {
+        "id": "promise",
+        "headline": "A shift built around tradeoffs",
+        "claim": "Each shift asks the player to balance queues against available staff.",
+        "fact": "promise",
+        "note": "Show the point where adding staff changes the waiting line."
+      },
+      {
+        "id": "proof",
+        "headline": "One shift is playable",
+        "claim": "A local trace follows a shift from opening through handover.",
+        "fact": "proof",
+        "note": "Walk through the closing state and the input that produced it."
+      },
+      {
+        "id": "scope",
+        "headline": "Keep the second shift small",
+        "claim": "The next prototype would vary arrivals while retaining the current staffing rules.",
+        "fact": "scope",
+        "note": "Cut the extra arrival pattern first if balancing overruns."
+      },
+      {
+        "id": "dependencies",
+        "headline": "Two reviews can proceed together",
+        "claim": "The model and cue reviews depend on the capture and use separate resources.",
+        "fact": "dependencies",
+        "note": "Show their distinct resource keys and the final decision handoff."
+      },
+      {
+        "id": "risk",
+        "headline": "Queue readability is the open design risk",
+        "claim": "A denser arrival pattern could obscure the queue cue.",
+        "fact": "risk",
+        "note": "Use the current cue test before committing additional art."
+      },
+      {
+        "id": "ask",
+        "headline": "Authorize the next prototype",
+        "claim": "Authorize a second shift prototype under the agreed role capacities.",
+        "fact": "ask",
+        "note": "Seek a scope decision. If declined, retain the single-shift demonstration."
+      }
+    ],
+    "deckReview": {
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "source": "synthetic review notes for the six slides",
+      "role": "milestone reviewer",
+      "digest": "0b1f12c6527a5a2f40486665080b071d5ffa4db6e61553a59083943edb0859ef",
+      "topics": {
+        "promise": true,
+        "proof": true,
+        "scope": true,
+        "dependencies": true,
+        "risk": true,
+        "ask": true
+      }
+    }
+  }
+}

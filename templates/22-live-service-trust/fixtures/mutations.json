@@ -1,0 +1,725 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "transactions-and-entitlements:1#empty-tx.injectedCases",
+   "line": "transactions-and-entitlements:1",
+   "expect": "U",
+   "set": {
+    "metrics.tx.injectedCases": []
+   }
+  },
+  {
+   "id": "transactions-and-entitlements:1#neg1",
+   "line": "transactions-and-entitlements:1",
+   "expect": "fail",
+   "areas": [
+    "payments",
+    "entitlements"
+   ],
+   "set": {
+    "metrics.tx.duplicatedPaid": 1
+   }
+  },
+  {
+   "id": "transactions-and-entitlements:1#neg2",
+   "line": "transactions-and-entitlements:1",
+   "expect": "fail",
+   "areas": [
+    "payments",
+    "entitlements"
+   ],
+   "set": {
+    "metrics.tx.isolated": false
+   }
+  },
+  {
+   "id": "transactions-and-entitlements:1#missing",
+   "line": "transactions-and-entitlements:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.tx.isolated"
+   ]
+  },
+  {
+   "id": "transactions-and-entitlements:2#empty-tx.injectedCases",
+   "line": "transactions-and-entitlements:2",
+   "expect": "U",
+   "set": {
+    "metrics.tx.injectedCases": []
+   }
+  },
+  {
+   "id": "transactions-and-entitlements:2#empty-restore.expected",
+   "line": "transactions-and-entitlements:2",
+   "expect": "U",
+   "set": {
+    "metrics.restore.expected": 0
+   }
+  },
+  {
+   "id": "transactions-and-entitlements:2#neg1",
+   "line": "transactions-and-entitlements:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.restore.displayVsAuthoritativeMismatch": 2
+   }
+  },
+  {
+   "id": "transactions-and-entitlements:2#missing",
+   "line": "transactions-and-entitlements:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.restore.restored"
+   ]
+  },
+  {
+   "id": "authorization-and-abuse-boundaries:1#empty-authz.forbiddenTransitionsAttempted",
+   "line": "authorization-and-abuse-boundaries:1",
+   "expect": "U",
+   "set": {
+    "metrics.authz.forbiddenTransitionsAttempted": 0
+   }
+  },
+  {
+   "id": "authorization-and-abuse-boundaries:1#neg1",
+   "line": "authorization-and-abuse-boundaries:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.authz.forbiddenTransitionsSucceeded": 1
+   }
+  },
+  {
+   "id": "authorization-and-abuse-boundaries:1#missing",
+   "line": "authorization-and-abuse-boundaries:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.authz.forbiddenTransitionsAttempted"
+   ]
+  },
+  {
+   "id": "authorization-and-abuse-boundaries:2#empty-replay.replaysAttempted",
+   "line": "authorization-and-abuse-boundaries:2",
+   "expect": "U",
+   "set": {
+    "metrics.replay.replaysAttempted": 0
+   }
+  },
+  {
+   "id": "authorization-and-abuse-boundaries:2#neg1",
+   "line": "authorization-and-abuse-boundaries:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.replay.replaysAccepted": 1
+   }
+  },
+  {
+   "id": "authorization-and-abuse-boundaries:2#missing",
+   "line": "authorization-and-abuse-boundaries:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.replay.replaysAttempted"
+   ]
+  },
+  {
+   "id": "durability-and-recovery:1#empty-storage.cases",
+   "line": "durability-and-recovery:1",
+   "expect": "U",
+   "set": {
+    "metrics.storage.cases": []
+   }
+  },
+  {
+   "id": "durability-and-recovery:1#neg1",
+   "line": "durability-and-recovery:1",
+   "expect": "fail",
+   "areas": [
+    "saved-state"
+   ],
+   "set": {
+    "metrics.storage.stateLost": 1
+   }
+  },
+  {
+   "id": "durability-and-recovery:1#missing",
+   "line": "durability-and-recovery:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.storage.cases"
+   ]
+  },
+  {
+   "id": "durability-and-recovery:2#empty-recovery.cases",
+   "line": "durability-and-recovery:2",
+   "expect": "U",
+   "set": {
+    "metrics.recovery.cases": []
+   }
+  },
+  {
+   "id": "durability-and-recovery:2#neg1",
+   "line": "durability-and-recovery:2",
+   "expect": "fail",
+   "areas": [
+    "crash-recovery"
+   ],
+   "set": {
+    "metrics.recovery.unrecovered": 1
+   }
+  },
+  {
+   "id": "durability-and-recovery:2#missing",
+   "line": "durability-and-recovery:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.recovery.cases"
+   ]
+  },
+  {
+   "id": "operations:1#empty-live.measuredCases",
+   "line": "operations:1",
+   "expect": "U",
+   "set": {
+    "metrics.live.measuredCases": 0
+   }
+  },
+  {
+   "id": "operations:1#neg1",
+   "line": "operations:1",
+   "expect": "fail",
+   "areas": [
+    "live-ops"
+   ],
+   "set": {
+    "metrics.live.liveShaRecorded": false
+   }
+  },
+  {
+   "id": "operations:1#missing",
+   "line": "operations:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.live.liveShaRecorded"
+   ]
+  },
+  {
+   "id": "operations:2#empty-ops.measuredCases",
+   "line": "operations:2",
+   "expect": "U",
+   "set": {
+    "metrics.ops.measuredCases": 0
+   }
+  },
+  {
+   "id": "operations:2#neg1",
+   "line": "operations:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.ops.rollbackExercised": false
+   }
+  },
+  {
+   "id": "operations:2#missing",
+   "line": "operations:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.ops.healthSignals"
+   ]
+  },
+  {
+   "id": "privacy-age-rights-safety-and-support:1#empty-privacy.measuredCases",
+   "line": "privacy-age-rights-safety-and-support:1",
+   "expect": "U",
+   "set": {
+    "metrics.privacy.measuredCases": 0
+   }
+  },
+  {
+   "id": "privacy-age-rights-safety-and-support:1#neg1",
+   "line": "privacy-age-rights-safety-and-support:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.privacy.retentionDoc": false
+   }
+  },
+  {
+   "id": "privacy-age-rights-safety-and-support:1#missing",
+   "line": "privacy-age-rights-safety-and-support:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.privacy.dataHandlingDoc"
+   ]
+  },
+  {
+   "id": "privacy-age-rights-safety-and-support:2#empty-rights.measuredCases",
+   "line": "privacy-age-rights-safety-and-support:2",
+   "expect": "U",
+   "set": {
+    "metrics.rights.measuredCases": 0
+   }
+  },
+  {
+   "id": "privacy-age-rights-safety-and-support:2#neg1",
+   "line": "privacy-age-rights-safety-and-support:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.rights.agentLegalSignoff": true
+   }
+  },
+  {
+   "id": "privacy-age-rights-safety-and-support:2#missing",
+   "line": "privacy-age-rights-safety-and-support:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.rights.rightsInventory"
+   ]
+  },
+  {
+   "id": "store-policy#empty-storePolicy.checked",
+   "line": "store-policy",
+   "expect": "U",
+   "set": {
+    "metrics.storePolicy.checked": []
+   }
+  },
+  {
+   "id": "store-policy#empty-storePolicy.platforms",
+   "line": "store-policy",
+   "expect": "U",
+   "set": {
+    "metrics.storePolicy.platforms": []
+   }
+  },
+  {
+   "id": "store-policy#neg1",
+   "line": "store-policy",
+   "expect": "fail",
+   "areas": [
+    "store-policy"
+   ],
+   "set": {
+    "metrics.storePolicy.disclosuresPresent": false
+   }
+  },
+  {
+   "id": "store-policy#missing",
+   "line": "store-policy",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.storePolicy"
+   ]
+  },
+  {
+   "id": "contest-rules#empty-contestRules.measuredCases",
+   "line": "contest-rules",
+   "expect": "U",
+   "set": {
+    "metrics.contestRules.measuredCases": 0
+   }
+  },
+  {
+   "id": "contest-rules#neg1",
+   "line": "contest-rules",
+   "expect": "fail",
+   "areas": [
+    "contest-rules"
+   ],
+   "set": {
+    "metrics.contestRules.judgingDisclosed": false
+   }
+  },
+  {
+   "id": "contest-rules#missing",
+   "line": "contest-rules",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.contestRules"
+   ]
+  },
+  {
+   "line": "transactions-and-entitlements:1",
+   "expect": "U",
+   "id": "transactionOutcomes#missing-row",
+   "set": {
+    "receipts.transactionOutcomes": [
+     {
+      "id": "duplicate",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-transactionOutcomes-duplicate",
+      "scenario": "duplicate",
+      "isolated": true,
+      "lostPaid": 0,
+      "duplicatedPaid": 0,
+      "before": "art-tx",
+      "after": "art-restore"
+     },
+     {
+      "id": "reorder",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-transactionOutcomes-reorder",
+      "scenario": "reorder",
+      "isolated": true,
+      "lostPaid": 0,
+      "duplicatedPaid": 0,
+      "before": "art-tx",
+      "after": "art-restore"
+     }
+    ]
+   }
+  },
+  {
+   "line": "transactions-and-entitlements:1",
+   "expect": "U",
+   "id": "transactionOutcomes#stale",
+   "set": {
+    "receipts.transactionOutcomes.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "transactions-and-entitlements:1",
+   "expect": "U",
+   "id": "transactionOutcomes#artifact",
+   "set": {
+    "receipts.transactionOutcomes.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "durability-and-recovery:1",
+   "expect": "U",
+   "id": "storageOutcomes#missing-row",
+   "set": {
+    "receipts.storageOutcomes": [
+     {
+      "id": "corrupted",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-storageOutcomes-corrupted",
+      "scenario": "corrupted",
+      "expected": "3dbb3963d11aa418de8b61f846c3dbd5af43b40d252842adb823f90936fe6920",
+      "recovered": "3dbb3963d11aa418de8b61f846c3dbd5af43b40d252842adb823f90936fe6920"
+     },
+     {
+      "id": "migration",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-storageOutcomes-migration",
+      "scenario": "migration",
+      "expected": "8a6cead4385ed4394247b71692fb729b0563f8e1bd4818a8c6c82940e9e099ba",
+      "recovered": "8a6cead4385ed4394247b71692fb729b0563f8e1bd4818a8c6c82940e9e099ba"
+     },
+     {
+      "id": "memory-fallback",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-storageOutcomes-memory-fallback",
+      "scenario": "memory-fallback",
+      "expected": "007cec0fae4ac618f7244b9ead90bfd18cef943278c45b842c323c7ec3ac1315",
+      "recovered": "007cec0fae4ac618f7244b9ead90bfd18cef943278c45b842c323c7ec3ac1315"
+     }
+    ]
+   }
+  },
+  {
+   "line": "durability-and-recovery:1",
+   "expect": "U",
+   "id": "storageOutcomes#stale",
+   "set": {
+    "receipts.storageOutcomes.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "durability-and-recovery:1",
+   "expect": "U",
+   "id": "storageOutcomes#artifact",
+   "set": {
+    "receipts.storageOutcomes.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "durability-and-recovery:2",
+   "expect": "U",
+   "id": "recoveryOutcomes#missing-row",
+   "set": {
+    "receipts.recoveryOutcomes": [
+     {
+      "id": "concurrent-clients",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-recoveryOutcomes-concurrent-clients",
+      "scenario": "concurrent-clients",
+      "expected": "e35864cf3e96157268712873f1be5c62f007f683c8b27c71f24216d4d09908f3",
+      "recovered": "e35864cf3e96157268712873f1be5c62f007f683c8b27c71f24216d4d09908f3"
+     },
+     {
+      "id": "deploy",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-recoveryOutcomes-deploy",
+      "scenario": "deploy",
+      "expected": "b7bd55c11b781b0ccc43aa6e57f9dadf0660e9d1d4e27e0979ee43a407d454ae",
+      "recovered": "b7bd55c11b781b0ccc43aa6e57f9dadf0660e9d1d4e27e0979ee43a407d454ae"
+     }
+    ]
+   }
+  },
+  {
+   "line": "durability-and-recovery:2",
+   "expect": "U",
+   "id": "recoveryOutcomes#stale",
+   "set": {
+    "receipts.recoveryOutcomes.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "durability-and-recovery:2",
+   "expect": "U",
+   "id": "recoveryOutcomes#artifact",
+   "set": {
+    "receipts.recoveryOutcomes.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "operations:1",
+   "expect": "U",
+   "id": "runningBuild#missing-row",
+   "set": {
+    "receipts.runningBuild": []
+   }
+  },
+  {
+   "line": "operations:1",
+   "expect": "U",
+   "id": "runningBuild#stale",
+   "set": {
+    "receipts.runningBuild.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "operations:1",
+   "expect": "U",
+   "id": "runningBuild#artifact",
+   "set": {
+    "receipts.runningBuild.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "operations:2",
+   "expect": "U",
+   "id": "rollback#missing-row",
+   "set": {
+    "receipts.rollback": []
+   }
+  },
+  {
+   "line": "operations:2",
+   "expect": "U",
+   "id": "rollback#stale",
+   "set": {
+    "receipts.rollback.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "operations:2",
+   "expect": "U",
+   "id": "rollback#artifact",
+   "set": {
+    "receipts.rollback.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "privacy-age-rights-safety-and-support:1",
+   "expect": "U",
+   "id": "privacyReview#missing-row",
+   "set": {
+    "receipts.privacyReview": [
+     {
+      "id": "retention",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-privacyReview-retention",
+      "topic": "retention",
+      "reviewer": "qualified-review-role",
+      "reviewedRecord": "art-privacy",
+      "accepted": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "privacy-age-rights-safety-and-support:1",
+   "expect": "U",
+   "id": "privacyReview#stale",
+   "set": {
+    "receipts.privacyReview.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "privacy-age-rights-safety-and-support:1",
+   "expect": "U",
+   "id": "privacyReview#artifact",
+   "set": {
+    "receipts.privacyReview.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "privacy-age-rights-safety-and-support:2",
+   "expect": "U",
+   "id": "rightsReview#missing-row",
+   "set": {
+    "receipts.rightsReview": [
+     {
+      "id": "age",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-rightsReview-age",
+      "topic": "age",
+      "reviewer": "qualified-review-role",
+      "reviewedRecord": "art-rights",
+      "accepted": true
+     },
+     {
+      "id": "safety",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-rightsReview-safety",
+      "topic": "safety",
+      "reviewer": "qualified-review-role",
+      "reviewedRecord": "art-rights",
+      "accepted": true
+     },
+     {
+      "id": "support",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-rightsReview-support",
+      "topic": "support",
+      "reviewer": "qualified-review-role",
+      "reviewedRecord": "art-rights",
+      "accepted": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "privacy-age-rights-safety-and-support:2",
+   "expect": "U",
+   "id": "rightsReview#stale",
+   "set": {
+    "receipts.rightsReview.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "privacy-age-rights-safety-and-support:2",
+   "expect": "U",
+   "id": "rightsReview#artifact",
+   "set": {
+    "receipts.rightsReview.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "transactionOutcomes#loss",
+   "expect": 0,
+   "set": {
+    "receipts.transactionOutcomes.0.lostPaid": 1
+   },
+   "line": "transactions-and-entitlements:1"
+  },
+  {
+   "id": "transactionOutcomes#duplicate",
+   "expect": 0,
+   "set": {
+    "receipts.transactionOutcomes.0.duplicatedPaid": 1
+   },
+   "line": "transactions-and-entitlements:1"
+  },
+  {
+   "id": "storageOutcomes#state-loss",
+   "expect": 0,
+   "set": {
+    "receipts.storageOutcomes.0.recovered": "9d6f965ac832e40a5df6c06afe983e3b449c07b843ff51ce76204de05c690d11"
+   },
+   "line": "durability-and-recovery:1"
+  },
+  {
+   "id": "recoveryOutcomes#state-loss",
+   "expect": 0,
+   "set": {
+    "receipts.recoveryOutcomes.0.recovered": "9d6f965ac832e40a5df6c06afe983e3b449c07b843ff51ce76204de05c690d11"
+   },
+   "line": "durability-and-recovery:2"
+  },
+  {
+   "id": "runningBuild#stale",
+   "expect": 1,
+   "set": {
+    "receipts.runningBuild.0.running": "stale-live"
+   },
+   "line": "operations:1"
+  },
+  {
+   "id": "rollback#wrong-target",
+   "expect": 0,
+   "set": {
+    "receipts.rollback.0.restored": "different"
+   },
+   "line": "operations:2"
+  },
+  {
+   "id": "privacyReview#rejected",
+   "expect": 0,
+   "set": {
+    "receipts.privacyReview.0.accepted": false
+   },
+   "line": "privacy-age-rights-safety-and-support:1"
+  },
+  {
+   "id": "rightsReview#rejected",
+   "expect": 0,
+   "set": {
+    "receipts.rightsReview.0.accepted": false
+   },
+   "line": "privacy-age-rights-safety-and-support:2"
+  },
+  {
+   "id": "paid-loss",
+   "line": "transactions-and-entitlements:1",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.tx.lostPaid": 1
+   }
+  },
+  {
+   "id": "duplicate-grant",
+   "line": "transactions-and-entitlements:1",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.tx.duplicatedPaid": 1
+   }
+  },
+  {
+   "id": "entitlement-restore",
+   "line": "transactions-and-entitlements:2",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.restore.restored": 0
+   }
+  },
+  {
+   "id": "accepted-replay",
+   "line": "authorization-and-abuse-boundaries:2",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.replay.replaysAccepted": 1
+   }
+  }
+ ]
+}

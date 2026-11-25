@@ -1,0 +1,391 @@
+{
+  "status": "VALID",
+  "packId": "synthetic-parallel-game-producer",
+  "synthetic": true,
+  "gitSha": "synthetic-source-parallel-game-producer",
+  "liveSha": "synthetic-build-parallel-game-producer",
+  "openP0": 0,
+  "profile": {
+    "scope": "management-prototype-review-a",
+    "genre": "management simulation",
+    "bands": {
+      "floor": 0.5,
+      "pass": 0.75,
+      "target": 1
+    },
+    "milestone": "one playable shift",
+    "audience": "prototype review group",
+    "ask": "authorize a second shift prototype",
+    "hoursByRole": {
+      "capture": 4,
+      "design": 6,
+      "art": 5,
+      "producer": 3
+    },
+    "reviewWindow": "one planning wave",
+    "firstTask": "capture",
+    "decisionTask": "decision",
+    "severities": [
+      "P0",
+      "P1",
+      "P2"
+    ],
+    "requiredGates": [
+      "playable",
+      "readability"
+    ],
+    "requiredTopics": [
+      "promise",
+      "proof",
+      "scope",
+      "dependencies",
+      "risk",
+      "ask"
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "receipt-scope",
+      "kind": "static",
+      "lineId": "milestone:1",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-capacity",
+      "kind": "config",
+      "lineId": "milestone:2",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-dependency",
+      "kind": "trace",
+      "lineId": "workstreams:1",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-locks",
+      "kind": "trace",
+      "lineId": "workstreams:2",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-counts",
+      "kind": "static",
+      "lineId": "ledger:1",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-closure",
+      "kind": "trace",
+      "lineId": "ledger:2",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-gate",
+      "kind": "trace",
+      "lineId": "release-decision:1",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-risk",
+      "kind": "static",
+      "lineId": "release-decision:2",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-claims",
+      "kind": "static",
+      "lineId": "pitch:1",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    },
+    {
+      "id": "receipt-review",
+      "kind": "capture",
+      "lineId": "pitch:2",
+      "gitSha": "synthetic-source-parallel-game-producer",
+      "liveSha": "synthetic-build-parallel-game-producer",
+      "scope": "management-prototype-review-a",
+      "context": {
+        "milestone": "one playable shift",
+        "audience": "prototype review group",
+        "ask": "authorize a second shift prototype"
+      },
+      "source": "fixtures/project.json#/snapshot"
+    }
+  ],
+  "metrics": {
+    "scope": {
+      "artifact": "receipt-scope",
+      "samples": [
+        {
+          "caseId": "capture",
+          "testable": true
+        },
+        {
+          "caseId": "model",
+          "testable": true
+        },
+        {
+          "caseId": "cue",
+          "testable": true
+        },
+        {
+          "caseId": "decision",
+          "testable": true
+        }
+      ]
+    },
+    "capacity": {
+      "artifact": "receipt-capacity",
+      "samples": [
+        {
+          "caseId": "[\"capture\",0]",
+          "role": "capture",
+          "hours": 2
+        },
+        {
+          "caseId": "[\"design\",1]",
+          "role": "design",
+          "hours": 5
+        },
+        {
+          "caseId": "[\"art\",1]",
+          "role": "art",
+          "hours": 3
+        },
+        {
+          "caseId": "[\"producer\",2]",
+          "role": "producer",
+          "hours": 2
+        }
+      ]
+    },
+    "dependency": {
+      "artifact": "receipt-dependency",
+      "samples": [
+        {
+          "caseId": "[\"capture\",\"model\"]",
+          "ready": true
+        },
+        {
+          "caseId": "[\"capture\",\"cue\"]",
+          "ready": true
+        },
+        {
+          "caseId": "[\"model\",\"decision\"]",
+          "ready": true
+        },
+        {
+          "caseId": "[\"cue\",\"decision\"]",
+          "ready": true
+        },
+        {
+          "caseId": "[\"capture\",\"decision\"]",
+          "ready": true
+        }
+      ]
+    },
+    "locks": {
+      "artifact": "receipt-locks",
+      "samples": [
+        {
+          "caseId": "capture",
+          "conflictFree": true
+        },
+        {
+          "caseId": "model",
+          "conflictFree": true
+        },
+        {
+          "caseId": "cue",
+          "conflictFree": true
+        },
+        {
+          "caseId": "decision",
+          "conflictFree": true
+        }
+      ]
+    },
+    "counts": {
+      "artifact": "receipt-counts",
+      "samples": [
+        {
+          "caseId": "P0",
+          "derived": 0,
+          "reported": 0
+        },
+        {
+          "caseId": "P1",
+          "derived": 1,
+          "reported": 1
+        },
+        {
+          "caseId": "P2",
+          "derived": 1,
+          "reported": 1
+        }
+      ]
+    },
+    "closure": {
+      "artifact": "receipt-closure",
+      "samples": [
+        {
+          "caseId": "shift-total",
+          "verified": true
+        }
+      ]
+    },
+    "gate": {
+      "artifact": "receipt-gate",
+      "samples": [
+        {
+          "caseId": "playable",
+          "passed": true
+        },
+        {
+          "caseId": "readability",
+          "passed": true
+        }
+      ]
+    },
+    "risk": {
+      "artifact": "receipt-risk",
+      "samples": [
+        {
+          "caseId": "density",
+          "actionable": true
+        }
+      ]
+    },
+    "claims": {
+      "artifact": "receipt-claims",
+      "samples": [
+        {
+          "caseId": "promise",
+          "grounded": true
+        },
+        {
+          "caseId": "proof",
+          "grounded": true
+        },
+        {
+          "caseId": "scope",
+          "grounded": true
+        },
+        {
+          "caseId": "dependencies",
+          "grounded": true
+        },
+        {
+          "caseId": "risk",
+          "grounded": true
+        },
+        {
+          "caseId": "ask",
+          "grounded": true
+        }
+      ]
+    },
+    "review": {
+      "artifact": "receipt-review",
+      "samples": [
+        {
+          "caseId": "promise",
+          "reviewed": true
+        },
+        {
+          "caseId": "proof",
+          "reviewed": true
+        },
+        {
+          "caseId": "scope",
+          "reviewed": true
+        },
+        {
+          "caseId": "dependencies",
+          "reviewed": true
+        },
+        {
+          "caseId": "risk",
+          "reviewed": true
+        },
+        {
+          "caseId": "ask",
+          "reviewed": true
+        }
+      ]
+    }
+  }
+}

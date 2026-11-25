@@ -1,0 +1,93 @@
+# Stream-to-Devlog & Trailer Cut Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Turn recorded gameplay into a devlog or trailer. Choose moments that show the player experience, frame them for each destination and check the cut for sensitive information.
+
+Rubric: `gbf-10-trailer-cut-director` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks have the caps shown in the rubric (a receipt is one result row for one test case you agreed in `profile.cases`, such as one delivery cut decoded at its expected size). All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population required by each line (the list or count of things measured, such as shots or caption cues). Single-number summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `authentic-gameplay:1` | Build-bound shots | computed | `shots.fromGradedBuild`, `shots.total`, `shots.namedInPack` | shots.fromGradedBuild == shots.total (hard: level 1 on failure); shots.namedInPack == shots.total |
+| `authentic-gameplay:2` | No unavailable features implied | computed | `claims.claimsChecked`, `claims.unavailableImplied` | claims.claimsChecked >= 1; claims.unavailableImplied == 0 (hard: level 1 on failure) |
+| `readable-story:1` | Edit decisions recorded | computed | `edl.sourceClipsRecorded`, `edl.decisionsRecorded`, `shots.total`, `receipts.editDecisions` | `edl.sourceClipsRecorded true `, `edl.decisionsRecorded >= shots.total`, approved receipt cases pass |
+| `readable-story:2` | Action readable in the main wide cut | judged | judgements["readable-story:2"] with capture evidence ids from this pack | a named judge records a level 0 to 4 citing artifacts in the pack |
+| `composition:1` | Action and essential UI kept in the approved crop | computed | `cropFraming.shotsWithActionPoint`, `cropFraming.shots`, `cropFraming.hudContextKept` | cropFraming.shotsWithActionPoint == cropFraming.shots; cropFraming.hudContextKept is true, and the cut appears in deliveryCuts |
+| `composition:2` | Sensitive information redacted | computed | `redaction.framesScanned`, `redaction.namesVisibleUnredacted`, `redaction.totalFrames`, `receipts.finalReview` | `redaction.framesScanned > 0`, `redaction.namesVisibleUnredacted == 0`, `redaction.framesScanned == redaction.totalFrames`, approved receipt cases pass |
+| `technical-export:1` | Approved delivery cuts exported and decoded | computed | `exports.rendered`, `exports.lengthS`, `exports.independentDecodeOk`, `exports.avSyncMs`, `receipts.decodedCuts` | `exports.rendered true `, `exports.lengthS <= P.maxLengthS`, `exports.independentDecodeOk true `, `exports.avSyncMs <= P.maxAvSyncMs`, approved receipt cases pass |
+| `technical-export:2` | Recovery after interruption | computed | `recovery.interruptionsInjected`, `recovery.corruptedOutputs` | recovery.interruptionsInjected >= 1; recovery.corruptedOutputs == 0 (hard: level 1 on failure) |
+| `accessible-delivery:1` | Captions | computed | `captions.matchedCues`, `captions.totalCues`, `receipts.captionAlignment` | `ratio(captions.matchedCues,captions.totalCues) >= P.minCaptionMatch`, `captions.matchedCues <= captions.totalCues`, approved receipt cases pass |
+| `accessible-delivery:2` | Sound check | computed | `sound.checkedOnDecodedFile`, `sound.integratedLufs`, `sound.truePeakDb` | sound.checkedOnDecodedFile is true (hard: level 1 on failure); absdiff(sound.integratedLufs,P.targetLufs) <= P.lufsTolerance; sound.truePeakDb <= P.maxTruePeakDb |
+
+## Growth checks (reported beside the grade, not scored)
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `licensed-music` | licensing | `licensing.licensedTracks`, `licensing.tracks` | licensing.licensedTracks == licensing.tracks |
+
+## Adapt to your game
+
+Start from the moment a viewer needs to understand, such as completing a level or discovering a new location. The moments come from your game's own events and the footage, never from a fixed list of action signals. For example:
+
+- 2D platformer: a hard jump landed or a secret found.
+- Mobile puzzle game: the last piece settling or a board cleared.
+- Turn-based strategy game: a flank that turns a battle.
+- Racing game: an overtake into the last corner.
+- Narrative adventure: a choice and its visible result.
+- Farming or life sim: the first harvest or a change of season.
+- 3D arena game: a team objective taken.
+
+If your game logs no events, pick moments by hand while watching and record why (see `gameplay-moment-finder`).
+
+Choose the delivery formats before capturing. The profile's `deliveryCuts` list is the only promise of formats, and each cut needs a `decodedCuts` case. The sample profile has one wide (16:9) and one vertical (9:16) cut. Add a square (1:1) or portrait feed (4:5) cut only if you will post one. `readable-story:2` is judged on the wide cut, and `composition:1` checks the one cropped cut named in `cropFraming.cut` (any approved crop, despite the 9:16 in the group name).
+
+If your game has no HUD, no voices or no player names, the matching checks still apply to what is on screen: the essential information the crop must keep, the key sounds to caption, and anything private that could leak (desktop notifications, save names, debug text). If there is truly nothing to measure for a line, leave it out of the pack. It grades U, which lowers coverage but is never a defect.
+
+- Run ffprobe and an EBU R128 loudness pass on the decoded exports and write the numbers into exports and sound.
+- Record every shot's build id in the pack so authenticity is checkable.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+## Owner calls
+
+- Which delivery formats you need, and the loudness target, true-peak limit (`maxTruePeakDb`) and maximum length for each platform.
+- Who reviews the story in each delivery format.
+
+## Blockers
+
+- Action readable in the main wide cut (`readable-story:2`) needs a person to watch the wide cut; it stays U until a named reviewer records a judgement.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

@@ -1,0 +1,993 @@
+{
+ "packId": "example-09-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "viewports": [
+   "desktop-1280",
+   "phone-portrait",
+   "phone-landscape"
+  ],
+  "states": [
+   "busiest-moment",
+   "fail-state",
+   "inventory",
+   "results"
+  ],
+  "minContrast": 4.5,
+  "minCvdDeltaE": 12,
+  "minTouchTargetPx": 44,
+  "minTextPx": 12,
+  "uiBudgetMs": 2,
+  "pseudoLocExpansion": 1.4,
+  "maxHudCoverPct": 20,
+  "cases": {
+   "elementContrast": [
+    {
+     "id": "text-0",
+     "element": "text",
+     "state": "busiest-moment",
+     "minimum": 4.5
+    },
+    {
+     "id": "text-1",
+     "element": "text",
+     "state": "fail-state",
+     "minimum": 4.5
+    },
+    {
+     "id": "text-2",
+     "element": "text",
+     "state": "inventory",
+     "minimum": 4.5
+    },
+    {
+     "id": "text-3",
+     "element": "text",
+     "state": "results",
+     "minimum": 4.5
+    },
+    {
+     "id": "graphic-0",
+     "element": "graphic",
+     "state": "busiest-moment",
+     "minimum": 3
+    },
+    {
+     "id": "graphic-1",
+     "element": "graphic",
+     "state": "fail-state",
+     "minimum": 3
+    },
+    {
+     "id": "graphic-2",
+     "element": "graphic",
+     "state": "inventory",
+     "minimum": 3
+    },
+    {
+     "id": "graphic-3",
+     "element": "graphic",
+     "state": "results",
+     "minimum": 3
+    },
+    {
+     "id": "focus-0",
+     "element": "focus",
+     "state": "busiest-moment",
+     "minimum": 3
+    },
+    {
+     "id": "focus-1",
+     "element": "focus",
+     "state": "fail-state",
+     "minimum": 3
+    },
+    {
+     "id": "focus-2",
+     "element": "focus",
+     "state": "inventory",
+     "minimum": 3
+    },
+    {
+     "id": "focus-3",
+     "element": "focus",
+     "state": "results",
+     "minimum": 3
+    }
+   ],
+   "actionBounds": [
+    {
+     "id": "keyboard-select-desktop-1280",
+     "control": "select",
+     "input": "keyboard",
+     "viewport": "desktop-1280"
+    },
+    {
+     "id": "keyboard-select-phone-portrait",
+     "control": "select",
+     "input": "keyboard",
+     "viewport": "phone-portrait"
+    },
+    {
+     "id": "keyboard-select-phone-landscape",
+     "control": "select",
+     "input": "keyboard",
+     "viewport": "phone-landscape"
+    },
+    {
+     "id": "pad-select-desktop-1280",
+     "control": "select",
+     "input": "pad",
+     "viewport": "desktop-1280"
+    },
+    {
+     "id": "pad-select-phone-portrait",
+     "control": "select",
+     "input": "pad",
+     "viewport": "phone-portrait"
+    },
+    {
+     "id": "pad-select-phone-landscape",
+     "control": "select",
+     "input": "pad",
+     "viewport": "phone-landscape"
+    },
+    {
+     "id": "touch-select-desktop-1280",
+     "control": "select",
+     "input": "touch",
+     "viewport": "desktop-1280"
+    },
+    {
+     "id": "touch-select-phone-portrait",
+     "control": "select",
+     "input": "touch",
+     "viewport": "phone-portrait"
+    },
+    {
+     "id": "touch-select-phone-landscape",
+     "control": "select",
+     "input": "touch",
+     "viewport": "phone-landscape"
+    },
+    {
+     "id": "keyboard-dismiss-desktop-1280",
+     "control": "dismiss",
+     "input": "keyboard",
+     "viewport": "desktop-1280"
+    },
+    {
+     "id": "keyboard-dismiss-phone-portrait",
+     "control": "dismiss",
+     "input": "keyboard",
+     "viewport": "phone-portrait"
+    },
+    {
+     "id": "keyboard-dismiss-phone-landscape",
+     "control": "dismiss",
+     "input": "keyboard",
+     "viewport": "phone-landscape"
+    },
+    {
+     "id": "pad-dismiss-desktop-1280",
+     "control": "dismiss",
+     "input": "pad",
+     "viewport": "desktop-1280"
+    },
+    {
+     "id": "pad-dismiss-phone-portrait",
+     "control": "dismiss",
+     "input": "pad",
+     "viewport": "phone-portrait"
+    },
+    {
+     "id": "pad-dismiss-phone-landscape",
+     "control": "dismiss",
+     "input": "pad",
+     "viewport": "phone-landscape"
+    },
+    {
+     "id": "touch-dismiss-desktop-1280",
+     "control": "dismiss",
+     "input": "touch",
+     "viewport": "desktop-1280"
+    },
+    {
+     "id": "touch-dismiss-phone-portrait",
+     "control": "dismiss",
+     "input": "touch",
+     "viewport": "phone-portrait"
+    },
+    {
+     "id": "touch-dismiss-phone-landscape",
+     "control": "dismiss",
+     "input": "touch",
+     "viewport": "phone-landscape"
+    }
+   ]
+  },
+  "contrastElements": [
+   "text",
+   "graphic",
+   "focus"
+  ],
+  "hudControls": [
+   "select",
+   "dismiss"
+  ],
+  "hudInputs": [
+   "keyboard",
+   "pad",
+   "touch"
+  ]
+ },
+ "artifacts": [
+  {
+   "id": "art-priority",
+   "kind": "capture",
+   "path": "captures/priority.json",
+   "sha256": null
+  },
+  {
+   "id": "art-strings",
+   "kind": "static",
+   "path": "static/strings.json",
+   "sha256": null
+  },
+  {
+   "id": "art-contrast",
+   "kind": "capture",
+   "path": "captures/contrast.json",
+   "sha256": null
+  },
+  {
+   "id": "art-cvd",
+   "kind": "capture",
+   "path": "captures/cvd.json",
+   "sha256": null
+  },
+  {
+   "id": "art-focus",
+   "kind": "capture",
+   "path": "captures/focus.json",
+   "sha256": null
+  },
+  {
+   "id": "art-touch",
+   "kind": "capture",
+   "path": "captures/touch.json",
+   "sha256": null
+  },
+  {
+   "id": "art-text",
+   "kind": "capture",
+   "path": "captures/text.json",
+   "sha256": null
+  },
+  {
+   "id": "art-orientation",
+   "kind": "capture",
+   "path": "captures/orientation.json",
+   "sha256": null
+  },
+  {
+   "id": "art-uiCost",
+   "kind": "trace",
+   "path": "traces/uiCost.json",
+   "sha256": null
+  },
+  {
+   "id": "art-expansion",
+   "kind": "capture",
+   "path": "captures/expansion.json",
+   "sha256": null
+  },
+  {
+   "id": "art-hudChrome",
+   "kind": "capture",
+   "path": "captures/hudChrome.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-text-0",
+   "kind": "capture",
+   "path": "receipts/elementContrast/text-0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-text-1",
+   "kind": "capture",
+   "path": "receipts/elementContrast/text-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-text-2",
+   "kind": "capture",
+   "path": "receipts/elementContrast/text-2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-text-3",
+   "kind": "capture",
+   "path": "receipts/elementContrast/text-3.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-graphic-0",
+   "kind": "capture",
+   "path": "receipts/elementContrast/graphic-0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-graphic-1",
+   "kind": "capture",
+   "path": "receipts/elementContrast/graphic-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-graphic-2",
+   "kind": "capture",
+   "path": "receipts/elementContrast/graphic-2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-graphic-3",
+   "kind": "capture",
+   "path": "receipts/elementContrast/graphic-3.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-focus-0",
+   "kind": "capture",
+   "path": "receipts/elementContrast/focus-0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-focus-1",
+   "kind": "capture",
+   "path": "receipts/elementContrast/focus-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-focus-2",
+   "kind": "capture",
+   "path": "receipts/elementContrast/focus-2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-elementContrast-focus-3",
+   "kind": "capture",
+   "path": "receipts/elementContrast/focus-3.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-keyboard-select-desktop-1280",
+   "kind": "capture",
+   "path": "receipts/actionBounds/keyboard-select-desktop-1280.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-keyboard-select-phone-portrait",
+   "kind": "capture",
+   "path": "receipts/actionBounds/keyboard-select-phone-portrait.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-keyboard-select-phone-landscape",
+   "kind": "capture",
+   "path": "receipts/actionBounds/keyboard-select-phone-landscape.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-pad-select-desktop-1280",
+   "kind": "capture",
+   "path": "receipts/actionBounds/pad-select-desktop-1280.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-pad-select-phone-portrait",
+   "kind": "capture",
+   "path": "receipts/actionBounds/pad-select-phone-portrait.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-pad-select-phone-landscape",
+   "kind": "capture",
+   "path": "receipts/actionBounds/pad-select-phone-landscape.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-touch-select-desktop-1280",
+   "kind": "capture",
+   "path": "receipts/actionBounds/touch-select-desktop-1280.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-touch-select-phone-portrait",
+   "kind": "capture",
+   "path": "receipts/actionBounds/touch-select-phone-portrait.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-touch-select-phone-landscape",
+   "kind": "capture",
+   "path": "receipts/actionBounds/touch-select-phone-landscape.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-keyboard-dismiss-desktop-1280",
+   "kind": "capture",
+   "path": "receipts/actionBounds/keyboard-dismiss-desktop-1280.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-keyboard-dismiss-phone-portrait",
+   "kind": "capture",
+   "path": "receipts/actionBounds/keyboard-dismiss-phone-portrait.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-keyboard-dismiss-phone-landscape",
+   "kind": "capture",
+   "path": "receipts/actionBounds/keyboard-dismiss-phone-landscape.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-pad-dismiss-desktop-1280",
+   "kind": "capture",
+   "path": "receipts/actionBounds/pad-dismiss-desktop-1280.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-pad-dismiss-phone-portrait",
+   "kind": "capture",
+   "path": "receipts/actionBounds/pad-dismiss-phone-portrait.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-pad-dismiss-phone-landscape",
+   "kind": "capture",
+   "path": "receipts/actionBounds/pad-dismiss-phone-landscape.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-touch-dismiss-desktop-1280",
+   "kind": "capture",
+   "path": "receipts/actionBounds/touch-dismiss-desktop-1280.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-touch-dismiss-phone-portrait",
+   "kind": "capture",
+   "path": "receipts/actionBounds/touch-dismiss-phone-portrait.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-actionBounds-touch-dismiss-phone-landscape",
+   "kind": "capture",
+   "path": "receipts/actionBounds/touch-dismiss-phone-landscape.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "priority": {
+   "artifact": "art-priority",
+   "statesCaptured": [
+    "busiest-moment",
+    "fail-state",
+    "inventory",
+    "results"
+   ],
+   "viewports": [
+    "desktop-1280",
+    "phone-portrait",
+    "phone-landscape"
+   ],
+   "essentialMissing": 0
+  },
+  "strings": {
+   "artifact": "art-strings",
+   "inventoryComplete": true,
+   "hardcodedStrings": 0,
+   "measuredCases": 1
+  },
+  "contrast": {
+   "artifact": "art-contrast",
+   "source": "pack-screenshots",
+   "pairs": [
+    [
+     "#ffffff",
+     "#1b2330"
+    ],
+    [
+     "#ffd84d",
+     "#20262e"
+    ],
+    [
+     "#e8f1ff",
+     "#2a3b52"
+    ]
+   ]
+  },
+  "cvd": {
+   "artifact": "art-cvd",
+   "paletteA": [
+    "#9e9e9e",
+    "#2e7d32",
+    "#1565c0",
+    "#6a1b9a",
+    "#ff8f00"
+   ],
+   "paletteB": [
+    "#bdbdbd",
+    "#00897b",
+    "#3949ab",
+    "#d81b60",
+    "#fdd835"
+   ],
+   "infoSurvivesGreyscale": true
+  },
+  "focus": {
+   "artifact": "art-focus",
+   "focusVisible": true,
+   "focusReturnsAfterDialog": true,
+   "navReachableActions": 2,
+   "hudActions": 2
+  },
+  "touch": {
+   "artifact": "art-touch",
+   "targetPx": [
+    48,
+    52,
+    44,
+    60,
+    46
+   ]
+  },
+  "text": {
+   "artifact": "art-text",
+   "minPxLargeViewport": 12,
+   "minPxSmallViewport": 12.5,
+   "measuredCases": 1
+  },
+  "orientation": {
+   "artifact": "art-orientation",
+   "clippedEssential": 0,
+   "obscuredEssential": 0,
+   "measuredCases": 1
+  },
+  "uiCost": {
+   "artifact": "art-uiCost",
+   "uiMs": [
+    0.6,
+    0.8,
+    1.1,
+    1.3,
+    1.5
+   ]
+  },
+  "expansion": {
+   "artifact": "art-expansion",
+   "factorTested": 1.4,
+   "overflowingLayouts": 0,
+   "measuredCases": 1
+  },
+  "hudChrome": {
+   "artifact": "art-hudChrome",
+   "screenCoverPctMaxDuringPlay": 14,
+   "measuredCases": 1
+  },
+  "retryInput": {
+   "artifact": "art-focus",
+   "runs": 2,
+   "withoutGesture": 0,
+   "afterGesture": 1
+  }
+ },
+ "receipts": {
+  "elementContrast": [
+   {
+    "id": "text-0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-text-0",
+    "element": "text",
+    "state": "busiest-moment",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "text-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-text-1",
+    "element": "text",
+    "state": "fail-state",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "text-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-text-2",
+    "element": "text",
+    "state": "inventory",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "text-3",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-text-3",
+    "element": "text",
+    "state": "results",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "graphic-0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-graphic-0",
+    "element": "graphic",
+    "state": "busiest-moment",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "graphic-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-graphic-1",
+    "element": "graphic",
+    "state": "fail-state",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "graphic-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-graphic-2",
+    "element": "graphic",
+    "state": "inventory",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "graphic-3",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-graphic-3",
+    "element": "graphic",
+    "state": "results",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "focus-0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-focus-0",
+    "element": "focus",
+    "state": "busiest-moment",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "focus-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-focus-1",
+    "element": "focus",
+    "state": "fail-state",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "focus-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-focus-2",
+    "element": "focus",
+    "state": "inventory",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   },
+   {
+    "id": "focus-3",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-elementContrast-focus-3",
+    "element": "focus",
+    "state": "results",
+    "foreground": "#ffffff",
+    "background": "#202020"
+   }
+  ],
+  "actionBounds": [
+   {
+    "id": "keyboard-select-desktop-1280",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-keyboard-select-desktop-1280",
+    "control": "select",
+    "input": "keyboard",
+    "viewport": "desktop-1280",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "keyboard-select-phone-portrait",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-keyboard-select-phone-portrait",
+    "control": "select",
+    "input": "keyboard",
+    "viewport": "phone-portrait",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "keyboard-select-phone-landscape",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-keyboard-select-phone-landscape",
+    "control": "select",
+    "input": "keyboard",
+    "viewport": "phone-landscape",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "pad-select-desktop-1280",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-pad-select-desktop-1280",
+    "control": "select",
+    "input": "pad",
+    "viewport": "desktop-1280",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "pad-select-phone-portrait",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-pad-select-phone-portrait",
+    "control": "select",
+    "input": "pad",
+    "viewport": "phone-portrait",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "pad-select-phone-landscape",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-pad-select-phone-landscape",
+    "control": "select",
+    "input": "pad",
+    "viewport": "phone-landscape",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "touch-select-desktop-1280",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-touch-select-desktop-1280",
+    "control": "select",
+    "input": "touch",
+    "viewport": "desktop-1280",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "touch-select-phone-portrait",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-touch-select-phone-portrait",
+    "control": "select",
+    "input": "touch",
+    "viewport": "phone-portrait",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "touch-select-phone-landscape",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-touch-select-phone-landscape",
+    "control": "select",
+    "input": "touch",
+    "viewport": "phone-landscape",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "keyboard-dismiss-desktop-1280",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-keyboard-dismiss-desktop-1280",
+    "control": "dismiss",
+    "input": "keyboard",
+    "viewport": "desktop-1280",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "keyboard-dismiss-phone-portrait",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-keyboard-dismiss-phone-portrait",
+    "control": "dismiss",
+    "input": "keyboard",
+    "viewport": "phone-portrait",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "keyboard-dismiss-phone-landscape",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-keyboard-dismiss-phone-landscape",
+    "control": "dismiss",
+    "input": "keyboard",
+    "viewport": "phone-landscape",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "pad-dismiss-desktop-1280",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-pad-dismiss-desktop-1280",
+    "control": "dismiss",
+    "input": "pad",
+    "viewport": "desktop-1280",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "pad-dismiss-phone-portrait",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-pad-dismiss-phone-portrait",
+    "control": "dismiss",
+    "input": "pad",
+    "viewport": "phone-portrait",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "pad-dismiss-phone-landscape",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-pad-dismiss-phone-landscape",
+    "control": "dismiss",
+    "input": "pad",
+    "viewport": "phone-landscape",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "touch-dismiss-desktop-1280",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-touch-dismiss-desktop-1280",
+    "control": "dismiss",
+    "input": "touch",
+    "viewport": "desktop-1280",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "touch-dismiss-phone-portrait",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-touch-dismiss-phone-portrait",
+    "control": "dismiss",
+    "input": "touch",
+    "viewport": "phone-portrait",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   },
+   {
+    "id": "touch-dismiss-phone-landscape",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-actionBounds-touch-dismiss-phone-landscape",
+    "control": "dismiss",
+    "input": "touch",
+    "viewport": "phone-landscape",
+    "left": 5,
+    "top": 8,
+    "right": 50,
+    "bottom": 60,
+    "viewportWidth": 360,
+    "viewportHeight": 640,
+    "reached": true,
+    "focusReturned": true
+   }
+  ]
+ }
+}

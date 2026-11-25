@@ -1,0 +1,142 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-19-store-presskit-director",
+  "slug": "19-presskit-director",
+  "name": "Store Page & Presskit Director",
+  "shortName": "Store Page",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Prepare store copy, screenshots and press assets that show what players actually do in your game, then check each destination's requirements.",
+  "stage": "Ship",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "store-presskit-getting-started",
+  "skills": [
+    "store-presskit-getting-started",
+    "store-art-format-auditor",
+    "store-copy-and-metadata-checker",
+    "presskit-zip-zero-leak-compiler",
+    "store-presskit-lens-engine"
+  ],
+  "routines": [
+    "store-presskit-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-19-store-presskit-director",
+    "version": "1.3.0",
+    "hash": "sha256:1fe127411d0378a34102114652b4f71d4142390674aea70be8d2256c7517083a"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 65,
+    "externalReviewMin": 4.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Trailer Director, HUD (screenshots).",
+    "handsTo": "Streamer and Patch Notes (outreach)."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "media-export-manifest": "^1.0.0",
+      "clip-list": "^1.0.0",
+      "hud-capture-set": "^1.0.0",
+      "access-report": "^1.0.0",
+      "trust-records": "^1.0.0",
+      "pitch-draft": "^1.0.0",
+      "atlas-manifest": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "store-asset-manifest",
+      "version": "1.0.0",
+      "format": "JSON manifest plus the store copy, art and archive files",
+      "schema": "spec/artifacts/store-asset-manifest.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "media-export-manifest",
+      "required": false,
+      "schema": "spec/artifacts/media-export-manifest.schema.json",
+      "whenMissing": "Continue: decode media from the current build yourself; media:1 stays unmeasured until you do. Never reuse unreviewed exports."
+    },
+    {
+      "artifact": "clip-list",
+      "required": false,
+      "schema": "spec/artifacts/clip-list.schema.json"
+    },
+    {
+      "artifact": "hud-capture-set",
+      "required": false,
+      "schema": "spec/artifacts/hud-capture-set.schema.json"
+    },
+    {
+      "artifact": "access-report",
+      "required": false,
+      "schema": "spec/artifacts/access-report.schema.json",
+      "whenMissing": "Continue: make no accessibility claim on the store page, and write \"ASSUMPTION: no access-report available\" in the report."
+    },
+    {
+      "artifact": "trust-records",
+      "required": false,
+      "schema": "spec/artifacts/trust-records.schema.json",
+      "whenMissing": "Continue: presskit-and-obligations:2 stays unmeasured; never invent links."
+    },
+    {
+      "artifact": "pitch-draft",
+      "required": false,
+      "schema": "spec/artifacts/pitch-draft.schema.json"
+    },
+    {
+      "artifact": "atlas-manifest",
+      "required": false,
+      "schema": "spec/artifacts/atlas-manifest.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

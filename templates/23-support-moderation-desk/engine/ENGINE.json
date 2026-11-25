@@ -1,0 +1,30 @@
+{
+  "cmd": [
+    "node",
+    "engine/lens.mjs"
+  ],
+  "meta": [
+    "node",
+    "engine/lens.mjs",
+    "--meta"
+  ],
+  "embed": [
+    "engine/lens-kit.mjs",
+    "engine/lens.mjs",
+    "engine/team-memory.mjs"
+  ],
+  "domain": [
+    "support/drafts.mjs",
+    "tests/test-safety.mjs"
+  ],
+  "contract": [
+    "engine/ENGINE.json",
+    "RUBRIC.json",
+    "fixtures/good-pack.json",
+    "fixtures/mutations.json",
+    "tests/test-lens-contract.mjs",
+    "tests/lens-negative-fixtures.mjs",
+    "tests/test-empty-sample.mjs",
+    "tests/run-all.mjs"
+  ]
+}

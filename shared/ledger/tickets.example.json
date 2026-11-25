@@ -1,0 +1,19 @@
+{
+  "note": "Synthetic example ticket list. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "tickets": [
+    {
+      "id": "T-0001",
+      "title": "Pause menu button unreachable with a gamepad",
+      "templateIds": ["gbf-21-access-input-localization"],
+      "dedupKey": "input/pause-menu/focus-trap/build-abc123",
+      "severity": "P1",
+      "confidence": "high",
+      "status": "open",
+      "buildId": "abc123",
+      "packId": "example-pack-001",
+      "artifactIds": ["art-input"],
+      "fixer": null,
+      "verifier": null
+    }
+  ]
+}

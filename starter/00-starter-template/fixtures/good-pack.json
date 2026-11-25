@@ -1,0 +1,109 @@
+{
+  "packId": "example-starter-pack",
+  "status": "VALID",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "note": "Synthetic worked example. Not a measurement of any game.",
+  "profile": {
+    "firstActionBudgetS": 15,
+    "firstWinShareMin": 0.6,
+    "goalBudgetS": 10,
+    "firstLoadBudgetMB": 25,
+    "crashFreeMin": 0.99,
+    "frameBudgetMs": 11.1,
+    "nextGoalShareMin": 0.8
+  },
+  "artifacts": [
+    {
+      "id": "art-firstAction",
+      "kind": "capture",
+      "path": "captures/firstAction.json",
+      "sha256": null
+    },
+    {
+      "id": "art-firstWin",
+      "kind": "trace",
+      "path": "traces/firstWin.json",
+      "sha256": null
+    },
+    {
+      "id": "art-clarity",
+      "kind": "capture",
+      "path": "captures/clarity.json",
+      "sha256": null
+    },
+    {
+      "id": "art-friction",
+      "kind": "trace",
+      "path": "traces/friction.json",
+      "sha256": null
+    },
+    {
+      "id": "art-stability",
+      "kind": "trace",
+      "path": "traces/stability.json",
+      "sha256": null
+    },
+    {
+      "id": "art-return",
+      "kind": "static",
+      "path": "statics/return.json",
+      "sha256": null
+    },
+    {
+      "id": "art-friction-static",
+      "kind": "static",
+      "path": "static/friction.json",
+      "sha256": null
+    },
+    {
+      "id": "art-return-capture",
+      "kind": "capture",
+      "path": "capture/return.json",
+      "sha256": null
+    }
+  ],
+  "metrics": {
+    "firstAction": {
+      "p95Seconds": 8,
+      "artifact": "art-firstAction",
+      "measuredCases": 1
+    },
+    "firstWin": {
+      "reachedShare": 0.7,
+      "artifact": "art-firstWin",
+      "measuredCases": 1
+    },
+    "clarity": {
+      "goalShownWithinS": 5,
+      "requiredControlsUntaught": 0,
+      "artifact": "art-clarity",
+      "measuredCases": 1
+    },
+    "friction": {
+      "gatesBeforePlay": 0,
+      "firstLoadMB": 12,
+      "artifact": "art-friction",
+      "measuredCases": 1,
+      "artifactsByLine": {
+        "friction:1": "art-friction-static"
+      }
+    },
+    "stability": {
+      "crashFreeShare": 0.995,
+      "p95FrameMs": 10.5,
+      "artifact": "art-stability",
+      "measuredCases": 1
+    },
+    "return": {
+      "nextGoalShownShare": 0.9,
+      "actionsToRestart": 1,
+      "artifact": "art-return",
+      "measuredCases": 1,
+      "artifactsByLine": {
+        "return:1": "art-return-capture"
+      }
+    }
+  }
+}

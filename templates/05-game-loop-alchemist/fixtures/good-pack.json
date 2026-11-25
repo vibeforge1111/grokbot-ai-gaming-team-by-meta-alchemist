@@ -1,0 +1,280 @@
+{
+  "packId": "synthetic-game-loop-alchemist",
+  "status": "VALID",
+  "gitSha": "synthetic-source-game-loop-alchemist",
+  "liveSha": "synthetic-build-game-loop-alchemist",
+  "synthetic": true,
+  "openP0": 0,
+  "note": "Synthetic worked example. Case IDs label anonymous opportunities. All numbers are illustrative.",
+  "profile": {
+    "scope": "puzzle-opening-window-a",
+    "genre": "spatial puzzle",
+    "bands": {
+      "floor": 0.5,
+      "pass": 0.75,
+      "target": 1
+    },
+    "cohort": "first session",
+    "window": "next optional board offered before the session closes",
+    "action": "place a tile",
+    "outcome": "path connected",
+    "actionBudgetS": 18,
+    "beatBudgetS": 9,
+    "recoveryBudgetS": 14
+  },
+  "artifacts": [
+    {
+      "id": "receipt-goal",
+      "kind": "capture",
+      "lineId": "opening:1",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#goal"
+    },
+    {
+      "id": "receipt-action",
+      "kind": "trace",
+      "lineId": "opening:2",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#action"
+    },
+    {
+      "id": "receipt-state",
+      "kind": "trace",
+      "lineId": "consequence:1",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#state"
+    },
+    {
+      "id": "receipt-feedback",
+      "kind": "capture",
+      "lineId": "consequence:2",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#feedback"
+    },
+    {
+      "id": "receipt-beat",
+      "kind": "trace",
+      "lineId": "pacing:1",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#beat"
+    },
+    {
+      "id": "receipt-recovery",
+      "kind": "trace",
+      "lineId": "pacing:2",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#recovery"
+    },
+    {
+      "id": "receipt-choice",
+      "kind": "trace",
+      "lineId": "agency:1",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#choice"
+    },
+    {
+      "id": "receipt-exit",
+      "kind": "capture",
+      "lineId": "agency:2",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#exit"
+    },
+    {
+      "id": "receipt-reason",
+      "kind": "capture",
+      "lineId": "replay:1",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#reason"
+    },
+    {
+      "id": "receipt-return",
+      "kind": "trace",
+      "lineId": "replay:2",
+      "gitSha": "synthetic-source-game-loop-alchemist",
+      "liveSha": "synthetic-build-game-loop-alchemist",
+      "scope": "puzzle-opening-window-a",
+      "context": {
+        "cohort": "first session",
+        "window": "next optional board offered before the session closes",
+        "action": "place a tile",
+        "outcome": "path connected"
+      },
+      "source": "fixtures/session-notes.md#return"
+    }
+  ],
+  "metrics": {
+    "goal": {
+      "artifact": "receipt-goal",
+      "samples": [
+        {
+          "caseId": "goal-1",
+          "expected": "connect exits",
+          "readback": "connect exits"
+        }
+      ]
+    },
+    "action": {
+      "artifact": "receipt-action",
+      "samples": [
+        {
+          "caseId": "action-1",
+          "startS": 3,
+          "actionS": 15
+        }
+      ]
+    },
+    "state": {
+      "artifact": "receipt-state",
+      "samples": [
+        {
+          "caseId": "state-1",
+          "expected": "connected",
+          "actual": "connected"
+        }
+      ]
+    },
+    "feedback": {
+      "artifact": "receipt-feedback",
+      "samples": [
+        {
+          "caseId": "feedback-1",
+          "expected": "route opened",
+          "readback": "route opened"
+        }
+      ]
+    },
+    "beat": {
+      "artifact": "receipt-beat",
+      "samples": [
+        {
+          "caseId": "beat-1",
+          "resolvedS": 12,
+          "choiceS": 18
+        }
+      ]
+    },
+    "recovery": {
+      "artifact": "receipt-recovery",
+      "samples": [
+        {
+          "caseId": "recovery-1",
+          "setbackS": 14,
+          "controlS": 23
+        }
+      ]
+    },
+    "choice": {
+      "artifact": "receipt-choice",
+      "samples": [
+        {
+          "caseId": "choice-1",
+          "expected": "alternate route",
+          "actual": "alternate route"
+        }
+      ]
+    },
+    "exit": {
+      "artifact": "receipt-exit",
+      "samples": [
+        {
+          "caseId": "exit-1",
+          "honored": true
+        }
+      ]
+    },
+    "reason": {
+      "artifact": "receipt-reason",
+      "samples": [
+        {
+          "caseId": "reason-1",
+          "intrinsic": true
+        }
+      ]
+    },
+    "return": {
+      "artifact": "receipt-return",
+      "samples": [
+        {
+          "caseId": "offer-board",
+          "offerRef": "offer-board",
+          "cohort": "first session",
+          "window": "next optional board offered before the session closes",
+          "windowClosed": true,
+          "returned": true
+        }
+      ]
+    }
+  }
+}

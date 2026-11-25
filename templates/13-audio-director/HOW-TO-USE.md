@@ -1,0 +1,124 @@
+# How to use: Sound Effects & Adaptive Music Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Review sound effects, music transitions and mix levels against your game's feedback needs and device budgets.
+
+The short name of this template is Audio Director (13). It reviews any game's sound, recorded or generated ("procedural"), in any engine or audio middleware. Microphone input is optional, starts off and needs the player's consent.
+
+- **Pipeline stage:** Polish
+- **When:** When adding sound, or when important actions sound unclear.
+- **You provide:** A list of sound events, music stems or cues, loudness targets, recordings and mixer traces from the target device, your game profile (`game-profile`) and an evidence pack (`evidence-pack`).
+- **You get:** A 100-point audio grade (`grade-record`), an audio bus plan, adaptive music rules, a loudness, bus and caption timing report (`audio-mix-report`) and local ticket drafts.
+- **Takes from:** Your evidence pack, and optionally `feel-findings` from Game Feel (01).
+- **Hands to:** Game Feel (01) for impact sounds and Trailer Director (10) for the mix, through `audio-mix-report`. See Team handoffs in [README.md](README.md#team-handoffs).
+
+Evidence comes from a CI run, a test harness or a manual capture of your build. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the audio-director-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/13-audio-director
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`audio-director-getting-started`](skills/audio-director-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Sound Effects & Adaptive Music Director grade. |
+| [`sound-effect-bus-and-voice-limits`](skills/sound-effect-bus-and-voice-limits/SKILL.md) | Route recorded or generated sound effects through a mixer bus in your engine or audio middleware, set voice limits and stealing, and verify playback, loudness and lifecycle on target hardware. |
+| [`adaptive-music-stem-crossfader`](skills/adaptive-music-stem-crossfader/SKILL.md) | Change music with game states using stems (separate layers of one piece) or whole cues, then test transition timing, level jumps, ducking and interrupted transitions in any engine. |
+| [`optional-microphone-input`](skills/optional-microphone-input/SKILL.md) | Design optional sound-driven controls that use the microphone only after the owner and the player opt in, never record or send audio, and always offer an equal non-microphone control. |
+| [`audio-director-lens-engine`](skills/audio-director-lens-engine/SKILL.md) | Use when you need to grade a Sound Effects & Adaptive Music Director evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-13-audio-director` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `load-and-start:1` | Load cost and asset streaming | 10 | trace |
+| `load-and-start:2` | Audio start on first input | 10 | trace |
+| `music-and-mix:1` | Music system | 10 | capture |
+| `music-and-mix:2` | Mix and bus structure | 10 | capture |
+| `loudness-and-voices:1` | Loudness and true-peak limiting | 10 | capture |
+| `loudness-and-voices:2` | Active voice cap and stealing on the target device | 10 | trace |
+| `space-and-variety:1` | Spatial audio and occlusion | 10 | capture |
+| `space-and-variety:2` | SFX variety and procedural pooling | 10 | capture |
+| `voice-and-lifecycle:1` | Spoken lines and captions | 10 | trace |
+| `voice-and-lifecycle:2` | Lifecycle (mute, backgrounding, start rules, memory) | 10 | capture |
+
+## Decisions only you make
+
+- How loud the game should be overall, and the highest peak you allow, on each target device.
+- How many sounds may play at once on the weakest device, and how much audio may load before the first play.
+- If sounds are placed in space: how sure the direction test must be (`minSpatialDirectionLow`, for example 0.8).
+- Which rubric profiles apply (`no-music`, `no-spoken-lines`, `no-spatial-audio`), approved before scoring and set as `rubricProfile` in the game profile.
+- Whether the game uses the microphone at all. It stays off by default, and players must agree before it turns on.
+
+## Known limits
+
+- Recordings and voice counts need a target device; the worked example is synthetic.
+- Three approved profiles mark a line not applicable: `no-music` (`music-and-mix:1`), `no-spoken-lines` (`voice-and-lifecycle:1`) and `no-spatial-audio` (`space-and-variety:1`). The owner approves them before scoring and sets `rubricProfile` in the game profile. The line then reads N/A, its partner line takes the pillar's 20 points, and the verdict can reach PASS.
+- A native build whose audio starts before any input has no profile for `load-and-start:2`: it stays U and the verdict stays CONDITIONAL. The report says the line does not apply.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `feel-findings` (optional, ^1.0.0) | 01 Game Feel | `.grokbot-team/artifacts/feel-findings/` | Continue: list the essential sounds with the owner, and write "ASSUMPTION: no feel-findings available" in the report. |
+| `dialogue-draft` (optional, ^1.0.0) | 14 NPC and Lore | `.grokbot-team/artifacts/dialogue-draft/` | Continue without it. Start the report with "ASSUMPTION: no dialogue-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `audio-mix-report` 1.0.0 | JSON | `.grokbot-team/artifacts/audio-mix-report/` | 01 Game Feel, 10 Trailer, 21 Access |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-13-audio-director` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

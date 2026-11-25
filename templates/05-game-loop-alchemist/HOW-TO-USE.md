@@ -1,0 +1,128 @@
+# How to use: Game Loop Alchemist
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+**Status: preview, not shipping.** This template works and its tests pass, but it is not yet held to the kit's release standard.
+
+Before it can ship:
+
+- **Minimum sample size.** Today one observed case can earn level 4 on a line. The engine needs a profile setting (`profile.bands.minCases`) so a line backed by fewer observed cases reads U. Until then, treat any line with fewer cases than your playtest plan calls for as provisional.
+
+Map what the player chooses, what changes, and why the next turn is worth taking. Measure the core loop, its pace and the freedom to stop.
+
+- **Pipeline stage:** Prototype and playtest.
+- **When:** After you change the opening, a repeating decision, a retry or setback, or the invitation to play again. Grade a fresh cohort each time.
+- **You provide:** Timestamped first-session traces, anonymous playtest observations, and return opportunities from an observation window that has closed; your game profile (`game-profile`) and an evidence pack (`evidence-pack`).
+- **You get:** A 100-point loop grade (`grade-record`), a local loop map, a pacing diagnosis and an experiment card for the designer and the playtest lead (together, a `loop-report`), and local ticket drafts (`ticket-draft`). Nothing is filed until you file it.
+- **Takes from:** Playtest traces and captures (the evidence pack) from your playtest team, a CI run or a manual capture; the owner's game profile.
+- **Hands to:** Producer (12), which can use this grade record as a milestone gate; Bug Desk (18) for ticket drafts (a forced continuation after a stop request is a P0 candidate); the designer and playtest lead for the loop map, pacing diagnosis and experiment card; through `loop-report`, Game Feel (01) and HUD Designer (09) for cue changes and Economy Director (06) for reward or replay changes; Audio Director (13) for sound cue changes, as a ticket draft. See Team handoffs in [README.md](README.md#team-handoffs).
+
+New to terms such as evidence pack, receipt, cohort, bands or U? See [Words used here](README.md#words-used-here).
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents. Both work offline with the local files.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the [`game-loop-alchemist-lens-engine`](skills/game-loop-alchemist-lens-engine/SKILL.md) skill, then the [`game-loop-alchemist-getting-started`](skills/game-loop-alchemist-getting-started/SKILL.md) skill, then the five evidence skills below.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. When the owner picks a cadence, create the routine from section 2 of [PROMPTS.md](PROMPTS.md): "Create a routine with this prompt: ...". Replace `<cadence>` first.
+4. Say: "Run the game-loop-alchemist-getting-started skill." It grades the synthetic example first, then helps you collect a real pack.
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine, or let the agent write them from the `-lens-engine` skill. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/05-game-loop-alchemist
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when | Feeds rubric lines |
+|---|---|---|
+| [`game-loop-alchemist-getting-started`](skills/game-loop-alchemist-getting-started/SKILL.md) | First run with a new owner: agree the game profile one question at a time and run the first grade. | all (setup) |
+| [`opening-playtest`](skills/opening-playtest/SKILL.md) | A new opening needs an unaided goal readback and a time to the first meaningful action. | `opening:1`, `opening:2` |
+| [`loop-consequence`](skills/loop-consequence/SKILL.md) | You need to check that the core action causes the intended change and that testers can say what changed. | `consequence:1`, `consequence:2` |
+| [`decision-pacing`](skills/decision-pacing/SKILL.md) | The loop feels slow, or a setback delays the next useful choice. | `pacing:1`, `pacing:2` |
+| [`loop-agency`](skills/loop-agency/SKILL.md) | You need to show that a different choice leads somewhere different and that a tester can stop when they want. | `agency:1`, `agency:2` |
+| [`voluntary-replay`](skills/voluntary-replay/SKILL.md) | You need to separate the stated reason to play again from whether testers actually came back. Also carries the worked example files. | `replay:1`, `replay:2` |
+| [`game-loop-alchemist-lens-engine`](skills/game-loop-alchemist-lens-engine/SKILL.md) | You need to grade a pack: write the engine files from this skill and run them. | all (grading) |
+
+## First real pack
+
+1. Agree the profile with the getting-started skill and pick a scope name for it.
+2. Collect rows with the evidence skills. Keep each source file (observer sheet, trace export, capture notes) on disk under the pack's folder.
+3. Copy the shape of `fixtures/good-pack.json`, set `synthetic` to false, and replace every value with your own.
+4. Ask the evidence producer (the person or tool that made the captures) for a `game-evidence-v1` producer receipt:
+   - Give each artifact a relative `path` under the pack directory and the hex SHA-256 of its bytes.
+   - The receipt names `producer`, `profileId`, `device`, `hook`, and a capture or trace ID in `gameplayArtifact`. Set `schema` to `game-evidence-v1` and include the matching `packId`, `gitSha` and `liveSha`.
+   - Its `profileSha256`, `artifactsSha256` and `observationsSha256` cover the profile, the artifact array and the array `[metrics, receipts, judgements, populations, openP0]`, using an empty object for absent collections and zero for an absent openP0.
+   - Hash UTF-8 JSON with recursively sorted object keys and no whitespace.
+5. Run `node engine/lens.mjs your-pack.json`. The engine checks these digests and the local files. If any check fails it reports INVALID and a null grade.
+
+Keep the worked examples labelled synthetic. Never copy a synthetic row into a real pack.
+
+## Decisions only you make
+
+- What the first meaningful action is and what it should change. A puzzle game might pick placing a tile; a racing game, the first throttle input after the countdown; a narrative adventure, the first dialogue choice.
+- How many seconds are acceptable before that action, between decisions, and after a setback (`actionBudgetS`, `beatBudgetS`, `recoveryBudgetS`), and which pauses (cutscenes, loading, an enemy turn) are left out of the beat.
+- Where the player may stop, and what must happen when they do.
+- Who is in the cohort, and when the observation window for a return closes.
+- The coding keys observers use for goals, consequences and reasons to play again.
+- The bands (`floor`, `pass`, `target`).
+
+## Known limits
+
+- One observed case can earn level 4 (see the status note at the top).
+- Needs your own playtest observations; both worked examples are synthetic.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `feel-findings` (optional, ^1.0.0) | 01 Game Feel | `.grokbot-team/artifacts/feel-findings/` | Continue without it. Start the report with "ASSUMPTION: no feel-findings available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `cohort-report` (optional, ^1.0.0) | 27 Retention | `.grokbot-team/artifacts/cohort-report/` | Continue without it. Start the report with "ASSUMPTION: no cohort-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `loop-report` 1.0.0 | JSON plus a Markdown loop map draft | `.grokbot-team/artifacts/loop-report/` | 01 Game Feel, 06 Economy, 09 HUD |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases`, `balance` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-05-game-loop-alchemist` and `0.1.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.
+- Testers stay anonymous: case ids only, no names or accounts in the pack.

@@ -1,0 +1,353 @@
+{
+ "packId": "example-18-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "flakyRunsRequired": 10,
+  "p0Scopes": [
+   "payments",
+   "entitlements",
+   "saved-state"
+  ],
+  "cases": {
+   "intakeReplay": [
+    {
+     "id": "B-1",
+     "ticket": "B-1",
+     "signature": "route-B-1"
+    },
+    {
+     "id": "B-2",
+     "ticket": "B-2",
+     "signature": "route-B-2"
+    }
+   ],
+   "buildLag": [
+    {
+     "id": "running"
+    }
+   ],
+   "closureReview": [
+    {
+     "id": "B-1",
+     "ticket": "B-1"
+    },
+    {
+     "id": "B-2",
+     "ticket": "B-2"
+    }
+   ]
+  },
+  "p0ResponseHours": 24
+ },
+ "artifacts": [
+  {
+   "id": "art-repro",
+   "kind": "trace",
+   "path": "traces/repro.json",
+   "sha256": null
+  },
+  {
+   "id": "art-flaky",
+   "kind": "trace",
+   "path": "traces/flaky.json",
+   "sha256": null
+  },
+  {
+   "id": "art-captures",
+   "kind": "trace",
+   "path": "traces/captures.json",
+   "sha256": null
+  },
+  {
+   "id": "art-liveBehind",
+   "kind": "config",
+   "path": "config/liveBehind.json",
+   "sha256": null
+  },
+  {
+   "id": "art-dedup",
+   "kind": "trace",
+   "path": "traces/dedup.json",
+   "sha256": null
+  },
+  {
+   "id": "art-severity",
+   "kind": "static",
+   "path": "static/severity.json",
+   "sha256": null
+  },
+  {
+   "id": "art-routing",
+   "kind": "static",
+   "path": "static/routing.json",
+   "sha256": null
+  },
+  {
+   "id": "art-closure",
+   "kind": "trace",
+   "path": "traces/closure.json",
+   "sha256": null
+  },
+  {
+   "id": "art-mismatch",
+   "kind": "trace",
+   "path": "traces/mismatch.json",
+   "sha256": null
+  },
+  {
+   "id": "art-sla",
+   "kind": "trace",
+   "path": "traces/sla.json",
+   "sha256": null
+  },
+  {
+   "id": "art-crashIntake",
+   "kind": "trace",
+   "path": "traces/crashIntake.json",
+   "sha256": null
+  },
+  {
+   "id": "art-shareIntake",
+   "kind": "static",
+   "path": "static/shareIntake.json",
+   "sha256": null
+  },
+  {
+   "id": "art-dedup-static",
+   "kind": "static",
+   "path": "static/dedup.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-intakeReplay-B-1",
+   "kind": "trace",
+   "path": "receipts/intakeReplay/B-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-intakeReplay-B-2",
+   "kind": "trace",
+   "path": "receipts/intakeReplay/B-2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-buildLag-running",
+   "kind": "config",
+   "path": "receipts/buildLag/running.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-closureReview-B-1",
+   "kind": "trace",
+   "path": "receipts/closureReview/B-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-closureReview-B-2",
+   "kind": "trace",
+   "path": "receipts/closureReview/B-2.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "repro": {
+   "artifact": "art-repro",
+   "highPriority": [
+    {
+     "id": "B-1",
+     "replayed": true
+    },
+    {
+     "id": "B-2",
+     "replayed": true
+    }
+   ]
+  },
+  "flaky": {
+   "artifact": "art-flaky",
+   "flakyReports": 3,
+   "fixedBelowCriterion": 0,
+   "criterionRuns": 10
+  },
+  "captures": {
+   "artifact": "art-captures",
+   "playFindings": 6,
+   "playFindingsWithActionCapture": 6
+  },
+  "liveBehind": {
+   "artifact": "art-liveBehind",
+   "recorded": true,
+   "measuredCases": 1
+  },
+  "dedup": {
+   "artifact": "art-dedup",
+   "distinctPairsKeptSeparate": 5,
+   "distinctPairs": 5,
+   "sameRootMerged": 3,
+   "sameRoot": 3,
+   "pairs": [
+    {
+     "sameRoot": false,
+     "autoMerged": false,
+     "leftSignature": "load-state",
+     "rightSignature": "resume-state",
+     "symptom": "blank-panel"
+    },
+    {
+     "sameRoot": true,
+     "autoMerged": false
+    }
+   ],
+   "artifactsByLine": {
+    "correct-dedup:2": "art-dedup-static"
+   }
+  },
+  "severity": {
+   "artifact": "art-severity",
+   "tickets": [
+    {
+     "severity": "P0",
+     "scope": "payments",
+     "confidenceRecorded": true
+    },
+    {
+     "severity": "P2",
+     "scope": "ui",
+     "confidenceRecorded": true
+    }
+   ],
+   "p0ScopesUsed": [
+    "payments"
+   ]
+  },
+  "routing": {
+   "artifact": "art-routing",
+   "auditDefects": 2,
+   "routedToAuditList": 2
+  },
+  "closure": {
+   "artifact": "art-closure",
+   "closures": [
+    {
+     "fixer": "fix-role",
+     "verifier": "review-role",
+     "rawArtifacts": true,
+     "ticket": "B-1"
+    },
+    {
+     "fixer": "fix-role",
+     "verifier": "review-role",
+     "rawArtifacts": true,
+     "ticket": "B-2"
+    }
+   ]
+  },
+  "mismatch": {
+   "artifact": "art-mismatch",
+   "mismatchClosuresAllowed": 0,
+   "measuredCases": 1
+  },
+  "sla": {
+   "artifact": "art-sla",
+   "p0OpenHoursMax": 20,
+   "measuredCases": 1
+  },
+  "crashIntake": {
+   "artifact": "art-crashIntake",
+   "received": 14,
+   "withBuildSha": 14,
+   "triagedInWindow": 14
+  },
+  "shareIntake": {
+   "artifact": "art-shareIntake",
+   "reports": 3,
+   "withLinkSample": 3,
+   "routedToLinkOwner": true
+  }
+ },
+ "receipts": {
+  "intakeReplay": [
+   {
+    "id": "B-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-intakeReplay-B-1",
+    "ticket": "B-1",
+    "signature": "route-B-1",
+    "attempts": 2,
+    "reproduced": true,
+    "rewind": "art-repro",
+    "acceptance": "replay expected route"
+   },
+   {
+    "id": "B-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-intakeReplay-B-2",
+    "ticket": "B-2",
+    "signature": "route-B-2",
+    "attempts": 2,
+    "reproduced": true,
+    "rewind": "art-repro",
+    "acceptance": "replay expected route"
+   }
+  ],
+  "buildLag": [
+   {
+    "id": "running",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-buildLag-running",
+    "source": "example-git-sha",
+    "live": "example-live-sha",
+    "capped": true,
+    "sourceHistory": [
+     "example-live-sha",
+     "example-git-sha"
+    ],
+    "historyArtifact": "art-liveBehind"
+   }
+  ],
+  "closureReview": [
+   {
+    "id": "B-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-closureReview-B-1",
+    "ticket": "B-1",
+    "fixer": "fix-role",
+    "verifier": "review-role",
+    "fixedBuild": "example-live-sha",
+    "replay": "art-closure",
+    "acceptance": "expected task finishes",
+    "passed": true
+   },
+   {
+    "id": "B-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-closureReview-B-2",
+    "ticket": "B-2",
+    "fixer": "fix-role",
+    "verifier": "review-role",
+    "fixedBuild": "example-live-sha",
+    "replay": "art-closure",
+    "acceptance": "expected task finishes",
+    "passed": true
+   }
+  ]
+ },
+ "populations": {
+  "intakeReplay": {
+   "count": 2,
+   "liveSha": "example-live-sha",
+   "artifact": "art-repro",
+   "source": "read-only-export"
+  },
+  "closureReview": {
+   "count": 2,
+   "liveSha": "example-live-sha",
+   "artifact": "art-closure",
+   "source": "read-only-export"
+  }
+ }
+}

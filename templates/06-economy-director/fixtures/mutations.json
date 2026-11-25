@@ -1,0 +1,582 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "combat-balance:1#empty-timeToDefeat.perAttackP50S",
+   "line": "combat-balance:1",
+   "expect": "U",
+   "set": {
+    "metrics.timeToDefeat.perAttackP50S": []
+   }
+  },
+  {
+   "id": "combat-balance:1#neg1",
+   "line": "combat-balance:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.timeToDefeat.perAttackP50S": [
+     0.4,
+     2.6,
+     3.4,
+     9.1
+    ]
+   }
+  },
+  {
+   "id": "combat-balance:1#missing",
+   "line": "combat-balance:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.timeToDefeat.label"
+   ]
+  },
+  {
+   "id": "combat-balance:2#empty-multiAttacker.examples",
+   "line": "combat-balance:2",
+   "expect": "U",
+   "set": {
+    "metrics.multiAttacker.examples": []
+   }
+  },
+  {
+   "id": "combat-balance:2#neg1",
+   "line": "combat-balance:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.multiAttacker.examples": [
+     {
+      "hp": 100,
+      "damage": 20,
+      "attackers": 2,
+      "intervalS": 0.5,
+      "reportedTtkS": 0.6,
+      "model": "simultaneous"
+     }
+    ]
+   }
+  },
+  {
+   "id": "combat-balance:2#missing",
+   "line": "combat-balance:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.multiAttacker.examples"
+   ]
+  },
+  {
+   "id": "loot-access:1#empty-randomRewards.drops",
+   "line": "loot-access:1",
+   "expect": "U",
+   "set": {
+    "metrics.randomRewards.drops": 0
+   }
+  },
+  {
+   "id": "loot-access:1#neg1",
+   "line": "loot-access:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.randomRewards.drops": 200,
+    "metrics.randomRewards.rare": 10
+   }
+  },
+  {
+   "id": "loot-access:1#missing",
+   "line": "loot-access:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.randomRewards.intervalsReported"
+   ]
+  },
+  {
+   "id": "loot-access:2#empty-randomRewards.drops",
+   "line": "loot-access:2",
+   "expect": "U",
+   "set": {
+    "metrics.randomRewards.drops": 0
+   }
+  },
+  {
+   "id": "loot-access:2#empty-reachability.requiredPaths",
+   "line": "loot-access:2",
+   "expect": "U",
+   "set": {
+    "metrics.reachability.requiredPaths": 0
+   }
+  },
+  {
+   "id": "loot-access:2#neg1",
+   "line": "loot-access:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.reachability.unreachable": 1
+   }
+  },
+  {
+   "id": "loot-access:2#missing",
+   "line": "loot-access:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.reachability.unreachable"
+   ]
+  },
+  {
+   "id": "progression:1#empty-progression.assumptionsStated",
+   "line": "progression:1",
+   "expect": "U",
+   "set": {
+    "metrics.progression.assumptionsStated": []
+   }
+  },
+  {
+   "id": "progression:1#neg1",
+   "line": "progression:1",
+   "expect": "fail",
+   "areas": [
+    "progression-analytics"
+   ],
+   "set": {
+    "metrics.progression.assumptionsStated": [
+     "daily-minutes"
+    ]
+   }
+  },
+  {
+   "id": "progression:1#missing",
+   "line": "progression:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.progression.assumptionsStated"
+   ]
+  },
+  {
+   "id": "progression:2#empty-storage.pathACounts",
+   "line": "progression:2",
+   "expect": "U",
+   "set": {
+    "metrics.storage.pathACounts": []
+   }
+  },
+  {
+   "id": "progression:2#empty-storage.pathBCounts",
+   "line": "progression:2",
+   "expect": "U",
+   "set": {
+    "metrics.storage.pathBCounts": []
+   }
+  },
+  {
+   "id": "progression:2#neg1",
+   "line": "progression:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.storage.pathBCounts": [
+     3,
+     6,
+     12
+    ]
+   }
+  },
+  {
+   "id": "progression:2#missing",
+   "line": "progression:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.storage.pathACounts"
+   ]
+  },
+  {
+   "id": "reward-fairness:1#empty-rewards.retriesSimulated",
+   "line": "reward-fairness:1",
+   "expect": "U",
+   "set": {
+    "metrics.rewards.retriesSimulated": 0
+   }
+  },
+  {
+   "id": "reward-fairness:1#neg1",
+   "line": "reward-fairness:1",
+   "expect": "fail",
+   "areas": [
+    "reward-persistence"
+   ],
+   "set": {
+    "metrics.rewards.duplicateGrantsB": 2
+   }
+  },
+  {
+   "id": "reward-fairness:1#missing",
+   "line": "reward-fairness:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.rewards.retriesSimulated"
+   ]
+  },
+  {
+   "id": "reward-fairness:2#empty-freeVsPaid.paidItemsPerPeriod",
+   "line": "reward-fairness:2",
+   "expect": "U",
+   "set": {
+    "metrics.freeVsPaid.paidItemsPerPeriod": 0
+   }
+  },
+  {
+   "id": "reward-fairness:2#neg1",
+   "line": "reward-fairness:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.freeVsPaid.freeItemsPerPeriod": 12
+   }
+  },
+  {
+   "id": "reward-fairness:2#missing",
+   "line": "reward-fairness:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.freeVsPaid.assumptionsStated"
+   ]
+  },
+  {
+   "id": "entitlement-consistency:1#empty-payments.failurePathTests",
+   "line": "entitlement-consistency:1",
+   "expect": "U",
+   "set": {
+    "metrics.payments.failurePathTests": 0
+   }
+  },
+  {
+   "id": "entitlement-consistency:1#neg1",
+   "line": "entitlement-consistency:1",
+   "expect": "fail",
+   "areas": [
+    "payments",
+    "payment-safety"
+   ],
+   "set": {
+    "metrics.payments.failedPaymentGrants": 1
+   }
+  },
+  {
+   "id": "entitlement-consistency:1#missing",
+   "line": "entitlement-consistency:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.payments.failurePathTests"
+   ]
+  },
+  {
+   "id": "entitlement-consistency:2#empty-balance.operations",
+   "line": "entitlement-consistency:2",
+   "expect": "U",
+   "set": {
+    "metrics.balance.operations": 0
+   }
+  },
+  {
+   "id": "entitlement-consistency:2#neg1",
+   "line": "entitlement-consistency:2",
+   "expect": "fail",
+   "areas": [
+    "payments"
+   ],
+   "set": {
+    "metrics.balance.mismatches": 3
+   }
+  },
+  {
+   "id": "entitlement-consistency:2#missing",
+   "line": "entitlement-consistency:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.balance.operations"
+   ]
+  },
+  {
+   "id": "store-pricing#empty-storePricing.items",
+   "line": "store-pricing",
+   "expect": "U",
+   "set": {
+    "metrics.storePricing.items": 0
+   }
+  },
+  {
+   "id": "store-pricing#neg1",
+   "line": "store-pricing",
+   "expect": "fail",
+   "areas": [
+    "store-pricing"
+   ],
+   "set": {
+    "metrics.storePricing.pricedFromTable": 9
+   }
+  },
+  {
+   "id": "store-pricing#missing",
+   "line": "store-pricing",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.storePricing"
+   ]
+  },
+  {
+   "id": "paid-advantage#empty-paidEdge.paidOfferItems",
+   "line": "paid-advantage",
+   "expect": "U",
+   "set": {
+    "metrics.paidEdge.paidOfferItems": 0
+   }
+  },
+  {
+   "id": "paid-advantage#empty-paidEdge.reviewedItems",
+   "line": "paid-advantage",
+   "expect": "U",
+   "set": {
+    "metrics.paidEdge.reviewedItems": 0
+   }
+  },
+  {
+   "id": "paid-advantage#neg1",
+   "line": "paid-advantage",
+   "expect": "fail",
+   "areas": [
+    "paid-advantage"
+   ],
+   "set": {
+    "metrics.paidEdge.paidPowerItems": 2
+   }
+  },
+  {
+   "id": "paid-advantage#missing",
+   "line": "paid-advantage",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.paidEdge"
+   ]
+  },
+  {
+   "line": "combat-balance:2",
+   "expect": "U",
+   "id": "modelInputs#missing-row",
+   "set": {
+    "receipts.modelInputs": []
+   }
+  },
+  {
+   "line": "combat-balance:2",
+   "expect": "U",
+   "id": "modelInputs#stale",
+   "set": {
+    "receipts.modelInputs.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "combat-balance:2",
+   "expect": "U",
+   "id": "modelInputs#artifact",
+   "set": {
+    "receipts.modelInputs.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "progression:1",
+   "expect": "U",
+   "id": "simulationRun#missing-row",
+   "set": {
+    "receipts.simulationRun": []
+   }
+  },
+  {
+   "line": "progression:1",
+   "expect": "U",
+   "id": "simulationRun#stale",
+   "set": {
+    "receipts.simulationRun.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "progression:1",
+   "expect": "U",
+   "id": "simulationRun#artifact",
+   "set": {
+    "receipts.simulationRun.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "progression:2",
+   "expect": "U",
+   "id": "storageReplay#missing-row",
+   "set": {
+    "receipts.storageReplay": [
+     {
+      "id": "fallback",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-storageReplay-fallback",
+      "path": "fallback",
+      "seed": "sample-seed",
+      "operationDigest": "74de07c4e919534b1b460e3465bb216ce0cc2bd458e42abaf0f22448da08d063",
+      "stateDigest": "60e0b9b14540af0cbeb5255ac71b2f842c5130f748e3ae2358145d6d8d005c76"
+     }
+    ]
+   }
+  },
+  {
+   "line": "progression:2",
+   "expect": "U",
+   "id": "storageReplay#stale",
+   "set": {
+    "receipts.storageReplay.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "progression:2",
+   "expect": "U",
+   "id": "storageReplay#artifact",
+   "set": {
+    "receipts.storageReplay.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "entitlement-consistency:1",
+   "expect": "U",
+   "id": "entitlementDrills#missing-row",
+   "set": {
+    "receipts.entitlementDrills": [
+     {
+      "id": "duplicate",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-entitlementDrills-duplicate",
+      "isolated": true,
+      "expected": 1,
+      "observed": 1,
+      "snapshot": "art-payments"
+     },
+     {
+      "id": "rollback",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-entitlementDrills-rollback",
+      "isolated": true,
+      "expected": 0,
+      "observed": 0,
+      "snapshot": "art-payments"
+     }
+    ]
+   }
+  },
+  {
+   "line": "entitlement-consistency:1",
+   "expect": "U",
+   "id": "entitlementDrills#stale",
+   "set": {
+    "receipts.entitlementDrills.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "entitlement-consistency:1",
+   "expect": "U",
+   "id": "entitlementDrills#artifact",
+   "set": {
+    "receipts.entitlementDrills.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "staggered-damped-passes",
+   "expect": 4,
+   "set": {
+    "profile.combatModel": "event-ledger",
+    "metrics.multiAttacker.examples": [
+     {
+      "model": "event-ledger",
+      "hp": 10,
+      "events": [
+       {
+        "timeS": 0,
+        "applied": 4
+       },
+       {
+        "timeS": 0.7,
+        "applied": 3
+       },
+       {
+        "timeS": 1.8,
+        "applied": 3
+       }
+      ],
+      "reportedTtkS": 1.8
+     }
+    ]
+   },
+   "line": "combat-balance:2"
+  },
+  {
+   "id": "staggered-disagrees",
+   "expect": "fail",
+   "set": {
+    "profile.combatModel": "event-ledger",
+    "metrics.multiAttacker.examples": [
+     {
+      "model": "event-ledger",
+      "hp": 10,
+      "events": [
+       {
+        "timeS": 0,
+        "applied": 4
+       },
+       {
+        "timeS": 0.7,
+        "applied": 3
+       },
+       {
+        "timeS": 1.8,
+        "applied": 3
+       }
+      ],
+      "reportedTtkS": 0.7
+     }
+    ]
+   },
+   "line": "combat-balance:2"
+  },
+  {
+   "id": "simulationRun#inverted-interval",
+   "expect": 1,
+   "set": {
+    "receipts.simulationRun.0.highDays": 12
+   },
+   "line": "progression:1"
+  },
+  {
+   "id": "storageReplay#state-loss",
+   "expect": 1,
+   "set": {
+    "receipts.storageReplay.0.stateDigest": "3432edbfd674e72ffc914303d05a39152b6a0e01f812f08f5647db2e9ca4e8e3"
+   },
+   "line": "progression:2"
+  },
+  {
+   "id": "entitlementDrills#excess-grant",
+   "expect": 0,
+   "set": {
+    "receipts.entitlementDrills.0.observed": 2
+   },
+   "line": "entitlement-consistency:1"
+  }
+ ]
+}

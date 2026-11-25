@@ -1,0 +1,553 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "entrance-and-copy:1#empty-firstScreen.viewports",
+   "line": "entrance-and-copy:1",
+   "expect": "U",
+   "set": {
+    "metrics.firstScreen.viewports": []
+   }
+  },
+  {
+   "id": "entrance-and-copy:1#empty-firstScreen.hookVisibleByViewport",
+   "line": "entrance-and-copy:1",
+   "expect": "U",
+   "set": {
+    "metrics.firstScreen.hookVisibleByViewport": []
+   }
+  },
+  {
+   "id": "entrance-and-copy:1#neg1",
+   "line": "entrance-and-copy:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.firstScreen.freshBuild": false
+   }
+  },
+  {
+   "id": "entrance-and-copy:1#neg2",
+   "line": "entrance-and-copy:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.firstScreen.hookVisibleByViewport": [
+     true,
+     false
+    ]
+   }
+  },
+  {
+   "id": "entrance-and-copy:1#missing",
+   "line": "entrance-and-copy:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.firstScreen.viewports"
+   ]
+  },
+  {
+   "id": "entrance-and-copy:2#empty-copy.features",
+   "line": "entrance-and-copy:2",
+   "expect": "U",
+   "set": {
+    "metrics.copy.features": 0
+   }
+  },
+  {
+   "id": "entrance-and-copy:2#neg1",
+   "line": "entrance-and-copy:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.copy.featuresWithEvidence": 4
+   }
+  },
+  {
+   "id": "entrance-and-copy:2#missing",
+   "line": "entrance-and-copy:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.copy.featuresWithEvidence"
+   ]
+  },
+  {
+   "id": "share-metadata:1#empty-meta.present",
+   "line": "share-metadata:1",
+   "expect": "U",
+   "set": {
+    "metrics.meta.present": []
+   }
+  },
+  {
+   "id": "share-metadata:1#neg1",
+   "line": "share-metadata:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.meta.present": [
+     "title"
+    ]
+   }
+  },
+  {
+   "id": "share-metadata:1#missing",
+   "line": "share-metadata:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.meta.present"
+   ]
+  },
+  {
+   "id": "share-metadata:2#empty-linkPreviews.destinationsPreviewed",
+   "line": "share-metadata:2",
+   "expect": "U",
+   "set": {
+    "metrics.linkPreviews.destinationsPreviewed": 0
+   }
+  },
+  {
+   "id": "share-metadata:2#neg1",
+   "line": "share-metadata:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.linkPreviews.renderedOk": 1
+   }
+  },
+  {
+   "id": "share-metadata:2#missing",
+   "line": "share-metadata:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.linkPreviews.destinationsPreviewed"
+   ]
+  },
+  {
+   "id": "icons-and-install:1#empty-icons.urls",
+   "line": "icons-and-install:1",
+   "expect": "U",
+   "set": {
+    "metrics.icons.urls": 0
+   }
+  },
+  {
+   "id": "icons-and-install:1#neg1",
+   "line": "icons-and-install:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.icons.decodedLive": 4
+   }
+  },
+  {
+   "id": "icons-and-install:1#missing",
+   "line": "icons-and-install:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.icons.decodedLive"
+   ]
+  },
+  {
+   "id": "icons-and-install:2#empty-storeArt.textPairs",
+   "line": "icons-and-install:2",
+   "expect": "U",
+   "set": {
+    "metrics.storeArt.textPairs": []
+   }
+  },
+  {
+   "id": "icons-and-install:2#neg1",
+   "line": "icons-and-install:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.storeArt.textPairs": [
+     [
+      "#888888",
+      "#777777"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "icons-and-install:2#missing",
+   "line": "icons-and-install:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.storeArt.textPairs"
+   ]
+  },
+  {
+   "id": "media:1#empty-media.items",
+   "line": "media:1",
+   "expect": "U",
+   "set": {
+    "metrics.media.items": 0
+   }
+  },
+  {
+   "id": "media:1#neg1",
+   "line": "media:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.media.decodedCurrentBuild": 6
+   }
+  },
+  {
+   "id": "media:1#missing",
+   "line": "media:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.media.decodedCurrentBuild"
+   ]
+  },
+  {
+   "id": "media:2#empty-storeArtFormats.formatsChecked",
+   "line": "media:2",
+   "expect": "U",
+   "set": {
+    "metrics.storeArtFormats.formatsChecked": 0
+   }
+  },
+  {
+   "id": "media:2#neg1",
+   "line": "media:2",
+   "expect": "fail",
+   "areas": [
+    "destination-assets"
+   ],
+   "set": {
+    "metrics.storeArtFormats.formatsPassing": 3
+   }
+  },
+  {
+   "id": "media:2#missing",
+   "line": "media:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.storeArtFormats.formatsChecked"
+   ]
+  },
+  {
+   "id": "presskit-and-obligations:1#empty-presskit.has",
+   "line": "presskit-and-obligations:1",
+   "expect": "U",
+   "set": {
+    "metrics.presskit.has": []
+   }
+  },
+  {
+   "id": "presskit-and-obligations:1#neg1",
+   "line": "presskit-and-obligations:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.presskit.has": [
+     "press-page"
+    ]
+   }
+  },
+  {
+   "id": "presskit-and-obligations:1#neg2",
+   "line": "presskit-and-obligations:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.presskit.archiveScanClean": false
+   }
+  },
+  {
+   "id": "presskit-and-obligations:1#missing",
+   "line": "presskit-and-obligations:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.presskit.has"
+   ]
+  },
+  {
+   "id": "presskit-and-obligations:2#empty-obligations.linksToTrustRecords",
+   "line": "presskit-and-obligations:2",
+   "expect": "U",
+   "set": {
+    "metrics.obligations.linksToTrustRecords": []
+   }
+  },
+  {
+   "id": "presskit-and-obligations:2#empty-obligations.measuredCases",
+   "line": "presskit-and-obligations:2",
+   "expect": "U",
+   "set": {
+    "metrics.obligations.measuredCases": 0
+   }
+  },
+  {
+   "id": "presskit-and-obligations:2#neg1",
+   "line": "presskit-and-obligations:2",
+   "expect": "fail",
+   "areas": [
+    "legal-claims"
+   ],
+   "set": {
+    "metrics.obligations.linksToTrustRecords": [
+     "privacy"
+    ]
+   }
+  },
+  {
+   "id": "presskit-and-obligations:2#missing",
+   "line": "presskit-and-obligations:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.obligations.rightsRecords"
+   ]
+  },
+  {
+   "id": "localization-claims#empty-locClaims.shippedLocales",
+   "line": "localization-claims",
+   "expect": "U",
+   "set": {
+    "metrics.locClaims.shippedLocales": []
+   }
+  },
+  {
+   "id": "localization-claims#empty-locClaims.advertisedLocales",
+   "line": "localization-claims",
+   "expect": "U",
+   "set": {
+    "metrics.locClaims.advertisedLocales": []
+   }
+  },
+  {
+   "id": "localization-claims#neg1",
+   "line": "localization-claims",
+   "expect": "fail",
+   "areas": [
+    "localization-claims"
+   ],
+   "set": {
+    "metrics.locClaims.advertisedLocales": [
+     "en",
+     "ja"
+    ]
+   }
+  },
+  {
+   "id": "localization-claims#missing",
+   "line": "localization-claims",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.locClaims"
+   ]
+  },
+  {
+   "line": "entrance-and-copy:1",
+   "expect": "U",
+   "id": "hookPreviews#missing-row",
+   "set": {
+    "receipts.hookPreviews": [
+     {
+      "id": "phone",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-hookPreviews-phone",
+      "viewport": "phone",
+      "previewVersion": "sample-preview-v1",
+      "visible": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "entrance-and-copy:1",
+   "expect": "U",
+   "id": "hookPreviews#stale",
+   "set": {
+    "receipts.hookPreviews.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "entrance-and-copy:1",
+   "expect": "U",
+   "id": "hookPreviews#artifact",
+   "set": {
+    "receipts.hookPreviews.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "media:1",
+   "expect": "U",
+   "id": "decodedMedia#missing-row",
+   "set": {
+    "receipts.decodedMedia": [
+     {
+      "id": "still",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-decodedMedia-still",
+      "item": "still",
+      "decodedBuild": "example-live-sha",
+      "license": "art-obligations",
+      "decoded": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "media:1",
+   "expect": "U",
+   "id": "decodedMedia#stale",
+   "set": {
+    "receipts.decodedMedia.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "media:1",
+   "expect": "U",
+   "id": "decodedMedia#artifact",
+   "set": {
+    "receipts.decodedMedia.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "media:2",
+   "expect": "U",
+   "id": "destinationFormats#missing-row",
+   "set": {
+    "receipts.destinationFormats": [
+     {
+      "id": "web-square",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-destinationFormats-web-square",
+      "destination": "web",
+      "format": "square",
+      "version": "sample-web-v1",
+      "width": 400,
+      "height": 400,
+      "safeZoneClear": true
+     },
+     {
+      "id": "store-wide",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-destinationFormats-store-wide",
+      "destination": "store",
+      "format": "wide",
+      "version": "sample-store-v2",
+      "width": 800,
+      "height": 450,
+      "safeZoneClear": true
+     },
+     {
+      "id": "store-square",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-destinationFormats-store-square",
+      "destination": "store",
+      "format": "square",
+      "version": "sample-store-v2",
+      "width": 400,
+      "height": 400,
+      "safeZoneClear": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "media:2",
+   "expect": "U",
+   "id": "destinationFormats#stale",
+   "set": {
+    "receipts.destinationFormats.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "media:2",
+   "expect": "U",
+   "id": "destinationFormats#artifact",
+   "set": {
+    "receipts.destinationFormats.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "presskit-and-obligations:1",
+   "expect": "U",
+   "id": "archiveReview#missing-row",
+   "set": {
+    "receipts.archiveReview": []
+   }
+  },
+  {
+   "line": "presskit-and-obligations:1",
+   "expect": "U",
+   "id": "archiveReview#stale",
+   "set": {
+    "receipts.archiveReview.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "presskit-and-obligations:1",
+   "expect": "U",
+   "id": "archiveReview#artifact",
+   "set": {
+    "receipts.archiveReview.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "hookPreviews#below-fold",
+   "expect": 1,
+   "set": {
+    "receipts.hookPreviews.0.visible": false
+   },
+   "line": "entrance-and-copy:1"
+  },
+  {
+   "id": "decodedMedia#decode-failed",
+   "expect": 1,
+   "set": {
+    "receipts.decodedMedia.0.decoded": false
+   },
+   "line": "media:1"
+  },
+  {
+   "id": "destinationFormats#old-spec",
+   "expect": 1,
+   "set": {
+    "receipts.destinationFormats.0.version": "obsolete"
+   },
+   "line": "media:2"
+  },
+  {
+   "id": "destinationFormats#bad-format",
+   "expect": 1,
+   "set": {
+    "receipts.destinationFormats.0.width": 200
+   },
+   "line": "media:2"
+  },
+  {
+   "id": "archiveReview#metadata-disclosure",
+   "expect": 0,
+   "set": {
+    "receipts.archiveReview.0.metadataHits": 1
+   },
+   "line": "presskit-and-obligations:1"
+  },
+  {
+   "id": "archiveReview#stale-archive",
+   "expect": 1,
+   "set": {
+    "receipts.archiveReview.0.scannedDigest": "cba06b5736faf67e54b07b561eae94395e774c517a7d910a54369e1263ccfbd4"
+   },
+   "line": "presskit-and-obligations:1"
+  }
+ ]
+}

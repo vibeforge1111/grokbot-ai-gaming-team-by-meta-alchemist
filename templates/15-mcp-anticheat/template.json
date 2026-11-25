@@ -1,0 +1,128 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-15-mcp-anticheat-director",
+  "slug": "15-mcp-anticheat",
+  "name": "Server Fairness & Anti-Cheat Guard",
+  "shortName": "Server Fairness",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "For games with a server, compare scene data across engines and review whether the server enforces your game's rules fairly.",
+  "stage": "Production, Live",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "mcp-anticheat-getting-started",
+  "skills": [
+    "mcp-anticheat-getting-started",
+    "cross-editor-scene-parity",
+    "server-authority-fairness-audit",
+    "mcp-anticheat-lens-engine"
+  ],
+  "routines": [
+    "mcp-anticheat-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-15-mcp-anticheat-director",
+    "version": "1.3.0",
+    "hash": "sha256:2e8217e291cc5846098308b08d4006a4b6d04362e0d7d4dae200384016dd01aa"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 75.5,
+    "externalReviewMin": 5.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Network QA and player reports.",
+    "handsTo": "Bug Desk (local ticket drafts), Live Service Trust (enforcement policy)."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "layout-brief": "^1.0.0",
+      "tracker-export": "^1.0.0",
+      "incident-report": "^1.0.0",
+      "support-case-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "fairness-findings",
+      "version": "1.0.0",
+      "format": "JSON plus a Markdown summary",
+      "schema": "spec/artifacts/fairness-findings.schema.json"
+    },
+    {
+      "artifact": "enforcement-policy-draft",
+      "version": "1.0.0",
+      "format": "Markdown local draft plus a JSON rule list",
+      "schema": "spec/artifacts/enforcement-policy-draft.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "layout-brief",
+      "required": false,
+      "schema": "spec/artifacts/layout-brief.schema.json",
+      "whenMissing": "Continue: the owner lists the scenes in profile.cases.sceneParity, and the report says \"ASSUMPTION: no layout-brief available\"."
+    },
+    {
+      "artifact": "tracker-export",
+      "required": false,
+      "schema": "spec/artifacts/tracker-export.schema.json"
+    },
+    {
+      "artifact": "incident-report",
+      "required": false,
+      "schema": "spec/artifacts/incident-report.schema.json"
+    },
+    {
+      "artifact": "support-case-draft",
+      "required": false,
+      "schema": "spec/artifacts/support-case-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "regions"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

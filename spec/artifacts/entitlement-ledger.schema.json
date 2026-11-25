@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/entitlement-ledger.schema.json",
+  "title": "Entitlement ledger (team artifact)",
+  "description": "Reconciled prize, refund and entitlement events from the Ledger preview. Grants, refunds and payouts are done by a human. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "entitlement-ledger"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One ledger event.",
+      "items": {
+        "type": "object",
+        "required": [
+          "eventRef",
+          "kind",
+          "state"
+        ],
+        "properties": {
+          "eventRef": {
+            "type": "string",
+            "description": "Local event label."
+          },
+          "kind": {
+            "type": "string",
+            "description": "grant, refund, hold or correction."
+          },
+          "subject": {
+            "type": "string",
+            "description": "Hashed subject id (sub_ plus 32 hex)."
+          },
+          "state": {
+            "type": "string",
+            "description": "proposed, approved-by-owner or done-by-owner."
+          }
+        }
+      }
+    }
+  }
+}

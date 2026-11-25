@@ -1,0 +1,96 @@
+{
+  "status": "VALID",
+  "packId": "balance-example",
+  "synthetic": true,
+  "gitSha": "example-source",
+  "liveSha": "example-build",
+  "artifacts": [
+    {
+      "id": "parameters",
+      "kind": "static"
+    },
+    {
+      "id": "proposal",
+      "kind": "static"
+    },
+    {
+      "id": "model-check",
+      "kind": "trace"
+    },
+    {
+      "id": "observations",
+      "kind": "trace"
+    },
+    {
+      "id": "inspection",
+      "kind": "trace"
+    },
+    {
+      "id": "notes",
+      "kind": "static"
+    }
+  ],
+  "profile": {
+    "minParameters": 2,
+    "stepPct": 10,
+    "maxStepPct": 15,
+    "maxLevers": 2,
+    "maxTelemetryAgeDays": 5,
+    "minObservations": 20,
+    "minProbeAttempts": 4
+  },
+  "metrics": {
+    "defs": {
+      "artifact": "parameters",
+      "parsedParameters": 3,
+      "measuredCases": 3,
+      "valueMismatches": 0,
+      "sourceShaSet": true
+    },
+    "map": {
+      "artifact": "proposal",
+      "measuredCases": 3,
+      "ambiguous": 1,
+      "ambiguousFlagged": 1,
+      "unresolvedProposedAsSure": 0
+    },
+    "math": {
+      "artifact": "model-check",
+      "itemsComputed": 2,
+      "oracleMismatches": 0
+    },
+    "telemetry": {
+      "artifact": "observations",
+      "measuredCases": 2,
+      "ageDays": 2,
+      "observations": 92,
+      "outliersListed": true
+    },
+    "proposals": {
+      "artifact": "proposal",
+      "items": 2,
+      "maxStepPct": 10,
+      "leversRecommended": 2,
+      "withRollback": 2,
+      "withAlternatives": 2,
+      "withPrediction": 2,
+      "withFollowUp": 2,
+      "changesOnStaleEvidence": 0
+    },
+    "authority": {
+      "artifact": "inspection",
+      "forbiddenAttempted": 4,
+      "forbiddenSucceeded": 0,
+      "repoWrites": 0,
+      "defsMutated": 0,
+      "parameterCount": 3
+    },
+    "notes": {
+      "artifact": "notes",
+      "measuredCases": 3,
+      "draftLabelled": true,
+      "datesOrPrices": 0,
+      "dashes": 0
+    }
+  }
+}

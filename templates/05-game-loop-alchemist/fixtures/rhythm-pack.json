@@ -1,0 +1,304 @@
+{
+  "packId": "synthetic-phrase-review",
+  "status": "VALID",
+  "gitSha": "synthetic-rhythm-source",
+  "liveSha": "synthetic-rhythm-build",
+  "synthetic": true,
+  "openP0": 0,
+  "note": "Synthetic worked example. Case IDs label anonymous opportunities. All numbers are illustrative.",
+  "profile": {
+    "scope": "rhythm-phrase-window-b",
+    "genre": "rhythm",
+    "bands": {
+      "floor": 0.5,
+      "pass": 0.75,
+      "target": 1
+    },
+    "cohort": "first phrase",
+    "window": "optional phrase offered before practice closes",
+    "action": "tap a response",
+    "outcome": "phrase answered",
+    "actionBudgetS": 2,
+    "beatBudgetS": 3,
+    "recoveryBudgetS": 4
+  },
+  "artifacts": [
+    {
+      "id": "receipt-goal",
+      "kind": "capture",
+      "lineId": "opening:1",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#goal"
+    },
+    {
+      "id": "receipt-action",
+      "kind": "trace",
+      "lineId": "opening:2",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#action"
+    },
+    {
+      "id": "receipt-state",
+      "kind": "trace",
+      "lineId": "consequence:1",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#state"
+    },
+    {
+      "id": "receipt-feedback",
+      "kind": "capture",
+      "lineId": "consequence:2",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#feedback"
+    },
+    {
+      "id": "receipt-beat",
+      "kind": "trace",
+      "lineId": "pacing:1",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#beat"
+    },
+    {
+      "id": "receipt-recovery",
+      "kind": "trace",
+      "lineId": "pacing:2",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#recovery"
+    },
+    {
+      "id": "receipt-choice",
+      "kind": "trace",
+      "lineId": "agency:1",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#choice"
+    },
+    {
+      "id": "receipt-exit",
+      "kind": "capture",
+      "lineId": "agency:2",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#exit"
+    },
+    {
+      "id": "receipt-reason",
+      "kind": "capture",
+      "lineId": "replay:1",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#reason"
+    },
+    {
+      "id": "receipt-return",
+      "kind": "trace",
+      "lineId": "replay:2",
+      "gitSha": "synthetic-rhythm-source",
+      "liveSha": "synthetic-rhythm-build",
+      "scope": "rhythm-phrase-window-b",
+      "context": {
+        "cohort": "first phrase",
+        "window": "optional phrase offered before practice closes",
+        "action": "tap a response",
+        "outcome": "phrase answered"
+      },
+      "source": "fixtures/session-notes.md#return"
+    }
+  ],
+  "metrics": {
+    "goal": {
+      "artifact": "receipt-goal",
+      "samples": [
+        {
+          "caseId": "phrase-goal",
+          "expected": "answer phrase",
+          "readback": "answer phrase"
+        }
+      ]
+    },
+    "action": {
+      "artifact": "receipt-action",
+      "samples": [
+        {
+          "caseId": "phrase-action",
+          "startS": 2,
+          "actionS": 3
+        }
+      ]
+    },
+    "state": {
+      "artifact": "receipt-state",
+      "samples": [
+        {
+          "caseId": "phrase-state",
+          "expected": "answered",
+          "actual": "answered"
+        }
+      ]
+    },
+    "feedback": {
+      "artifact": "receipt-feedback",
+      "samples": [
+        {
+          "caseId": "phrase-feedback",
+          "expected": "phrase echoed",
+          "readback": "phrase echoed"
+        }
+      ]
+    },
+    "beat": {
+      "artifact": "receipt-beat",
+      "samples": [
+        {
+          "caseId": "phrase-beat",
+          "resolvedS": 3,
+          "choiceS": 5
+        }
+      ]
+    },
+    "recovery": {
+      "artifact": "receipt-recovery",
+      "samples": [
+        {
+          "caseId": "phrase-recovery",
+          "setbackS": 5,
+          "controlS": 8
+        }
+      ]
+    },
+    "choice": {
+      "artifact": "receipt-choice",
+      "samples": [
+        {
+          "caseId": "phrase-choice",
+          "expected": "alternate echo",
+          "actual": "alternate echo"
+        }
+      ]
+    },
+    "exit": {
+      "artifact": "receipt-exit",
+      "samples": [
+        {
+          "caseId": "phrase-exit",
+          "honored": true
+        }
+      ]
+    },
+    "reason": {
+      "artifact": "receipt-reason",
+      "samples": [
+        {
+          "caseId": "phrase-reason",
+          "intrinsic": true
+        }
+      ]
+    },
+    "return": {
+      "artifact": "receipt-return",
+      "samples": [
+        {
+          "caseId": "offer-a",
+          "offerRef": "offer-a",
+          "cohort": "first phrase",
+          "window": "optional phrase offered before practice closes",
+          "windowClosed": true,
+          "returned": true
+        },
+        {
+          "caseId": "offer-b",
+          "offerRef": "offer-b",
+          "cohort": "first phrase",
+          "window": "optional phrase offered before practice closes",
+          "windowClosed": true,
+          "returned": true
+        },
+        {
+          "caseId": "offer-c",
+          "offerRef": "offer-c",
+          "cohort": "first phrase",
+          "window": "optional phrase offered before practice closes",
+          "windowClosed": true,
+          "returned": true
+        },
+        {
+          "caseId": "offer-d",
+          "offerRef": "offer-d",
+          "cohort": "first phrase",
+          "window": "optional phrase offered before practice closes",
+          "windowClosed": true,
+          "returned": false
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-12-parallel-game-producer",
+  "slug": "12-parallel-game-producer",
+  "name": "Parallel Game Producer and Pitch Architect",
+  "shortName": "Producer",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Plan parallel work against actual capacity, reconcile ticket rows and turn verified project evidence into a local pitch deck draft.",
+  "stage": "Milestone planning and pitch review",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "parallel-game-producer-getting-started",
+  "skills": [
+    "parallel-game-producer-getting-started",
+    "decision-gates",
+    "evidence-pitch",
+    "ledger-reconciliation",
+    "milestone-scope",
+    "parallel-handoffs",
+    "parallel-game-producer-lens-engine"
+  ],
+  "routines": [
+    "parallel-game-producer-review"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-12-parallel-game-producer",
+    "version": "2.0.0",
+    "hash": "sha256:2a426f5750e59d859403b889ada50f041e135240de0816914b7fa65708676a88"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "tracker-export": "^1.0.0",
+      "grade-record": "^1.0.0",
+      "ticket-draft": "^1.0.0",
+      "cohort-report": "^1.0.0",
+      "store-submission-checklist": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "work-plan",
+      "version": "1.0.0",
+      "format": "JSON plus a Markdown plan draft",
+      "schema": "spec/artifacts/work-plan.schema.json"
+    },
+    {
+      "artifact": "pitch-draft",
+      "version": "1.0.0",
+      "format": "Markdown slide draft plus a JSON claim list",
+      "schema": "spec/artifacts/pitch-draft.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "tracker-export",
+      "required": false,
+      "schema": "spec/artifacts/tracker-export.schema.json",
+      "whenMissing": "Continue: count only the tickets in the owner's project file, and write \"ASSUMPTION: no tracker-export available\" in the report; reconciliation lines stay unmeasured."
+    },
+    {
+      "artifact": "grade-record",
+      "required": false,
+      "schema": "spec/artifacts/grade-record.schema.json",
+      "whenMissing": "Continue: a gate with no grade record from the other template stays unmeasured; never mark it passed."
+    },
+    {
+      "artifact": "ticket-draft",
+      "required": false,
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    },
+    {
+      "artifact": "cohort-report",
+      "required": false,
+      "schema": "spec/artifacts/cohort-report.schema.json"
+    },
+    {
+      "artifact": "store-submission-checklist",
+      "required": false,
+      "schema": "spec/artifacts/store-submission-checklist.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "entitlements",
+      "balance",
+      "regions",
+      "releases"
+    ],
+    "writes": [
+      "decisions",
+      "releases"
+    ]
+  },
+  "license": "MIT"
+}

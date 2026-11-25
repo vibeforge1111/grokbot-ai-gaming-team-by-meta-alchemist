@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/fixtures/widget-list.schema.json",
+  "title": "Widget list (test fixture only)",
+  "description": "Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "2.0.0",
+  "type": "object",
+  "required": ["artifact", "version", "items"]
+}

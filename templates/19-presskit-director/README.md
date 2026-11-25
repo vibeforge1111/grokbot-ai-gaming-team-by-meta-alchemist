@@ -1,0 +1,87 @@
+# Store Page & Presskit Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Prepare store copy, screenshots and press assets that show what players actually do in your game, then check each destination's requirements.
+
+Rubric: `gbf-19-store-presskit-director` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks have the caps shown in the rubric (a receipt is one result row for one test case you agreed in `profile.cases`, such as one store image format checked at its expected size). All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population required by each line (the list or count of things measured, such as image formats or media items). Single-number summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `entrance-and-copy:1` | Store page first screen | computed | `firstScreen.viewports`, `firstScreen.freshBuild`, `firstScreen.hookVisibleByViewport`, `receipts.hookPreviews` | `firstScreen.viewports covers P.viewports`, `firstScreen.freshBuild true `, `firstScreen.hookVisibleByViewport all `, `len(firstScreen.hookVisibleByViewport) == len(firstScreen.viewports)`, approved receipt cases pass |
+| `entrance-and-copy:2` | Storefront hook copy | computed | `copy.featuresWithEvidence`, `copy.features` | copy.featuresWithEvidence == copy.features (hard: level 1 on failure) |
+| `share-metadata:1` | Page metadata on pages you control | computed | `meta.present` | missing(meta.present,P.requiredMeta) == 0 |
+| `share-metadata:2` | Link preview cards | computed | `linkPreviews.destinationsPreviewed`, `linkPreviews.renderedOk` | linkPreviews.destinationsPreviewed >= 1; linkPreviews.renderedOk == linkPreviews.destinationsPreviewed |
+| `icons-and-install:1` | Required icons load and decode | computed | `icons.decodedLive`, `icons.urls` | icons.decodedLive == icons.urls (hard: level 1 on failure) |
+| `icons-and-install:2` | Contrast and legibility | computed | `storeArt.textPairs` | contrastMin(storeArt.textPairs) >= P.minStoreArtContrast |
+| `media:1` | Screenshot and GIF readiness | computed | `media.decodedCurrentBuild`, `media.items`, `receipts.decodedMedia` | `media.decodedCurrentBuild == media.items`, approved receipt cases pass |
+| `media:2` | Store art and logo formats | computed | `storeArtFormats.formatsPassing`, `storeArtFormats.formatsChecked`, `receipts.destinationFormats` | `storeArtFormats.formatsPassing == storeArtFormats.formatsChecked`, approved receipt cases pass |
+| `presskit-and-obligations:1` | Presskit completeness | computed | `presskit.has`, `presskit.archiveScanClean`, `receipts.archiveReview` | `presskit.has covers ["press-page","factsheet","logo-pack"]`, `presskit.archiveScanClean true `, approved receipt cases pass |
+| `presskit-and-obligations:2` | Rights, age, privacy and support links | computed | `obligations.rightsRecords`, `obligations.linksToTrustRecords` | obligations.rightsRecords is true (hard: level 1 on failure); obligations.linksToTrustRecords covers ["age","privacy","support"] |
+
+## Growth checks (reported beside the grade, not scored)
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `localization-claims` | localization-claims | `locClaims.shippedLocales`, `locClaims.advertisedLocales` | missing(locClaims.shippedLocales,locClaims.advertisedLocales) == 0 (hard: level 1 on failure) |
+
+## Adapt to your game
+
+Choose destinations that will actually carry the game. Each has different asset and preview requirements, and Steam is only one example:
+
+- A PC store such as Steam: capsule images (Steam's name for its key art tiles) in several sizes, a logo, screenshots and a trailer.
+- itch.io: a cover image, screenshots and a page you style yourself; check the tags and link preview the live page produces from your cover and short description.
+- Console stores: key art, logo layers and icon tiles per platform. Their guidelines are often confidential: record the spec version you checked and never copy guideline text into a pack or a public file.
+- Mobile app stores: app icons in several sizes, a feature graphic, and phone and tablet screenshots.
+- The game's own website: a press page, page metadata, a share preview image and site icons.
+
+Some rubric lines apply only to some destinations: "Page metadata on pages you control" and "Link preview cards" apply only to pages you control, "Required icons load and decode" covers whatever icons your destinations take, and "Store art and logo formats" covers every store image format, not only Steam capsules. If the game has no web page you control, the owner approves the `no-own-web-page` profile before scoring and sets it in the game profile (`"rubricProfile": ["no-own-web-page"]` in `pack.profile`). Both `share-metadata` lines then read N/A (not U, not a defect), the pillar's 20 points are shared over the other eight lines (12.5 each), the `meta` and `linkPreviews` groups can be left out, and the verdict can reach PASS. Name the profile next to the grade. Any other line that cannot apply to your destinations (for example `icons-and-install:1` when no destination takes icons from you) has no profile: it stays U, lowers coverage, is never a defect, and keeps the verdict CONDITIONAL.
+
+- Record the destination spec version you checked each image format against, from the store's current documentation.
+- Attach the evidence id for every advertised feature (a controller badge needs a real pad capture).
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+## Owner calls
+
+- Which destinations the game will be listed on (for example a PC store such as Steam, itch.io, a console store, a mobile app store or your own website), and which spec version of each destination's asset guidelines applies.
+- Whether the `no-own-web-page` profile applies, approved before scoring and set as `rubricProfile` in the game profile.
+
+## Blockers
+
+- Share card previews need the real destinations; the agent never publishes or shares on its own.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

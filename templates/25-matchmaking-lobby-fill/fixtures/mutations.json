@@ -1,0 +1,359 @@
+{
+  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+  "cases": [
+    {
+      "id": "fill-measurement:1#empty-fill.regions",
+      "line": "fill-measurement:1",
+      "expect": "U",
+      "set": {
+        "metrics.fill.regions": 0
+      }
+    },
+    {
+      "id": "fill-measurement:1#empty-fill.regionHoursMeasured",
+      "line": "fill-measurement:1",
+      "expect": "U",
+      "set": {
+        "metrics.fill.regionHoursMeasured": 0
+      }
+    },
+    {
+      "id": "fill-measurement:1#neg1",
+      "line": "fill-measurement:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.fill.botsCountedAsHumans": 3
+      }
+    },
+    {
+      "id": "fill-measurement:1#neg2",
+      "line": "fill-measurement:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.fill.regionHoursMeasured": 4
+      }
+    },
+    {
+      "id": "fill-measurement:1#missing",
+      "line": "fill-measurement:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.fill.botsCountedAsHumans"
+      ]
+    },
+    {
+      "id": "fill-measurement:2#empty-fill.regions",
+      "line": "fill-measurement:2",
+      "expect": "U",
+      "set": {
+        "metrics.fill.regions": 0
+      }
+    },
+    {
+      "id": "fill-measurement:2#empty-fill.regionHoursMeasured",
+      "line": "fill-measurement:2",
+      "expect": "U",
+      "set": {
+        "metrics.fill.regionHoursMeasured": 0
+      }
+    },
+    {
+      "id": "fill-measurement:2#neg1",
+      "line": "fill-measurement:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.fill.thinMismatch": 1
+      }
+    },
+    {
+      "id": "fill-measurement:2#missing",
+      "line": "fill-measurement:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.fill.thinMismatch"
+      ]
+    },
+    {
+      "id": "proposals:1#empty-merge.proposals",
+      "line": "proposals:1",
+      "expect": "U",
+      "set": {
+        "metrics.merge.proposals": 0
+      }
+    },
+    {
+      "id": "proposals:1#empty-merge.thinRegions",
+      "line": "proposals:1",
+      "expect": "U",
+      "set": {
+        "metrics.merge.thinRegions": 0
+      }
+    },
+    {
+      "id": "proposals:1#empty-latency.pairs",
+      "line": "proposals:1",
+      "expect": "U",
+      "set": {
+        "metrics.latency.pairs": 0
+      }
+    },
+    {
+      "id": "proposals:1#neg1",
+      "line": "proposals:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.merge.overCap": 1
+      }
+    },
+    {
+      "id": "proposals:1#neg2",
+      "line": "proposals:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.merge.unknownPingProposed": 1
+      }
+    },
+    {
+      "id": "proposals:1#missing",
+      "line": "proposals:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.merge.overCap"
+      ]
+    },
+    {
+      "id": "proposals:2#empty-merge.proposals",
+      "line": "proposals:2",
+      "expect": "U",
+      "set": {
+        "metrics.merge.proposals": 0
+      }
+    },
+    {
+      "id": "proposals:2#empty-merge.thinRegions",
+      "line": "proposals:2",
+      "expect": "U",
+      "set": {
+        "metrics.merge.thinRegions": 0
+      }
+    },
+    {
+      "id": "proposals:2#neg1",
+      "line": "proposals:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.merge.thinWithAlternatives": 0
+      }
+    },
+    {
+      "id": "proposals:2#missing",
+      "line": "proposals:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.merge.thinWithAlternatives"
+      ]
+    },
+    {
+      "id": "bot-honesty:1#empty-bots.measuredCases",
+      "line": "bot-honesty:1",
+      "expect": "U",
+      "set": {
+        "metrics.bots.measuredCases": 0
+      }
+    },
+    {
+      "id": "bot-honesty:1#neg1",
+      "line": "bot-honesty:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.bots.labelShown": false
+      }
+    },
+    {
+      "id": "bot-honesty:1#neg2",
+      "line": "bot-honesty:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.bots.countedInPlayerCount": true
+      }
+    },
+    {
+      "id": "bot-honesty:1#missing",
+      "line": "bot-honesty:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.bots.labelShown"
+      ]
+    },
+    {
+      "id": "bot-honesty:2#empty-bots.measuredCases",
+      "line": "bot-honesty:2",
+      "expect": "U",
+      "set": {
+        "metrics.bots.measuredCases": 0
+      }
+    },
+    {
+      "id": "bot-honesty:2#neg1",
+      "line": "bot-honesty:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.bots.overCapWithoutProposal": 2
+      }
+    },
+    {
+      "id": "bot-honesty:2#missing",
+      "line": "bot-honesty:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.bots.overCapWithoutProposal"
+      ]
+    },
+    {
+      "id": "wait-and-devices:1#empty-wait.measuredCases",
+      "line": "wait-and-devices:1",
+      "expect": "U",
+      "set": {
+        "metrics.wait.measuredCases": 0
+      }
+    },
+    {
+      "id": "wait-and-devices:1#neg1",
+      "line": "wait-and-devices:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.wait.p50S": 120
+      }
+    },
+    {
+      "id": "wait-and-devices:1#neg2",
+      "line": "wait-and-devices:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.wait.p90S": 300
+      }
+    },
+    {
+      "id": "wait-and-devices:1#missing",
+      "line": "wait-and-devices:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.wait.p50S"
+      ]
+    },
+    {
+      "id": "wait-and-devices:2#empty-device.measuredCases",
+      "line": "wait-and-devices:2",
+      "expect": "U",
+      "set": {
+        "metrics.device.measuredCases": 0
+      }
+    },
+    {
+      "id": "wait-and-devices:2#neg1",
+      "line": "wait-and-devices:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.device.primaryInputWaitGapS": 60
+      }
+    },
+    {
+      "id": "wait-and-devices:2#missing",
+      "line": "wait-and-devices:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.device.primaryInputWaitGapS"
+      ]
+    },
+    {
+      "id": "safety-and-privacy:1#empty-authority.forbiddenAttempted",
+      "line": "safety-and-privacy:1",
+      "expect": "U",
+      "set": {
+        "metrics.authority.forbiddenAttempted": 0
+      }
+    },
+    {
+      "id": "safety-and-privacy:1#neg1",
+      "line": "safety-and-privacy:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.authority.forbiddenSucceeded": 1
+      }
+    },
+    {
+      "id": "safety-and-privacy:1#neg2",
+      "line": "safety-and-privacy:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.authority.liveChanges": 2
+      }
+    },
+    {
+      "id": "safety-and-privacy:1#missing",
+      "line": "safety-and-privacy:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.authority.forbiddenAttempted"
+      ]
+    },
+    {
+      "id": "safety-and-privacy:2#empty-privacy.measuredCases",
+      "line": "safety-and-privacy:2",
+      "expect": "U",
+      "set": {
+        "metrics.privacy.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety-and-privacy:2#neg1",
+      "line": "safety-and-privacy:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.privacy.piiFieldsAccepted": 1
+      }
+    },
+    {
+      "id": "safety-and-privacy:2#neg2",
+      "line": "safety-and-privacy:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.privacy.rawIdsInOutputs": 5
+      }
+    },
+    {
+      "id": "safety-and-privacy:2#missing",
+      "line": "safety-and-privacy:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.privacy.piiFieldsAccepted"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "visual-navigation:1#empty-landmarks.landmarksChecked",
+   "line": "visual-navigation:1",
+   "expect": "U",
+   "set": {
+    "metrics.landmarks.landmarksChecked": 0
+   }
+  },
+  {
+   "id": "visual-navigation:1#neg1",
+   "line": "visual-navigation:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.landmarks.minOnScreenPx": 9
+   }
+  },
+  {
+   "id": "visual-navigation:1#missing",
+   "line": "visual-navigation:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.landmarks.minOnScreenPx"
+   ]
+  },
+  {
+   "id": "visual-navigation:2#empty-locationOverlays.statesObserved",
+   "line": "visual-navigation:2",
+   "expect": "U",
+   "set": {
+    "metrics.locationOverlays.statesObserved": []
+   }
+  },
+  {
+   "id": "visual-navigation:2#empty-locationOverlays.measuredCases",
+   "line": "visual-navigation:2",
+   "expect": "U",
+   "set": {
+    "metrics.locationOverlays.measuredCases": 0
+   }
+  },
+  {
+   "id": "visual-navigation:2#neg1",
+   "line": "visual-navigation:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.locationOverlays.unexpectedOverlays": 1
+   }
+  },
+  {
+   "id": "visual-navigation:2#missing",
+   "line": "visual-navigation:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.locationOverlays.statesObserved"
+   ]
+  },
+  {
+   "id": "scene-composition:1#empty",
+   "line": "scene-composition:1",
+   "expect": "U",
+   "set": {
+    "judgements.scene-composition:1.evidenceIds": []
+   }
+  },
+  {
+   "id": "scene-composition:2#empty",
+   "line": "scene-composition:2",
+   "expect": "U",
+   "set": {
+    "judgements.scene-composition:2.evidenceIds": []
+   }
+  },
+  {
+   "id": "camera-occlusion:1#empty-occlusionProbe.probesRun",
+   "line": "camera-occlusion:1",
+   "expect": "U",
+   "set": {
+    "metrics.occlusionProbe.probesRun": 0
+   }
+  },
+  {
+   "id": "camera-occlusion:1#missing",
+   "line": "camera-occlusion:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.occlusionProbe.probesRun"
+   ]
+  },
+  {
+   "id": "camera-occlusion:2#empty-occlusion.routes",
+   "line": "camera-occlusion:2",
+   "expect": "U",
+   "set": {
+    "metrics.occlusion.routes": 0
+   }
+  },
+  {
+   "id": "camera-occlusion:2#neg1",
+   "line": "camera-occlusion:2",
+   "expect": "fail",
+   "areas": [
+    "camera-occlusion"
+   ],
+   "set": {
+    "metrics.occlusion.occludedCueFrames": 14
+   }
+  },
+  {
+   "id": "camera-occlusion:2#missing",
+   "line": "camera-occlusion:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.occlusion.routes"
+   ]
+  },
+  {
+   "id": "traversal-affordance:1#empty",
+   "line": "traversal-affordance:1",
+   "expect": "U",
+   "set": {
+    "judgements.traversal-affordance:1.evidenceIds": []
+   }
+  },
+  {
+   "id": "traversal-affordance:2#empty",
+   "line": "traversal-affordance:2",
+   "expect": "U",
+   "set": {
+    "judgements.traversal-affordance:2.evidenceIds": []
+   }
+  },
+  {
+   "id": "environment-consistency:1#empty",
+   "line": "environment-consistency:1",
+   "expect": "U",
+   "set": {
+    "judgements.environment-consistency:1.evidenceIds": []
+   }
+  },
+  {
+   "id": "environment-consistency:2#empty-consistency.devices",
+   "line": "environment-consistency:2",
+   "expect": "U",
+   "set": {
+    "metrics.consistency.devices": []
+   }
+  },
+  {
+   "id": "environment-consistency:2#empty-consistency.pairs",
+   "line": "environment-consistency:2",
+   "expect": "U",
+   "set": {
+    "metrics.consistency.pairs": []
+   }
+  },
+  {
+   "id": "environment-consistency:2#neg1",
+   "line": "environment-consistency:2",
+   "expect": "fail",
+   "areas": [
+    "art-direction"
+   ],
+   "set": {
+    "metrics.consistency.pairs": [
+     [
+      "#5b7f4a",
+      "#a04a4a"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "environment-consistency:2#missing",
+   "line": "environment-consistency:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.consistency.devices"
+   ]
+  },
+  {
+   "line": "camera-occlusion:1",
+   "expect": "U",
+   "id": "sightlines#missing-row",
+   "set": {
+    "receipts.sightlines": [
+     {
+      "id": "exit",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-sightlines-exit",
+      "schema": "sightline-v1",
+      "seed": "sample-seed",
+      "route": "exit",
+      "camera": "overview",
+      "expectedVisible": true,
+      "rayVisible": true,
+      "cueOccludedFrames": 0
+     }
+    ]
+   }
+  },
+  {
+   "line": "camera-occlusion:1",
+   "expect": "U",
+   "id": "sightlines#stale",
+   "set": {
+    "receipts.sightlines.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "camera-occlusion:1",
+   "expect": "U",
+   "id": "sightlines#artifact",
+   "set": {
+    "receipts.sightlines.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "sightlines#incompatible",
+   "expect": 1,
+   "set": {
+    "receipts.sightlines.0.schema": "sightline-v2"
+   },
+   "line": "camera-occlusion:1"
+  },
+  {
+   "id": "sightlines#hidden-cue",
+   "expect": 1,
+   "set": {
+    "receipts.sightlines.0.cueOccludedFrames": 2
+   },
+   "line": "camera-occlusion:1"
+  }
+ ]
+}

@@ -1,0 +1,508 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "load-and-start:1#empty-load.startLatencyMs",
+   "line": "load-and-start:1",
+   "expect": "U",
+   "set": {
+    "metrics.load.startLatencyMs": []
+   }
+  },
+  {
+   "id": "load-and-start:1#neg1",
+   "line": "load-and-start:1",
+   "expect": "fail",
+   "areas": [
+    "load"
+   ],
+   "set": {
+    "metrics.load.coldBytes": 14000000
+   }
+  },
+  {
+   "id": "load-and-start:1#missing",
+   "line": "load-and-start:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.load.coldBytes"
+   ]
+  },
+  {
+   "id": "load-and-start:2#empty-gesture.firstInputHandlerMs",
+   "line": "load-and-start:2",
+   "expect": "U",
+   "set": {
+    "metrics.gesture.firstInputHandlerMs": []
+   }
+  },
+  {
+   "id": "load-and-start:2#neg1",
+   "line": "load-and-start:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.gesture.firstInputHandlerMs": [
+     40,
+     70,
+     90,
+     120
+    ]
+   }
+  },
+  {
+   "id": "load-and-start:2#missing",
+   "line": "load-and-start:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.gesture.device"
+   ]
+  },
+  {
+   "id": "music-and-mix:1#empty-music.statesObserved",
+   "line": "music-and-mix:1",
+   "expect": "U",
+   "set": {
+    "metrics.music.statesObserved": []
+   }
+  },
+  {
+   "id": "music-and-mix:1#empty-music.statesSpecified",
+   "line": "music-and-mix:1",
+   "expect": "U",
+   "set": {
+    "metrics.music.statesSpecified": []
+   }
+  },
+  {
+   "id": "music-and-mix:1#neg1",
+   "line": "music-and-mix:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.music.statesObserved": [
+     "browse"
+    ]
+   }
+  },
+  {
+   "id": "music-and-mix:1#missing",
+   "line": "music-and-mix:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.music.statesObserved"
+   ]
+  },
+  {
+   "id": "music-and-mix:2#empty-mix.essentialCueMarginDb",
+   "line": "music-and-mix:2",
+   "expect": "U",
+   "set": {
+    "metrics.mix.essentialCueMarginDb": []
+   }
+  },
+  {
+   "id": "music-and-mix:2#empty-mix.worstCaseRecordings",
+   "line": "music-and-mix:2",
+   "expect": "U",
+   "set": {
+    "metrics.mix.worstCaseRecordings": 0
+   }
+  },
+  {
+   "id": "music-and-mix:2#neg1",
+   "line": "music-and-mix:2",
+   "expect": "fail",
+   "areas": [
+    "audio-mix"
+   ],
+   "set": {
+    "metrics.mix.essentialCueMarginDb": [
+     8,
+     2.5,
+     9
+    ]
+   }
+  },
+  {
+   "id": "music-and-mix:2#missing",
+   "line": "music-and-mix:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.mix.worstCaseRecordings"
+   ]
+  },
+  {
+   "id": "loudness-and-voices:1#empty-loudness.measuredCases",
+   "line": "loudness-and-voices:1",
+   "expect": "U",
+   "set": {
+    "metrics.loudness.measuredCases": 0
+   }
+  },
+  {
+   "id": "loudness-and-voices:1#neg1",
+   "line": "loudness-and-voices:1",
+   "expect": "fail",
+   "areas": [
+    "loudness"
+   ],
+   "set": {
+    "metrics.loudness.truePeakDb": 0.4
+   }
+  },
+  {
+   "id": "loudness-and-voices:1#missing",
+   "line": "loudness-and-voices:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.loudness.freshRecording"
+   ]
+  },
+  {
+   "id": "loudness-and-voices:2#empty-voices.peakVoices",
+   "line": "loudness-and-voices:2",
+   "expect": "U",
+   "set": {
+    "metrics.voices.peakVoices": []
+   }
+  },
+  {
+   "id": "loudness-and-voices:2#neg1",
+   "line": "loudness-and-voices:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.voices.peakVoices": [
+     18,
+     40,
+     27
+    ]
+   }
+  },
+  {
+   "id": "loudness-and-voices:2#missing",
+   "line": "loudness-and-voices:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.voices.device"
+   ]
+  },
+  {
+   "id": "space-and-variety:1#empty-spatial.directionTrials",
+   "line": "space-and-variety:1",
+   "expect": "U",
+   "set": {
+    "metrics.spatial.directionTrials": 0
+   }
+  },
+  {
+   "id": "space-and-variety:1#neg1",
+   "line": "space-and-variety:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.spatial.directionCorrect": 25
+   }
+  },
+  {
+   "id": "space-and-variety:1#missing",
+   "line": "space-and-variety:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.spatial.directionCorrect"
+   ]
+  },
+  {
+   "id": "space-and-variety:2#empty-variety.measuredCases",
+   "line": "space-and-variety:2",
+   "expect": "U",
+   "set": {
+    "metrics.variety.measuredCases": 0
+   }
+  },
+  {
+   "id": "space-and-variety:2#neg1",
+   "line": "space-and-variety:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.variety.sameCuePerSecondMax": 14
+   }
+  },
+  {
+   "id": "space-and-variety:2#missing",
+   "line": "space-and-variety:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.variety.sameCuePerSecondMax"
+   ]
+  },
+  {
+   "id": "voice-and-lifecycle:1#empty-captions.spokenLines",
+   "line": "voice-and-lifecycle:1",
+   "expect": "U",
+   "set": {
+    "metrics.captions.spokenLines": 0
+   }
+  },
+  {
+   "id": "voice-and-lifecycle:1#neg1",
+   "line": "voice-and-lifecycle:1",
+   "expect": "fail",
+   "areas": [
+    "sound-alternatives"
+   ],
+   "set": {
+    "metrics.captions.captionedMatching": 20
+   }
+  },
+  {
+   "id": "voice-and-lifecycle:1#missing",
+   "line": "voice-and-lifecycle:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.captions.captionedMatching"
+   ]
+  },
+  {
+   "id": "voice-and-lifecycle:2#empty-lifecycle.measuredCases",
+   "line": "voice-and-lifecycle:2",
+   "expect": "U",
+   "set": {
+    "metrics.lifecycle.measuredCases": 0
+   }
+  },
+  {
+   "id": "voice-and-lifecycle:2#neg1",
+   "line": "voice-and-lifecycle:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.lifecycle.resumeAfterBackground": false
+   }
+  },
+  {
+   "id": "voice-and-lifecycle:2#missing",
+   "line": "voice-and-lifecycle:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.lifecycle.resumeAfterBackground"
+   ]
+  },
+  {
+   "id": "mic-fallback#empty-micFallback.tested",
+   "line": "mic-fallback",
+   "expect": "U",
+   "set": {
+    "metrics.micFallback.tested": []
+   }
+  },
+  {
+   "id": "mic-fallback#neg1",
+   "line": "mic-fallback",
+   "expect": "fail",
+   "areas": [
+    "optional-input"
+   ],
+   "set": {
+    "metrics.micFallback.openTracksAfterStop": 1
+   }
+  },
+  {
+   "id": "mic-fallback#neg2",
+   "line": "mic-fallback",
+   "expect": "fail",
+   "areas": [
+    "optional-input"
+   ],
+   "set": {
+    "metrics.micFallback.revokedAction": "unavailable"
+   }
+  },
+  {
+   "id": "mic-fallback#missing",
+   "line": "mic-fallback",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.micFallback.tested"
+   ]
+  },
+  {
+   "line": "music-and-mix:1",
+   "expect": "U",
+   "id": "transitions#missing-row",
+   "set": {
+    "receipts.transitions": [
+     {
+      "id": "interrupt",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-transitions-interrupt",
+      "fromState": "build",
+      "toState": "browse",
+      "interruption": true,
+      "scheduleErrorMs": 4,
+      "gainJumpDb": 0.5,
+      "duckDb": 7
+     }
+    ]
+   }
+  },
+  {
+   "line": "music-and-mix:1",
+   "expect": "U",
+   "id": "transitions#stale",
+   "set": {
+    "receipts.transitions.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "music-and-mix:1",
+   "expect": "U",
+   "id": "transitions#artifact",
+   "set": {
+    "receipts.transitions.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "loudness-and-voices:1",
+   "expect": "U",
+   "id": "mixedPeak#missing-row",
+   "set": {
+    "receipts.mixedPeak": []
+   }
+  },
+  {
+   "line": "loudness-and-voices:1",
+   "expect": "U",
+   "id": "mixedPeak#stale",
+   "set": {
+    "receipts.mixedPeak.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "loudness-and-voices:1",
+   "expect": "U",
+   "id": "mixedPeak#artifact",
+   "set": {
+    "receipts.mixedPeak.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "loudness-and-voices:2",
+   "expect": "U",
+   "id": "voiceStress#missing-row",
+   "set": {
+    "receipts.voiceStress": []
+   }
+  },
+  {
+   "line": "loudness-and-voices:2",
+   "expect": "U",
+   "id": "voiceStress#stale",
+   "set": {
+    "receipts.voiceStress.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "loudness-and-voices:2",
+   "expect": "U",
+   "id": "voiceStress#artifact",
+   "set": {
+    "receipts.voiceStress.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "voice-and-lifecycle:1",
+   "expect": "U",
+   "id": "captionEvents#missing-row",
+   "set": {
+    "receipts.captionEvents": [
+     {
+      "id": "selection",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-captionEvents-selection",
+      "cue": "selection",
+      "caption": "selection",
+      "offsetMs": 24
+     }
+    ]
+   }
+  },
+  {
+   "line": "voice-and-lifecycle:1",
+   "expect": "U",
+   "id": "captionEvents#stale",
+   "set": {
+    "receipts.captionEvents.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "voice-and-lifecycle:1",
+   "expect": "U",
+   "id": "captionEvents#artifact",
+   "set": {
+    "receipts.captionEvents.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "transitions#late",
+   "expect": 1,
+   "set": {
+    "receipts.transitions.0.scheduleErrorMs": 100
+   },
+   "line": "music-and-mix:1"
+  },
+  {
+   "id": "transitions#no-duck",
+   "expect": 1,
+   "set": {
+    "receipts.transitions.0.duckDb": 0
+   },
+   "line": "music-and-mix:1"
+  },
+  {
+   "id": "mixedPeak#clipped",
+   "expect": 0,
+   "set": {
+    "receipts.mixedPeak.0.truePeakDb": 1
+   },
+   "line": "loudness-and-voices:1"
+  },
+  {
+   "id": "voiceStress#leak",
+   "expect": 1,
+   "set": {
+    "receipts.voiceStress.0.activeAfterStop": 1
+   },
+   "line": "loudness-and-voices:2"
+  },
+  {
+   "id": "voiceStress#no-steal",
+   "expect": 1,
+   "set": {
+    "receipts.voiceStress.0.stolen": 0
+   },
+   "line": "loudness-and-voices:2"
+  },
+  {
+   "id": "captionEvents#wrong-event",
+   "expect": 0,
+   "set": {
+    "receipts.captionEvents.0.caption": "different"
+   },
+   "line": "voice-and-lifecycle:1"
+  }
+ ]
+}

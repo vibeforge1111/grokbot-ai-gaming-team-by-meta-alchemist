@@ -1,0 +1,622 @@
+{
+ "packId": "example-03-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "minSilhouetteContrast": 3,
+  "minSilhouettePx": 24,
+  "maxPenetrationCm": 0.5,
+  "maxFootGapCm": 1.5,
+  "minColliderIoU": 0.85,
+  "floorProbeBudgetMs": 0.25,
+  "frameP95BudgetMs": 11.1,
+  "maxDrawCalls": 250,
+  "maxLodSwapsPerSecond": 2,
+  "maxPaletteDeltaE": 6,
+  "viewports": [
+   "desktop",
+   "phone"
+  ],
+  "requiredExtremes": [
+   "turn-left",
+   "turn-right",
+   "reach-up",
+   "reach-down"
+  ],
+  "minimumPoses": 12,
+  "requiredSlopesDeg": [
+   0,
+   15,
+   30
+  ],
+  "cases": {
+   "colliderViews": [
+    {
+     "id": "front",
+     "asset": "piece",
+     "view": "front",
+     "tool": "sample-export-v1"
+    },
+    {
+     "id": "side",
+     "asset": "piece",
+     "view": "side",
+     "tool": "sample-export-v1"
+    },
+    {
+     "id": "rear",
+     "asset": "piece",
+     "view": "rear",
+     "tool": "sample-export-v1"
+    },
+    {
+     "id": "top",
+     "asset": "piece",
+     "view": "top",
+     "tool": "sample-export-v1"
+    }
+   ],
+   "poseSweep": [
+    {
+     "id": "0",
+     "clip": "movement",
+     "pose": "pose-0"
+    },
+    {
+     "id": "1",
+     "clip": "movement",
+     "pose": "pose-1"
+    },
+    {
+     "id": "2",
+     "clip": "movement",
+     "pose": "pose-2"
+    },
+    {
+     "id": "3",
+     "clip": "movement",
+     "pose": "pose-3"
+    },
+    {
+     "id": "4",
+     "clip": "movement",
+     "pose": "pose-4"
+    },
+    {
+     "id": "5",
+     "clip": "movement",
+     "pose": "pose-5"
+    },
+    {
+     "id": "6",
+     "clip": "movement",
+     "pose": "pose-6"
+    },
+    {
+     "id": "7",
+     "clip": "movement",
+     "pose": "pose-7"
+    },
+    {
+     "id": "8",
+     "clip": "movement",
+     "pose": "pose-8"
+    },
+    {
+     "id": "9",
+     "clip": "movement",
+     "pose": "pose-9"
+    },
+    {
+     "id": "10",
+     "clip": "movement",
+     "pose": "pose-10"
+    },
+    {
+     "id": "11",
+     "clip": "movement",
+     "pose": "pose-11"
+    }
+   ],
+   "seedRuns": [
+    {
+     "id": "repeat"
+    }
+   ],
+   "slopeContacts": [
+    {
+     "id": "0",
+     "slopeDeg": 0
+    },
+    {
+     "id": "15",
+     "slopeDeg": 15
+    },
+    {
+     "id": "30",
+     "slopeDeg": 30
+    }
+   ]
+  }
+ },
+ "artifacts": [
+  {
+   "id": "art-silhouette",
+   "kind": "capture",
+   "path": "captures/silhouette.json",
+   "sha256": null
+  },
+  {
+   "id": "art-attachedPropSilhouette",
+   "kind": "capture",
+   "path": "captures/attachedPropSilhouette.json",
+   "sha256": null
+  },
+  {
+   "id": "art-clearance",
+   "kind": "capture",
+   "path": "captures/clearance.json",
+   "sha256": null
+  },
+  {
+   "id": "art-grounding",
+   "kind": "capture",
+   "path": "captures/grounding.json",
+   "sha256": null
+  },
+  {
+   "id": "art-colliders",
+   "kind": "capture",
+   "path": "captures/colliders.json",
+   "sha256": null
+  },
+  {
+   "id": "art-probe",
+   "kind": "trace",
+   "path": "traces/probe.json",
+   "sha256": null
+  },
+  {
+   "id": "art-scene",
+   "kind": "trace",
+   "path": "traces/scene.json",
+   "sha256": null
+  },
+  {
+   "id": "art-lod",
+   "kind": "capture",
+   "path": "captures/lod.json",
+   "sha256": null
+  },
+  {
+   "id": "art-artRef",
+   "kind": "capture",
+   "path": "captures/artRef.json",
+   "sha256": null
+  },
+  {
+   "id": "art-variation",
+   "kind": "static",
+   "path": "static/variation.json",
+   "sha256": null
+  },
+  {
+   "id": "art-animation",
+   "kind": "capture",
+   "path": "captures/animation.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-colliderViews-front",
+   "kind": "capture",
+   "path": "receipts/colliderViews/front.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-colliderViews-side",
+   "kind": "capture",
+   "path": "receipts/colliderViews/side.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-colliderViews-rear",
+   "kind": "capture",
+   "path": "receipts/colliderViews/rear.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-colliderViews-top",
+   "kind": "capture",
+   "path": "receipts/colliderViews/top.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-0",
+   "kind": "capture",
+   "path": "receipts/poseSweep/0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-1",
+   "kind": "capture",
+   "path": "receipts/poseSweep/1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-2",
+   "kind": "capture",
+   "path": "receipts/poseSweep/2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-3",
+   "kind": "capture",
+   "path": "receipts/poseSweep/3.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-4",
+   "kind": "capture",
+   "path": "receipts/poseSweep/4.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-5",
+   "kind": "capture",
+   "path": "receipts/poseSweep/5.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-6",
+   "kind": "capture",
+   "path": "receipts/poseSweep/6.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-7",
+   "kind": "capture",
+   "path": "receipts/poseSweep/7.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-8",
+   "kind": "capture",
+   "path": "receipts/poseSweep/8.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-9",
+   "kind": "capture",
+   "path": "receipts/poseSweep/9.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-10",
+   "kind": "capture",
+   "path": "receipts/poseSweep/10.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-poseSweep-11",
+   "kind": "capture",
+   "path": "receipts/poseSweep/11.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-seedRuns-repeat",
+   "kind": "static",
+   "path": "receipts/seedRuns/repeat.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-slopeContacts-0",
+   "kind": "capture",
+   "path": "receipts/slopeContacts/0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-slopeContacts-15",
+   "kind": "capture",
+   "path": "receipts/slopeContacts/15.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-slopeContacts-30",
+   "kind": "capture",
+   "path": "receipts/slopeContacts/30.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "silhouette": {
+   "artifact": "art-silhouette",
+   "viewports": [
+    "desktop",
+    "phone"
+   ],
+   "minContrast": 4.2,
+   "minHeightPx": 31,
+   "unreadableMembers": 0
+  },
+  "attachedPropSilhouette": {
+   "artifact": "art-attachedPropSilhouette",
+   "extremesChecked": [
+    "turn-left",
+    "turn-right",
+    "reach-up",
+    "reach-down"
+   ],
+   "unreadableAtExtremes": 0
+  },
+  "clearance": {
+   "artifact": "art-clearance",
+   "penetrationCm": [
+    0,
+    0.1,
+    0.2,
+    0,
+    0.3
+   ],
+   "posesChecked": 12
+  },
+  "grounding": {
+   "artifact": "art-grounding",
+   "footGapCm": [
+    0.2,
+    0.5,
+    0.9,
+    0.4
+   ],
+   "slopeDegTested": [
+    0,
+    15,
+    30
+   ]
+  },
+  "colliders": {
+   "artifact": "art-colliders",
+   "iou": [
+    0.91,
+    0.88,
+    0.93,
+    0.9
+   ]
+  },
+  "probe": {
+   "artifact": "art-probe",
+   "msPerFrame": [
+    0.08,
+    0.1,
+    0.12,
+    0.09,
+    0.11
+   ],
+   "allocBytesPerFrame": 0
+  },
+  "scene": {
+   "artifact": "art-scene",
+   "frameMs": [
+    7.5,
+    8.2,
+    9.1,
+    9.9,
+    10.3
+   ],
+   "drawCalls": 188
+  },
+  "lod": {
+   "artifact": "art-lod",
+   "swapsPerSecondMax": 0.6,
+   "popEventsAtGameplayDistance": 0,
+   "measuredCases": 1
+  },
+  "artRef": {
+   "artifact": "art-artRef",
+   "paletteDeltaE": [
+    2.1,
+    3.4,
+    1.8,
+    4
+   ],
+   "scaleRefMismatch": 0,
+   "referenceVersion": "art-ref-v3"
+  },
+  "variation": {
+   "artifact": "art-variation",
+   "sameSeedHashes": [
+    "sha:9c",
+    "sha:9c",
+    "sha:9c"
+   ]
+  },
+  "animation": {
+   "artifact": "art-animation",
+   "clipsWithFootSlide": 0,
+   "clipsChecked": 18
+  }
+ },
+ "receipts": {
+  "colliderViews": [
+   {
+    "id": "front",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-colliderViews-front",
+    "asset": "piece",
+    "view": "front",
+    "tool": "sample-export-v1",
+    "intersection": 90,
+    "union": 100
+   },
+   {
+    "id": "side",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-colliderViews-side",
+    "asset": "piece",
+    "view": "side",
+    "tool": "sample-export-v1",
+    "intersection": 90,
+    "union": 100
+   },
+   {
+    "id": "rear",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-colliderViews-rear",
+    "asset": "piece",
+    "view": "rear",
+    "tool": "sample-export-v1",
+    "intersection": 90,
+    "union": 100
+   },
+   {
+    "id": "top",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-colliderViews-top",
+    "asset": "piece",
+    "view": "top",
+    "tool": "sample-export-v1",
+    "intersection": 90,
+    "union": 100
+   }
+  ],
+  "poseSweep": [
+   {
+    "id": "0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-0",
+    "clip": "movement",
+    "pose": "pose-0",
+    "depthCm": 0.2
+   },
+   {
+    "id": "1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-1",
+    "clip": "movement",
+    "pose": "pose-1",
+    "depthCm": 0.2
+   },
+   {
+    "id": "2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-2",
+    "clip": "movement",
+    "pose": "pose-2",
+    "depthCm": 0.2
+   },
+   {
+    "id": "3",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-3",
+    "clip": "movement",
+    "pose": "pose-3",
+    "depthCm": 0.2
+   },
+   {
+    "id": "4",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-4",
+    "clip": "movement",
+    "pose": "pose-4",
+    "depthCm": 0.2
+   },
+   {
+    "id": "5",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-5",
+    "clip": "movement",
+    "pose": "pose-5",
+    "depthCm": 0.2
+   },
+   {
+    "id": "6",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-6",
+    "clip": "movement",
+    "pose": "pose-6",
+    "depthCm": 0.2
+   },
+   {
+    "id": "7",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-7",
+    "clip": "movement",
+    "pose": "pose-7",
+    "depthCm": 0.2
+   },
+   {
+    "id": "8",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-8",
+    "clip": "movement",
+    "pose": "pose-8",
+    "depthCm": 0.2
+   },
+   {
+    "id": "9",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-9",
+    "clip": "movement",
+    "pose": "pose-9",
+    "depthCm": 0.2
+   },
+   {
+    "id": "10",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-10",
+    "clip": "movement",
+    "pose": "pose-10",
+    "depthCm": 0.2
+   },
+   {
+    "id": "11",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-poseSweep-11",
+    "clip": "movement",
+    "pose": "pose-11",
+    "depthCm": 0.2
+   }
+  ],
+  "seedRuns": [
+   {
+    "id": "repeat",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-seedRuns-repeat",
+    "firstRun": "first",
+    "repeatRun": "second",
+    "seed": "sample",
+    "repeatSeed": "sample",
+    "mesh": "96d87d78ace85b5e5c525c776749313d609b49d6e29b424d7fb291358ddd1483",
+    "repeatMesh": "96d87d78ace85b5e5c525c776749313d609b49d6e29b424d7fb291358ddd1483"
+   }
+  ],
+  "slopeContacts": [
+   {
+    "id": "0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-slopeContacts-0",
+    "slopeDeg": 0,
+    "gapCm": 0.4,
+    "surface": "sample-support"
+   },
+   {
+    "id": "15",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-slopeContacts-15",
+    "slopeDeg": 15,
+    "gapCm": 0.4,
+    "surface": "sample-support"
+   },
+   {
+    "id": "30",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-slopeContacts-30",
+    "slopeDeg": 30,
+    "gapCm": 0.4,
+    "surface": "sample-support"
+   }
+  ]
+ }
+}

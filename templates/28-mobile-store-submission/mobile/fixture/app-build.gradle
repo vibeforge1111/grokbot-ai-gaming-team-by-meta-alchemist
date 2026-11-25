@@ -1,0 +1,16 @@
+// Synthetic fixture
+android {
+    namespace "com.example.game"
+    defaultConfig {
+        applicationId "com.example.game"
+        versionCode 3
+        versionName "1.2.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}

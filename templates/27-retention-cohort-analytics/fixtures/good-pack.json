@@ -1,0 +1,101 @@
+{
+  "packId": "synthetic-cohorts-001",
+  "status": "VALID",
+  "synthetic": true,
+  "gitSha": "synthetic",
+  "liveSha": "synthetic",
+  "profile": {
+    "minCellSize": 20,
+    "allowedSegments": [
+      "segment-a",
+      "segment-b"
+    ],
+    "minCohorts": 4,
+    "minPlayers": 500,
+    "minDays": 35,
+    "targetD1": 0.3,
+    "targetD7": 0.12,
+    "targetD30": 0.05,
+    "minProbeAttempts": 12
+  },
+  "artifacts": [
+    {
+      "id": "events",
+      "kind": "trace"
+    },
+    {
+      "id": "schema-check",
+      "kind": "trace"
+    },
+    {
+      "id": "cohort-table",
+      "kind": "trace"
+    },
+    {
+      "id": "interval-table",
+      "kind": "static"
+    },
+    {
+      "id": "report",
+      "kind": "trace"
+    },
+    {
+      "id": "probe",
+      "kind": "trace"
+    }
+  ],
+  "metrics": {
+    "privacy": {
+      "measuredCases": 5,
+      "artifact": "schema-check",
+      "piiAccepted": 0,
+      "rawIdsAccepted": 0,
+      "plantedRejected": true
+    },
+    "output": {
+      "measuredCases": 10,
+      "artifact": "report",
+      "idsInOutputs": 0,
+      "smallCellsShown": 0,
+      "individualExports": 0,
+      "dashes": 0
+    },
+    "authority": {
+      "artifact": "probe",
+      "forbiddenAttempted": 12,
+      "forbiddenSucceeded": 0,
+      "writes": 0
+    },
+    "math": {
+      "artifact": "cohort-table",
+      "oracleMismatches": 0,
+      "cohorts": 10,
+      "immatureCounted": 0
+    },
+    "conf": {
+      "artifact": "interval-table",
+      "rates": 25,
+      "ratesWithInterval": 25
+    },
+    "data": {
+      "artifact": "events",
+      "players": 2400,
+      "daysCovered": 70
+    },
+    "ret": {
+      "measuredCases": 2400,
+      "artifact": "cohort-table",
+      "d1": 0.3683,
+      "d7": 0.131
+    },
+    "ret30": {
+      "artifact": "cohort-table",
+      "measuredCases": 1468,
+      "d30": 0.1015
+    },
+    "segments": {
+      "artifact": "interval-table",
+      "compared": 2
+    }
+  }
+}

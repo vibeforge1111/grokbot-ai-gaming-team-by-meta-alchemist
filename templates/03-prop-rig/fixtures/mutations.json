@@ -1,0 +1,623 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "silhouette:1#empty-silhouette.viewports",
+   "line": "silhouette:1",
+   "expect": "U",
+   "set": {
+    "metrics.silhouette.viewports": []
+   }
+  },
+  {
+   "id": "silhouette:1#neg1",
+   "line": "silhouette:1",
+   "expect": "fail",
+   "areas": [
+    "art-direction"
+   ],
+   "set": {
+    "metrics.silhouette.minContrast": 1.6
+   }
+  },
+  {
+   "id": "silhouette:1#missing",
+   "line": "silhouette:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.silhouette.viewports"
+   ]
+  },
+  {
+   "id": "silhouette:2#empty-attachedPropSilhouette.extremesChecked",
+   "line": "silhouette:2",
+   "expect": "U",
+   "set": {
+    "metrics.attachedPropSilhouette.extremesChecked": []
+   }
+  },
+  {
+   "id": "silhouette:2#neg1",
+   "line": "silhouette:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.attachedPropSilhouette.unreadableAtExtremes": 2
+   }
+  },
+  {
+   "id": "silhouette:2#missing",
+   "line": "silhouette:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.attachedPropSilhouette.extremesChecked"
+   ]
+  },
+  {
+   "id": "animation-and-weapon-clearance:1#empty-clearance.penetrationCm",
+   "line": "animation-and-weapon-clearance:1",
+   "expect": "U",
+   "set": {
+    "metrics.clearance.penetrationCm": []
+   }
+  },
+  {
+   "id": "animation-and-weapon-clearance:1#empty-clearance.posesChecked",
+   "line": "animation-and-weapon-clearance:1",
+   "expect": "U",
+   "set": {
+    "metrics.clearance.posesChecked": 0
+   }
+  },
+  {
+   "id": "animation-and-weapon-clearance:1#neg1",
+   "line": "animation-and-weapon-clearance:1",
+   "expect": "fail",
+   "areas": [
+    "animation"
+   ],
+   "set": {
+    "metrics.clearance.penetrationCm": [
+     0,
+     2.5,
+     0.1
+    ]
+   }
+  },
+  {
+   "id": "animation-and-weapon-clearance:1#missing",
+   "line": "animation-and-weapon-clearance:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.clearance.penetrationCm"
+   ]
+  },
+  {
+   "id": "animation-and-weapon-clearance:2#empty-grounding.footGapCm",
+   "line": "animation-and-weapon-clearance:2",
+   "expect": "U",
+   "set": {
+    "metrics.grounding.footGapCm": []
+   }
+  },
+  {
+   "id": "animation-and-weapon-clearance:2#empty-grounding.slopeDegTested",
+   "line": "animation-and-weapon-clearance:2",
+   "expect": "U",
+   "set": {
+    "metrics.grounding.slopeDegTested": []
+   }
+  },
+  {
+   "id": "animation-and-weapon-clearance:2#neg1",
+   "line": "animation-and-weapon-clearance:2",
+   "expect": "fail",
+   "areas": [
+    "animation"
+   ],
+   "set": {
+    "metrics.grounding.footGapCm": [
+     0.2,
+     4.1,
+     0.3
+    ]
+   }
+  },
+  {
+   "id": "animation-and-weapon-clearance:2#missing",
+   "line": "animation-and-weapon-clearance:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.grounding.footGapCm"
+   ]
+  },
+  {
+   "id": "collider-agreement:1#empty-colliders.iou",
+   "line": "collider-agreement:1",
+   "expect": "U",
+   "set": {
+    "metrics.colliders.iou": []
+   }
+  },
+  {
+   "id": "collider-agreement:1#neg1",
+   "line": "collider-agreement:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.colliders.iou.1": 0.62
+   }
+  },
+  {
+   "id": "collider-agreement:1#missing",
+   "line": "collider-agreement:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.colliders.iou"
+   ]
+  },
+  {
+   "id": "collider-agreement:2#empty-probe.msPerFrame",
+   "line": "collider-agreement:2",
+   "expect": "U",
+   "set": {
+    "metrics.probe.msPerFrame": []
+   }
+  },
+  {
+   "id": "collider-agreement:2#neg1",
+   "line": "collider-agreement:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.probe.msPerFrame": [
+     0.3,
+     0.4,
+     0.5,
+     0.45,
+     0.38
+    ]
+   }
+  },
+  {
+   "id": "collider-agreement:2#missing",
+   "line": "collider-agreement:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.probe.msPerFrame"
+   ]
+  },
+  {
+   "id": "scene-budget:1#empty-scene.frameMs",
+   "line": "scene-budget:1",
+   "expect": "U",
+   "set": {
+    "metrics.scene.frameMs": []
+   }
+  },
+  {
+   "id": "scene-budget:1#neg1",
+   "line": "scene-budget:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.scene.drawCalls": 410
+   }
+  },
+  {
+   "id": "scene-budget:1#missing",
+   "line": "scene-budget:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.scene.frameMs"
+   ]
+  },
+  {
+   "id": "scene-budget:2#empty-lod.measuredCases",
+   "line": "scene-budget:2",
+   "expect": "U",
+   "set": {
+    "metrics.lod.measuredCases": 0
+   }
+  },
+  {
+   "id": "scene-budget:2#neg1",
+   "line": "scene-budget:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.lod.swapsPerSecondMax": 7
+   }
+  },
+  {
+   "id": "scene-budget:2#missing",
+   "line": "scene-budget:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.lod.swapsPerSecondMax"
+   ]
+  },
+  {
+   "id": "visual-consistency:1#empty-artRef.paletteDeltaE",
+   "line": "visual-consistency:1",
+   "expect": "U",
+   "set": {
+    "metrics.artRef.paletteDeltaE": []
+   }
+  },
+  {
+   "id": "visual-consistency:1#neg1",
+   "line": "visual-consistency:1",
+   "expect": "fail",
+   "areas": [
+    "art-direction"
+   ],
+   "set": {
+    "metrics.artRef.paletteDeltaE": [
+     2,
+     11.5,
+     3
+    ]
+   }
+  },
+  {
+   "id": "visual-consistency:1#missing",
+   "line": "visual-consistency:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.artRef.paletteDeltaE"
+   ]
+  },
+  {
+   "id": "visual-consistency:2#empty-variation.sameSeedHashes",
+   "line": "visual-consistency:2",
+   "expect": "U",
+   "set": {
+    "metrics.variation.sameSeedHashes": []
+   }
+  },
+  {
+   "id": "visual-consistency:2#neg1",
+   "line": "visual-consistency:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.variation.sameSeedHashes": [
+     "sha:9c",
+     "sha:a0",
+     "sha:9c"
+    ]
+   }
+  },
+  {
+   "id": "visual-consistency:2#neg2",
+   "line": "visual-consistency:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.variation.sameSeedHashes": [
+     "only-one-run"
+    ]
+   }
+  },
+  {
+   "id": "visual-consistency:2#missing",
+   "line": "visual-consistency:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.variation.sameSeedHashes"
+   ]
+  },
+  {
+   "id": "animation-foot-slide#empty-animation.clipsChecked",
+   "line": "animation-foot-slide",
+   "expect": "U",
+   "set": {
+    "metrics.animation.clipsChecked": 0
+   }
+  },
+  {
+   "id": "animation-foot-slide#neg1",
+   "line": "animation-foot-slide",
+   "expect": "fail",
+   "areas": [
+    "animation"
+   ],
+   "set": {
+    "metrics.animation.clipsWithFootSlide": 3
+   }
+  },
+  {
+   "id": "animation-foot-slide#missing",
+   "line": "animation-foot-slide",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.animation.clipsWithFootSlide"
+   ]
+  },
+  {
+   "line": "animation-and-weapon-clearance:1",
+   "expect": "U",
+   "id": "poseSweep#missing-row",
+   "set": {
+    "receipts.poseSweep": [
+     {
+      "id": "1",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-1",
+      "clip": "movement",
+      "pose": "pose-1",
+      "depthCm": 0.2
+     },
+     {
+      "id": "2",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-2",
+      "clip": "movement",
+      "pose": "pose-2",
+      "depthCm": 0.2
+     },
+     {
+      "id": "3",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-3",
+      "clip": "movement",
+      "pose": "pose-3",
+      "depthCm": 0.2
+     },
+     {
+      "id": "4",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-4",
+      "clip": "movement",
+      "pose": "pose-4",
+      "depthCm": 0.2
+     },
+     {
+      "id": "5",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-5",
+      "clip": "movement",
+      "pose": "pose-5",
+      "depthCm": 0.2
+     },
+     {
+      "id": "6",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-6",
+      "clip": "movement",
+      "pose": "pose-6",
+      "depthCm": 0.2
+     },
+     {
+      "id": "7",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-7",
+      "clip": "movement",
+      "pose": "pose-7",
+      "depthCm": 0.2
+     },
+     {
+      "id": "8",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-8",
+      "clip": "movement",
+      "pose": "pose-8",
+      "depthCm": 0.2
+     },
+     {
+      "id": "9",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-9",
+      "clip": "movement",
+      "pose": "pose-9",
+      "depthCm": 0.2
+     },
+     {
+      "id": "10",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-10",
+      "clip": "movement",
+      "pose": "pose-10",
+      "depthCm": 0.2
+     },
+     {
+      "id": "11",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-poseSweep-11",
+      "clip": "movement",
+      "pose": "pose-11",
+      "depthCm": 0.2
+     }
+    ]
+   }
+  },
+  {
+   "line": "animation-and-weapon-clearance:1",
+   "expect": "U",
+   "id": "poseSweep#stale",
+   "set": {
+    "receipts.poseSweep.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "animation-and-weapon-clearance:1",
+   "expect": "U",
+   "id": "poseSweep#artifact",
+   "set": {
+    "receipts.poseSweep.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "animation-and-weapon-clearance:2",
+   "expect": "U",
+   "id": "slopeContacts#missing-row",
+   "set": {
+    "receipts.slopeContacts": [
+     {
+      "id": "15",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-slopeContacts-15",
+      "slopeDeg": 15,
+      "gapCm": 0.4,
+      "surface": "sample-support"
+     },
+     {
+      "id": "30",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-slopeContacts-30",
+      "slopeDeg": 30,
+      "gapCm": 0.4,
+      "surface": "sample-support"
+     }
+    ]
+   }
+  },
+  {
+   "line": "animation-and-weapon-clearance:2",
+   "expect": "U",
+   "id": "slopeContacts#stale",
+   "set": {
+    "receipts.slopeContacts.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "animation-and-weapon-clearance:2",
+   "expect": "U",
+   "id": "slopeContacts#artifact",
+   "set": {
+    "receipts.slopeContacts.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "collider-agreement:1",
+   "expect": "U",
+   "id": "colliderViews#missing-row",
+   "set": {
+    "receipts.colliderViews": [
+     {
+      "id": "side",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-colliderViews-side",
+      "asset": "piece",
+      "view": "side",
+      "tool": "sample-export-v1",
+      "intersection": 90,
+      "union": 100
+     },
+     {
+      "id": "rear",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-colliderViews-rear",
+      "asset": "piece",
+      "view": "rear",
+      "tool": "sample-export-v1",
+      "intersection": 90,
+      "union": 100
+     },
+     {
+      "id": "top",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-colliderViews-top",
+      "asset": "piece",
+      "view": "top",
+      "tool": "sample-export-v1",
+      "intersection": 90,
+      "union": 100
+     }
+    ]
+   }
+  },
+  {
+   "line": "collider-agreement:1",
+   "expect": "U",
+   "id": "colliderViews#stale",
+   "set": {
+    "receipts.colliderViews.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "collider-agreement:1",
+   "expect": "U",
+   "id": "colliderViews#artifact",
+   "set": {
+    "receipts.colliderViews.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "visual-consistency:2",
+   "expect": "U",
+   "id": "seedRuns#missing-row",
+   "set": {
+    "receipts.seedRuns": []
+   }
+  },
+  {
+   "line": "visual-consistency:2",
+   "expect": "U",
+   "id": "seedRuns#stale",
+   "set": {
+    "receipts.seedRuns.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "visual-consistency:2",
+   "expect": "U",
+   "id": "seedRuns#artifact",
+   "set": {
+    "receipts.seedRuns.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "poseSweep#bad-pose",
+   "expect": 2,
+   "set": {
+    "receipts.poseSweep.0.depthCm": 2
+   },
+   "line": "animation-and-weapon-clearance:1"
+  },
+  {
+   "id": "slopeContacts#floating",
+   "expect": 2,
+   "set": {
+    "receipts.slopeContacts.0.gapCm": 4
+   },
+   "line": "animation-and-weapon-clearance:2"
+  },
+  {
+   "id": "colliderViews#bad-view",
+   "expect": 2,
+   "set": {
+    "receipts.colliderViews.0.intersection": 30
+   },
+   "line": "collider-agreement:1"
+  },
+  {
+   "id": "seedRuns#same-run",
+   "expect": 1,
+   "set": {
+    "receipts.seedRuns.0.repeatRun": "first"
+   },
+   "line": "visual-consistency:2"
+  },
+  {
+   "id": "seedRuns#drift",
+   "expect": 0,
+   "set": {
+    "receipts.seedRuns.0.repeatMesh": "6d749f6d23f2871fcb64b29c68833080ce6d824b9ad25de330d1b881fee49499"
+   },
+   "line": "visual-consistency:2"
+  }
+ ]
+}

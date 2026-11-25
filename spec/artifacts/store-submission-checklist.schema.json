@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/store-submission-checklist.schema.json",
+  "title": "Store submission checklist (team artifact)",
+  "description": "Per-target app store submission checks tied to one build, from the App Store Submission preview. Only the human submits. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "store-submission-checklist"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One check.",
+      "items": {
+        "type": "object",
+        "required": [
+          "target",
+          "check",
+          "status"
+        ],
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "Store target, for example a mobile store."
+          },
+          "check": {
+            "type": "string",
+            "description": "What was checked."
+          },
+          "status": {
+            "type": "string",
+            "description": "pass, fail or unmeasured.",
+            "enum": [
+              "pass",
+              "fail",
+              "unmeasured"
+            ]
+          },
+          "build": {
+            "type": "string",
+            "description": "Build id the check observed."
+          }
+        }
+      }
+    }
+  }
+}

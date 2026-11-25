@@ -1,0 +1,126 @@
+# How to use: Game Vibes Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Measure how quickly a game responds to input and how clearly its camera, sound and visuals communicate each action.
+
+Game Vibes Director is this template's name. Its folder is `01-game-feel` and other templates call it Game Feel (01), because it measures *game feel*: how fast and how clearly the game answers what the player does. It fits any genre and any engine. For a game without aiming, hazards or online prediction the owner selects a rubric profile so that line reads N/A; lines for other missing features (held input, ready cues, motion effects) stay unmeasured. The getting-started skill asks about each.
+
+- **Pipeline stage:** Prototype, Polish
+- **When:** As soon as the core loop is playable, and again after changes to an action, input or camera.
+- **You provide:** A playable build, input and camera captures, and an evidence pack (`evidence-pack`) for that build.
+- **You get:** A 100-point feel grade (`grade-record`), a plan for added feedback (juice), before and after proof clips, and local ticket drafts.
+- **Takes from:** Your game profile (`game-profile`) and evidence pack (`evidence-pack`); optionally `hud-capture-set` from HUD Designer (09) and `audio-mix-report` from Audio Director (13).
+- **Hands to:** HUD Designer (09) and Audio Director (13) through `feel-findings`, then playtesters for a repeat capture. See Team handoffs in [README.md](README.md#team-handoffs).
+
+Evidence comes from a CI run, a test harness or a manual capture of your build. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the game-vibes-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/01-game-feel
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`game-vibes-getting-started`](skills/game-vibes-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Game Vibes Director grade. |
+| [`game-feel-audit`](skills/game-feel-audit/SKILL.md) | Measure how fast and how clearly the game answers the actions players use most, in any genre and any engine, and gather the evidence for each Game Feel rubric line. |
+| [`ship-juice-module`](skills/ship-juice-module/SKILL.md) | Add visual, audio or haptic feedback (often called juice) to an action without changing input handling or game timing, behind a switch that is off by default. |
+| [`before-after-feel-proof`](skills/before-after-feel-proof/SKILL.md) | Compare the same player action before and after a feedback change and record both timing and perception. |
+| [`assist-and-forgiveness-check`](skills/assist-and-forgiveness-check/SKILL.md) | Check that aim assist, ledge grabs, snap-to-tile and other input help land where the player meant, the same way on every supported control. Use only when your game has such help. |
+| [`game-vibes-lens-engine`](skills/game-vibes-lens-engine/SKILL.md) | Use when you need to grade a Game Vibes Director evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-01-game-feel` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `response:1` | Input-to-action latency sample | 10 | capture |
+| `response:2` | Buffered and held input behaviour | 10 | capture |
+| `readable-feedback:1` | Action feedback capture | 10 | capture |
+| `readable-feedback:2` | Ready-again cues | 10 | trace |
+| `control-intent:1` | Input task completion | 10 | capture |
+| `control-intent:2` | Input intent and assist parity | 10 | capture |
+| `camera-comfort:1` | Camera framing of hazards | 10 | capture |
+| `camera-comfort:2` | Reduced motion respected | 10 | capture |
+| `parity:1` | Feedback preserves simulation timing | 10 | trace |
+| `parity:2` | Style effects are owner calls | 10 | static |
+
+## Decisions only you make
+
+- How fast each action must answer on each device, and how soon its first cue must appear.
+- If players aim: the acceptable aim error and how equal aim help must be across controls.
+- Which rubric profiles apply (`no-aiming`, `no-hazards`, `offline-only`), approved before scoring and set as `rubricProfile` in the game profile.
+- Which style effects are in the game on purpose (hitstop, a freeze of a few frames on impact; screen shake; platformer moves such as coyote time). This written list is the design contract, and nothing on it is ever marked down.
+
+## Known limits
+
+- Latency and aim evidence needs captures from each supported control; the shipped fixture is synthetic.
+- Three approved profiles mark a line not applicable: `no-aiming` (`control-intent:2`), `no-hazards` (`camera-comfort:1`) and `offline-only` (`parity:1`). The owner approves them before scoring and sets `rubricProfile` in the game profile. The line then reads N/A, its partner line takes the pillar's 20 points, and the verdict can reach PASS.
+- A game without held input (`response:2`), a ready-again cue (`readable-feedback:2`) or motion effects (`camera-comfort:2`) has no profile for that line: it stays U and the verdict stays CONDITIONAL. The report says the line does not apply.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `hud-capture-set` (optional, ^1.0.0) | 09 HUD | `.grokbot-team/artifacts/hud-capture-set/` | Continue: capture the HUD side of each action yourself, or leave the HUD cue checks unmeasured, and write "ASSUMPTION: no hud-capture-set available" in the report. |
+| `audio-mix-report` (optional, ^1.0.0) | 13 Audio | `.grokbot-team/artifacts/audio-mix-report/` | Continue without it. Start the report with "ASSUMPTION: no audio-mix-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `atlas-manifest` (optional, ^1.0.0) | 17 Sprites | `.grokbot-team/artifacts/atlas-manifest/` | Continue without it. Start the report with "ASSUMPTION: no atlas-manifest available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `loop-report` (optional, ^1.0.0) | 05 Game Loop | `.grokbot-team/artifacts/loop-report/` | Continue without it. Start the report with "ASSUMPTION: no loop-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `feel-findings` 1.0.0 | JSON | `.grokbot-team/artifacts/feel-findings/` | 05 Game Loop, 09 HUD, 13 Audio, 17 Sprites |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-01-game-feel` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

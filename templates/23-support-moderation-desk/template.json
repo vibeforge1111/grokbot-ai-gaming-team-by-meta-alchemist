@@ -1,0 +1,117 @@
+{
+  "kitVersion": 1,
+  "id": "gbf-23-support-moderation-desk",
+  "slug": "23-support-moderation-desk",
+  "name": "Community Support and Moderation Desk",
+  "shortName": "Support Desk",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Prepare support replies, moderation reviews and case digests from redacted local intake.",
+  "stage": "Community operations",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": null,
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "support-desk-getting-started",
+  "skills": [
+    "support-desk-getting-started",
+    "support-desk-ticket-intake",
+    "support-desk-scam-moderation",
+    "support-desk-kb-approval-batch",
+    "support-desk-daily-digest",
+    "file-to-shared-ledger",
+    "support-desk-lens-engine",
+    "support-desk-domain-engine"
+  ],
+  "routines": [
+    "support-desk-daily-digest",
+    "support-desk-redteam-rerun",
+    "support-desk-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-23-support-moderation-desk",
+    "version": "1.2.0",
+    "hash": "sha256:38a1235c220cd9d55ec09ccbdf809ed19d25a690f1ee1d1e56b4861dad029a7c"
+  },
+  "engine": {
+    "cmd": [
+      "node",
+      "engine/lens.mjs"
+    ],
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "incident-report": "^1.0.0",
+      "entitlement-ledger": "^1.0.0",
+      "patch-notes-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "support-case-draft",
+      "version": "1.0.0",
+      "format": "JSON local drafts plus a JSON digest",
+      "schema": "spec/artifacts/support-case-draft.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "incident-report",
+      "required": false,
+      "schema": "spec/artifacts/incident-report.schema.json"
+    },
+    {
+      "artifact": "entitlement-ledger",
+      "required": false,
+      "schema": "spec/artifacts/entitlement-ledger.schema.json"
+    },
+    {
+      "artifact": "patch-notes-draft",
+      "required": false,
+      "schema": "spec/artifacts/patch-notes-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "entitlements",
+      "releases",
+      "balance"
+    ],
+    "writes": [
+      "decisions",
+      "incidents"
+    ]
+  }
+}

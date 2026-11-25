@@ -1,0 +1,716 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "input:1#empty-journey.devicesPassed",
+   "line": "input:1",
+   "expect": "U",
+   "set": {
+    "metrics.journey.devicesPassed": []
+   }
+  },
+  {
+   "id": "input:1#empty-journey.tasksPassed",
+   "line": "input:1",
+   "expect": "U",
+   "set": {
+    "metrics.journey.tasksPassed": []
+   }
+  },
+  {
+   "id": "input:1#empty-journey.passedByDevice",
+   "line": "input:1",
+   "expect": "U",
+   "set": {
+    "metrics.journey.passedByDevice": []
+   }
+  },
+  {
+   "id": "input:1#neg1",
+   "line": "input:1",
+   "expect": "fail",
+   "areas": [
+    "input",
+    "input-devices"
+   ],
+   "set": {
+    "metrics.journey.devicesPassed": [
+     "keyboard-mouse"
+    ]
+   }
+  },
+  {
+   "id": "input:1#neg2",
+   "line": "input:1",
+   "expect": "fail",
+   "areas": [
+    "input",
+    "input-devices"
+   ],
+   "set": {
+    "metrics.journey.passedByDevice": [
+     {
+      "device": "gamepad",
+      "task": "title-screen"
+     },
+     {
+      "device": "gamepad",
+      "task": "core-play"
+     },
+     {
+      "device": "gamepad",
+      "task": "results"
+     },
+     {
+      "device": "gamepad",
+      "task": "play-again"
+     },
+     {
+      "device": "touch",
+      "task": "title-screen"
+     },
+     {
+      "device": "touch",
+      "task": "core-play"
+     },
+     {
+      "device": "touch",
+      "task": "results"
+     },
+     {
+      "device": "touch",
+      "task": "play-again"
+     },
+     {
+      "device": "keyboard-mouse",
+      "task": "title-screen"
+     },
+     {
+      "device": "keyboard-mouse",
+      "task": "core-play"
+     },
+     {
+      "device": "keyboard-mouse",
+      "task": "results"
+     }
+    ]
+   }
+  },
+  {
+   "id": "input:1#missing",
+   "line": "input:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.journey.devicesPassed"
+   ]
+  },
+  {
+   "id": "input:2#empty-remap.measuredCases",
+   "line": "input:2",
+   "expect": "U",
+   "set": {
+    "metrics.remap.measuredCases": 0
+   }
+  },
+  {
+   "id": "input:2#neg1",
+   "line": "input:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.remap.disconnectRecovers": false
+   }
+  },
+  {
+   "id": "input:2#missing",
+   "line": "input:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.remap.remapWorks"
+   ]
+  },
+  {
+   "id": "readability:1#empty-text.pairs",
+   "line": "readability:1",
+   "expect": "U",
+   "set": {
+    "metrics.text.pairs": []
+   }
+  },
+  {
+   "id": "readability:1#neg1",
+   "line": "readability:1",
+   "expect": "fail",
+   "areas": [
+    "accessibility"
+   ],
+   "set": {
+    "metrics.text.minPx": 9
+   }
+  },
+  {
+   "id": "readability:1#missing",
+   "line": "readability:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.text.minPx"
+   ]
+  },
+  {
+   "id": "readability:2#empty-colour.palette",
+   "line": "readability:2",
+   "expect": "U",
+   "set": {
+    "metrics.colour.palette": []
+   }
+  },
+  {
+   "id": "readability:2#neg1",
+   "line": "readability:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.colour.shapeOrLabelBacked": false
+   }
+  },
+  {
+   "id": "readability:2#missing",
+   "line": "readability:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.colour.palette"
+   ]
+  },
+  {
+   "id": "captions-and-assistive-info:1#empty-captions.requiredCues",
+   "line": "captions-and-assistive-info:1",
+   "expect": "U",
+   "set": {
+    "metrics.captions.requiredCues": 0
+   }
+  },
+  {
+   "id": "captions-and-assistive-info:1#neg1",
+   "line": "captions-and-assistive-info:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.captions.captionedCues": 20
+   }
+  },
+  {
+   "id": "captions-and-assistive-info:1#missing",
+   "line": "captions-and-assistive-info:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.captions.captionedCues"
+   ]
+  },
+  {
+   "id": "captions-and-assistive-info:2#empty-menus.measuredCases",
+   "line": "captions-and-assistive-info:2",
+   "expect": "U",
+   "set": {
+    "metrics.menus.measuredCases": 0
+   }
+  },
+  {
+   "id": "captions-and-assistive-info:2#neg1",
+   "line": "captions-and-assistive-info:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.menus.errorsUnderstandable": false
+   }
+  },
+  {
+   "id": "captions-and-assistive-info:2#missing",
+   "line": "captions-and-assistive-info:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.menus.navigableWithSupportedInputs"
+   ]
+  },
+  {
+   "id": "motion-and-flash-comfort:1#empty-motion.promisedReductions",
+   "line": "motion-and-flash-comfort:1",
+   "expect": "U",
+   "set": {
+    "metrics.motion.promisedReductions": 0
+   }
+  },
+  {
+   "id": "motion-and-flash-comfort:1#neg1",
+   "line": "motion-and-flash-comfort:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.motion.appliedInPairedCaptures": 3
+   }
+  },
+  {
+   "id": "motion-and-flash-comfort:1#missing",
+   "line": "motion-and-flash-comfort:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.motion.appliedInPairedCaptures"
+   ]
+  },
+  {
+   "id": "motion-and-flash-comfort:2#empty-flash.measuredCases",
+   "line": "motion-and-flash-comfort:2",
+   "expect": "U",
+   "set": {
+    "metrics.flash.measuredCases": 0
+   }
+  },
+  {
+   "id": "motion-and-flash-comfort:2#neg1",
+   "line": "motion-and-flash-comfort:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.flash.maxFlashesPerSecond": 5
+   }
+  },
+  {
+   "id": "motion-and-flash-comfort:2#missing",
+   "line": "motion-and-flash-comfort:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.flash.maxFlashesPerSecond"
+   ]
+  },
+  {
+   "id": "localization-readiness:1#empty-strings.measuredCases",
+   "line": "localization-readiness:1",
+   "expect": "U",
+   "set": {
+    "metrics.strings.measuredCases": 0
+   }
+  },
+  {
+   "id": "localization-readiness:1#neg1",
+   "line": "localization-readiness:1",
+   "expect": "fail",
+   "areas": [
+    "localization"
+   ],
+   "set": {
+    "metrics.strings.inventoryComplete": false
+   }
+  },
+  {
+   "id": "localization-readiness:1#missing",
+   "line": "localization-readiness:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.strings.inventoryComplete"
+   ]
+  },
+  {
+   "id": "localization-readiness:2#empty-locale.measuredCases",
+   "line": "localization-readiness:2",
+   "expect": "U",
+   "set": {
+    "metrics.locale.measuredCases": 0
+   }
+  },
+  {
+   "id": "localization-readiness:2#neg1",
+   "line": "localization-readiness:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.locale.truncations": 3
+   }
+  },
+  {
+   "id": "localization-readiness:2#missing",
+   "line": "localization-readiness:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.locale.pseudoLocalePass"
+   ]
+  },
+  {
+   "line": "input:2",
+   "expect": "U",
+   "id": "navigationRecovery#missing-row",
+   "set": {
+    "receipts.navigationRecovery": [
+     {
+      "id": "pad-match",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-pad-match",
+      "device": "gamepad",
+      "task": "core-play",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "pad-results",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-pad-results",
+      "device": "gamepad",
+      "task": "results",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "pad-rematch",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-pad-rematch",
+      "device": "gamepad",
+      "task": "play-again",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "touch-lobby",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-touch-lobby",
+      "device": "touch",
+      "task": "title-screen",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "touch-match",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-touch-match",
+      "device": "touch",
+      "task": "core-play",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "touch-results",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-touch-results",
+      "device": "touch",
+      "task": "results",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "touch-rematch",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-touch-rematch",
+      "device": "touch",
+      "task": "play-again",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "mouse-lobby",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-mouse-lobby",
+      "device": "keyboard-mouse",
+      "task": "title-screen",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "mouse-match",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-mouse-match",
+      "device": "keyboard-mouse",
+      "task": "core-play",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "mouse-results",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-mouse-results",
+      "device": "keyboard-mouse",
+      "task": "results",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     },
+     {
+      "id": "mouse-rematch",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-navigationRecovery-mouse-rematch",
+      "device": "keyboard-mouse",
+      "task": "play-again",
+      "remapped": true,
+      "recovered": true,
+      "focusRestored": true
+     }
+    ]
+   }
+  },
+  {
+   "line": "input:2",
+   "expect": "U",
+   "id": "navigationRecovery#stale",
+   "set": {
+    "receipts.navigationRecovery.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "input:2",
+   "expect": "U",
+   "id": "navigationRecovery#artifact",
+   "set": {
+    "receipts.navigationRecovery.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "captions-and-assistive-info:1",
+   "expect": "U",
+   "id": "cueMatches#missing-row",
+   "set": {
+    "receipts.cueMatches": [
+     {
+      "id": "prompt",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-cueMatches-prompt",
+      "event": "prompt",
+      "caption": "prompt",
+      "eventMs": 1000,
+      "captionMs": 1020
+     }
+    ]
+   }
+  },
+  {
+   "line": "captions-and-assistive-info:1",
+   "expect": "U",
+   "id": "cueMatches#stale",
+   "set": {
+    "receipts.cueMatches.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "captions-and-assistive-info:1",
+   "expect": "U",
+   "id": "cueMatches#artifact",
+   "set": {
+    "receipts.cueMatches.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "motion-and-flash-comfort:1",
+   "expect": "U",
+   "id": "motionPairs#missing-row",
+   "set": {
+    "receipts.motionPairs": [
+     {
+      "id": "touch-pan",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-motionPairs-touch-pan",
+      "scenario": "pan",
+      "normalDevice": "touch",
+      "reducedDevice": "touch",
+      "normalScenario": "pan",
+      "reducedArtifact": "art-motion",
+      "normalAmplitude": 4,
+      "reducedAmplitude": 0.5
+     },
+     {
+      "id": "mouse-pan",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-motionPairs-mouse-pan",
+      "scenario": "pan",
+      "normalDevice": "keyboard-mouse",
+      "reducedDevice": "keyboard-mouse",
+      "normalScenario": "pan",
+      "reducedArtifact": "art-motion",
+      "normalAmplitude": 4,
+      "reducedAmplitude": 0.5
+     }
+    ]
+   }
+  },
+  {
+   "line": "motion-and-flash-comfort:1",
+   "expect": "U",
+   "id": "motionPairs#stale",
+   "set": {
+    "receipts.motionPairs.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "motion-and-flash-comfort:1",
+   "expect": "U",
+   "id": "motionPairs#artifact",
+   "set": {
+    "receipts.motionPairs.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "localization-readiness:1",
+   "expect": "U",
+   "id": "stringGuard#missing-row",
+   "set": {
+    "receipts.stringGuard": []
+   }
+  },
+  {
+   "line": "localization-readiness:1",
+   "expect": "U",
+   "id": "stringGuard#stale",
+   "set": {
+    "receipts.stringGuard.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "localization-readiness:1",
+   "expect": "U",
+   "id": "stringGuard#artifact",
+   "set": {
+    "receipts.stringGuard.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "localization-readiness:2",
+   "expect": "U",
+   "id": "localeCaptures#missing-row",
+   "set": {
+    "receipts.localeCaptures": [
+     {
+      "id": "source-compact",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-localeCaptures-source-compact",
+      "locale": "source",
+      "viewport": "compact",
+      "font": "sample-font",
+      "truncations": 0,
+      "missingGlyphs": 0
+     },
+     {
+      "id": "pseudo-wide",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-localeCaptures-pseudo-wide",
+      "locale": "pseudo",
+      "viewport": "wide",
+      "font": "sample-font",
+      "truncations": 0,
+      "missingGlyphs": 0
+     },
+     {
+      "id": "pseudo-compact",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-localeCaptures-pseudo-compact",
+      "locale": "pseudo",
+      "viewport": "compact",
+      "font": "sample-font",
+      "truncations": 0,
+      "missingGlyphs": 0
+     }
+    ]
+   }
+  },
+  {
+   "line": "localization-readiness:2",
+   "expect": "U",
+   "id": "localeCaptures#stale",
+   "set": {
+    "receipts.localeCaptures.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "localization-readiness:2",
+   "expect": "U",
+   "id": "localeCaptures#artifact",
+   "set": {
+    "receipts.localeCaptures.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "navigationRecovery#lost-focus",
+   "expect": 1,
+   "set": {
+    "receipts.navigationRecovery.0.focusRestored": false
+   },
+   "line": "input:2"
+  },
+  {
+   "id": "cueMatches#wrong-event",
+   "expect": 0,
+   "set": {
+    "receipts.cueMatches.0.caption": "other"
+   },
+   "line": "captions-and-assistive-info:1"
+  },
+  {
+   "id": "cueMatches#late",
+   "expect": 2,
+   "set": {
+    "receipts.cueMatches.0.captionMs": 1500
+   },
+   "line": "captions-and-assistive-info:1"
+  },
+  {
+   "id": "motionPairs#mismatched-device",
+   "expect": 1,
+   "set": {
+    "receipts.motionPairs.0.reducedDevice": "other"
+   },
+   "line": "motion-and-flash-comfort:1"
+  },
+  {
+   "id": "motionPairs#unreduced",
+   "expect": 2,
+   "set": {
+    "receipts.motionPairs.0.reducedAmplitude": 4
+   },
+   "line": "motion-and-flash-comfort:1"
+  },
+  {
+   "id": "stringGuard#accepted-literal",
+   "expect": 3,
+   "set": {
+    "receipts.stringGuard.0.rejected": false
+   },
+   "line": "localization-readiness:1"
+  },
+  {
+   "id": "localeCaptures#missing-glyph",
+   "expect": 2,
+   "set": {
+    "receipts.localeCaptures.0.missingGlyphs": 1
+   },
+   "line": "localization-readiness:2"
+  },
+  {
+   "id": "localeCaptures#truncated",
+   "expect": 2,
+   "set": {
+    "receipts.localeCaptures.0.truncations": 1
+   },
+   "line": "localization-readiness:2"
+  },
+  {
+   "id": "flash-safety",
+   "line": "motion-and-flash-comfort:2",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.flash.maxFlashesPerSecond": 5
+   }
+  }
+ ]
+}

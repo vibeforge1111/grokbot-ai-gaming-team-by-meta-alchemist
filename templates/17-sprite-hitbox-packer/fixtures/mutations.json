@@ -1,0 +1,553 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "icons:1#empty-icons.devices",
+   "line": "icons:1",
+   "expect": "U",
+   "set": {
+    "metrics.icons.devices": []
+   }
+  },
+  {
+   "id": "icons:1#neg1",
+   "line": "icons:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.icons.bleedPixels": 6
+   }
+  },
+  {
+   "id": "icons:1#missing",
+   "line": "icons:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.icons.devices"
+   ]
+  },
+  {
+   "id": "icons:2#empty-atlas.combosRequired",
+   "line": "icons:2",
+   "expect": "U",
+   "set": {
+    "metrics.atlas.combosRequired": 0
+   }
+  },
+  {
+   "id": "icons:2#empty-atlas.combosChecked",
+   "line": "icons:2",
+   "expect": "U",
+   "set": {
+    "metrics.atlas.combosChecked": 0
+   }
+  },
+  {
+   "id": "icons:2#neg1",
+   "line": "icons:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.atlas.combosChecked": 4
+   }
+  },
+  {
+   "id": "icons:2#missing",
+   "line": "icons:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.atlas.combosChecked"
+   ]
+  },
+  {
+   "id": "install-icons:1#empty-install.urls",
+   "line": "install-icons:1",
+   "expect": "U",
+   "set": {
+    "metrics.install.urls": 0
+   }
+  },
+  {
+   "id": "install-icons:1#neg1",
+   "line": "install-icons:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.install.resolvedAndDecoded": 6
+   }
+  },
+  {
+   "id": "install-icons:1#missing",
+   "line": "install-icons:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.install.resolvedAndDecoded"
+   ]
+  },
+  {
+   "id": "install-icons:2#empty-iconSet.sizesPresent",
+   "line": "install-icons:2",
+   "expect": "U",
+   "set": {
+    "metrics.iconSet.sizesPresent": []
+   }
+  },
+  {
+   "id": "install-icons:2#neg1",
+   "line": "install-icons:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.iconSet.sizesPresent": [
+     192,
+     512
+    ]
+   }
+  },
+  {
+   "id": "install-icons:2#missing",
+   "line": "install-icons:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.iconSet.sizesPresent"
+   ]
+  },
+  {
+   "id": "reward-art:1#empty-itemArt.measuredCases",
+   "line": "reward-art:1",
+   "expect": "U",
+   "set": {
+    "metrics.itemArt.measuredCases": 0
+   }
+  },
+  {
+   "id": "reward-art:1#neg1",
+   "line": "reward-art:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.itemArt.unreadable": 2
+   }
+  },
+  {
+   "id": "reward-art:1#missing",
+   "line": "reward-art:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.itemArt.minDisplayedPx"
+   ]
+  },
+  {
+   "id": "reward-art:2#empty-tierPalette.pairs",
+   "line": "reward-art:2",
+   "expect": "U",
+   "set": {
+    "metrics.tierPalette.pairs": []
+   }
+  },
+  {
+   "id": "reward-art:2#neg1",
+   "line": "reward-art:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.tierPalette.pairs": [
+     [
+      "#9e9e9e",
+      "#d4a017"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "reward-art:2#missing",
+   "line": "reward-art:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.tierPalette.pairs"
+   ]
+  },
+  {
+   "id": "texture-weight:1#empty-weight.bytesPerScene",
+   "line": "texture-weight:1",
+   "expect": "U",
+   "set": {
+    "metrics.weight.bytesPerScene": []
+   }
+  },
+  {
+   "id": "texture-weight:1#neg1",
+   "line": "texture-weight:1",
+   "expect": "fail",
+   "areas": [
+    "asset-delivery"
+   ],
+   "set": {
+    "metrics.weight.bytesPerScene": [
+     14000000,
+     39000000
+    ]
+   }
+  },
+  {
+   "id": "texture-weight:1#missing",
+   "line": "texture-weight:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.weight.bytesPerScene"
+   ]
+  },
+  {
+   "id": "texture-weight:2#empty-decode.referenced",
+   "line": "texture-weight:2",
+   "expect": "U",
+   "set": {
+    "metrics.decode.referenced": 0
+   }
+  },
+  {
+   "id": "texture-weight:2#neg1",
+   "line": "texture-weight:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.decode.decoded": 310
+   }
+  },
+  {
+   "id": "texture-weight:2#missing",
+   "line": "texture-weight:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.decode.completeBuild"
+   ]
+  },
+  {
+   "id": "hit-shape:1#empty-hitShape.measuredCases",
+   "line": "hit-shape:1",
+   "expect": "U",
+   "set": {
+    "metrics.hitShape.measuredCases": 0
+   }
+  },
+  {
+   "id": "hit-shape:1#neg1",
+   "line": "hit-shape:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.hitShape.tracedCaller": "diagnostics"
+   }
+  },
+  {
+   "id": "hit-shape:1#missing",
+   "line": "hit-shape:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.hitShape.tracedCaller"
+   ]
+  },
+  {
+   "id": "hit-shape:2#empty-heightLayer.reproCases",
+   "line": "hit-shape:2",
+   "expect": "U",
+   "set": {
+    "metrics.heightLayer.reproCases": 0
+   }
+  },
+  {
+   "id": "hit-shape:2#neg1",
+   "line": "hit-shape:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.heightLayer.resolvedByDeclaredModel": 2
+   }
+  },
+  {
+   "id": "hit-shape:2#missing",
+   "line": "hit-shape:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.heightLayer.reproCases"
+   ]
+  },
+  {
+   "id": "atlas-packing#empty-packing.measuredCases",
+   "line": "atlas-packing",
+   "expect": "U",
+   "set": {
+    "metrics.packing.measuredCases": 0
+   }
+  },
+  {
+   "id": "atlas-packing#neg1",
+   "line": "atlas-packing",
+   "expect": "fail",
+   "areas": [
+    "atlas-packing"
+   ],
+   "set": {
+    "metrics.packing.paddingPx": 0
+   }
+  },
+  {
+   "id": "atlas-packing#missing",
+   "line": "atlas-packing",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.packing.occupancy"
+   ]
+  },
+  {
+   "line": "icons:2",
+   "expect": "U",
+   "id": "atlasMatrix#missing-row",
+   "set": {
+    "receipts.atlasMatrix": [
+     {
+      "id": "desktop-16-nearest",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-desktop-16-nearest",
+      "device": "desktop",
+      "sizePx": 16,
+      "filter": "nearest",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "desktop-32-linear",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-desktop-32-linear",
+      "device": "desktop",
+      "sizePx": 32,
+      "filter": "linear",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "desktop-32-nearest",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-desktop-32-nearest",
+      "device": "desktop",
+      "sizePx": 32,
+      "filter": "nearest",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "desktop-64-linear",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-desktop-64-linear",
+      "device": "desktop",
+      "sizePx": 64,
+      "filter": "linear",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "desktop-64-nearest",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-desktop-64-nearest",
+      "device": "desktop",
+      "sizePx": 64,
+      "filter": "nearest",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "phone-16-linear",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-phone-16-linear",
+      "device": "phone",
+      "sizePx": 16,
+      "filter": "linear",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "phone-16-nearest",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-phone-16-nearest",
+      "device": "phone",
+      "sizePx": 16,
+      "filter": "nearest",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "phone-32-linear",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-phone-32-linear",
+      "device": "phone",
+      "sizePx": 32,
+      "filter": "linear",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "phone-32-nearest",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-phone-32-nearest",
+      "device": "phone",
+      "sizePx": 32,
+      "filter": "nearest",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "phone-64-linear",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-phone-64-linear",
+      "device": "phone",
+      "sizePx": 64,
+      "filter": "linear",
+      "mip": 0,
+      "bleedPixels": 0
+     },
+     {
+      "id": "phone-64-nearest",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-atlasMatrix-phone-64-nearest",
+      "device": "phone",
+      "sizePx": 64,
+      "filter": "nearest",
+      "mip": 0,
+      "bleedPixels": 0
+     }
+    ]
+   }
+  },
+  {
+   "line": "icons:2",
+   "expect": "U",
+   "id": "atlasMatrix#stale",
+   "set": {
+    "receipts.atlasMatrix.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "icons:2",
+   "expect": "U",
+   "id": "atlasMatrix#artifact",
+   "set": {
+    "receipts.atlasMatrix.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "reward-art:2",
+   "expect": "U",
+   "id": "tierSeparation#missing-row",
+   "set": {
+    "receipts.tierSeparation": []
+   }
+  },
+  {
+   "line": "reward-art:2",
+   "expect": "U",
+   "id": "tierSeparation#stale",
+   "set": {
+    "receipts.tierSeparation.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "reward-art:2",
+   "expect": "U",
+   "id": "tierSeparation#artifact",
+   "set": {
+    "receipts.tierSeparation.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "hit-shape:1",
+   "expect": "U",
+   "id": "frameColliders#missing-row",
+   "set": {
+    "receipts.frameColliders": [
+     {
+      "id": "settle",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-frameColliders-settle",
+      "frame": "settle",
+      "collider": "shape-settle",
+      "pixels": "1784b410483d11db424f5ea04e2cfe73e1eb52c94f4ad12fdb5e8a23f296e720",
+      "pivotX": 10,
+      "pivotY": 8,
+      "sourceWidth": 32,
+      "sourceHeight": 32,
+      "trimX": 2,
+      "trimY": 1,
+      "rotated": false
+     }
+    ]
+   }
+  },
+  {
+   "line": "hit-shape:1",
+   "expect": "U",
+   "id": "frameColliders#stale",
+   "set": {
+    "receipts.frameColliders.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "hit-shape:1",
+   "expect": "U",
+   "id": "frameColliders#artifact",
+   "set": {
+    "receipts.frameColliders.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "atlasMatrix#bleed",
+   "expect": 0,
+   "set": {
+    "receipts.atlasMatrix.0.bleedPixels": 1
+   },
+   "line": "icons:2"
+  },
+  {
+   "id": "tierSeparation#indistinguishable",
+   "expect": 2,
+   "set": {
+    "receipts.tierSeparation.0.second": "#f8d17e"
+   },
+   "line": "reward-art:2"
+  },
+  {
+   "id": "frameColliders#wrong-frame",
+   "expect": 1,
+   "set": {
+    "receipts.frameColliders.0.frame": "settle"
+   },
+   "line": "hit-shape:1"
+  },
+  {
+   "id": "frameColliders#shared-pixels-wrong-pivot",
+   "expect": 1,
+   "set": {
+    "receipts.frameColliders.0.pivotX": 10
+   },
+   "line": "hit-shape:1"
+  },
+  {
+   "id": "frameColliders#wrong-hit-shape",
+   "expect": 1,
+   "set": {
+    "receipts.frameColliders.0.collider": "shape-settle"
+   },
+   "line": "hit-shape:1"
+  }
+ ]
+}

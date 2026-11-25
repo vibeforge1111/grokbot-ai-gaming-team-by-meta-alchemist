@@ -1,0 +1,12 @@
+{
+  "id": "fix-90-widget-maker",
+  "slug": "90-widget-maker",
+  "name": "Widget Maker (test fixture)",
+  "version": "2.0.0",
+  "status": "shipping",
+  "teamSpec": "1.0.0",
+  "compat": { "teamSpec": "^1.0.0", "consumes": {} },
+  "produces": [{ "artifact": "widget-list", "version": "2.0.0", "format": "JSON", "schema": "spec/artifacts/widget-list.schema.json" }],
+  "consumes": [],
+  "memory": { "reads": [], "writes": [] }
+}

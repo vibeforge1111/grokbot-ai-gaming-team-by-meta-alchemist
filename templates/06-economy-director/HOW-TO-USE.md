@@ -1,0 +1,129 @@
+# How to use: Game Economy Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Model sources and sinks for a currency or reward, compare progression paths, and simulate how balance changes affect player choices.
+
+- **Pipeline stage:** Production, Live
+- **Fits:** any game where players earn and spend something: a farming or life sim, a city builder, a card game, a puzzle game with boosters, a strategy game, a free game with no store, and games with combat.
+- **When:** Before a balance patch, when players say one choice is too strong or a goal takes too long, and before any change to rewards, prices or progression.
+- **You provide:** Resource and item definitions, session logs, and progression or exchange rules. Combat definitions only if the game has combat; store sandbox results only if it sells something.
+- **You get:** A map of sources and sinks, progression time estimates, reward counting checks, simulated outcomes for proposed changes, and a local draft change list (`economy-change-list`) for the owner.
+- **Takes from:** Playtest evidence and session telemetry (an `evidence-pack`), and the approved `game-profile`.
+- **Hands to:** Streamer and Patch Notes (20) for patch notes, and Live Service, Payments and Trust (22) for anything touching payments.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the economy-director-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/06-economy-director
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`economy-director-getting-started`](skills/economy-director-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first Game Economy Director grade. |
+| [`resource-sources-and-sinks-model`](skills/resource-sources-and-sinks-model/SKILL.md) | Start here for any game: list where each resource comes from (sources) and where it goes (sinks), model balances over time, and find stuck players, unreachable goals and double-counted rewards. |
+| [`monte-carlo-meta-balancer`](skills/monte-carlo-meta-balancer/SKILL.md) | Run many seeded simulations of player choices to measure progression time, whether one choice dominates (the meta) and what a proposed change would do. |
+| [`combat-timing-auditor`](skills/combat-timing-auditor/SKILL.md) | Optional, only if the game has combat: compare simulated and recorded time to defeat a target and multi-attacker damage with the build's real rules. |
+| [`economy-director-lens-engine`](skills/economy-director-lens-engine/SKILL.md) | Use when you need to grade a Game Economy Director evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-06-game-economy-director` v1.3.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence | Needs |
+|---|---|---|---|---|
+| `combat-balance:1` | Time to defeat a target (only with combat) | 10 | trace | combat |
+| `combat-balance:2` | Multi-attacker damage follows the build's rules | 10 | static | combat |
+| `loot-access:1` | Random reward rates reported with intervals | 10 | static | random rewards |
+| `loot-access:2` | No unreachable required path | 10 | trace | any game (also reads the random reward group today) |
+| `progression:1` | Time to the next progression step states its assumptions | 10 | static | any game |
+| `progression:2` | Progress consistency across save paths | 10 | trace | two or more save paths |
+| `reward-fairness:1` | Idempotent reward counting | 10 | trace | any game |
+| `reward-fairness:2` | Free and paid paths compared (only if the game sells something) | 10 | static | something for sale |
+| `entitlement-consistency:1` | Payment safety fails closed | 10 | trace | something for sale |
+| `entitlement-consistency:2` | Displayed vs authoritative balance | 10 | trace | any game |
+
+Two approved profiles mark lines N/A: `no-combat` (both `combat-balance` lines; that pillar's 20 points are shared over the other eight lines, 12.5 each) and `no-store` (`reward-fairness:2` and `entitlement-consistency:1`; their partner lines take 20 each). The owner approves them before scoring and sets `rubricProfile` in the game profile, for example `["no-combat", "no-store"]`. N/A is not U and not a defect, and the verdict can reach PASS (see [docs/RUBRIC_GUIDE.md](../../docs/RUBRIC_GUIDE.md#applicability)).
+
+Random rewards (`loot-access:1`) and two or more save paths (`progression:2`) have no profile: a game without them leaves the line U (unmeasured), reports it as "does not apply", and the verdict stays CONDITIONAL.
+
+## Decisions only you make
+
+- How long should a typical player take to reach the next step of progression, and, if you sell anything, how close should a player who never pays get to a paying player?
+- Does your game take real money at all, and if so, which store sandbox will you use for the failure tests?
+- Which rubric profiles apply: `no-combat` if the game has no combat, `no-store` if it sells nothing.
+- Which proposed balance changes ship. The bot only drafts them.
+
+## Known limits
+
+- For a game with purchases, payment failure evidence needs a sandbox account; the worked example is synthetic.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `change-list` (optional, ^1.0.0) | the owner, 18 Bug Desk | `.grokbot-team/artifacts/change-list/` | Continue: compare builds by their ids only and write "ASSUMPTION: no change-list available" in the report. |
+| `tracker-export` (optional, ^1.0.0) | the owner | `.grokbot-team/artifacts/tracker-export/` | Continue without it. Start the report with "ASSUMPTION: no tracker-export available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `loop-report` (optional, ^1.0.0) | 05 Game Loop | `.grokbot-team/artifacts/loop-report/` | Continue without it. Start the report with "ASSUMPTION: no loop-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `cohort-report` (optional, ^1.0.0) | 27 Retention | `.grokbot-team/artifacts/cohort-report/` | Continue without it. Start the report with "ASSUMPTION: no cohort-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `balance-patch-draft` (optional, ^1.0.0) | 26 Balance Patch | `.grokbot-team/artifacts/balance-patch-draft/` | Continue without it. Start the report with "ASSUMPTION: no balance-patch-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `entitlement-ledger` (optional, ^1.0.0) | 24 Ledger | `.grokbot-team/artifacts/entitlement-ledger/` | Continue without it. Start the report with "ASSUMPTION: no entitlement-ledger available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `economy-change-list` 1.0.0 | JSON plus a Markdown proposal draft | `.grokbot-team/artifacts/economy-change-list/` | 20 Patch Notes, 22 Live Service, 26 Balance Patch |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `balance`, `entitlements`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`, `balance`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-06-game-economy-director` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Payments: the bot only reviews results the owner ran in a store sandbox. It never makes a charge, refund or grant, real or sandbox. Production records are read-only.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

@@ -1,0 +1,123 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-01-game-feel",
+  "slug": "01-game-feel",
+  "name": "Game Vibes Director",
+  "shortName": "Game Feel",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Measure how quickly a game responds to input and how clearly its camera, sound and visuals communicate each action.",
+  "stage": "Prototype, Polish",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "game-vibes-getting-started",
+  "skills": [
+    "game-vibes-getting-started",
+    "game-feel-audit",
+    "ship-juice-module",
+    "before-after-feel-proof",
+    "assist-and-forgiveness-check",
+    "game-vibes-lens-engine"
+  ],
+  "routines": [
+    "game-vibes-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-01-game-feel",
+    "version": "1.3.0",
+    "hash": "sha256:4d8030ea2e37ea17337d68acfb9469ba366c072050a39723fad04beac0509555"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 75,
+    "externalReviewMin": 4.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Your playtest evidence pack.",
+    "handsTo": "HUD and Audio for feedback changes, then playtesters for a repeat capture."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "hud-capture-set": "^1.0.0",
+      "audio-mix-report": "^1.0.0",
+      "atlas-manifest": "^1.0.0",
+      "loop-report": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "feel-findings",
+      "version": "1.0.0",
+      "format": "JSON",
+      "schema": "spec/artifacts/feel-findings.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "hud-capture-set",
+      "required": false,
+      "schema": "spec/artifacts/hud-capture-set.schema.json",
+      "whenMissing": "Continue: capture the HUD side of each action yourself, or leave the HUD cue checks unmeasured, and write \"ASSUMPTION: no hud-capture-set available\" in the report."
+    },
+    {
+      "artifact": "audio-mix-report",
+      "required": false,
+      "schema": "spec/artifacts/audio-mix-report.schema.json"
+    },
+    {
+      "artifact": "atlas-manifest",
+      "required": false,
+      "schema": "spec/artifacts/atlas-manifest.schema.json"
+    },
+    {
+      "artifact": "loop-report",
+      "required": false,
+      "schema": "spec/artifacts/loop-report.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

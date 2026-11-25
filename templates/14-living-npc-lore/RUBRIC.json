@@ -1,0 +1,638 @@
+{
+  "id": "gbf-14-living-npc-lore",
+  "version": "2.0.0",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "migration": "Replaces encounter-specific combat checks with memory, dialogue, canon and scenario evidence across expressive channels. Start a new baseline at this version.",
+  "contribution": "weight x level / 4",
+  "gameProfile": "Owner-approved pack.profile defines the game facts, scope and budgets",
+  "receiptPolicy": "build-scope-line-v1",
+  "receiptFields": [
+    "role",
+    "canonRevision",
+    "responseChannel",
+    "heldOut",
+    "scenarioSeed"
+  ],
+  "levels": "Score the share of observed cases meeting each condition against the profile floor, pass share and target.",
+  "verdict": "Open P0s and confirmed release blockers set the grade to 0. Missing observations reduce coverage. Invalid packs have a null grade.",
+  "samplePolicy": "Every line reads uniquely keyed sample rows from its own receipt. Empty lists and zero measured cases give U and earn 0 points. Fractions use all eligible observed opportunities.",
+  "source": "A versioned canon excerpt, a role's knowledge and memory rules, seeded case traces, dialogue captures and independent scenario readbacks.",
+  "pillars": [
+    {
+      "id": "memory",
+      "name": "Memory",
+      "points": 20
+    },
+    {
+      "id": "viewpoint",
+      "name": "Viewpoint",
+      "points": 20
+    },
+    {
+      "id": "dialogue",
+      "name": "Dialogue",
+      "points": 20
+    },
+    {
+      "id": "canon",
+      "name": "Canon",
+      "points": 20
+    },
+    {
+      "id": "review",
+      "name": "Review",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "memory:1",
+      "pillar": "Memory",
+      "name": "Permitted memory recalled",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(recall.samples,\"expected\",\"recalled\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(recall.samples,\"expected\",\"recalled\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(recall.samples,\"expected\",\"recalled\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(recall.samples,\"expected\",\"recalled\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the recall key matches the permitted event in the case history.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the recall key matches the permitted event in the case history.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line memory:1"
+      }
+    },
+    {
+      "id": "memory:2",
+      "pillar": "Memory",
+      "name": "Expired memory stays forgotten",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(expiry.samples,\"forgotten\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(expiry.samples,\"forgotten\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(expiry.samples,\"forgotten\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(expiry.samples,\"forgotten\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: a forgotten or reset fact cannot be recalled beyond its boundary.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: a forgotten or reset fact cannot be recalled beyond its boundary.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line memory:2"
+      }
+    },
+    {
+      "id": "viewpoint:1",
+      "pillar": "Viewpoint",
+      "name": "Unseen information stays private to the scene",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(knowledge.samples,\"withheld\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(knowledge.samples,\"withheld\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(knowledge.samples,\"withheld\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(knowledge.samples,\"withheld\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the response withholds a fact the NPC has no allowed way to know.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the response withholds a fact the NPC has no allowed way to know.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line viewpoint:1"
+      }
+    },
+    {
+      "id": "viewpoint:2",
+      "pillar": "Viewpoint",
+      "name": "Character belief follows its source",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(belief.samples,\"expected\",\"asserted\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(belief.samples,\"expected\",\"asserted\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(belief.samples,\"expected\",\"asserted\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(belief.samples,\"expected\",\"asserted\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the assertion follows the speaker's documented belief or exception.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the assertion follows the speaker's documented belief or exception.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line viewpoint:2"
+      }
+    },
+    {
+      "id": "dialogue:1",
+      "pillar": "Dialogue",
+      "name": "Response addresses the current intent",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(intent.samples,\"expected\",\"actual\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(intent.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(intent.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(intent.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the response conveys the expected meaning for this intent and state.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the response conveys the expected meaning for this intent and state.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line dialogue:1"
+      }
+    },
+    {
+      "id": "dialogue:2",
+      "pillar": "Dialogue",
+      "name": "Unknown intent has a usable fallback",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(repair.samples,\"expected\",\"actual\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(repair.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(repair.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(repair.samples,\"expected\",\"actual\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: an unsupported input reaches the approved recovery choice.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: an unsupported input reaches the approved recovery choice.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line dialogue:2"
+      }
+    },
+    {
+      "id": "canon:1",
+      "pillar": "Canon",
+      "name": "Claims match active canon",
+      "evidence": "static",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(version.samples,\"expected\",\"claim\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(version.samples,\"expected\",\"claim\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(version.samples,\"expected\",\"claim\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(version.samples,\"expected\",\"claim\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the assertion matches the active canon entry for this scene.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the assertion matches the active canon entry for this scene.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line canon:1"
+      }
+    },
+    {
+      "id": "canon:2",
+      "pillar": "Canon",
+      "name": "Reveal follows its prerequisite",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(reveal.samples,\"legal\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(reveal.samples,\"legal\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(reveal.samples,\"legal\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(reveal.samples,\"legal\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the fact is revealed only in a state where its prerequisite holds.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the fact is revealed only in a state where its prerequisite holds.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line canon:2"
+      }
+    },
+    {
+      "id": "review:1",
+      "pillar": "Review",
+      "name": "Seeded replay preserves response meaning",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(replay.samples,\"first\",\"second\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(replay.samples,\"first\",\"second\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(replay.samples,\"first\",\"second\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(replay.samples,\"first\",\"second\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: two runs of a known case preserve the required response meaning.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: two runs of a known case preserve the required response meaning.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line review:1"
+      },
+      "rowBinding": {
+        "group": "replay",
+        "fields": [
+          "firstRef",
+          "secondRef"
+        ],
+        "distinct": [
+          [
+            "firstRef",
+            "secondRef"
+          ]
+        ],
+        "profile": {
+          "seed": "scenarioSeed"
+        }
+      }
+    },
+    {
+      "id": "review:2",
+      "pillar": "Review",
+      "name": "Held-out response is understood",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(heldout.samples,\"expected\",\"readback\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(heldout.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(heldout.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(heldout.samples,\"expected\",\"readback\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the reviewer independently identifies the intended meaning on a held-out case.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the reviewer independently identifies the intended meaning on a held-out case.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/14-living-npc-lore",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line review:2"
+      },
+      "rowBinding": {
+        "group": "heldout",
+        "fields": [
+          "reviewRole",
+          "turnRef",
+          "reason"
+        ],
+        "profile": {
+          "scenario": "heldOut",
+          "channel": "responseChannel"
+        }
+      }
+    }
+  ],
+  "sampleFields": {
+    "recall": [
+      "samples"
+    ],
+    "expiry": [
+      "samples"
+    ],
+    "knowledge": [
+      "samples"
+    ],
+    "belief": [
+      "samples"
+    ],
+    "intent": [
+      "samples"
+    ],
+    "repair": [
+      "samples"
+    ],
+    "version": [
+      "samples"
+    ],
+    "reveal": [
+      "samples"
+    ],
+    "replay": [
+      "samples"
+    ],
+    "heldout": [
+      "samples"
+    ]
+  },
+  "releaseBlockers": [
+    {
+      "id": "retained-after-reset",
+      "line": "memory:2",
+      "evidence": "trace",
+      "reason": "A fact remained available after a mandatory forgetting boundary.",
+      "condition": [
+        "observedFailure(expiry.samples,\"forgotten\",false)",
+        "false"
+      ],
+      "fixture": {
+        "metrics.expiry.samples": [
+          {
+            "caseId": "expiry-1",
+            "forgotten": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "hidden-fact-disclosed",
+      "line": "viewpoint:1",
+      "evidence": "capture",
+      "reason": "An NPC disclosed a fact outside its allowed knowledge.",
+      "condition": [
+        "observedFailure(knowledge.samples,\"withheld\",false)",
+        "false"
+      ],
+      "fixture": {
+        "metrics.knowledge.samples": [
+          {
+            "caseId": "knowledge-1",
+            "withheld": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "early-reveal",
+      "line": "canon:2",
+      "evidence": "trace",
+      "reason": "A gated canon fact appeared before its prerequisite.",
+      "condition": [
+        "observedFailure(reveal.samples,\"legal\",false)",
+        "false"
+      ],
+      "fixture": {
+        "metrics.reveal.samples": [
+          {
+            "caseId": "reveal-1",
+            "legal": false
+          }
+        ]
+      }
+    }
+  ],
+  "hash": "sha256:20ef0214590da4ecbf06925c74370f0f19fcf12fb8e39816c5b0663e4c1c05c8"
+}

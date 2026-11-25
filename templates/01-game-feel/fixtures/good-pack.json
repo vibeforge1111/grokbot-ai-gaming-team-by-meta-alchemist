@@ -1,0 +1,691 @@
+{
+ "packId": "example-01-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "inputDevices": [
+   "mouse",
+   "touch",
+   "pad"
+  ],
+  "viewports": [
+   "desktop",
+   "phone"
+  ],
+  "inputLatencyP95Ms": 100,
+  "heldInputMaxDeltaPct": 5,
+  "feedbackCueMaxMs": 50,
+  "targetingErrorP95Deg": 2,
+  "assistParityTolerance": 0.05,
+  "edgeHazardVisibleMin": 0.95,
+  "reducedMotionShakeMaxPx": 0,
+  "cases": {
+   "deviceLatency": [
+    {
+     "id": "mouse-0",
+     "device": "mouse",
+     "run": "run-0",
+     "seed": "sample"
+    },
+    {
+     "id": "mouse-1",
+     "device": "mouse",
+     "run": "run-1",
+     "seed": "sample"
+    },
+    {
+     "id": "mouse-2",
+     "device": "mouse",
+     "run": "run-2",
+     "seed": "sample"
+    },
+    {
+     "id": "touch-0",
+     "device": "touch",
+     "run": "run-0",
+     "seed": "sample"
+    },
+    {
+     "id": "touch-1",
+     "device": "touch",
+     "run": "run-1",
+     "seed": "sample"
+    },
+    {
+     "id": "touch-2",
+     "device": "touch",
+     "run": "run-2",
+     "seed": "sample"
+    },
+    {
+     "id": "pad-0",
+     "device": "pad",
+     "run": "run-0",
+     "seed": "sample"
+    },
+    {
+     "id": "pad-1",
+     "device": "pad",
+     "run": "run-1",
+     "seed": "sample"
+    },
+    {
+     "id": "pad-2",
+     "device": "pad",
+     "run": "run-2",
+     "seed": "sample"
+    }
+   ],
+   "inputTasks": [
+    {
+     "id": "mouse",
+     "device": "mouse",
+     "task": "place"
+    },
+    {
+     "id": "touch",
+     "device": "touch",
+     "task": "place"
+    },
+    {
+     "id": "pad",
+     "device": "pad",
+     "task": "place"
+    }
+   ],
+   "readyEmissions": [
+    {
+     "id": "0"
+    },
+    {
+     "id": "1"
+    },
+    {
+     "id": "2"
+    },
+    {
+     "id": "3"
+    },
+    {
+     "id": "4"
+    },
+    {
+     "id": "5"
+    }
+   ],
+   "pairedTiming": [
+    {
+     "id": "offline",
+     "device": "desktop",
+     "seed": "sample-seed"
+    },
+    {
+     "id": "predicted",
+     "device": "desktop",
+     "seed": "sample-seed"
+    }
+   ]
+  },
+  "latencyRunIds": [
+   "run-0",
+   "run-1",
+   "run-2"
+  ],
+  "journeyTasks": [
+   "place"
+  ]
+ },
+ "artifacts": [
+  {
+   "id": "art-latency",
+   "kind": "capture",
+   "path": "captures/latency.json",
+   "sha256": null
+  },
+  {
+   "id": "art-heldInput",
+   "kind": "capture",
+   "path": "captures/heldInput.json",
+   "sha256": null
+  },
+  {
+   "id": "art-hitFeedback",
+   "kind": "capture",
+   "path": "captures/hitFeedback.json",
+   "sha256": null
+  },
+  {
+   "id": "art-readyCue",
+   "kind": "trace",
+   "path": "traces/readyCue.json",
+   "sha256": null
+  },
+  {
+   "id": "art-tasks",
+   "kind": "capture",
+   "path": "captures/tasks.json",
+   "sha256": null
+  },
+  {
+   "id": "art-aim",
+   "kind": "capture",
+   "path": "captures/targeting.json",
+   "sha256": null
+  },
+  {
+   "id": "art-camera",
+   "kind": "capture",
+   "path": "captures/camera.json",
+   "sha256": null
+  },
+  {
+   "id": "art-reducedMotion",
+   "kind": "capture",
+   "path": "captures/reducedMotion.json",
+   "sha256": null
+  },
+  {
+   "id": "art-simTiming",
+   "kind": "trace",
+   "path": "traces/simTiming.json",
+   "sha256": null
+  },
+  {
+   "id": "art-style",
+   "kind": "static",
+   "path": "static/style.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-mouse-0",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/mouse-0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-mouse-1",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/mouse-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-mouse-2",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/mouse-2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-touch-0",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/touch-0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-touch-1",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/touch-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-touch-2",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/touch-2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-pad-0",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/pad-0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-pad-1",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/pad-1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-deviceLatency-pad-2",
+   "kind": "capture",
+   "path": "receipts/deviceLatency/pad-2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-inputTasks-mouse",
+   "kind": "capture",
+   "path": "receipts/inputTasks/mouse.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-inputTasks-touch",
+   "kind": "capture",
+   "path": "receipts/inputTasks/touch.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-inputTasks-pad",
+   "kind": "capture",
+   "path": "receipts/inputTasks/pad.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-readyEmissions-0",
+   "kind": "trace",
+   "path": "receipts/readyEmissions/0.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-readyEmissions-1",
+   "kind": "trace",
+   "path": "receipts/readyEmissions/1.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-readyEmissions-2",
+   "kind": "trace",
+   "path": "receipts/readyEmissions/2.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-readyEmissions-3",
+   "kind": "trace",
+   "path": "receipts/readyEmissions/3.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-readyEmissions-4",
+   "kind": "trace",
+   "path": "receipts/readyEmissions/4.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-readyEmissions-5",
+   "kind": "trace",
+   "path": "receipts/readyEmissions/5.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-pairedTiming-offline",
+   "kind": "trace",
+   "path": "receipts/pairedTiming/offline.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-pairedTiming-predicted",
+   "kind": "trace",
+   "path": "receipts/pairedTiming/predicted.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "latency": {
+   "artifact": "art-latency",
+   "devices": [
+    "mouse",
+    "touch",
+    "pad"
+   ],
+   "runs": 3
+  },
+  "heldInput": {
+   "artifact": "art-heldInput",
+   "bufferedPressHonored": [
+    true,
+    true,
+    true,
+    true
+   ],
+   "heldRateDeltaPct": [
+    0.8,
+    1.4,
+    2.1
+   ],
+   "onlineMatchesOffline": true
+  },
+  "hitFeedback": {
+   "artifact": "art-hitFeedback",
+   "visualByDevice": [
+    true,
+    true,
+    true
+   ],
+   "audioByDevice": [
+    true,
+    true,
+    true
+   ],
+   "cueLatencyMs": [
+    16,
+    18,
+    33
+   ]
+  },
+  "readyCue": {
+   "artifact": "art-readyCue",
+   "emitCounts": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "tasks": {
+   "artifact": "art-tasks",
+   "devices": [
+    "mouse",
+    "touch",
+    "pad"
+   ],
+   "deviceSwitchOk": true
+  },
+  "targeting": {
+   "artifact": "art-aim",
+   "errorDegP95": [
+    0.9,
+    1.4,
+    1.6
+   ],
+   "assistDocumented": true,
+   "touchAssist": 0.2,
+   "padAssist": 0.2
+  },
+  "camera": {
+   "artifact": "art-camera",
+   "viewports": [
+    "desktop",
+    "phone"
+   ],
+   "hazardsOffscreen": 0,
+   "edgeHazardVisibleRatio": 0.98
+  },
+  "reducedMotion": {
+   "artifact": "art-reducedMotion",
+   "promised": [
+    "shake",
+    "flash",
+    "zoom"
+   ],
+   "applied": [
+    "shake",
+    "flash",
+    "zoom"
+   ],
+   "shakePxWhenReduced": 0
+  },
+  "simTiming": {
+   "artifact": "art-simTiming",
+   "offlineWithFx": "sha:a1",
+   "offlineNoFx": "sha:a1",
+   "predictedWithFx": "sha:b2",
+   "predictedNoFx": "sha:b2",
+   "measuredCases": 1
+  },
+  "style": {
+   "artifact": "art-style",
+   "designContractPresent": true,
+   "deductionsAgainstOwnerChoices": 0,
+   "measuredCases": 1
+  }
+ },
+ "receipts": {
+  "deviceLatency": [
+   {
+    "id": "mouse-0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-mouse-0",
+    "device": "mouse",
+    "run": "run-0",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     40,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "mouse-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-mouse-1",
+    "device": "mouse",
+    "run": "run-1",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     43,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "mouse-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-mouse-2",
+    "device": "mouse",
+    "run": "run-2",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     46,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "touch-0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-touch-0",
+    "device": "touch",
+    "run": "run-0",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     59,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "touch-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-touch-1",
+    "device": "touch",
+    "run": "run-1",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     64,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "touch-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-touch-2",
+    "device": "touch",
+    "run": "run-2",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     68,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "pad-0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-pad-0",
+    "device": "pad",
+    "run": "run-0",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     48,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "pad-1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-pad-1",
+    "device": "pad",
+    "run": "run-1",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     51,
+     20,
+     30,
+     35,
+     45
+    ]
+   },
+   {
+    "id": "pad-2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-deviceLatency-pad-2",
+    "device": "pad",
+    "run": "run-2",
+    "seed": "sample",
+    "samples": 5,
+    "latencyMs": [
+     53,
+     20,
+     30,
+     35,
+     45
+    ]
+   }
+  ],
+  "inputTasks": [
+   {
+    "id": "mouse",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-inputTasks-mouse",
+    "device": "mouse",
+    "task": "place",
+    "completed": true
+   },
+   {
+    "id": "touch",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-inputTasks-touch",
+    "device": "touch",
+    "task": "place",
+    "completed": true
+   },
+   {
+    "id": "pad",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-inputTasks-pad",
+    "device": "pad",
+    "task": "place",
+    "completed": true
+   }
+  ],
+  "readyEmissions": [
+   {
+    "id": "0",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-readyEmissions-0",
+    "caller": "cooldown-completed",
+    "sourceLine": 4,
+    "emits": 1
+   },
+   {
+    "id": "1",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-readyEmissions-1",
+    "caller": "cooldown-completed",
+    "sourceLine": 4,
+    "emits": 1
+   },
+   {
+    "id": "2",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-readyEmissions-2",
+    "caller": "cooldown-completed",
+    "sourceLine": 4,
+    "emits": 1
+   },
+   {
+    "id": "3",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-readyEmissions-3",
+    "caller": "cooldown-completed",
+    "sourceLine": 4,
+    "emits": 1
+   },
+   {
+    "id": "4",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-readyEmissions-4",
+    "caller": "cooldown-completed",
+    "sourceLine": 4,
+    "emits": 1
+   },
+   {
+    "id": "5",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-readyEmissions-5",
+    "caller": "cooldown-completed",
+    "sourceLine": 4,
+    "emits": 1
+   }
+  ],
+  "pairedTiming": [
+   {
+    "id": "offline",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-pairedTiming-offline",
+    "device": "desktop",
+    "onSeed": "sample-seed",
+    "offSeed": "sample-seed",
+    "onRun": "offline",
+    "offRun": "offline",
+    "onTicks": 60,
+    "offTicks": 60,
+    "offArtifact": "art-simTiming",
+    "onHash": "8e2c7ac508139a02af859de64a4743c1f3946837279332c35ec8f5ddf20654ae",
+    "offHash": "8e2c7ac508139a02af859de64a4743c1f3946837279332c35ec8f5ddf20654ae"
+   },
+   {
+    "id": "predicted",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-pairedTiming-predicted",
+    "device": "desktop",
+    "onSeed": "sample-seed",
+    "offSeed": "sample-seed",
+    "onRun": "predicted",
+    "offRun": "predicted",
+    "onTicks": 60,
+    "offTicks": 60,
+    "offArtifact": "art-simTiming",
+    "onHash": "22e12554dd26b5bf8a0db41fdd8b0afb4dd299a56e058716db7a71b15bd34dd8",
+    "offHash": "22e12554dd26b5bf8a0db41fdd8b0afb4dd299a56e058716db7a71b15bd34dd8"
+   }
+  ]
+ }
+}

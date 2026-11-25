@@ -1,0 +1,347 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "opening:1#empty-goal.samples",
+   "line": "opening:1",
+   "expect": "U",
+   "set": {
+    "metrics.goal.samples": []
+   }
+  },
+  {
+   "id": "opening:1#neg1",
+   "line": "opening:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.goal.samples": [
+     {
+      "caseId": "goal-1",
+      "expected": "connect exits",
+      "readback": "collect tiles"
+     }
+    ]
+   }
+  },
+  {
+   "id": "opening:1#missing",
+   "line": "opening:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.goal.samples"
+   ]
+  },
+  {
+   "id": "opening:2#empty-action.samples",
+   "line": "opening:2",
+   "expect": "U",
+   "set": {
+    "metrics.action.samples": []
+   }
+  },
+  {
+   "id": "opening:2#neg1",
+   "line": "opening:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.action.samples": [
+     {
+      "caseId": "action-1",
+      "startS": 3,
+      "actionS": 39
+     }
+    ]
+   }
+  },
+  {
+   "id": "opening:2#missing",
+   "line": "opening:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.action.samples"
+   ]
+  },
+  {
+   "id": "consequence:1#empty-state.samples",
+   "line": "consequence:1",
+   "expect": "U",
+   "set": {
+    "metrics.state.samples": []
+   }
+  },
+  {
+   "id": "consequence:1#neg1",
+   "line": "consequence:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.state.samples": [
+     {
+      "caseId": "state-1",
+      "expected": "connected",
+      "actual": "unchanged"
+     }
+    ]
+   }
+  },
+  {
+   "id": "consequence:1#missing",
+   "line": "consequence:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.state.samples"
+   ]
+  },
+  {
+   "id": "consequence:2#empty-feedback.samples",
+   "line": "consequence:2",
+   "expect": "U",
+   "set": {
+    "metrics.feedback.samples": []
+   }
+  },
+  {
+   "id": "consequence:2#neg1",
+   "line": "consequence:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.feedback.samples": [
+     {
+      "caseId": "feedback-1",
+      "expected": "route opened",
+      "readback": "no change"
+     }
+    ]
+   }
+  },
+  {
+   "id": "consequence:2#missing",
+   "line": "consequence:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.feedback.samples"
+   ]
+  },
+  {
+   "id": "pacing:1#empty-beat.samples",
+   "line": "pacing:1",
+   "expect": "U",
+   "set": {
+    "metrics.beat.samples": []
+   }
+  },
+  {
+   "id": "pacing:1#neg1",
+   "line": "pacing:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.beat.samples": [
+     {
+      "caseId": "beat-1",
+      "resolvedS": 12,
+      "choiceS": 41
+     }
+    ]
+   }
+  },
+  {
+   "id": "pacing:1#missing",
+   "line": "pacing:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.beat.samples"
+   ]
+  },
+  {
+   "id": "pacing:2#empty-recovery.samples",
+   "line": "pacing:2",
+   "expect": "U",
+   "set": {
+    "metrics.recovery.samples": []
+   }
+  },
+  {
+   "id": "pacing:2#neg1",
+   "line": "pacing:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.recovery.samples": [
+     {
+      "caseId": "recovery-1",
+      "setbackS": 14,
+      "controlS": 42
+     }
+    ]
+   }
+  },
+  {
+   "id": "pacing:2#missing",
+   "line": "pacing:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.recovery.samples"
+   ]
+  },
+  {
+   "id": "agency:1#empty-choice.samples",
+   "line": "agency:1",
+   "expect": "U",
+   "set": {
+    "metrics.choice.samples": []
+   }
+  },
+  {
+   "id": "agency:1#neg1",
+   "line": "agency:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.choice.samples": [
+     {
+      "caseId": "choice-1",
+      "expected": "alternate route",
+      "actual": "same route"
+     }
+    ]
+   }
+  },
+  {
+   "id": "agency:1#missing",
+   "line": "agency:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.choice.samples"
+   ]
+  },
+  {
+   "id": "agency:2#empty-exit.samples",
+   "line": "agency:2",
+   "expect": "U",
+   "set": {
+    "metrics.exit.samples": []
+   }
+  },
+  {
+   "id": "agency:2#neg1",
+   "line": "agency:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.exit.samples": [
+     {
+      "caseId": "exit-1",
+      "honored": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "agency:2#missing",
+   "line": "agency:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.exit.samples"
+   ]
+  },
+  {
+   "id": "replay:1#empty-reason.samples",
+   "line": "replay:1",
+   "expect": "U",
+   "set": {
+    "metrics.reason.samples": []
+   }
+  },
+  {
+   "id": "replay:1#neg1",
+   "line": "replay:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.reason.samples": [
+     {
+      "caseId": "reason-1",
+      "intrinsic": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "replay:1#missing",
+   "line": "replay:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.reason.samples"
+   ]
+  },
+  {
+   "id": "replay:2#empty-return.samples",
+   "line": "replay:2",
+   "expect": "U",
+   "set": {
+    "metrics.return.samples": []
+   }
+  },
+  {
+   "id": "replay:2#neg1",
+   "line": "replay:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.return.samples": [
+     {
+      "caseId": "offer-board",
+      "offerRef": "offer-board",
+      "cohort": "first session",
+      "window": "next optional board offered before the session closes",
+      "windowClosed": true,
+      "returned": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "replay:2#missing",
+   "line": "replay:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.return.samples"
+   ]
+  },
+  {
+   "id": "forced-continuation",
+   "line": "agency:2",
+   "expect": "BLOCKED",
+   "set": {
+    "metrics.exit.samples": [
+     {
+      "caseId": "exit-1",
+      "honored": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "open-p0",
+   "line": null,
+   "expect": "BLOCKED",
+   "set": {
+    "openP0": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,142 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-22-live-service-trust",
+  "slug": "22-live-service-trust",
+  "name": "Live Service, Payments and Trust",
+  "shortName": "Live Service",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Review progress saves, entitlements and recovery after service failures. Include payment checks when your game sells items or access.",
+  "stage": "Ship, Live",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "live-service-trust-getting-started",
+  "skills": [
+    "live-service-trust-getting-started",
+    "transaction-idempotency-and-entitlement-audit",
+    "persistence-fault-injection",
+    "live-ops-incident-drill-and-build-identity",
+    "rights-privacy-and-safety-review",
+    "file-to-shared-ledger",
+    "live-service-trust-lens-engine"
+  ],
+  "routines": [
+    "live-service-trust-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-22-live-service-trust",
+    "version": "1.2.0",
+    "hash": "sha256:b4a123e8d9ff1a8ea88e7986fd3acb84a488bbb86fc8aeff214d55364db1bc34"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": null,
+    "externalReviewMin": 4.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Anti-Cheat, Economy Director.",
+    "handsTo": "Bug Desk (local ticket drafts), the owner (every money decision)."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "economy-change-list": "^1.0.0",
+      "fairness-findings": "^1.0.0",
+      "enforcement-policy-draft": "^1.0.0",
+      "tracker-export": "^1.0.0",
+      "entitlement-ledger": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "incident-report",
+      "version": "1.0.0",
+      "format": "Markdown local draft plus JSON",
+      "schema": "spec/artifacts/incident-report.schema.json"
+    },
+    {
+      "artifact": "trust-records",
+      "version": "1.0.0",
+      "format": "JSON",
+      "schema": "spec/artifacts/trust-records.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "economy-change-list",
+      "required": false,
+      "schema": "spec/artifacts/economy-change-list.schema.json",
+      "whenMissing": "Continue: review the current build only, and write \"ASSUMPTION: no economy-change-list available\" in the report."
+    },
+    {
+      "artifact": "fairness-findings",
+      "required": false,
+      "schema": "spec/artifacts/fairness-findings.schema.json",
+      "whenMissing": "Continue: grade the authorization lines from this template's own pack."
+    },
+    {
+      "artifact": "enforcement-policy-draft",
+      "required": false,
+      "schema": "spec/artifacts/enforcement-policy-draft.schema.json"
+    },
+    {
+      "artifact": "tracker-export",
+      "required": false,
+      "schema": "spec/artifacts/tracker-export.schema.json"
+    },
+    {
+      "artifact": "entitlement-ledger",
+      "required": false,
+      "schema": "spec/artifacts/entitlement-ledger.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "entitlements",
+      "regions",
+      "releases"
+    ],
+    "writes": [
+      "decisions",
+      "incidents",
+      "entitlements"
+    ]
+  }
+}

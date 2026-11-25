@@ -1,0 +1,130 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-10-trailer-cut-director",
+  "slug": "10-trailer-director",
+  "name": "Stream-to-Devlog & Trailer Cut Director",
+  "shortName": "Trailer",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Turn recorded gameplay into a devlog or trailer. Choose moments that show the player experience, frame them for each destination and check the cut for sensitive information.",
+  "stage": "Ship, Live",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "trailer-director-getting-started",
+  "skills": [
+    "trailer-director-getting-started",
+    "gameplay-moment-finder",
+    "multi-aspect-smart-framing-exporter",
+    "beat-sync-and-secret-redaction-gate",
+    "trailer-director-lens-engine"
+  ],
+  "routines": [
+    "trailer-cut-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-10-trailer-cut-director",
+    "version": "1.3.0",
+    "hash": "sha256:182be69cbbd9d39c54901a50a5cff6029488eb546263cc8ddddc125a00779b6e"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 78,
+    "externalReviewMin": 5.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "playtest captures, live streams.",
+    "handsTo": "Presskit Director (local store media drafts), Streamer and Patch Notes (local post drafts)."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "hud-capture-set": "^1.0.0",
+      "audio-mix-report": "^1.0.0",
+      "change-list": "^1.0.0",
+      "pitch-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "clip-list",
+      "version": "1.0.0",
+      "format": "JSON",
+      "schema": "spec/artifacts/clip-list.schema.json"
+    },
+    {
+      "artifact": "media-export-manifest",
+      "version": "1.0.0",
+      "format": "JSON manifest plus the exported video and still files",
+      "schema": "spec/artifacts/media-export-manifest.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "hud-capture-set",
+      "required": false,
+      "schema": "spec/artifacts/hud-capture-set.schema.json",
+      "whenMissing": "Continue: mark the essential UI by hand while framing, and write \"ASSUMPTION: no hud-capture-set available\" in the report."
+    },
+    {
+      "artifact": "audio-mix-report",
+      "required": false,
+      "schema": "spec/artifacts/audio-mix-report.schema.json",
+      "whenMissing": "Continue: measure loudness on the decoded file yourself, and write \"ASSUMPTION: no audio-mix-report available\" in the report."
+    },
+    {
+      "artifact": "change-list",
+      "required": false,
+      "schema": "spec/artifacts/change-list.schema.json",
+      "whenMissing": "Continue: check every feature claim directly against the build, and write \"ASSUMPTION: no change-list available\" in the report."
+    },
+    {
+      "artifact": "pitch-draft",
+      "required": false,
+      "schema": "spec/artifacts/pitch-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+[
+ {
+  "pack": "09-hud-designer.0.3.0.json",
+  "template": "gbf-09-hud-ui-designer",
+  "build": "0.3.0",
+  "verdict": "CONDITIONAL",
+  "grade": 90,
+  "coverage": 1,
+  "belowPass": [
+   "readable-combat-states:1=2",
+   "operability:2=2"
+  ],
+  "unmeasured": []
+ },
+ {
+  "pack": "09-hud-designer.0.3.1.json",
+  "template": "gbf-09-hud-ui-designer",
+  "build": "0.3.1",
+  "verdict": "PASS",
+  "grade": 100,
+  "coverage": 1,
+  "belowPass": [],
+  "unmeasured": []
+ },
+ {
+  "pack": "18-bug-desk-triage.0.3.0.json",
+  "template": "gbf-18-bug-desk-triage",
+  "build": "0.3.0",
+  "verdict": "CONDITIONAL",
+  "grade": 92.5,
+  "coverage": 1,
+  "belowPass": [
+   "closure-quality:1=1"
+  ],
+  "unmeasured": []
+ },
+ {
+  "pack": "18-bug-desk-triage.0.3.1.json",
+  "template": "gbf-18-bug-desk-triage",
+  "build": "0.3.1",
+  "verdict": "PASS",
+  "grade": 100,
+  "coverage": 1,
+  "belowPass": [],
+  "unmeasured": []
+ }
+]

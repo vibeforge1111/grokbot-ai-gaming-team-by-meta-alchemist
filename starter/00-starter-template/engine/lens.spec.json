@@ -1,0 +1,170 @@
+{
+  "lensVersion": "1.1.0",
+  "lines": {
+    "time-to-fun:1": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "firstAction.p95Seconds",
+          "<=",
+          "P.firstActionBudgetS",
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.firstAction.p95Seconds": 999
+        }
+      ]
+    },
+    "time-to-fun:2": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "firstWin.reachedShare",
+          ">=",
+          "P.firstWinShareMin"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.firstWin.reachedShare": 0
+        }
+      ]
+    },
+    "clarity:1": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "clarity.goalShownWithinS",
+          "<=",
+          "P.goalBudgetS"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.clarity.goalShownWithinS": 999
+        }
+      ]
+    },
+    "clarity:2": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "clarity.requiredControlsUntaught",
+          "==",
+          0,
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.clarity.requiredControlsUntaught": 2
+        }
+      ]
+    },
+    "friction:1": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "friction.gatesBeforePlay",
+          "==",
+          0,
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.friction.gatesBeforePlay": 1
+        }
+      ]
+    },
+    "friction:2": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "friction.firstLoadMB",
+          "<=",
+          "P.firstLoadBudgetMB"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.friction.firstLoadMB": 9999
+        }
+      ]
+    },
+    "stability:1": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "stability.crashFreeShare",
+          ">=",
+          "P.crashFreeMin",
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.stability.crashFreeShare": 0.5
+        }
+      ]
+    },
+    "stability:2": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "stability.p95FrameMs",
+          "<=",
+          "P.frameBudgetMs"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.stability.p95FrameMs": 100
+        }
+      ]
+    },
+    "return:1": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "return.nextGoalShownShare",
+          ">=",
+          "P.nextGoalShareMin"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.return.nextGoalShownShare": 0
+        }
+      ]
+    },
+    "return:2": {
+      "kind": "computed",
+      "why": "see RUBRIC.json",
+      "conds": [
+        [
+          "return.actionsToRestart",
+          "<=",
+          1
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.return.actionsToRestart": 4
+        }
+      ]
+    }
+  },
+  "checks": {}
+}

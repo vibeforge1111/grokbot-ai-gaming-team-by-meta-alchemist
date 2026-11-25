@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/shared-memory.schema.json",
+  "title": "Team memory record (one line of .grokbot-team/memory/<topic>.jsonl)",
+  "description": "Append-only shared memory for the templates in one game project. Version 1.0.0. Created by @meta_alchemist (https://x.com/meta_alchemist). shared/team-memory/team-memory.mjs enforces this schema and also rejects personal data, which a schema alone cannot express.",
+  "x-version": "1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "time", "writer", "topic", "kind", "summary", "data", "source", "confidence", "expires_at", "supersedes"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^mem_[0-9a-z]{8,12}_[0-9a-f]{8}$", "description": "Unique record id. Never reused." },
+    "time": { "type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,3})?Z$", "description": "When the record was written, ISO 8601 in UTC." },
+    "writer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+-[0-9]{2}-[a-z0-9-]+$", "description": "The writing template's id from its template.json." },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z.-]+)?$", "description": "The writing template's version from its template.json." }
+      }
+    },
+    "topic": { "enum": ["decisions", "incidents", "entitlements", "balance", "regions", "releases"], "description": "Also the file name. A template writes only the topics listed in its template.json memory.writes." },
+    "kind": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,47}$", "description": "What happened, as a short kebab-case word, for example decision, incident-opened, grant-reviewed, value-changed, region-added, release-cut." },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 280, "description": "One plain sentence a teammate can act on. No personal data." },
+    "data": { "type": "object", "description": "Structured details, 4096 bytes at most. People and accounts appear only as hashed subject ids (sub_ plus 32 hex) under a key named subject or subjects." },
+    "source": { "type": "object", "minProperties": 1, "description": "Where the fact came from: pack, artifact, path, gitSha, liveSha or note. Never a URL." },
+    "confidence": { "enum": ["measured", "reported", "assumed"], "description": "measured: from an evidence pack or artifact; reported: a person said so; assumed: a clearly marked working assumption." },
+    "expires_at": { "type": ["string", "null"], "format": "date-time", "description": "After this UTC time the record is no longer active. null means it does not expire." },
+    "supersedes": { "type": ["string", "null"], "pattern": "^mem_[0-9a-z]{8,12}_[0-9a-f]{8}$", "description": "The id of an earlier record in the same topic that this record replaces. Records are never edited or deleted." }
+  }
+}

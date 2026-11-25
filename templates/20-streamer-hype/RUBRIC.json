@@ -1,0 +1,519 @@
+{
+  "id": "gbf-20-streamer-hype-director",
+  "version": "1.4.0",
+  "migration": "1.0.0 to 1.1.0: anchors made game-agnostic (constants live in the game profile), lens gates added; ids, weights and passAt unchanged; 1.1.0 to 1.1.1: gameProfile generalized to your-game-profile for the public kit and hash recomputed with the documented kit algorithm (spec/RUBRIC_HASH.md); ids, weights, anchors and passAt unchanged. 1.1.1 to 1.1.3: Evidence descriptions and fixture working directories now refer to the distributed kit. 1.1.3 to 1.1.4: Empty samples and zero case counts earn U. Computed lines require the declared evidence type. Measured release blockers override the numerical grade. Check the attribution query key and score commit-backed draft notes. 1.1.4 to 1.1.5: Adds partner-feed delay and disclosure blockers, paired capture overhead and per-claim shipped switch evidence. 1.1.5 to 1.2.0: Line, pillar and anchor wording made genre-neutral (ids, weights, conditions and pass marks unchanged); adds owner-selected not-applicable profiles no-spectator-mode, no-share-links. 1.2.0 to 1.3.0: Evidence pack names made genre-neutral (spectateLinks to spectatorLinks; spectateRead to spectatorRead; openedLiveMatch to openedIntendedView; spectate-links to spectator-links; spectate to spectatorPolicy). Scoring, weights, conditions and pass marks unchanged; rename these fields in packs made for 1.2.0. 1.3.0 to 1.4.0: adds the owner-selected no-streamer-mode profile (creator-controls:1 not applicable, its redaction blockers do not apply). Lines, weights, conditions and pass marks unchanged.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "pillars": [
+    {
+      "id": "capture-reliability",
+      "name": "Capture reliability",
+      "points": 20
+    },
+    {
+      "id": "spectator-comprehension",
+      "name": "Spectator comprehension",
+      "points": 20
+    },
+    {
+      "id": "creator-controls",
+      "name": "Creator controls",
+      "points": 20
+    },
+    {
+      "id": "truthful-claims",
+      "name": "Truthful claims",
+      "points": 20
+    },
+    {
+      "id": "player-safety",
+      "name": "Player safety",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "capture-reliability:1",
+      "pillar": "Capture reliability",
+      "name": "Recording replays and exports",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Export fails",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "A complete recording replays and exports with correct sound and attribution",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line capture-reliability:1",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "capture-reliability:2",
+      "pillar": "Capture reliability",
+      "name": "Capture performance budget",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Capture adds frame time beyond the budget on a tested device",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Capture mode meets its own performance budget with capture off vs on. All approved `capturePairs` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line capture-reliability:2",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "capturePairs",
+          "description": "Use the same replay, build and device with capture on and off. Compare observed p95 frame time for each pair.",
+          "fields": {
+            "device": "text",
+            "replayOn": "text",
+            "replayOff": "text",
+            "ticksOn": "positive",
+            "ticksOff": "positive",
+            "onP95Ms": "number",
+            "offP95Ms": "number",
+            "offArtifact": "artifact:trace"
+          },
+          "tests": [
+            [
+              "device",
+              "==",
+              "case.device",
+              1
+            ],
+            [
+              "replayOn",
+              "==",
+              "row.replayOff",
+              1
+            ],
+            [
+              "ticksOn",
+              "==",
+              "row.ticksOff",
+              1
+            ],
+            [
+              "overheadMs",
+              "<=",
+              "profile.maxCaptureOverheadMs",
+              2
+            ]
+          ],
+          "derive": {
+            "overheadMs": [
+              "diff",
+              "onP95Ms",
+              "offP95Ms"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "spectator-comprehension:1",
+      "pillar": "Spectator comprehension",
+      "name": "Spectator view shows only allowed information",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "A tested feed fails to open, exposes restricted fields or falls short of its required delay.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Spectator information follows the approved information policy. All approved `partnerFeeds` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line spectator-comprehension:1",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "partnerFeeds",
+          "description": "Inspect the partner-visible feed under the approved information policy. Record the observed delay and exposed fields from the sanitized capture.",
+          "fields": {
+            "feed": "text",
+            "delayMs": "count",
+            "restrictedFields": "count",
+            "opened": "bool"
+          },
+          "tests": [
+            [
+              "feed",
+              "==",
+              "case.feed",
+              1
+            ],
+            [
+              "delayMs",
+              ">=",
+              "profile.minStreamDelayMs",
+              0
+            ],
+            [
+              "restrictedFields",
+              "==",
+              0,
+              0
+            ],
+            [
+              "opened",
+              "==",
+              true,
+              0
+            ]
+          ],
+          "blockOn": [
+            "delayMs",
+            "restrictedFields",
+            "opened"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "spectator-comprehension:2",
+      "pillar": "Spectator comprehension",
+      "name": "Spectator view readable at stream resolutions",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Unreadable",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Spectate view is readable on stream resolutions",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line spectator-comprehension:2",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "creator-controls:1",
+      "pillar": "Creator controls",
+      "name": "Streamer mode and redaction",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Names leak",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Streamer mode hides names and sensitive info",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line creator-controls:1",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "creator-controls:2",
+      "pillar": "Creator controls",
+      "name": "Share links",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Share links broken",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Share links carry the profile's source tag and resolve",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line creator-controls:2",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "truthful-claims:1",
+      "pillar": "Truthful claims",
+      "name": "Patch notes checked against commits",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A draft describes a feature whose switch is disabled on the shipped build.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every player-facing draft line maps to a verified change on the reviewed build. All approved `shippedClaims` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line truthful-claims:1",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "shippedClaims",
+          "description": "Map each draft claim to its change and observe its switch state on the shipped build.",
+          "fields": {
+            "claim": "text",
+            "commit": "text",
+            "switchEnabled": "bool",
+            "buildReceipt": "artifact:capture"
+          },
+          "tests": [
+            [
+              "claim",
+              "==",
+              "case.claim",
+              1
+            ],
+            [
+              "commit",
+              "==",
+              "case.commit",
+              1
+            ],
+            [
+              "switchEnabled",
+              "==",
+              true,
+              0
+            ]
+          ],
+          "population": "metrics.notes.lines"
+        }
+      ]
+    },
+    {
+      "id": "truthful-claims:2",
+      "pillar": "Truthful claims",
+      "name": "Technical claims match the code",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Claim not in code",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every technical claim (for example crash recovery or faster loading) matches the code",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line truthful-claims:2",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "player-safety:1",
+      "pillar": "Player safety",
+      "name": "Creator and viewer features cannot change results",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A creator feature changes outcomes",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Creator and viewer features cannot change results, saves or rankings",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line player-safety:1",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "player-safety:2",
+      "pillar": "Player safety",
+      "name": "Test results carry measured values",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Unconditional PASS receipt",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Receipts carry measured values; unconditional PASS/100 is rejected",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line player-safety:2",
+        "cwd": "templates/20-streamer-hype",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks. Each confirmed release blocker sets verdict BLOCKED and grade 0. Supported points, coverage and the evidence interval retain their uncapped values. Unmeasured safety evidence prevents PASS.",
+  "source": "Gameplay recordings, spectator captures, redaction checks and release records for published claims.",
+  "hash": "sha256:fdc88981a6561afc9abeaba8f148fdaeb64950463794d0271511cb08686530f4",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty inputs or zero measured cases earn U and zero points. A measured zero failures is valid.",
+  "sampleFields": {
+    "captureCost": [
+      "frameMsOn"
+    ],
+    "spectatorRead": [
+      "resolutionsChecked"
+    ],
+    "links": [
+      "links"
+    ],
+    "notes": [
+      "lines"
+    ],
+    "claims": [
+      "claims"
+    ],
+    "spectatorLinks": [
+      "tested"
+    ],
+    "creatorLog": [
+      "choices"
+    ]
+  },
+  "releaseBlockers": [
+    {
+      "id": "spectator-policy",
+      "line": "spectator-comprehension:1",
+      "condition": [
+        "spectatorPolicy.policyViolations",
+        "==",
+        0
+      ],
+      "reason": "A measured spectator information policy violation blocks release.",
+      "fixture": {
+        "metrics.spectatorPolicy.policyViolations": 1
+      },
+      "evidence": "capture"
+    },
+    {
+      "id": "stream-delay",
+      "line": "spectator-links",
+      "condition": [
+        "spectatorLinks.respectsDelay",
+        "true",
+        null
+      ],
+      "reason": "A measured spectator feed or stream delay violation blocks release.",
+      "fixture": {
+        "metrics.spectatorLinks.respectsDelay": false
+      },
+      "evidence": "capture"
+    },
+    {
+      "id": "redaction-namesLeaked",
+      "line": "creator-controls:1",
+      "condition": [
+        "streamerMode.namesLeaked",
+        "==",
+        0
+      ],
+      "reason": "A player name exposed in the streamer capture blocks release.",
+      "fixture": {
+        "metrics.streamerMode.namesLeaked": 1
+      },
+      "evidence": "capture"
+    },
+    {
+      "id": "redaction-sensitiveLeaked",
+      "line": "creator-controls:1",
+      "condition": [
+        "streamerMode.sensitiveLeaked",
+        "==",
+        0
+      ],
+      "reason": "Sensitive information exposed in the streamer capture blocks release.",
+      "fixture": {
+        "metrics.streamerMode.sensitiveLeaked": 1
+      },
+      "evidence": "capture"
+    },
+    {
+      "id": "spectator-feed",
+      "line": "spectator-links",
+      "condition": [
+        "spectatorLinks.openedIntendedView",
+        "==",
+        "spectatorLinks.tested"
+      ],
+      "reason": "A tested spectator feed that fails to open as intended blocks release.",
+      "fixture": {
+        "metrics.spectatorLinks.openedIntendedView": 4
+      },
+      "evidence": "capture"
+    }
+  ],
+  "profiles": {
+    "no-spectator-mode": {
+      "reason": "The game has no spectator or live viewing mode; its 20 points are shared over the other lines and the spectator feed blockers do not apply. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "capture-reliability:1": 12.5,
+        "capture-reliability:2": 12.5,
+        "spectator-comprehension:1": 0,
+        "spectator-comprehension:2": 0,
+        "creator-controls:1": 12.5,
+        "creator-controls:2": 12.5,
+        "truthful-claims:1": 12.5,
+        "truthful-claims:2": 12.5,
+        "player-safety:1": 12.5,
+        "player-safety:2": 12.5
+      },
+      "blockersNotApplicable": [
+        "stream-delay",
+        "spectator-feed"
+      ]
+    },
+    "no-share-links": {
+      "reason": "The game offers no share or watch links. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "creator-controls:1": 20,
+        "creator-controls:2": 0
+      }
+    },
+    "no-streamer-mode": {
+      "reason": "The game has no streamer mode and never shows player names, chat or account details on screen, so there is nothing to redact; the redaction blockers do not apply. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "creator-controls:1": 0,
+        "creator-controls:2": 20
+      }
+    }
+  }
+}

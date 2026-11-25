@@ -1,0 +1,110 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-17-sprite-hitbox-packer",
+  "slug": "17-sprite-hitbox-packer",
+  "name": "2D Sprite Atlas & Hitbox Packer",
+  "shortName": "Sprites",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Pack sprites into atlases and check their silhouettes, hitboxes, palettes and memory use on your target devices.",
+  "stage": "Production",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "sprite-hitbox-packer-getting-started",
+  "skills": [
+    "sprite-hitbox-packer-getting-started",
+    "sprite-atlas-packer",
+    "sprite-hit-shape-checker",
+    "sprite-palette-and-readability-checker",
+    "sprite-hitbox-packer-lens-engine"
+  ],
+  "routines": [
+    "sprite-hitbox-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-17-sprite-hitbox-packer",
+    "version": "1.3.0",
+    "hash": "sha256:75bfa2006a56e06a3d5713fb9035b1a09edad21eb9fa51f3eab37008f83494e6"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 69,
+    "externalReviewMin": 5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Art pipeline.",
+    "handsTo": "Game Feel and the team validating the animation in play."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "feel-findings": "^1.0.0",
+      "fairness-findings": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "atlas-manifest",
+      "version": "1.0.0",
+      "format": "JSON plus the packed atlas images",
+      "schema": "spec/artifacts/atlas-manifest.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "feel-findings",
+      "required": false,
+      "schema": "spec/artifacts/feel-findings.schema.json",
+      "whenMissing": "Continue: work from the animation list, and write \"ASSUMPTION: no feel-findings available\" in the report."
+    },
+    {
+      "artifact": "fairness-findings",
+      "required": false,
+      "schema": "spec/artifacts/fairness-findings.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

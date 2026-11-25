@@ -1,0 +1,110 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-13-audio-director",
+  "slug": "13-audio-director",
+  "name": "Sound Effects & Adaptive Music Director",
+  "shortName": "Audio",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Review sound effects, music transitions and mix levels against your game's feedback needs and device budgets.",
+  "stage": "Polish",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "audio-director-getting-started",
+  "skills": [
+    "audio-director-getting-started",
+    "sound-effect-bus-and-voice-limits",
+    "adaptive-music-stem-crossfader",
+    "optional-microphone-input",
+    "audio-director-lens-engine"
+  ],
+  "routines": [
+    "audio-director-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-13-audio-director",
+    "version": "1.3.0",
+    "hash": "sha256:f2a4ca49a3558221e0623ba23f9fd4c11a36f9d9cf12a382794a11cfe31bad99"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 68.5,
+    "externalReviewMin": 4.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Game Feel findings.",
+    "handsTo": "Game Feel (impact), Trailer Director (mix)."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "feel-findings": "^1.0.0",
+      "dialogue-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "audio-mix-report",
+      "version": "1.0.0",
+      "format": "JSON",
+      "schema": "spec/artifacts/audio-mix-report.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "feel-findings",
+      "required": false,
+      "schema": "spec/artifacts/feel-findings.schema.json",
+      "whenMissing": "Continue: list the essential sounds with the owner, and write \"ASSUMPTION: no feel-findings available\" in the report."
+    },
+    {
+      "artifact": "dialogue-draft",
+      "required": false,
+      "schema": "spec/artifacts/dialogue-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

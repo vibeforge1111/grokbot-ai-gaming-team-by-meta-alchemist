@@ -1,0 +1,23 @@
+{
+  "name": "grokbot-game-templates",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Grok Bot AI gaming team kit: 15 shipping game-dev templates, 8 previews, a team map, shared memory, versioning, spec, validator and guides. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "scrub": "node scripts/scrub-check.mjs",
+    "links": "node scripts/check-links.mjs",
+    "team": "node scripts/build-team.mjs && node scripts/build-recipe-all.mjs",
+    "team:check": "node scripts/build-team.mjs --check",
+    "compat": "node scripts/compat-check.mjs",
+    "memory:lint": "node shared/team-memory/team-memory.mjs lint",
+    "test": "node --test tests/*.test.mjs",
+    "catalog": "node scripts/build-catalog.mjs",
+    "new": "node scripts/new-template.mjs",
+    "build-recipe": "node scripts/build-recipe.mjs",
+    "check": "npm run validate && npm run scrub && npm run links && npm run team:check && npm run compat && npm test"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,119 @@
+{
+  "kitVersion": 1,
+  "id": "gbf-28-mobile-store-submission",
+  "slug": "28-mobile-store-submission",
+  "name": "Mobile App Store Submission",
+  "shortName": "App Store",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Review target-specific evidence and draft a store readiness checklist for a human release owner.",
+  "stage": "Distribution preparation",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": null,
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "store-submission-getting-started",
+  "skills": [
+    "store-submission-getting-started",
+    "store-submission-checklist",
+    "store-submission-owner-answers",
+    "store-submission-code-brief",
+    "file-to-shared-ledger",
+    "store-submission-lens-engine",
+    "store-submission-domain-engine"
+  ],
+  "routines": [
+    "store-submission-weekly",
+    "store-submission-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-28-mobile-store-submission",
+    "version": "1.1.0",
+    "hash": "sha256:ea8dc4fab3118c56fd6c7c069d66468d4de873b0eaeaa8de3838bda0a0a637bc"
+  },
+  "engine": {
+    "cmd": [
+      "node",
+      "engine/lens.mjs"
+    ],
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "store-asset-manifest": "^1.0.0",
+      "access-report": "^1.0.0",
+      "trust-records": "^1.0.0",
+      "entitlement-ledger": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "store-submission-checklist",
+      "version": "1.0.0",
+      "format": "Markdown checklist draft plus JSON findings",
+      "schema": "spec/artifacts/store-submission-checklist.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "store-asset-manifest",
+      "required": false,
+      "schema": "spec/artifacts/store-asset-manifest.schema.json"
+    },
+    {
+      "artifact": "access-report",
+      "required": false,
+      "schema": "spec/artifacts/access-report.schema.json"
+    },
+    {
+      "artifact": "trust-records",
+      "required": false,
+      "schema": "spec/artifacts/trust-records.schema.json"
+    },
+    {
+      "artifact": "entitlement-ledger",
+      "required": false,
+      "schema": "spec/artifacts/entitlement-ledger.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "entitlements",
+      "incidents"
+    ],
+    "writes": [
+      "decisions",
+      "releases"
+    ]
+  }
+}

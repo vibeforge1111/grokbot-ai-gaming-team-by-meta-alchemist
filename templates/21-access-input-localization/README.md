@@ -1,0 +1,125 @@
+# Access, Input and Localization QA
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Check whether players can navigate, read and control your game across supported inputs, languages and accessibility settings.
+
+Rubric: `gbf-21-access-input-localization` v1.2.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## Words used here
+
+- **Evidence pack:** one JSON file with the measurements for one build.
+- **Game profile (`pack.profile`):** your settings: supported devices, required journey tasks, text and contrast floors, the flash limit and so on.
+- **Journey task:** something every player must be able to do with every supported input, such as open the pause menu or finish a level.
+- **Approved profile:** a rubric variant you choose on purpose. This template has two, `single-language` and `single-input`; you can select both.
+- **Release blocker:** a measured problem that stops release whatever the score. Here: flashing above your safety limit.
+- **Case and receipt:** a case is one item you approved for checking, listed in `profile.cases`. A receipt is the matching row under `receipts` that records what ran, on which build, and what happened.
+- **Pseudo-locale:** a fake language that makes text longer and swaps in accented characters, so cut-off text and missing glyphs show up before real translations exist.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt (a short record from your capture tool naming the build, the device and the hashes of the evidence files) and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `input:1` | Required tasks across supported inputs | computed | `journey.devicesPassed`, `journey.tasksPassed` | journey.devicesPassed covers P.devices (hard: level 1 on failure); journey.tasksPassed covers P.journeyTasks; passedByDevice records every device/task pair |
+| `input:2` | Remapping, prompts and device switching | computed | `remap.remapWorks`, `remap.promptsSwitch`, `remap.disconnectRecovers`, `remap.focusRecovers`, `receipts.navigationRecovery` | `remap.remapWorks true `, `remap.promptsSwitch true `, `remap.disconnectRecovers true `, `remap.focusRecovers true `, approved receipt cases pass |
+| `readability:1` | Text size and contrast over real scenes | computed | `text.minPx`, `text.pairs` | text.minPx >= P.minTextPx; contrastMin(text.pairs) >= P.minContrast |
+| `readability:2` | Meaning without colour | computed | `colour.palette`, `colour.shapeOrLabelBacked` | cvdMinDeltaE(colour.palette) >= P.minCvdDeltaE; colour.shapeOrLabelBacked is true |
+| `captions-and-assistive-info:1` | Caption event log | computed | `captions.captionedCues`, `captions.requiredCues`, `receipts.cueMatches` | `captions.captionedCues == captions.requiredCues`, approved receipt cases pass |
+| `captions-and-assistive-info:2` | Menus and error messages | computed | `menus.navigableWithSupportedInputs`, `menus.errorsUnderstandable` | menus.navigableWithSupportedInputs is true; menus.errorsUnderstandable is true |
+| `motion-and-flash-comfort:1` | Reduced motion respected everywhere | computed | `motion.appliedInPairedCaptures`, `motion.promisedReductions`, `receipts.motionPairs` | `motion.appliedInPairedCaptures == motion.promisedReductions`, approved receipt cases pass |
+| `motion-and-flash-comfort:2` | Flash safety and hold/toggle alternatives | computed | `flash.maxFlashesPerSecond`, `flash.holdToggleAlternatives` | flash.maxFlashesPerSecond <= P.maxFlashesPerSecond (hard: level 1 on failure); flash.holdToggleAlternatives is true |
+| `localization-readiness:1` | String inventory | computed | `strings.inventoryComplete`, `strings.hardcodedListed`, `strings.newHardcodedStringRejected`, `receipts.stringGuard` | `strings.inventoryComplete true `, `strings.hardcodedListed true `, `strings.newHardcodedStringRejected true `, approved receipt cases pass |
+| `localization-readiness:2` | Locale tests (N/A under the single-language profile) | computed | `locale.pseudoLocalePass`, `locale.supportedLocalesPass`, `locale.truncations`, `receipts.localeCaptures` | `locale.pseudoLocalePass true `, `locale.supportedLocalesPass true `, `locale.truncations == 0`, approved receipt cases pass |
+
+What the less obvious names mean:
+
+- **Caption event log:** every sound that carries information the player needs is matched, one event at a time, to the right caption shown within your allowed delay.
+- **Menus and error messages:** menus can be used without a mouse or touch (the field is named for keyboard and gamepad), and error messages say what went wrong and what to do.
+- **Reduced motion respected everywhere:** each promised reduction (shake, zoom, flashes, camera sway) visibly changes in paired recordings of the same scene with the setting off and on.
+- **Locale tests (N/A under the single-language profile):** pseudo-locale and supported-locale captures. Under the default profile they are measured. Under the approved `single-language` profile, which you choose for a one-language release, this line is N/A.
+
+## Adapt to your game
+
+Set the supported devices, languages and required journey in the profile. Selecting and undoing a puzzle move is as valid an input task as driving a lap or picking a dialogue choice. Name the journey tasks after your own game; the worked example's `title-screen`, `core-play`, `results` and `play-again` come from one synthetic online game. Examples:
+
+- Mobile puzzle game: `title-screen`, `select-level`, `swap-tiles`, `undo-move`, `pause-menu`.
+- 2D platformer: `title-screen`, `jump-and-run`, `restart-checkpoint`, `remap-controls`, `pause-menu`.
+- Turn-based strategy game: `main-menu`, `select-unit`, `issue-order`, `end-turn`, `save-game`.
+- Racing game: `garage-menu`, `drive-a-lap`, `pause-menu`, `restart-race`.
+- Narrative adventure: `title-screen`, `pick-dialogue-choice`, `open-journal`, `save-and-load`.
+- Farming or life sim: `main-menu`, `plant-crop`, `open-inventory`, `sleep-and-save`.
+
+Then:
+
+- List every sound cue that needs a caption in your event log.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+### One language or several
+
+- **One language at this release:** approve the `single-language` profile by setting `profile.rubricProfile` to `"single-language"`, and record who approved it, for which build and why. `localization-readiness:2` (locale tests) becomes N/A: it is left out of the grade and never filed as a defect. `localization-readiness:1` (string inventory) is worth 20 points instead of 10. Leave `locale` and `receipts.localeCaptures` out of the pack.
+- **Why the string inventory still counts:** it finds every piece of player-facing text so it can be checked for readability, fixed in one place and translated later without searching the code.
+- **When a second language enters scope:** remove `rubricProfile` (the default profile), add the languages to `reviewLocales` and the screen sizes to `localeViewports`, and run pseudo-locale and supported-locale captures. Compare grades only between packs with the same profile.
+
+### One input method or several
+
+- **One input method (for example a touch-only phone game):** approve the `single-input` profile, alone or with the language one, for example `"rubricProfile": ["single-language", "single-input"]`, and record who approved it, for which build and why. `input:2` (remapping, prompts and device switching) becomes N/A, never a defect, and `input:1` (required tasks) is worth 20 points. Leave `remap` and `receipts.navigationRecovery` out of the pack.
+- **When a second input method enters scope:** remove `single-input` and measure `input:2`.
+
+An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can reach PASS. Name the profiles next to the grade.
+
+### If your game does not have a feature
+
+Never record a missing feature as passed. When no approved profile covers it, leave its metric group out so the line stays U (0 points, not a defect), and write the reason next to the profile approval.
+
+- **Touch-only game (no controller, keyboard or gamepad):** `input:2` reads N/A under the `single-input` profile. `captions-and-assistive-info:2` (whose field is named for keyboard and gamepad menus) has no profile and usually stays U.
+- **No sound carries information the player needs:** record that decision; `captions-and-assistive-info:1` reads U with zero required cues.
+- **No reduced-motion promises:** `motion-and-flash-comfort:1` reads U. Flash safety is still measured.
+- **No hold actions:** record `flash.holdToggleAlternatives` as true only with a capture of the full control list showing none.
+
+## Owner calls
+
+- Does this release ship in one language? If so, approve the `single-language` profile and record who approved it, for which build and why. Switch back to the default profile as soon as a second language enters scope.
+- Does the game support only one input method? If so, approve the `single-input` profile the same way; remove it when a second input method enters scope.
+- Which flash safety limit to follow (`maxFlashesPerSecond`), from the guideline you use.
+
+## Blockers
+
+PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks. Each confirmed release blocker sets verdict BLOCKED and grade 0. Supported points, coverage and the evidence interval retain their uncapped values. Unmeasured safety evidence prevents PASS.
+
+- Flashing above the approved safety limit blocks release. This applies under every profile, including single-language.
+
+- Capture the player journey on each supported input device; the worked example is synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

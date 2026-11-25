@@ -1,0 +1,115 @@
+{
+  "kitVersion": 1,
+  "id": "gbf-26-balance-patch-director",
+  "slug": "26-balance-patch-director",
+  "name": "Live-Ops Balance Patch Director",
+  "shortName": "Balance Patch",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Compare configurable numeric parameters with observed outcomes and draft bounded, reversible changes.",
+  "stage": "Balance review",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": null,
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "balance-director-getting-started",
+  "skills": [
+    "balance-director-getting-started",
+    "balance-director-weekly-proposal",
+    "balance-director-patch-notes-draft",
+    "balance-director-post-release-read",
+    "file-to-shared-ledger",
+    "balance-director-lens-engine",
+    "balance-director-domain-engine"
+  ],
+  "routines": [
+    "balance-director-weekly",
+    "balance-director-post-release",
+    "balance-director-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-26-balance-patch-director",
+    "version": "1.1.0",
+    "hash": "sha256:9cb5e3a3969dd9c0416acab9708abfff51e427847dbd32371c8dc06734c15da9"
+  },
+  "engine": {
+    "cmd": [
+      "node",
+      "engine/lens.mjs"
+    ],
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "support-case-draft": "^1.0.0",
+      "cohort-report": "^1.0.0",
+      "economy-change-list": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "balance-patch-draft",
+      "version": "1.0.0",
+      "format": "Markdown proposal and patch-notes drafts plus JSON",
+      "schema": "spec/artifacts/balance-patch-draft.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "support-case-draft",
+      "required": false,
+      "schema": "spec/artifacts/support-case-draft.schema.json"
+    },
+    {
+      "artifact": "cohort-report",
+      "required": false,
+      "schema": "spec/artifacts/cohort-report.schema.json"
+    },
+    {
+      "artifact": "economy-change-list",
+      "required": false,
+      "schema": "spec/artifacts/economy-change-list.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "balance",
+      "releases"
+    ],
+    "writes": [
+      "decisions",
+      "balance"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "synthetic": true,
+  "note": "Illustrative observations for a cooking game. The HUD values model CI screenshot sampling and manual layout checks. The closure roles model a manual review of the issue tracker.",
+  "builds": {
+    "0.3.0": {
+      "timerColors": [
+        "#9a9a9a",
+        "#7a7a7a"
+      ],
+      "recipeButtonWidthsPx": [
+        48,
+        30,
+        44
+      ],
+      "fixer": "developer",
+      "verifier": "developer"
+    },
+    "0.3.1": {
+      "timerColors": [
+        "#ffffff",
+        "#1b2330"
+      ],
+      "recipeButtonWidthsPx": [
+        48,
+        48,
+        44
+      ],
+      "fixer": "developer",
+      "verifier": "artist"
+    }
+  }
+}

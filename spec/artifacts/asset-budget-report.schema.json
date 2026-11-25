@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/asset-budget-report.schema.json",
+  "title": "Asset budget report (team artifact)",
+  "description": "Per-asset geometry, texture, animation and collider results from Prop and Rig. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "asset-budget-report"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One asset.",
+      "items": {
+        "type": "object",
+        "required": [
+          "asset",
+          "withinBudget"
+        ],
+        "properties": {
+          "asset": {
+            "type": "string",
+            "description": "Asset path or id."
+          },
+          "triangles": {
+            "type": "number",
+            "description": "Triangle count, when 3D."
+          },
+          "textureBytes": {
+            "type": "number",
+            "description": "Texture memory in bytes."
+          },
+          "colliderAgreement": {
+            "type": "number",
+            "description": "Overlap between collider and visible shape, 0 to 1."
+          },
+          "withinBudget": {
+            "type": "boolean",
+            "description": "True when every budgeted value is inside the profile budget."
+          },
+          "notes": {
+            "type": "string",
+            "description": "What to change or keep."
+          }
+        }
+      }
+    }
+  }
+}

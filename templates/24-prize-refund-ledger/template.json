@@ -1,0 +1,108 @@
+{
+  "kitVersion": 1,
+  "id": "gbf-24-prize-refund-ledger",
+  "slug": "24-prize-refund-ledger",
+  "name": "Prize, Refund and Entitlement Ledger",
+  "shortName": "Ledger",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Reconcile local claim histories against owner decisions and fulfillment evidence, then draft a review digest.",
+  "stage": "Player operations",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": null,
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "prize-ledger-getting-started",
+  "skills": [
+    "prize-ledger-getting-started",
+    "prize-ledger-claim-and-wallet-checks",
+    "prize-ledger-reconcile-and-digest",
+    "prize-ledger-public-note-draft",
+    "file-to-shared-ledger",
+    "prize-ledger-lens-engine",
+    "prize-ledger-domain-engine"
+  ],
+  "routines": [
+    "prize-ledger-daily-digest",
+    "prize-ledger-window-alert",
+    "prize-ledger-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-24-prize-refund-ledger",
+    "version": "1.2.0",
+    "hash": "sha256:03429e182cc15234acd7fae70da010a178cec5b69e181dcee383aaa8fc937ca1"
+  },
+  "engine": {
+    "cmd": [
+      "node",
+      "engine/lens.mjs"
+    ],
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "support-case-draft": "^1.0.0",
+      "enforcement-policy-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "entitlement-ledger",
+      "version": "1.0.0",
+      "format": "JSON plus a text digest draft",
+      "schema": "spec/artifacts/entitlement-ledger.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "support-case-draft",
+      "required": false,
+      "schema": "spec/artifacts/support-case-draft.schema.json"
+    },
+    {
+      "artifact": "enforcement-policy-draft",
+      "required": false,
+      "schema": "spec/artifacts/enforcement-policy-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "releases"
+    ],
+    "writes": [
+      "decisions",
+      "entitlements"
+    ]
+  }
+}

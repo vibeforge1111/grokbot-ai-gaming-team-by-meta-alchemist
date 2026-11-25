@@ -1,0 +1,483 @@
+{
+  "id": "gbf-01-game-feel",
+  "version": "1.3.0",
+  "migration": "1.0.0 to 1.1.0: anchors made game-agnostic (constants live in the game profile), lens gates added; ids, weights and passAt unchanged; 1.1.0 to 1.1.1: gameProfile generalized to your-game-profile for the public kit and hash recomputed with the documented kit algorithm (spec/RUBRIC_HASH.md); ids, weights, anchors and passAt unchanged. 1.1.1 to 1.1.3: Evidence descriptions and fixture working directories now refer to the distributed kit. 1.1.3 to 1.1.4: Empty samples and zero case counts earn U. Computed lines require the declared evidence type. 1.1.4 to 1.1.5: Requires supported-device runs, traced ready events and comparable simulation replays. 1.1.5 to 1.2.0: Line, pillar and anchor wording made genre-neutral (ids, weights, conditions and pass marks unchanged); adds owner-selected not-applicable profiles no-aiming, no-hazards, offline-only. 1.2.0 to 1.3.0: Evidence pack names made genre-neutral (heldFireMaxDeltaPct to heldInputMaxDeltaPct; heldFire to heldInput; onlineMatchesPractice to onlineMatchesOffline; damagingThreatsOffscreen to hazardsOffscreen; edgeThreatVisibleRatio to edgeHazardVisibleRatio; edgeThreatVisibleMin to edgeHazardVisibleMin; aimErrorP95Deg to targetingErrorP95Deg; aim to targeting). Scoring, weights, conditions and pass marks unchanged; rename these fields in packs made for 1.2.0.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "pillars": [
+    {
+      "id": "response",
+      "name": "Response",
+      "points": 20
+    },
+    {
+      "id": "readable-feedback",
+      "name": "Readable feedback",
+      "points": 20
+    },
+    {
+      "id": "control-intent",
+      "name": "Control intent",
+      "points": 20
+    },
+    {
+      "id": "camera-comfort",
+      "name": "Camera comfort",
+      "points": 20
+    },
+    {
+      "id": "parity",
+      "name": "Parity",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "response:1",
+      "pillar": "Response",
+      "name": "Input-to-action latency sample",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "No latency sample exists for the build, or a required action produces no response",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Input response meets the approved budget across the supported devices and repeated runs. All approved `deviceLatency` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line response:1",
+        "cwd": "templates/01-game-feel",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "deviceLatency",
+          "description": "Record independent runs for every supported input. Compare the observed p95 against the signed-off latency budget.",
+          "fields": {
+            "device": "text",
+            "run": "text",
+            "seed": "text",
+            "samples": "positive",
+            "latencyMs": "samples"
+          },
+          "tests": [
+            [
+              "device",
+              "==",
+              "case.device",
+              1
+            ],
+            [
+              "run",
+              "==",
+              "case.run",
+              1
+            ],
+            [
+              "seed",
+              "==",
+              "case.seed",
+              1
+            ],
+            [
+              "p95Ms",
+              "<=",
+              "profile.inputLatencyP95Ms",
+              2
+            ],
+            [
+              "samples",
+              "==",
+              "row.sampleCount",
+              1
+            ]
+          ],
+          "axes": {
+            "device": "profile.inputDevices",
+            "run": "profile.latencyRunIds"
+          },
+          "derive": {
+            "p95Ms": [
+              "p95",
+              "latencyMs"
+            ],
+            "sampleCount": [
+              "length",
+              "latencyMs"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "response:2",
+      "pillar": "Response",
+      "name": "Buffered and held input behaviour",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "A capture shows a held or buffered input behaving differently from what the game teaches",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "A buffered press and a held input produce the documented action at the intended cadence across the tested input paths",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line response:2",
+        "cwd": "templates/01-game-feel",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "readable-feedback:1",
+      "pillar": "Readable feedback",
+      "name": "Action feedback capture",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "The expected action confirmation is missing or unreadable in the capture",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The expected visual and audio cues for the chosen action are recognizable in captures for each tested device",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line readable-feedback:1",
+        "cwd": "templates/01-game-feel",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "readable-feedback:2",
+      "pillar": "Readable feedback",
+      "name": "Ready-again cues",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "An observed ready event emits zero cues or emits more than once.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "A ready-again event (cooldown done, turn start, crop ready) emits its configured cue exactly once (the emitting caller traced to file and line) on every run. All approved `readyEmissions` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line readable-feedback:2",
+        "cwd": "templates/01-game-feel",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "readyEmissions",
+          "description": "Identify the emitting caller and count once per traced ready event.",
+          "fields": {
+            "caller": "text",
+            "sourceLine": "positive",
+            "emits": "count"
+          },
+          "tests": [
+            [
+              "emits",
+              "==",
+              1,
+              0
+            ]
+          ],
+          "population": "metrics.readyCue.emitCounts"
+        }
+      ]
+    },
+    {
+      "id": "control-intent:1",
+      "pillar": "Control intent",
+      "name": "Input task completion",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "A required action is unreachable on a supported input device",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The same task sequence completes across the tested input devices, including after a device switch. All approved `inputTasks` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line control-intent:1",
+        "cwd": "templates/01-game-feel",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "inputTasks",
+          "description": "Capture the same profile task on each supported input.",
+          "fields": {
+            "device": "text",
+            "task": "text",
+            "completed": "bool"
+          },
+          "tests": [
+            [
+              "device",
+              "==",
+              "case.device",
+              1
+            ],
+            [
+              "task",
+              "==",
+              "case.task",
+              1
+            ],
+            [
+              "completed",
+              "==",
+              true,
+              1
+            ]
+          ],
+          "axes": {
+            "device": "profile.inputDevices",
+            "task": "profile.journeyTasks"
+          }
+        }
+      ]
+    },
+    {
+      "id": "control-intent:2",
+      "pillar": "Control intent",
+      "name": "Input intent and assist parity",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Aimed, selected or steered input snaps or drifts against intent in the capture",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Aimed, selected or steered input lands where the player intended on every device; any assist is documented and equal across devices",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line control-intent:2",
+        "cwd": "templates/01-game-feel",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "camera-comfort:1",
+      "pillar": "Camera comfort",
+      "name": "Camera framing of hazards",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Something that can hurt the player or make them fail is off screen or hidden by the camera",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Hazards at screen edges and at elevation stay visible in the fixed seed routes at every viewport in the game profile",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line camera-comfort:1",
+        "cwd": "templates/01-game-feel",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "camera-comfort:2",
+      "pillar": "Camera comfort",
+      "name": "Reduced motion respected",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "A promised reduction is not applied, with a capture",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Reduced-motion setting alters every promised effect (shake, flash, zoom) in a paired capture",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line camera-comfort:2",
+        "cwd": "templates/01-game-feel",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "parity:1",
+      "pillar": "Parity",
+      "name": "Feedback preserves simulation timing",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Effects change the simulation digest on a comparable replay.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Feedback effects never change simulation timing in any simulation path the game has (offline, and online predicted when present; same-seed trace). All approved `pairedTiming` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line parity:1",
+        "cwd": "templates/01-game-feel",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "pairedTiming",
+          "description": "Compare equal-length traces from the same build, seed, device, simulation path and input replay with effects on and off.",
+          "fields": {
+            "device": "text",
+            "onSeed": "text",
+            "offSeed": "text",
+            "onRun": "text",
+            "offRun": "text",
+            "onTicks": "positive",
+            "offTicks": "positive",
+            "offArtifact": "artifact:trace",
+            "onHash": "sha256",
+            "offHash": "sha256"
+          },
+          "tests": [
+            [
+              "device",
+              "==",
+              "case.device",
+              1
+            ],
+            [
+              "onSeed",
+              "==",
+              "case.seed",
+              1
+            ],
+            [
+              "offSeed",
+              "==",
+              "row.onSeed",
+              1
+            ],
+            [
+              "onRun",
+              "==",
+              "row.offRun",
+              1
+            ],
+            [
+              "onTicks",
+              "==",
+              "row.offTicks",
+              1
+            ],
+            [
+              "onHash",
+              "==",
+              "row.offHash",
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "parity:2",
+      "pillar": "Parity",
+      "name": "Style effects are owner calls",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A deduction is applied for a stylistic effect the owner removed by design",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Stylistic effects (for example hitstop, screen shake or platformer moves) are scored only against the owner's written design contract",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line parity:2",
+        "cwd": "templates/01-game-feel",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "source": "Input traces, matched feedback captures and simulation replays from the build under review.",
+  "hash": "sha256:4d8030ea2e37ea17337d68acfb9469ba366c072050a39723fad04beac0509555",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty inputs or zero measured cases earn U and zero points. A measured zero failures is valid.",
+  "sampleFields": {
+    "latency": [
+      "runs"
+    ],
+    "heldInput": [
+      "bufferedPressHonored"
+    ],
+    "hitFeedback": [
+      "visualByDevice"
+    ],
+    "readyCue": [
+      "emitCounts"
+    ],
+    "tasks": [
+      "devices"
+    ],
+    "targeting": [
+      "errorDegP95"
+    ],
+    "camera": [
+      "viewports"
+    ],
+    "reducedMotion": [
+      "promised"
+    ]
+  },
+  "profiles": {
+    "no-aiming": {
+      "reason": "The game has no aimed, selected or steered input to compare with intent. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "control-intent:1": 20,
+        "control-intent:2": 0
+      }
+    },
+    "no-hazards": {
+      "reason": "Nothing in the game can hurt the player or make them fail from off screen. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "camera-comfort:1": 0,
+        "camera-comfort:2": 20
+      }
+    },
+    "offline-only": {
+      "reason": "The game has no online or predicted simulation path to compare. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "parity:1": 0,
+        "parity:2": 20
+      }
+    }
+  }
+}

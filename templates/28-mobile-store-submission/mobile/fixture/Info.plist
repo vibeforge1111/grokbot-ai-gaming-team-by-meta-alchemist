@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic fixture -->
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Example Game</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Save a screenshot you choose to your Photos library.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+</dict>
+</plist>

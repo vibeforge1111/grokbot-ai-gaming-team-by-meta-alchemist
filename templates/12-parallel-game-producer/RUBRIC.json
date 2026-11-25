@@ -1,0 +1,608 @@
+{
+  "id": "gbf-12-parallel-game-producer",
+  "version": "2.0.0",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "migration": "Replaces studio-specific coordination claims with row-derived counts, predecessor evidence, shared-resource checks and pitch review. Start a new baseline at this version.",
+  "contribution": "weight x level / 4",
+  "gameProfile": "Owner-approved pack.profile defines the game facts, scope and budgets",
+  "receiptPolicy": "build-scope-line-v1",
+  "receiptFields": [
+    "milestone",
+    "audience",
+    "ask"
+  ],
+  "levels": "Score the share of observed cases meeting each condition against the profile floor, pass share and target.",
+  "verdict": "Open P0s and confirmed release blockers set the grade to 0. Missing observations reduce coverage. Invalid packs have a null grade.",
+  "samplePolicy": "Every line reads uniquely keyed sample rows from its own receipt. Empty lists and zero measured cases give U and earn 0 points. Fractions use all eligible observed opportunities.",
+  "source": "An owner-approved ledger export, task graph, time and capacity estimates, discipline receipts, approved pitch facts and a reviewed local deck.",
+  "pillars": [
+    {
+      "id": "milestone",
+      "name": "Milestone",
+      "points": 20
+    },
+    {
+      "id": "workstreams",
+      "name": "Workstreams",
+      "points": 20
+    },
+    {
+      "id": "ledger",
+      "name": "Ledger",
+      "points": 20
+    },
+    {
+      "id": "release-decision",
+      "name": "Release decision",
+      "points": 20
+    },
+    {
+      "id": "pitch",
+      "name": "Pitch",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "milestone:1",
+      "pillar": "Milestone",
+      "name": "Milestone work has acceptance evidence",
+      "evidence": "static",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(scope.samples,\"testable\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(scope.samples,\"testable\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(scope.samples,\"testable\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(scope.samples,\"testable\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: each sampled deliverable has a role, done condition and named verification source.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: each sampled deliverable has a role, done condition and named verification source.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line milestone:1"
+      }
+    },
+    {
+      "id": "milestone:2",
+      "pillar": "Milestone",
+      "name": "Role load fits wave capacity",
+      "evidence": "config",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "withinShare(capacity.samples,\"hours\",P.hoursByRole,\"role\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "withinShare(capacity.samples,\"hours\",P.hoursByRole,\"role\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "withinShare(capacity.samples,\"hours\",P.hoursByRole,\"role\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "withinShare(capacity.samples,\"hours\",P.hoursByRole,\"role\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the sum of assigned hours per role and wave fits its approved capacity envelope.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the sum of assigned hours per role and wave fits its approved capacity envelope.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line milestone:2"
+      }
+    },
+    {
+      "id": "workstreams:1",
+      "pillar": "Workstreams",
+      "name": "Predecessor receipts precede handoff",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(dependency.samples,\"ready\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(dependency.samples,\"ready\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(dependency.samples,\"ready\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(dependency.samples,\"ready\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the consumer starts after its predecessor has current passing evidence.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the consumer starts after its predecessor has current passing evidence.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line workstreams:1"
+      }
+    },
+    {
+      "id": "workstreams:2",
+      "pillar": "Workstreams",
+      "name": "Parallel tasks respect exclusive locks",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(locks.samples,\"conflictFree\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(locks.samples,\"conflictFree\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(locks.samples,\"conflictFree\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(locks.samples,\"conflictFree\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: tasks in the same wave never hold conflicting write locks.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: tasks in the same wave never hold conflicting write locks.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line workstreams:2"
+      }
+    },
+    {
+      "id": "ledger:1",
+      "pillar": "Ledger",
+      "name": "Backlog counts reconcile to ticket rows",
+      "evidence": "static",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "equalShare(counts.samples,\"derived\",\"reported\")",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "equalShare(counts.samples,\"derived\",\"reported\")",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "equalShare(counts.samples,\"derived\",\"reported\")",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "equalShare(counts.samples,\"derived\",\"reported\")",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the reported count in each severity bucket equals the count derived from distinct open rows.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the reported count in each severity bucket equals the count derived from distinct open rows.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line ledger:1"
+      }
+    },
+    {
+      "id": "ledger:2",
+      "pillar": "Ledger",
+      "name": "Closure has independent live verification",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(closure.samples,\"verified\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(closure.samples,\"verified\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(closure.samples,\"verified\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(closure.samples,\"verified\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: a claimed closure has current verification by another role and its required config state.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: a claimed closure has current verification by another role and its required config state.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line ledger:2"
+      }
+    },
+    {
+      "id": "release-decision:1",
+      "pillar": "Release decision",
+      "name": "Required discipline gates pass",
+      "evidence": "trace",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(gate.samples,\"passed\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(gate.samples,\"passed\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(gate.samples,\"passed\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(gate.samples,\"passed\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the required gate reports a passing result for the decision build.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the required gate reports a passing result for the decision build.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line release-decision:1"
+      }
+    },
+    {
+      "id": "release-decision:2",
+      "pillar": "Release decision",
+      "name": "Risks have owned decision paths",
+      "evidence": "static",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(risk.samples,\"actionable\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(risk.samples,\"actionable\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(risk.samples,\"actionable\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(risk.samples,\"actionable\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the risk has an owner, trigger, fallback and decision point.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the risk has an owner, trigger, fallback and decision point.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line release-decision:2"
+      }
+    },
+    {
+      "id": "pitch:1",
+      "pillar": "Pitch",
+      "name": "Pitch claims trace to approved facts",
+      "evidence": "static",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(claims.samples,\"grounded\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(claims.samples,\"grounded\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(claims.samples,\"grounded\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(claims.samples,\"grounded\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the slide claim matches an approved project fact and cites its evidence.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the slide claim matches an approved project fact and cites its evidence.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line pitch:1"
+      }
+    },
+    {
+      "id": "pitch:2",
+      "pillar": "Pitch",
+      "name": "Deck covers the reviewed decision",
+      "evidence": "capture",
+      "weight": 10,
+      "passAt": 3,
+      "automatedGate": true,
+      "conditions": [
+        [
+          "valueShare(review.samples,\"reviewed\",true)",
+          ">",
+          0,
+          "zero"
+        ],
+        [
+          "valueShare(review.samples,\"reviewed\",true)",
+          ">=",
+          "P.bands.floor",
+          "h"
+        ],
+        [
+          "valueShare(review.samples,\"reviewed\",true)",
+          ">=",
+          "P.bands.pass",
+          "d"
+        ],
+        [
+          "valueShare(review.samples,\"reviewed\",true)",
+          ">=",
+          "P.bands.target",
+          "4"
+        ]
+      ],
+      "anchors": {
+        "0": "No measured case meets this condition: the reviewer signed off the current slide for the required audience and ask.",
+        "1": "Some cases meet the condition, below the profile floor.",
+        "2": "The observed share reaches the floor and falls short of the pass share.",
+        "3": "The observed share reaches the pass share and falls short of the target.",
+        "4": "At least the target share of cases shows this outcome: the reviewer signed off the current slide for the required audience and ask.",
+        "U": "UNMEASURED. The receipt, population, required observation or approved budget is missing, stale or unusable."
+      },
+      "negativeFixture": {
+        "cwd": "templates/12-parallel-game-producer",
+        "cmd": "node tests/lens-negative-fixtures.mjs --line pitch:2"
+      }
+    }
+  ],
+  "sampleFields": {
+    "scope": [
+      "samples"
+    ],
+    "capacity": [
+      "samples"
+    ],
+    "dependency": [
+      "samples"
+    ],
+    "locks": [
+      "samples"
+    ],
+    "counts": [
+      "samples"
+    ],
+    "closure": [
+      "samples"
+    ],
+    "gate": [
+      "samples"
+    ],
+    "risk": [
+      "samples"
+    ],
+    "claims": [
+      "samples"
+    ],
+    "review": [
+      "samples"
+    ]
+  },
+  "releaseBlockers": [
+    {
+      "id": "invalid-handoff",
+      "line": "workstreams:1",
+      "evidence": "trace",
+      "reason": "A consumer ran before a required predecessor passed, or a required predecessor timed out.",
+      "condition": [
+        "observedFailure(dependency.samples,\"ready\",false)",
+        "false"
+      ],
+      "fixture": {
+        "metrics.dependency.samples": [
+          {
+            "caseId": "capture-to-review",
+            "ready": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "overlapping-lock",
+      "line": "workstreams:2",
+      "evidence": "trace",
+      "reason": "Two tasks in one wave claim an exclusive resource.",
+      "condition": [
+        "observedFailure(locks.samples,\"conflictFree\",false)",
+        "false"
+      ],
+      "fixture": {
+        "metrics.locks.samples": [
+          {
+            "caseId": "locks-1",
+            "conflictFree": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "failed-gate",
+      "line": "release-decision:1",
+      "evidence": "trace",
+      "reason": "A required discipline gate has a measured failure.",
+      "condition": [
+        "observedFailure(gate.samples,\"passed\",false)",
+        "false"
+      ],
+      "fixture": {
+        "metrics.gate.samples": [
+          {
+            "caseId": "gate-1",
+            "passed": false
+          }
+        ]
+      }
+    }
+  ],
+  "hash": "sha256:2a426f5750e59d859403b889ada50f041e135240de0816914b7fa65708676a88"
+}

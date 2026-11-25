@@ -1,0 +1,109 @@
+{
+  "kitVersion": 1,
+  "id": "gbf-27-retention-cohort-analytics",
+  "slug": "27-retention-cohort-analytics",
+  "name": "Retention and Cohort Analytics",
+  "shortName": "Retention",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Measure mature return cohorts with uncertainty ranges and draft a privacy-preserving review.",
+  "stage": "Product analytics",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": null,
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "retention-cohorts-getting-started",
+  "skills": [
+    "retention-cohorts-getting-started",
+    "retention-cohorts-weekly-report",
+    "retention-cohorts-release-compare",
+    "retention-cohorts-export-check",
+    "file-to-shared-ledger",
+    "retention-cohorts-lens-engine",
+    "retention-cohorts-domain-engine"
+  ],
+  "routines": [
+    "retention-cohorts-weekly",
+    "retention-cohorts-release",
+    "retention-cohorts-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-27-retention-cohort-analytics",
+    "version": "1.1.0",
+    "hash": "sha256:5956c48fa00b2ad3dded0fc7f4ea33706fd6e8e5146985d5c6bbad72d3427aad"
+  },
+  "engine": {
+    "cmd": [
+      "node",
+      "engine/lens.mjs"
+    ],
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "lobby-fill-proposal": "^1.0.0",
+      "balance-patch-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "cohort-report",
+      "version": "1.0.0",
+      "format": "JSON plus a Markdown report draft",
+      "schema": "spec/artifacts/cohort-report.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "lobby-fill-proposal",
+      "required": false,
+      "schema": "spec/artifacts/lobby-fill-proposal.schema.json"
+    },
+    {
+      "artifact": "balance-patch-draft",
+      "required": false,
+      "schema": "spec/artifacts/balance-patch-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "incidents",
+      "balance",
+      "regions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

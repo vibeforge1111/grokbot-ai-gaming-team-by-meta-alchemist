@@ -1,0 +1,286 @@
+{
+  "id": "gbf-28-mobile-store-submission",
+  "version": "1.1.0",
+  "migration": "Portable profiles and local drafts. Scored groups require positive sample populations and traceable artifacts. Recapture evidence for this version.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "owner-configured",
+  "contribution": "weight * level / 4",
+  "levels": "0 to 4, or U (UNMEASURED, 0 points, not a defect). A test that did not run is NOT_RUN and never reads as PASS.",
+  "pillars": [
+    {
+      "id": "build-config",
+      "name": "Build config",
+      "points": 20
+    },
+    {
+      "id": "privacy",
+      "name": "Privacy",
+      "points": 20
+    },
+    {
+      "id": "store-policy",
+      "name": "Store policy",
+      "points": 20
+    },
+    {
+      "id": "signing",
+      "name": "Signing",
+      "points": 20
+    },
+    {
+      "id": "submission",
+      "name": "Submission",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "build-config:1",
+      "pillar": "Build config",
+      "name": "Target build settings",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required target build settings check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line build-config:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "build-config:2",
+      "pillar": "Build config",
+      "name": "Release hardening",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required release hardening check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line build-config:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "privacy:1",
+      "pillar": "Privacy",
+      "name": "Permissions and explanations",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required permissions and explanations check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line privacy:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "privacy:2",
+      "pillar": "Privacy",
+      "name": "Privacy declarations",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required privacy declarations check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line privacy:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "store-policy:1",
+      "pillar": "Store policy",
+      "name": "Billing review",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required billing review check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line store-policy:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "store-policy:2",
+      "pillar": "Store policy",
+      "name": "Account lifecycle",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required account lifecycle check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line store-policy:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "signing:1",
+      "pillar": "Signing",
+      "name": "Credential hygiene",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required credential hygiene check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line signing:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "signing:2",
+      "pillar": "Signing",
+      "name": "Human signing custody",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required human signing custody check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line signing:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "submission:1",
+      "pillar": "Submission",
+      "name": "Never builds, signs or uploads",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "The agent pushed a build",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every attempt to build, sign, upload, submit or hold a key through the engine fails, and it calls no build or store tool",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line submission:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "submission:2",
+      "pillar": "Submission",
+      "name": "Listing materials",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "An observed requirement fails.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each required listing materials check has a passing observation on the selected build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line submission:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "hashAlgo": "gbf-sorted-json-v2",
+  "sampleFields": {
+    "config": [
+      "measuredCases"
+    ],
+    "hard": [
+      "measuredCases"
+    ],
+    "perm": [
+      "measuredCases"
+    ],
+    "privacy": [
+      "measuredCases"
+    ],
+    "billing": [
+      "measuredCases"
+    ],
+    "accounts": [
+      "measuredCases"
+    ],
+    "secrets": [
+      "measuredCases"
+    ],
+    "signing": [
+      "measuredCases"
+    ],
+    "listing": [
+      "measuredCases"
+    ],
+    "authority": [
+      "forbiddenAttempted"
+    ]
+  },
+  "releaseBlockers": [],
+  "hash": "sha256:ea8dc4fab3118c56fd6c7c069d66468d4de873b0eaeaa8de3838bda0a0a637bc"
+}

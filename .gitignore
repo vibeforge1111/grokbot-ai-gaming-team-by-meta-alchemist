@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+# private scrub terms never go in the public repo
+.scrub-denylist
+*.local.json

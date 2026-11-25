@@ -1,0 +1,8 @@
+[
+ "android/app/build.gradle",
+ "android/app/src/main/AndroidManifest.xml",
+ "ios/App/App/Info.plist",
+ "ios/App/App/PrivacyInfo.xcprivacy",
+ "src/main.ts",
+ "README.md"
+]

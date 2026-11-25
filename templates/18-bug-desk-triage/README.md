@@ -1,0 +1,110 @@
+# Playtest Bug Desk & Repro Triage Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Turn playtest observations into reproducible local issue drafts, group duplicate reports and verify fixes against the affected build.
+
+Rubric: `gbf-18-bug-desk-triage` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## Words used here
+
+- **Evidence pack:** one JSON file with the measurements for one build.
+- **Game profile (`pack.profile`):** your settings, such as which bugs may be P0 and how many clean runs a flaky bug needs.
+- **gitSha and liveSha:** the source revision you are reviewing, and the build players actually run (the deployed web build, the store build, or the build sent to testers).
+- **Case and receipt:** a case is one item you approved for checking (for example one high-priority ticket), listed in `profile.cases`. A receipt is the matching row under `receipts` that records what ran, on which build, and what happened.
+- **Population:** the set of cases a line was measured on, such as the list of high-priority tickets. An empty population earns U.
+- **Other templates:** each template in the kit grades one area (HUD, Audio, Access and so on) and drafts its own findings. Older rubric text calls them "lenses". Bug Desk is where their findings meet, so the same bug is not filed several times.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt (a short record from your capture tool naming the build, the device and the hashes of the evidence files) and the local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `reproducibility:1` | High-priority reports replay | computed | `repro.highPriority`, `receipts.intakeReplay` | `countWhereNot(repro.highPriority,'replayed') == 0`, approved receipt cases pass |
+| `reproducibility:2` | Flaky status kept | computed | `flaky.fixedBelowCriterion`, `flaky.flakyReports` | flaky.fixedBelowCriterion == 0 (hard: level 1 on failure); flaky.flakyReports >= 0 |
+| `evidence-completeness:1` | Captures show real play | computed | `captures.playFindingsWithActionCapture`, `captures.playFindings` | captures.playFindingsWithActionCapture == captures.playFindings (hard: level 1 on failure) |
+| `evidence-completeness:2` | Build lag recorded and applied | computed | `liveBehind.recorded`, `receipts.buildLag` | `liveBehind.recorded true `, approved receipt cases pass |
+| `correct-dedup:1` | Dedup key and owner confirmation | computed | `dedup.distinctPairsKeptSeparate`, `dedup.distinctPairs`, `dedup.sameRootMerged`, `dedup.sameRoot` | dedup.distinctPairsKeptSeparate == dedup.distinctPairs (hard: level 1 on failure); dedup.sameRootMerged == dedup.sameRoot |
+| `correct-dedup:2` | Similarity cutoff is a candidate generator | computed | `dedup.pairs` | maxSimilarDistinct(dedup.pairs) == 0 (hard: level 1 on failure); countWhere(dedup.pairs,'autoMerged') == 0 |
+| `severity:1` | Severity vs confidence | computed | `severity.tickets`, `severity.p0ScopesUsed` | countWhereNot(severity.tickets,'confidenceRecorded') == 0; extra(severity.p0ScopesUsed,P.p0Scopes) == 0 |
+| `severity:2` | Review mistakes kept off the game bug list | computed | `routing.routedToAuditList`, `routing.auditDefects` | routing.routedToAuditList == routing.auditDefects |
+| `closure-quality:1` | Verifier is not the fixer | computed | `closure.closures`, `receipts.closureReview` | `countFieldsEq(closure.closures,'fixer','verifier') == 0`, `countWhereNot(closure.closures,'rawArtifacts') == 0`, approved receipt cases pass |
+| `closure-quality:2` | Artifact mismatch blocks closure | computed | `mismatch.mismatchClosuresAllowed` | mismatch.mismatchClosuresAllowed == 0 (hard: level 1 on failure) |
+
+What the less obvious names mean:
+
+- **Captures show real play:** a finding about play needs a capture of real play, not only a menu or a loading screen. A "match" here is any play session: a level, a run, a race, a puzzle board, a story chapter or a round.
+- **Build lag recorded and applied:** record whether the build players run is older than the source you are reviewing. When it is, scores read from that build's runtime console or logs are capped, because they describe older code.
+- **Similarity cutoff is a candidate generator:** a similarity score only suggests possible duplicates. A person confirms every merge.
+- **Review mistakes kept off the game bug list:** mistakes in the review itself (a broken capture, a wrong rubric reading) go to an audit fix list, not the game bug list.
+
+## Growth checks (reported beside the grade, not scored)
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `p0-response` | triage-speed | `sla.p0OpenHoursMax` | sla.p0OpenHoursMax <= 24 |
+| `crash-intake` | crash-intake | `crashIntake.withBuildSha`, `crashIntake.received`, `crashIntake.triagedInWindow` | crashIntake.withBuildSha == crashIntake.received; crashIntake.triagedInWindow == crashIntake.received |
+| `share-link-intake` | share-link-intake | `shareIntake.withLinkSample`, `shareIntake.reports`, `shareIntake.routedToLinkOwner` | shareIntake.withLinkSample == shareIntake.reports; shareIntake.routedToLinkOwner is true |
+
+- `p0-response`: the age in hours of the oldest open P0. This check compares it with a fixed 24 hours set inside the engine, not your profile; read it as information only. With no open P0, leave `sla` out and the check reads U.
+- `crash-intake`: every crash report carries the build id it came from and is triaged inside the window your team agreed.
+- `share-link-intake`: only for games with share, invite or referral links. A report about a broken link should include a sample of the failing link and reach the person who owns those links (often whoever runs marketing or growth). If your game has no such links, leave `shareIntake` out of the pack; the check reads U and never affects the grade.
+
+## Adapt to your game
+
+Choose the shortest repeatable player journey that shows the bug. It always needs the build, the inputs and the visible result. Examples:
+
+- Solo action game: a save and reload sequence.
+- Co-op game: a disconnect and reconnect.
+- Mobile puzzle game: a board state and the tap sequence.
+- Racing game: the last few seconds of inputs before a desync.
+- Turn-based strategy game: the save from the turn before and the orders given.
+- Narrative adventure: the choice log and the save slot.
+
+Then:
+
+- Export your tracker's tickets with fixer, verifier, severity, scope and confidence fields.
+- Set the number of clean repeated runs a flaky bug needs (`flakyRunsRequired`) and the P0 scopes (`p0Scopes`) in the profile.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+## Owner calls
+
+- Which kinds of bug may be P0 for your game (`p0Scopes`), for example payments, lost saves or items players paid for.
+- How many clean runs in a row a flaky bug must pass before it counts as fixed (`flakyRunsRequired`).
+
+## Blockers
+
+- Needs your real ticket export; the worked example is synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

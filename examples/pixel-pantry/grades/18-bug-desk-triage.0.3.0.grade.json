@@ -1,0 +1,187 @@
+{
+ "templateId": "gbf-18-bug-desk-triage",
+ "rubricVersion": "1.3.0",
+ "rubricHash": "sha256:4b7bc60d6d1dbf94576da56859448d8e1a8c9f04a6811fc76b61b3ceccddb276",
+ "engine": {
+  "kit": "1.3.0",
+  "lens": "1.1.0"
+ },
+ "evidenceNote": "Synthetic examples use declared artifacts. For a real pack the engine checks local artifact bytes and the producer receipt. Measurements and producer identity still require owner review.",
+ "packId": "pixel-pantry-18-0.3.0",
+ "gitSha": "pp-030-git",
+ "liveSha": "pp-030-live",
+ "synthetic": true,
+ "applicable": true,
+ "lines": [
+  {
+   "id": "reproducibility:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-repro",
+    "sample-intakeReplay-B-1",
+    "sample-intakeReplay-B-2"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "reproducibility:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-flaky"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "evidence-completeness:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-captures"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "evidence-completeness:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-liveBehind",
+    "sample-buildLag-running"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "correct-dedup:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-dedup"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "correct-dedup:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-dedup-static"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "severity:1",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-severity"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "severity:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-routing"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "closure-quality:1",
+   "kind": "computed",
+   "level": 1,
+   "evidenceIds": [
+    "art-closure",
+    "sample-closureReview-B-1"
+   ],
+   "findings": [
+    "countFieldsEq(closure.closures,'fixer','verifier') = 1 fails == 0 (0)",
+    "closureReview/B-1: verifier fails != row.fixer"
+   ],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "closure-quality:2",
+   "kind": "computed",
+   "level": 4,
+   "evidenceIds": [
+    "art-mismatch"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  }
+ ],
+ "supportedPoints": 92.5,
+ "coverage": 1,
+ "grade": 92.5,
+ "verdict": "CONDITIONAL",
+ "interval": {
+  "low": 92.5,
+  "high": 92.5,
+  "note": "low treats UNMEASURED as 0, high as full credit"
+ },
+ "checks": [
+  {
+   "id": "p0-response",
+   "areas": [
+    "triage-speed"
+   ],
+   "pass": true,
+   "level": 4,
+   "evidenceIds": [
+    "art-sla"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "crash-intake",
+   "areas": [
+    "crash-intake"
+   ],
+   "pass": true,
+   "level": 4,
+   "evidenceIds": [
+    "art-crashIntake"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  },
+  {
+   "id": "share-link-intake",
+   "areas": [
+    "share-link-intake"
+   ],
+   "pass": true,
+   "level": 4,
+   "evidenceIds": [
+    "art-shareIntake"
+   ],
+   "findings": [],
+   "evidenceMode": "pack-declared"
+  }
+ ],
+ "tickets": [
+  {
+   "key": "5ec843c488753474",
+   "lineId": "closure-quality:1",
+   "level": 1,
+   "finding": "countFieldsEq(closure.closures,'fixer','verifier') = 1 fails == 0 (0)",
+   "evidenceIds": [
+    "art-closure",
+    "sample-closureReview-B-1"
+   ],
+   "state": "candidate"
+  }
+ ]
+}

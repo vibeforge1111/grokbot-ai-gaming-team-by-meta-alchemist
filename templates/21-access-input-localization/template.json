@@ -1,0 +1,125 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-21-access-input-localization",
+  "slug": "21-access-input-localization",
+  "name": "Access, Input and Localization QA",
+  "shortName": "Access",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Check whether players can navigate, read and control your game across supported inputs, languages and accessibility settings.",
+  "stage": "Polish, Ship",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "access-input-localization-getting-started",
+  "skills": [
+    "access-input-localization-getting-started",
+    "input-navigation-and-device-switch-audit",
+    "readability-and-caption-evidence",
+    "motion-flash-comfort-check",
+    "string-inventory-and-pseudo-locale",
+    "file-to-shared-ledger",
+    "access-input-localization-lens-engine"
+  ],
+  "routines": [
+    "access-input-localization-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-21-access-input-localization",
+    "version": "1.2.0",
+    "hash": "sha256:6f75de48ce38d716710d749e86779f290245f33b76e9800faf86ad9a8bf8f593"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": null,
+    "externalReviewMin": 4.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "HUD Designer and the playtest team.",
+    "handsTo": "Bug Desk (local ticket drafts)."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "hud-capture-set": "^1.0.0",
+      "audio-mix-report": "^1.0.0",
+      "tracker-export": "^1.0.0",
+      "dialogue-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "access-report",
+      "version": "1.0.0",
+      "format": "JSON plus a Markdown summary",
+      "schema": "spec/artifacts/access-report.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "hud-capture-set",
+      "required": false,
+      "schema": "spec/artifacts/hud-capture-set.schema.json",
+      "whenMissing": "Continue: capture text and contrast states yourself, or leave readability:1 and readability:2 unmeasured, and write \"ASSUMPTION: no hud-capture-set available\"."
+    },
+    {
+      "artifact": "audio-mix-report",
+      "required": false,
+      "schema": "spec/artifacts/audio-mix-report.schema.json",
+      "whenMissing": "Continue: build the cue list from the game's event log, or leave captions-and-assistive-info:1 unmeasured."
+    },
+    {
+      "artifact": "tracker-export",
+      "required": false,
+      "schema": "spec/artifacts/tracker-export.schema.json"
+    },
+    {
+      "artifact": "dialogue-draft",
+      "required": false,
+      "schema": "spec/artifacts/dialogue-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

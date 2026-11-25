@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/fairness-findings.schema.json",
+  "title": "Fairness findings (team artifact)",
+  "description": "Server authority and fairness findings from the Fairness and Bridge template. Defensive review of your own game only. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "fairness-findings"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One finding.",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule",
+          "finding",
+          "severity",
+          "packId"
+        ],
+        "properties": {
+          "rule": {
+            "type": "string",
+            "description": "Game rule the server should enforce."
+          },
+          "authority": {
+            "type": "string",
+            "description": "Who decides it now: server, client or shared."
+          },
+          "finding": {
+            "type": "string",
+            "description": "What was observed."
+          },
+          "severity": {
+            "type": "string",
+            "description": "Owner's severity scale."
+          },
+          "packId": {
+            "type": "string",
+            "description": "Pack id."
+          }
+        }
+      }
+    }
+  }
+}

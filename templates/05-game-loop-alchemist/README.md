@@ -1,0 +1,141 @@
+# Game Loop Alchemist
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+**Status: preview, not shipping.** This template works and its tests pass, but it is not yet held to the kit's release standard.
+
+Before it can ship:
+
+- **Minimum sample size.** Today one observed case can earn level 4 on a line. The engine needs a profile setting (`profile.bands.minCases`) so a line backed by fewer observed cases reads U. Until then, treat any line with fewer cases than your playtest plan calls for as provisional, and say so in the report.
+
+Map what the player chooses, what changes, and why the next turn is worth taking. Measure the core loop, its pace and the freedom to stop. The playtest lead and the designer get a local loop map, a pacing diagnosis and an experiment card.
+
+A *core loop* is the short cycle a player repeats: act, see what changed, choose again. It fits any genre: placing a tile in a puzzle game, a jump and a checkpoint in a 2D platformer, a turn in a strategy game, a lap in a racing game, a day in a farming sim, a choice in a narrative adventure.
+
+[Install and run](HOW-TO-USE.md) | [Prompts](PROMPTS.md) | [Frozen rubric](RUBRIC.md)
+
+Rubric: `gbf-05-game-loop-alchemist` v2.0.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+Run these in this folder (Node 18 or later):
+
+```sh
+node engine/lens.mjs fixtures/good-pack.json      # synthetic puzzle example, grade 100
+node engine/lens.mjs fixtures/rhythm-pack.json    # synthetic rhythm example, a second genre
+node engine/lens.mjs --meta                       # every line, its fields and profile values
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+To rebuild the installed recipe after editing a skill, memory fact or routine, run `node scripts/build-recipe.mjs templates/05-game-loop-alchemist` from the repository root.
+
+## Words used here
+
+- **Evidence pack:** one JSON file with the observations for one build. The engine (`engine/lens.mjs`, also called the lens) grades it.
+- **Game profile (`pack.profile`):** the owner's settings for this game: the meaningful action, its outcome, the time budgets, the cohort, the observation window and the bands. Thresholds live here, never in the engine.
+- **Case:** one observed opportunity, for example one tester's opening, one decision beat or one invitation to play again. Each case has an anonymous `caseId`.
+- **Sample group and rows:** each rubric line reads one group under `metrics`, for example `metrics.goal.samples`. Each row in `samples` is one case.
+- **Receipt:** the entry in `pack.artifacts` that says where a group's rows came from: the rubric line, both build ids, the profile scope, the cohort context and the source file. Each group names its receipt in `artifact`.
+- **Bands:** three shares of cases between 0 and 1 that you choose: `floor`, `pass` and `target`. The engine compares the share of cases that met a line's condition with them.
+- **Cohort and observation window:** who is eligible (for example first-session testers) and the period in which a return to play counts. A window is *closed* once it has ended; replay is only counted in a closed window.
+- **gitSha and liveSha:** the source revision you are reviewing, and the build players actually run.
+- **U (UNMEASURED) and NOT_RUN:** U means no usable evidence yet; it earns 0 points and is not a defect. NOT_RUN means a planned capture or run did not happen.
+- **Release blocker:** a measured failure that sets the grade to 0. Here it is a tester who asked to stop and was forced into another cycle.
+
+## How the engine decides a level
+
+For each line the engine takes the rows in its sample group, checks each row against the line's condition and divides the cases that met it by all observed cases. Then:
+
+- 0 when no case met the condition;
+- 1 when some did, below `bands.floor`;
+- 2 at or above the floor, below `bands.pass`;
+- 3 at or above the pass share, below `bands.target`;
+- 4 at or above the target.
+
+Example (illustrative bands 0.5, 0.75 and 1): 3 of 4 cases meeting the condition is a share of 0.75, level 3.
+
+A line is U when its receipt is missing or does not match the pack, a row is malformed, a row is marked NOT_RUN, or a profile value the line needs is missing. A measured failure stays in the share. Any confirmed release blocker or open P0 sets the grade to zero. Read the grade with its supported points (the points the measured lines could earn) and its interval (the lowest and highest grade the U lines allow).
+
+## Pack fields (one row per rubric line)
+
+Supply timestamped first-session traces, anonymous playtest observations and return opportunities from a closed observation window. Every receipt must carry this line's `lineId`, the pack's `gitSha` and `liveSha`, the profile `scope`, and a `context` that repeats the profile's `cohort`, `window`, `action` and `outcome`. Its `source` is a local file path and locator, for example `notes/session-12.md#goal`. Case ids must be distinct within a group.
+
+| Line | Group (evidence) | Row fields | How to get a row | Meets the condition when |
+|---|---|---|---|---|
+| `opening:1` Opening goal understood | `goal` (capture) | `{caseId, expected, readback}` | Before any hint, ask what the tester is trying to do. Code the answer with the goal key. | `readback` equals `expected` |
+| `opening:2` Time to meaningful action | `action` (trace) | `{caseId, startS, actionS}` | Timestamp the first moment of control and the first meaningful action in the same attempt, in seconds. | `actionS - startS` is at most `profile.actionBudgetS` |
+| `consequence:1` Action produces its intended state | `state` (trace) | `{caseId, expected, actual}` | Write the intended state change before the input, then read the resulting state from the same trace. | `actual` equals `expected` |
+| `consequence:2` Feedback explains the consequence | `feedback` (capture) | `{caseId, expected, readback}` | Right after the cue, ask what changed. Code the answer with the consequence key. | `readback` equals `expected` |
+| `pacing:1` Time between decisions | `beat` (trace) | `{caseId, resolvedS, choiceS}` | Mark when one choice resolved and when the next choice became available, leaving out pauses the owner listed. | `choiceS - resolvedS` is at most `profile.beatBudgetS` |
+| `pacing:2` Time to regain agency | `recovery` (trace) | `{caseId, setbackS, controlS}` | Trigger the approved setback, undo or retry and mark when the next useful input is possible. | `controlS - setbackS` is at most `profile.recoveryBudgetS` |
+| `agency:1` A choice changes the next beat | `choice` (trace) | `{caseId, expected, actual}` | From the same starting state, take the baseline and the alternate choice. Write the expected difference first. | `actual` equals `expected` |
+| `agency:2` An explicit stop is honored | `exit` (capture) | `{caseId, honored}` | At the agreed stop point, the tester declines another cycle. Record whether play stopped. | `honored` is true. `false` is a release blocker. |
+| `replay:1` Reason to replay is intrinsic | `reason` (capture) | `{caseId, intrinsic}` | After the loop, ask a neutral question about another attempt. Code the answer with the reason key. | `intrinsic` is true |
+| `replay:2` Voluntary replay after an opportunity | `return` (trace) | `{caseId, offerRef, cohort, window, windowClosed, returned}` | Once per eligible invitation, record accepted or declined after the window closes. | `returned` is true, with `cohort` and `window` equal to the profile, `windowClosed` true and a non-empty `offerRef` |
+
+Times are seconds on one clock for both timestamps in a row (for example the session timer of one recording). An end time before its start time, or a missing timestamp, makes the line U. "Intrinsic" in `replay:1` means the reason comes from the game itself (a choice, a challenge or a discovery the tester wants), not from obligation, a streak or a reward timer. Code indifference and obligation as `intrinsic: false`; they stay in the share.
+
+Profile values the lines read: `scope`, `bands` (`floor`, `pass`, `target`), `cohort`, `window`, `action`, `outcome`, `actionBudgetS`, `beatBudgetS` and `recoveryBudgetS`. Copy the shape of [the synthetic pack](fixtures/good-pack.json) and replace every value with your own.
+
+## Adapt to your game
+
+The owner names the loop's pieces. Examples (illustrative, not budgets):
+
+- **Mobile puzzle game (the worked example):** first action is placing a tile; the outcome is a connected path; the next decision is the next placement; the retry after a dead end is the recovery; the replay offer is the next optional board.
+- **2D platformer:** first action is the first jump onto a platform; the recovery is a respawn after a fall; the stop point is the level-complete screen; the replay offer is "retry for a better time".
+- **Turn-based strategy game:** first action is the first order; the decision beat runs from the end of the enemy turn to the next available order (leave the enemy animation out as an owner-defined pause); the stop point is end turn with save and quit.
+- **Racing game:** first action is the first throttle input after the countdown; the recovery is control back after a crash; the replay offer is a rematch on the results screen.
+- **Farming or life sim:** first action is planting a crop; the decision beat runs from the end of a day to the first choice of the next; the stop point is sleeping and saving, which must not force another day.
+- **Narrative adventure:** first action is the first dialogue choice; the alternate choice should lead to a different scene; the replay offer is replaying a chapter for another branch.
+- **Rhythm game (the second worked example):** first action is the first tap response; the decision beat is the gap to the next input window.
+
+If your game has no part of the loop a line needs (for example no setback, so nothing to recover from), leave that group out of the pack. The line reads U, coverage drops and the verdict stays CONDITIONAL. Say "does not apply" in the report; never fill it with made-up rows.
+
+## Owner decisions
+
+- The meaningful first action and its intended outcome.
+- The decision beat, the setback or retry point, and the stop point.
+- The eligible cohort and when the observation window closes.
+- The coding keys for the goal readback, the consequence readback and the reason to play again (with indifference and obligation as options).
+- The time budgets (`actionBudgetS`, `beatBudgetS`, `recoveryBudgetS`) and the bands.
+
+## Worked example
+
+Two synthetic games, each with its own build ids, scope and timings. Neither sets your budgets.
+
+- [fixtures/good-pack.json](fixtures/good-pack.json): a spatial puzzle. Placing a tile connects a path; the next decision is another placement. Grade 100.
+- [fixtures/rhythm-pack.json](fixtures/rhythm-pack.json): a rhythm game. A tap answers a phrase. Three of four replay offers were accepted, so `replay:2` is level 3 and the grade is 97.5.
+- [fixtures/session-notes.md](fixtures/session-notes.md): the synthetic observer notes both packs cite.
+
+## Team handoffs
+
+Files are exchanged locally under `.grokbot-team/artifacts/<artifact-id>/` in your game project. Nothing is sent anywhere.
+
+| Artifact | Direction | Required | Other end | If it is missing |
+|---|---|---|---|---|
+| `game-profile` | consumes | required | The owner, via the getting-started skill | Run the getting-started skill first; lines with no budget grade U |
+| `evidence-pack` | consumes | required | Your playtest lead, CI run or manual capture | No grade; the engine refuses the pack (INVALID) |
+| `loop-report` | produces | optional | Game Feel (01), Economy Director (06), HUD Designer (09) | They work from their own captures; the loop map stays in the report |
+| `grade-record` | produces | required | Producer (12) as a milestone gate, the owner | The Producer leaves that gate unmeasured |
+| `ticket-draft` | produces | optional | Bug Desk (18), then the human files it | Findings stay in the report only. A forced continuation is a P0 candidate. |
+
+The loop map, pacing diagnosis and experiment card are local drafts for the designer and the playtest lead, saved together as a `loop-report`. Game Feel (01) and HUD Designer (09) read it for cue changes, and Economy Director (06) for reward or replay changes. A sound cue change for Audio Director (13) goes in a local ticket draft.
+
+## Known limits
+
+- One observed case can earn level 4 (see the status note at the top).
+- `agency:2` and `replay:1` rows carry only a yes or no flag. Keep the coded answer and the stop point in the cited source so a reviewer can check the coding.
+- Needs your own playtest observations; both worked examples are synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+). `engine/team-memory.mjs`: the shared team memory helper.
+- `fixtures/good-pack.json`, `fixtures/rhythm-pack.json`, `fixtures/session-notes.md`: worked examples. `fixtures/mutations.json`: negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.
+
+[MIT license](../../LICENSE).

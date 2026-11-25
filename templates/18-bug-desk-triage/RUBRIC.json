@@ -1,0 +1,432 @@
+{
+  "id": "gbf-18-bug-desk-triage",
+  "version": "1.3.0",
+  "migration": "1.0.0 to 1.1.0: anchors made game-agnostic (constants live in the game profile), lens gates added; ids, weights and passAt unchanged; 1.1.0 to 1.1.1: gameProfile generalized to your-game-profile for the public kit and hash recomputed with the documented kit algorithm (spec/RUBRIC_HASH.md); ids, weights, anchors and passAt unchanged; 1.1.1 to 1.1.2: The severity anchor names the project-defined P0 scopes used by the engine. Scoring and fields are unchanged. 1.1.2 to 1.1.3: Evidence descriptions and fixture working directories now refer to the distributed kit. 1.1.3 to 1.1.4: Empty samples and zero case counts earn U. Computed lines require the declared evidence type. 1.1.4 to 1.1.5: Links intake, replays and independent closures to cases and derives the lag-cap requirement from build IDs. 1.1.5 to 1.2.0: Line, pillar and anchor wording made genre-neutral (ids, weights, conditions and pass marks unchanged). 1.2.0 to 1.3.0: Evidence pack names made genre-neutral (matchLinesWithActionCapture to playFindingsWithActionCapture; matchLines to playFindings; routedToGrowth to routedToLinkOwner; share-attribution-intake to share-link-intake). Scoring, weights, conditions and pass marks unchanged; rename these fields in packs made for 1.2.0.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "pillars": [
+    {
+      "id": "reproducibility",
+      "name": "Reproducibility",
+      "points": 20
+    },
+    {
+      "id": "evidence-completeness",
+      "name": "Evidence completeness",
+      "points": 20
+    },
+    {
+      "id": "correct-dedup",
+      "name": "Correct dedup",
+      "points": 20
+    },
+    {
+      "id": "severity",
+      "name": "Severity",
+      "points": 20
+    },
+    {
+      "id": "closure-quality",
+      "name": "Closure quality",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "reproducibility:1",
+      "pillar": "Reproducibility",
+      "name": "High-priority reports replay",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A high-priority ticket cannot be replayed",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every high-priority report replays from its minimal repro. All approved `intakeReplay` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reproducibility:1",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "intakeReplay",
+          "description": "Start from a read-only high-priority intake export. Match each case to its replay, signature and observed attempt count. Record verified empty intake as a dated zero-row export with no execution credit.",
+          "fields": {
+            "ticket": "text",
+            "signature": "text",
+            "attempts": "positive",
+            "reproduced": "bool",
+            "rewind": "artifact:trace",
+            "acceptance": "text"
+          },
+          "tests": [
+            [
+              "ticket",
+              "==",
+              "case.ticket",
+              1
+            ],
+            [
+              "signature",
+              "==",
+              "case.signature",
+              1
+            ],
+            [
+              "reproduced",
+              "==",
+              true,
+              1
+            ]
+          ],
+          "members": {
+            "path": "metrics.repro.highPriority",
+            "field": "id",
+            "caseField": "ticket"
+          },
+          "inventorySource": "trace"
+        }
+      ]
+    },
+    {
+      "id": "reproducibility:2",
+      "pillar": "Reproducibility",
+      "name": "Flaky status kept",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Flaky reported as fixed",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Flaky stays flaky until the repeated-run criterion is met",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reproducibility:2",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "evidence-completeness:1",
+      "pillar": "Evidence completeness",
+      "name": "Captures show real play",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A capture of loading or menus only is treated as clean play",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Captures cover real action sequences; a menu-only log cannot pass a line about play",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line evidence-completeness:1",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "evidence-completeness:2",
+      "pillar": "Evidence completeness",
+      "name": "Build lag recorded and applied",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "config",
+      "anchors": {
+        "0": "Live build not identified",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Whether the running build is behind the source is recorded, and scores read from its runtime logs are capped while it is behind. All approved `buildLag` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line evidence-completeness:2",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "buildLag",
+          "description": "Read the source ancestry and deployed commit from a read-only history export. Compare IDs in the same revision namespace. Unrelated histories stay U.",
+          "fields": {
+            "source": "text",
+            "live": "text",
+            "capped": "bool",
+            "sourceHistory": "ids",
+            "historyArtifact": "artifact:config"
+          },
+          "tests": [
+            [
+              "source",
+              "==",
+              "pack.gitSha",
+              1
+            ],
+            [
+              "live",
+              "==",
+              "pack.liveSha",
+              1
+            ],
+            [
+              "capped",
+              "==",
+              "row.behind",
+              1
+            ],
+            [
+              "tip",
+              "==",
+              "row.source",
+              1
+            ]
+          ],
+          "derive": {
+            "behind": [
+              "ancestorBehind",
+              "sourceHistory",
+              "live"
+            ],
+            "tip": [
+              "last",
+              "sourceHistory"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "correct-dedup:1",
+      "pillar": "Correct dedup",
+      "name": "Dedup key and owner confirmation",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Several templates file the same bug as separate tickets",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Two distinct bugs with similar messages stay separate; one root cause reported by several templates is merged after the owner confirms",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line correct-dedup:1",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "correct-dedup:2",
+      "pillar": "Correct dedup",
+      "name": "Similarity cutoff is a candidate generator",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Auto-merge on an unvalidated cutoff",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Similarity candidates (any method) are confirmed by the owner, never auto-merged",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line correct-dedup:2",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "severity:1",
+      "pillar": "Severity",
+      "name": "Severity vs confidence",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Severity inflated by confidence",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Severity and confidence are recorded separately and P0 is limited to the scopes in the project's profile",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line severity:1",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "severity:2",
+      "pillar": "Severity",
+      "name": "Review mistakes kept off the game bug list",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Review mistakes filed as game bugs",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Review mistakes go to the review fix list",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line severity:2",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    },
+    {
+      "id": "closure-quality:1",
+      "pillar": "Closure quality",
+      "name": "Verifier is not the fixer",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Fixer verifies own fix",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "VERIFIED_FIXED needs a different verifier and raw artifacts. All approved `closureReview` cases pass on the reviewed build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line closure-quality:1",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Run missing, stale and measured-failure cases against the synthetic pack."
+      },
+      "receipts": [
+        {
+          "name": "closureReview",
+          "description": "Use the closure intake export as the expected set. Link the independent verification replay, acceptance test and fixed build.",
+          "fields": {
+            "ticket": "text",
+            "fixer": "text",
+            "verifier": "text",
+            "fixedBuild": "text",
+            "replay": "artifact:trace",
+            "acceptance": "text",
+            "passed": "bool"
+          },
+          "tests": [
+            [
+              "ticket",
+              "==",
+              "case.ticket",
+              1
+            ],
+            [
+              "verifier",
+              "!=",
+              "row.fixer",
+              1
+            ],
+            [
+              "fixedBuild",
+              "==",
+              "pack.liveSha",
+              1
+            ],
+            [
+              "passed",
+              "==",
+              true,
+              1
+            ]
+          ],
+          "members": {
+            "path": "metrics.closure.closures",
+            "field": "ticket",
+            "caseField": "ticket"
+          },
+          "inventorySource": "trace"
+        }
+      ]
+    },
+    {
+      "id": "closure-quality:2",
+      "pillar": "Closure quality",
+      "name": "Artifact mismatch blocks closure",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Closure despite mismatch",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "A raw artifact mismatch blocks closure",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line closure-quality:2",
+        "cwd": "templates/18-bug-desk-triage",
+        "note": "Every recorded mutation of the worked example must drop this line below pass, and a missing metric must give U"
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "source": "Issue records, replay attempts, build identifiers and independent verification evidence.",
+  "hash": "sha256:4b7bc60d6d1dbf94576da56859448d8e1a8c9f04a6811fc76b61b3ceccddb276",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty inputs or zero measured cases earn U and zero points. A measured zero failures is valid.",
+  "sampleFields": {
+    "repro": [
+      "highPriority"
+    ],
+    "flaky": [
+      "flakyReports"
+    ],
+    "captures": [
+      "playFindings"
+    ],
+    "dedup": [
+      "distinctPairs",
+      "sameRoot",
+      "pairs"
+    ],
+    "severity": [
+      "tickets"
+    ],
+    "routing": [
+      "auditDefects"
+    ],
+    "closure": [
+      "closures"
+    ],
+    "crashIntake": [
+      "received"
+    ],
+    "shareIntake": [
+      "reports"
+    ]
+  }
+}

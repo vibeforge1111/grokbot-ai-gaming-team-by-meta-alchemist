@@ -1,0 +1,284 @@
+{
+  "id": "gbf-27-retention-cohort-analytics",
+  "version": "1.1.0",
+  "migration": "Portable profiles and local drafts. Scored groups require positive sample populations and traceable artifacts. Recapture evidence for this version.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "owner-configured",
+  "contribution": "weight * level / 4",
+  "levels": "0 to 4, or U (UNMEASURED, 0 points, not a defect). A test that did not run is NOT_RUN and never reads as PASS.",
+  "pillars": [
+    {
+      "id": "privacy-in",
+      "name": "Privacy in",
+      "points": 20
+    },
+    {
+      "id": "correctness",
+      "name": "Correctness",
+      "points": 20
+    },
+    {
+      "id": "confidence",
+      "name": "Confidence",
+      "points": 20
+    },
+    {
+      "id": "retention",
+      "name": "Retention",
+      "points": 20
+    },
+    {
+      "id": "reporting",
+      "name": "Reporting",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "privacy-in:1",
+      "pillar": "Privacy in",
+      "name": "No personal data accepted",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Personal data in the dataset",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Only salted hashes and day numbers get in; planted personal rows, raw ids and timestamps are all refused",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line privacy-in:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "privacy-in:2",
+      "pillar": "Privacy in",
+      "name": "Nothing personal out",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A player list left the analytics",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "No ids in outputs, no small cohort shown, and no way to list or export individuals",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line privacy-in:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "correctness:1",
+      "pillar": "Correctness",
+      "name": "Matches an independent recount",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Numbers do not reconcile",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Pooled D1, D7 and D30 match a separate player-by-player recount across enough cohorts",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line correctness:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "correctness:2",
+      "pillar": "Correctness",
+      "name": "Only days that have passed",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Young players drag rates down",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "No player is counted for a day that has not fully passed",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line correctness:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "confidence:1",
+      "pillar": "Confidence",
+      "name": "A range on every rate",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Bare percentages",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every rate shown has a 95% range that contains it",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line confidence:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "confidence:2",
+      "pillar": "Confidence",
+      "name": "Enough data",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A handful of players",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Enough players and days to judge",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line confidence:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "retention:1",
+      "pillar": "Retention",
+      "name": "D1 and D7 against targets",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Most players never come back",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "D1 and D7 meet the owner's targets",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line retention:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "retention:2",
+      "pillar": "Retention",
+      "name": "D30 against target",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Nobody stays a month",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "D30 meets the owner's target",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line retention:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "reporting:1",
+      "pillar": "Reporting",
+      "name": "Owner report and authority",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Reports sent to players or posted",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The owner report is clean and no attempt to export, post or write through the engine succeeds",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reporting:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "reporting:2",
+      "pillar": "Reporting",
+      "name": "Segments compared",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "One number for everyone",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "At least one segment split (device, mode or source) is shown with ranges",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line reporting:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "hashAlgo": "gbf-sorted-json-v2",
+  "sampleFields": {
+    "privacy": [
+      "measuredCases"
+    ],
+    "output": [
+      "measuredCases"
+    ],
+    "authority": [
+      "forbiddenAttempted"
+    ],
+    "math": [
+      "cohorts"
+    ],
+    "conf": [
+      "rates"
+    ],
+    "data": [
+      "players",
+      "daysCovered"
+    ],
+    "ret": [
+      "measuredCases"
+    ],
+    "ret30": [
+      "measuredCases"
+    ],
+    "segments": [
+      "compared"
+    ]
+  },
+  "releaseBlockers": [],
+  "hash": "sha256:5956c48fa00b2ad3dded0fc7f4ea33706fd6e8e5146985d5c6bbad72d3427aad"
+}

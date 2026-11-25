@@ -1,0 +1,573 @@
+{
+ "packId": "example-17-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "minIconPx": 16,
+  "devices": [
+   "desktop",
+   "phone"
+  ],
+  "requiredIconSizes": [
+   48,
+   72,
+   96,
+   144,
+   192,
+   512
+  ],
+  "maxTextureBytesPerScene": 24000000,
+  "maxTierPaletteDeltaE": 6,
+  "minItemArtPx": 32,
+  "minPackingOccupancy": 0.75,
+  "minPaddingPx": 2,
+  "cases": {
+   "atlasMatrix": [
+    {
+     "id": "desktop-16-linear",
+     "device": "desktop",
+     "sizePx": 16,
+     "filter": "linear",
+     "mip": 0
+    },
+    {
+     "id": "desktop-16-nearest",
+     "device": "desktop",
+     "sizePx": 16,
+     "filter": "nearest",
+     "mip": 0
+    },
+    {
+     "id": "desktop-32-linear",
+     "device": "desktop",
+     "sizePx": 32,
+     "filter": "linear",
+     "mip": 0
+    },
+    {
+     "id": "desktop-32-nearest",
+     "device": "desktop",
+     "sizePx": 32,
+     "filter": "nearest",
+     "mip": 0
+    },
+    {
+     "id": "desktop-64-linear",
+     "device": "desktop",
+     "sizePx": 64,
+     "filter": "linear",
+     "mip": 0
+    },
+    {
+     "id": "desktop-64-nearest",
+     "device": "desktop",
+     "sizePx": 64,
+     "filter": "nearest",
+     "mip": 0
+    },
+    {
+     "id": "phone-16-linear",
+     "device": "phone",
+     "sizePx": 16,
+     "filter": "linear",
+     "mip": 0
+    },
+    {
+     "id": "phone-16-nearest",
+     "device": "phone",
+     "sizePx": 16,
+     "filter": "nearest",
+     "mip": 0
+    },
+    {
+     "id": "phone-32-linear",
+     "device": "phone",
+     "sizePx": 32,
+     "filter": "linear",
+     "mip": 0
+    },
+    {
+     "id": "phone-32-nearest",
+     "device": "phone",
+     "sizePx": 32,
+     "filter": "nearest",
+     "mip": 0
+    },
+    {
+     "id": "phone-64-linear",
+     "device": "phone",
+     "sizePx": 64,
+     "filter": "linear",
+     "mip": 0
+    },
+    {
+     "id": "phone-64-nearest",
+     "device": "phone",
+     "sizePx": 64,
+     "filter": "nearest",
+     "mip": 0
+    }
+   ],
+   "frameColliders": [
+    {
+     "id": "rise",
+     "frame": "rise",
+     "collider": "shape-rise",
+     "pixels": "1784b410483d11db424f5ea04e2cfe73e1eb52c94f4ad12fdb5e8a23f296e720",
+     "pivotX": 8,
+     "pivotY": 8,
+     "sourceWidth": 32,
+     "sourceHeight": 32,
+     "trimX": 2,
+     "trimY": 1,
+     "rotated": false
+    },
+    {
+     "id": "settle",
+     "frame": "settle",
+     "collider": "shape-settle",
+     "pixels": "1784b410483d11db424f5ea04e2cfe73e1eb52c94f4ad12fdb5e8a23f296e720",
+     "pivotX": 10,
+     "pivotY": 8,
+     "sourceWidth": 32,
+     "sourceHeight": 32,
+     "trimX": 2,
+     "trimY": 1,
+     "rotated": false
+    }
+   ],
+   "tierSeparation": [
+    {
+     "id": "tiers"
+    }
+   ]
+  },
+  "minTierDeltaE": 12,
+  "atlasSizes": [
+   16,
+   32,
+   64
+  ],
+  "atlasFilters": [
+   "nearest",
+   "linear"
+  ],
+  "atlasMips": [
+   0
+  ]
+ },
+ "artifacts": [
+  {
+   "id": "art-icons",
+   "kind": "capture",
+   "path": "captures/icons.json",
+   "sha256": null
+  },
+  {
+   "id": "art-atlas",
+   "kind": "capture",
+   "path": "captures/atlas.json",
+   "sha256": null
+  },
+  {
+   "id": "art-install",
+   "kind": "trace",
+   "path": "traces/install.json",
+   "sha256": null
+  },
+  {
+   "id": "art-iconSet",
+   "kind": "static",
+   "path": "static/iconSet.json",
+   "sha256": null
+  },
+  {
+   "id": "art-itemArt",
+   "kind": "capture",
+   "path": "captures/itemArt.json",
+   "sha256": null
+  },
+  {
+   "id": "art-rarity",
+   "kind": "capture",
+   "path": "captures/tierPalette.json",
+   "sha256": null
+  },
+  {
+   "id": "art-weight",
+   "kind": "trace",
+   "path": "traces/weight.json",
+   "sha256": null
+  },
+  {
+   "id": "art-decode",
+   "kind": "trace",
+   "path": "traces/decode.json",
+   "sha256": null
+  },
+  {
+   "id": "art-hitShape",
+   "kind": "trace",
+   "path": "traces/hitShape.json",
+   "sha256": null
+  },
+  {
+   "id": "art-elevation",
+   "kind": "capture",
+   "path": "captures/heightLayer.json",
+   "sha256": null
+  },
+  {
+   "id": "art-packing",
+   "kind": "trace",
+   "path": "traces/packing.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-desktop-16-linear",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/desktop-16-linear.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-desktop-16-nearest",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/desktop-16-nearest.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-desktop-32-linear",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/desktop-32-linear.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-desktop-32-nearest",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/desktop-32-nearest.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-desktop-64-linear",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/desktop-64-linear.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-desktop-64-nearest",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/desktop-64-nearest.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-phone-16-linear",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/phone-16-linear.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-phone-16-nearest",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/phone-16-nearest.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-phone-32-linear",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/phone-32-linear.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-phone-32-nearest",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/phone-32-nearest.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-phone-64-linear",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/phone-64-linear.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-atlasMatrix-phone-64-nearest",
+   "kind": "capture",
+   "path": "receipts/atlasMatrix/phone-64-nearest.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-frameColliders-rise",
+   "kind": "trace",
+   "path": "receipts/frameColliders/rise.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-frameColliders-settle",
+   "kind": "trace",
+   "path": "receipts/frameColliders/settle.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-tierSeparation-tiers",
+   "kind": "capture",
+   "path": "receipts/tierSeparation/tiers.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "icons": {
+   "artifact": "art-icons",
+   "devices": [
+    "desktop",
+    "phone"
+   ],
+   "minDisplayedPx": 20,
+   "bleedPixels": 0
+  },
+  "atlas": {
+   "artifact": "art-atlas",
+   "combosRequired": 12,
+   "combosChecked": 12,
+   "bleedFailures": 0
+  },
+  "install": {
+   "artifact": "art-install",
+   "urls": 8,
+   "resolvedAndDecoded": 8,
+   "liveBehindSeparated": true
+  },
+  "iconSet": {
+   "artifact": "art-iconSet",
+   "sizesPresent": [
+    48,
+    72,
+    96,
+    144,
+    192,
+    512
+   ]
+  },
+  "itemArt": {
+   "artifact": "art-itemArt",
+   "minDisplayedPx": 40,
+   "unreadable": 0,
+   "measuredCases": 1
+  },
+  "tierPalette": {
+   "artifact": "art-rarity",
+   "pairs": [
+    [
+     "#9e9e9e",
+     "#a0a0a0"
+    ],
+    [
+     "#1565c0",
+     "#1667c2"
+    ],
+    [
+     "#6a1b9a",
+     "#6b1c9c"
+    ]
+   ]
+  },
+  "weight": {
+   "artifact": "art-weight",
+   "bytesPerScene": [
+    14000000,
+    18500000,
+    21000000
+   ]
+  },
+  "decode": {
+   "artifact": "art-decode",
+   "referenced": 312,
+   "decoded": 312,
+   "completeBuild": true
+  },
+  "hitShape": {
+   "artifact": "art-hitShape",
+   "tracedCaller": "gameplay-path",
+   "diagnosticsOnly": false,
+   "measuredCases": 1
+  },
+  "heightLayer": {
+   "artifact": "art-elevation",
+   "reproCases": 4,
+   "resolvedByDeclaredModel": 4
+  },
+  "packing": {
+   "artifact": "art-packing",
+   "occupancy": 0.86,
+   "paddingPx": 2,
+   "measuredCases": 1
+  }
+ },
+ "receipts": {
+  "atlasMatrix": [
+   {
+    "id": "desktop-16-linear",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-desktop-16-linear",
+    "device": "desktop",
+    "sizePx": 16,
+    "filter": "linear",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "desktop-16-nearest",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-desktop-16-nearest",
+    "device": "desktop",
+    "sizePx": 16,
+    "filter": "nearest",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "desktop-32-linear",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-desktop-32-linear",
+    "device": "desktop",
+    "sizePx": 32,
+    "filter": "linear",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "desktop-32-nearest",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-desktop-32-nearest",
+    "device": "desktop",
+    "sizePx": 32,
+    "filter": "nearest",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "desktop-64-linear",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-desktop-64-linear",
+    "device": "desktop",
+    "sizePx": 64,
+    "filter": "linear",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "desktop-64-nearest",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-desktop-64-nearest",
+    "device": "desktop",
+    "sizePx": 64,
+    "filter": "nearest",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "phone-16-linear",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-phone-16-linear",
+    "device": "phone",
+    "sizePx": 16,
+    "filter": "linear",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "phone-16-nearest",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-phone-16-nearest",
+    "device": "phone",
+    "sizePx": 16,
+    "filter": "nearest",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "phone-32-linear",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-phone-32-linear",
+    "device": "phone",
+    "sizePx": 32,
+    "filter": "linear",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "phone-32-nearest",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-phone-32-nearest",
+    "device": "phone",
+    "sizePx": 32,
+    "filter": "nearest",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "phone-64-linear",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-phone-64-linear",
+    "device": "phone",
+    "sizePx": 64,
+    "filter": "linear",
+    "mip": 0,
+    "bleedPixels": 0
+   },
+   {
+    "id": "phone-64-nearest",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-atlasMatrix-phone-64-nearest",
+    "device": "phone",
+    "sizePx": 64,
+    "filter": "nearest",
+    "mip": 0,
+    "bleedPixels": 0
+   }
+  ],
+  "frameColliders": [
+   {
+    "id": "rise",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-frameColliders-rise",
+    "frame": "rise",
+    "collider": "shape-rise",
+    "pixels": "1784b410483d11db424f5ea04e2cfe73e1eb52c94f4ad12fdb5e8a23f296e720",
+    "pivotX": 8,
+    "pivotY": 8,
+    "sourceWidth": 32,
+    "sourceHeight": 32,
+    "trimX": 2,
+    "trimY": 1,
+    "rotated": false
+   },
+   {
+    "id": "settle",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-frameColliders-settle",
+    "frame": "settle",
+    "collider": "shape-settle",
+    "pixels": "1784b410483d11db424f5ea04e2cfe73e1eb52c94f4ad12fdb5e8a23f296e720",
+    "pivotX": 10,
+    "pivotY": 8,
+    "sourceWidth": 32,
+    "sourceHeight": 32,
+    "trimX": 2,
+    "trimY": 1,
+    "rotated": false
+   }
+  ],
+  "tierSeparation": [
+   {
+    "id": "tiers",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-tierSeparation-tiers",
+    "first": "#f8d17e",
+    "second": "#2e5081"
+   }
+  ]
+ }
+}

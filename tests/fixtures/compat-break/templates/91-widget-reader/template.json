@@ -1,0 +1,12 @@
+{
+  "id": "fix-91-widget-reader",
+  "slug": "91-widget-reader",
+  "name": "Widget Reader (test fixture)",
+  "version": "1.0.0",
+  "status": "shipping",
+  "teamSpec": "1.0.0",
+  "compat": { "teamSpec": "^1.0.0", "consumes": { "widget-list": "^1.0.0" } },
+  "produces": [],
+  "consumes": [{ "artifact": "widget-list", "required": false, "schema": "spec/artifacts/widget-list.schema.json" }],
+  "memory": { "reads": [], "writes": [] }
+}

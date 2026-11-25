@@ -1,0 +1,489 @@
+{
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "server-authority:1#empty-authority.impossibleActions",
+   "line": "server-authority:1",
+   "expect": "U",
+   "set": {
+    "metrics.authority.impossibleActions": 0
+   }
+  },
+  {
+   "id": "server-authority:1#neg1",
+   "line": "server-authority:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.authority.rejected": 37
+   }
+  },
+  {
+   "id": "server-authority:1#missing",
+   "line": "server-authority:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.authority.authorizedLocal"
+   ]
+  },
+  {
+   "id": "server-authority:2#empty-clamping.malformedInputs",
+   "line": "server-authority:2",
+   "expect": "U",
+   "set": {
+    "metrics.clamping.malformedInputs": 0
+   }
+  },
+  {
+   "id": "server-authority:2#neg1",
+   "line": "server-authority:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.clamping.clamped": 20
+   }
+  },
+  {
+   "id": "server-authority:2#missing",
+   "line": "server-authority:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.clamping.clamped"
+   ]
+  },
+  {
+   "id": "cadence-and-timing:1#empty-cadence.overRateAttempts",
+   "line": "cadence-and-timing:1",
+   "expect": "U",
+   "set": {
+    "metrics.cadence.overRateAttempts": 0
+   }
+  },
+  {
+   "id": "cadence-and-timing:1#neg1",
+   "line": "cadence-and-timing:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.cadence.enforced": 28
+   }
+  },
+  {
+   "id": "cadence-and-timing:1#missing",
+   "line": "cadence-and-timing:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.cadence.enforced"
+   ]
+  },
+  {
+   "id": "cadence-and-timing:2#empty-lagComp.rewindMsObserved",
+   "line": "cadence-and-timing:2",
+   "expect": "U",
+   "set": {
+    "metrics.lagComp.rewindMsObserved": []
+   }
+  },
+  {
+   "id": "cadence-and-timing:2#neg1",
+   "line": "cadence-and-timing:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.lagComp.rewindMsObserved": [
+     60,
+     350
+    ]
+   }
+  },
+  {
+   "id": "cadence-and-timing:2#missing",
+   "line": "cadence-and-timing:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.lagComp.rewindMsObserved"
+   ]
+  },
+  {
+   "id": "parity:1#empty-actionParity.measuredCases",
+   "line": "parity:1",
+   "expect": "U",
+   "set": {
+    "metrics.actionParity.measuredCases": 0
+   }
+  },
+  {
+   "id": "parity:1#neg1",
+   "line": "parity:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.actionParity.botRules": "r2"
+   }
+  },
+  {
+   "id": "parity:1#missing",
+   "line": "parity:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.actionParity.humanRules"
+   ]
+  },
+  {
+   "id": "parity:2#empty-assist.strengthByDevicePct",
+   "line": "parity:2",
+   "expect": "U",
+   "set": {
+    "metrics.assist.strengthByDevicePct": []
+   }
+  },
+  {
+   "id": "parity:2#neg1",
+   "line": "parity:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.assist.strengthByDevicePct": [
+     20,
+     35
+    ]
+   }
+  },
+  {
+   "id": "parity:2#neg2",
+   "line": "parity:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.assist.strengthByDevicePct": [
+     20
+    ]
+   }
+  },
+  {
+   "id": "parity:2#missing",
+   "line": "parity:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.assist.strengthByDevicePct"
+   ]
+  },
+  {
+   "id": "exposure-and-abuse:1#empty-hiddenInfo.measuredCases",
+   "line": "exposure-and-abuse:1",
+   "expect": "U",
+   "set": {
+    "metrics.hiddenInfo.measuredCases": 0
+   }
+  },
+  {
+   "id": "exposure-and-abuse:1#neg1",
+   "line": "exposure-and-abuse:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.hiddenInfo.relyOnDistanceOnly": true
+   }
+  },
+  {
+   "id": "exposure-and-abuse:1#missing",
+   "line": "exposure-and-abuse:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.hiddenInfo.hiddenStateSent"
+   ]
+  },
+  {
+   "id": "exposure-and-abuse:2#empty-flood.measuredCases",
+   "line": "exposure-and-abuse:2",
+   "expect": "U",
+   "set": {
+    "metrics.flood.measuredCases": 0
+   }
+  },
+  {
+   "id": "exposure-and-abuse:2#neg1",
+   "line": "exposure-and-abuse:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.flood.malformedCrashes": 1
+   }
+  },
+  {
+   "id": "exposure-and-abuse:2#missing",
+   "line": "exposure-and-abuse:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.flood.peakAcceptedPerSecond"
+   ]
+  },
+  {
+   "id": "recovery-and-detection:1#empty-joins.measuredCases",
+   "line": "recovery-and-detection:1",
+   "expect": "U",
+   "set": {
+    "metrics.joins.measuredCases": 0
+   }
+  },
+  {
+   "id": "recovery-and-detection:1#neg1",
+   "line": "recovery-and-detection:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.joins.duplicateJoinAccepted": 1
+   }
+  },
+  {
+   "id": "recovery-and-detection:1#missing",
+   "line": "recovery-and-detection:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.joins.duplicateJoinAccepted"
+   ]
+  },
+  {
+   "id": "recovery-and-detection:2#empty-detection.negativeCases",
+   "line": "recovery-and-detection:2",
+   "expect": "U",
+   "set": {
+    "metrics.detection.negativeCases": 0
+   }
+  },
+  {
+   "id": "recovery-and-detection:2#empty-detection.positiveCases",
+   "line": "recovery-and-detection:2",
+   "expect": "U",
+   "set": {
+    "metrics.detection.positiveCases": 0
+   }
+  },
+  {
+   "id": "recovery-and-detection:2#neg1",
+   "line": "recovery-and-detection:2",
+   "expect": "fail",
+   "areas": [
+    "player-safety"
+   ],
+   "set": {
+    "metrics.detection.fpRate": 0.02
+   }
+  },
+  {
+   "id": "recovery-and-detection:2#neg2",
+   "line": "recovery-and-detection:2",
+   "expect": "fail",
+   "areas": [
+    "player-safety"
+   ],
+   "set": {
+    "metrics.detection.falseNegatives": 8
+   }
+  },
+  {
+   "id": "recovery-and-detection:2#missing",
+   "line": "recovery-and-detection:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.detection.assistiveInputIncluded"
+   ]
+  },
+  {
+   "id": "multi-account#empty-multiAccount.flaggedClusters",
+   "line": "multi-account",
+   "expect": "U",
+   "set": {
+    "metrics.multiAccount.flaggedClusters": 0
+   }
+  },
+  {
+   "id": "multi-account#neg1",
+   "line": "multi-account",
+   "expect": "fail",
+   "areas": [
+    "multi-account"
+   ],
+   "set": {
+    "metrics.multiAccount.autoBans": 2
+   }
+  },
+  {
+   "id": "multi-account#neg2",
+   "line": "multi-account",
+   "expect": "fail",
+   "areas": [
+    "multi-account"
+   ],
+   "set": {
+    "metrics.multiAccount.reviewedByHuman": 1
+   }
+  },
+  {
+   "id": "multi-account#missing",
+   "line": "multi-account",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.multiAccount"
+   ]
+  },
+  {
+   "line": "server-authority:1",
+   "expect": "U",
+   "id": "authorityCases#missing-row",
+   "set": {
+    "receipts.authorityCases": [
+     {
+      "id": "duplicate-reward",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-authorityCases-duplicate-reward",
+      "scenario": "duplicate-reward",
+      "isolated": true,
+      "decision": "reject",
+      "rewardBefore": 1,
+      "rewardAfter": 1
+     }
+    ]
+   }
+  },
+  {
+   "line": "server-authority:1",
+   "expect": "U",
+   "id": "authorityCases#stale",
+   "set": {
+    "receipts.authorityCases.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "server-authority:1",
+   "expect": "U",
+   "id": "authorityCases#artifact",
+   "set": {
+    "receipts.authorityCases.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "parity:2",
+   "expect": "U",
+   "id": "assistDevices#missing-row",
+   "set": {
+    "receipts.assistDevices": [
+     {
+      "id": "touch",
+      "liveSha": "example-live-sha",
+      "artifact": "sample-assistDevices-touch",
+      "device": "touch",
+      "strengthPct": 20
+     }
+    ]
+   }
+  },
+  {
+   "line": "parity:2",
+   "expect": "U",
+   "id": "assistDevices#stale",
+   "set": {
+    "receipts.assistDevices.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "parity:2",
+   "expect": "U",
+   "id": "assistDevices#artifact",
+   "set": {
+    "receipts.assistDevices.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "line": "exposure-and-abuse:1",
+   "expect": "U",
+   "id": "sceneParity#missing-row",
+   "set": {
+    "receipts.sceneParity": []
+   }
+  },
+  {
+   "line": "exposure-and-abuse:1",
+   "expect": "U",
+   "id": "sceneParity#stale",
+   "set": {
+    "receipts.sceneParity.0.liveSha": "other-build"
+   }
+  },
+  {
+   "line": "exposure-and-abuse:1",
+   "expect": "U",
+   "id": "sceneParity#artifact",
+   "set": {
+    "receipts.sceneParity.0.artifact": "unknown-artifact"
+   }
+  },
+  {
+   "id": "authorityCases#wrong-decision",
+   "expect": 0,
+   "set": {
+    "receipts.authorityCases.0.decision": "accept"
+   },
+   "line": "server-authority:1"
+  },
+  {
+   "id": "authorityCases#extra-reward",
+   "expect": 0,
+   "set": {
+    "receipts.authorityCases.0.rewardAfter": 2
+   },
+   "line": "server-authority:1"
+  },
+  {
+   "id": "assistDevices#mislabelled",
+   "expect": "U",
+   "set": {
+    "receipts.assistDevices.0.device": "other"
+   },
+   "line": "parity:2"
+  },
+  {
+   "id": "unequal-labelled-strengths",
+   "expect": 1,
+   "set": {
+    "receipts.assistDevices.1.strengthPct": 80
+   },
+   "line": "parity:2"
+  },
+  {
+   "id": "sceneParity#rotation",
+   "expect": 0,
+   "set": {
+    "receipts.sceneParity.0.clientRotation": "f42546d5ecdd452509808b2d6d0413b5a738c70a793b99ccf8ed6f423aac83d3"
+   },
+   "line": "exposure-and-abuse:1"
+  },
+  {
+   "id": "sceneParity#spawn",
+   "expect": 0,
+   "set": {
+    "receipts.sceneParity.0.clientSpawn": "2ec51a80f6f515e86c912b638ce3c6fd14a89f4625502a97d822cf9977dead6b"
+   },
+   "line": "exposure-and-abuse:1"
+  },
+  {
+   "id": "sceneParity#shape",
+   "expect": 0,
+   "set": {
+    "receipts.sceneParity.0.serverGeometry": "8ec28aeb13830456a26ed939fd1a74fb21f1f07f0bc2bd4b2f4cddeaac8d1874"
+   },
+   "line": "exposure-and-abuse:1"
+  }
+ ]
+}

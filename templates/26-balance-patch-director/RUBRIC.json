@@ -1,0 +1,278 @@
+{
+  "id": "gbf-26-balance-patch-director",
+  "version": "1.1.0",
+  "migration": "Portable profiles and local drafts. Scored groups require positive sample populations and traceable artifacts. Recapture evidence for this version.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "owner-configured",
+  "contribution": "weight * level / 4",
+  "levels": "0 to 4, or U (UNMEASURED, 0 points, not a defect). A test that did not run is NOT_RUN and never reads as PASS.",
+  "pillars": [
+    {
+      "id": "data-fidelity",
+      "name": "Data fidelity",
+      "points": 20
+    },
+    {
+      "id": "evidence",
+      "name": "Evidence",
+      "points": 20
+    },
+    {
+      "id": "proposals",
+      "name": "Proposals",
+      "points": 20
+    },
+    {
+      "id": "authority",
+      "name": "Authority",
+      "points": 20
+    },
+    {
+      "id": "patch-notes",
+      "name": "Patch notes",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "data-fidelity:1",
+      "pillar": "Data fidelity",
+      "name": "Reference values",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Values disagree with the reference export.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Numeric parameters match a separate reference export for the identified build.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line data-fidelity:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "data-fidelity:2",
+      "pillar": "Data fidelity",
+      "name": "Names mapped to real ids",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A guess acted on as fact",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every complaint is mapped to ids; unclear names are flagged for the owner and never recommended as sure",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line data-fidelity:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "evidence:1",
+      "pillar": "Evidence",
+      "name": "Check modeled outcomes",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "The prediction check disagrees.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Predicted changes agree with an independent ratio check on measured outcomes.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line evidence:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "evidence:2",
+      "pillar": "Evidence",
+      "name": "Recent observations",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "The observation set is stale or undersized.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The observation sample meets the count and age limits and differences from target are listed.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line evidence:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "proposals:1",
+      "pillar": "Proposals",
+      "name": "Small, reversible steps",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Big swings with no way back",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every change is inside the step cap, the patch stays inside the lever cap, and each option rolls back to today's value",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line proposals:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "proposals:2",
+      "pillar": "Proposals",
+      "name": "Options, predictions and follow-up",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A resolved request lacks an alternative or prediction.",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Each resolved request has alternatives, a modeled outcome and a follow-up measure.",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line proposals:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "authority:1",
+      "pillar": "Authority",
+      "name": "Proposes only",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "The director changed a live value",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every attempt to ship, rewrite or call a live change through the engine fails and the engine has no write path",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line authority:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "authority:2",
+      "pillar": "Authority",
+      "name": "Game data untouched",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Game data changed by the run",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The parsed game data is identical before and after proposing",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line authority:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "patch-notes:1",
+      "pillar": "Patch notes",
+      "name": "Draft notes, honest and clean",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Notes posted or promising dates",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Patch notes are labelled as a draft and carry no dates, prices or long dashes",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line patch-notes:1",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    },
+    {
+      "id": "patch-notes:2",
+      "pillar": "Patch notes",
+      "name": "Recommendation follows the evidence",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Changes pushed on stale data",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "With a stale ledger the recommendation is to measure; with a fresh one at most the lever cap moves",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line patch-notes:2",
+        "note": "Measured failures fall below pass. Missing or empty evidence earns zero points."
+      }
+    }
+  ],
+  "verdict": "PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.",
+  "hashAlgo": "gbf-sorted-json-v2",
+  "sampleFields": {
+    "defs": [
+      "parsedParameters"
+    ],
+    "map": [
+      "measuredCases"
+    ],
+    "math": [
+      "itemsComputed"
+    ],
+    "telemetry": [
+      "observations"
+    ],
+    "proposals": [
+      "items"
+    ],
+    "authority": [
+      "forbiddenAttempted",
+      "parameterCount"
+    ],
+    "notes": [
+      "measuredCases"
+    ]
+  },
+  "releaseBlockers": [],
+  "hash": "sha256:9cb5e3a3969dd9c0416acab9708abfff51e427847dbd32371c8dc06734c15da9"
+}

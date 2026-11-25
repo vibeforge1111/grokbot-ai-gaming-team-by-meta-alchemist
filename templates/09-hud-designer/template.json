@@ -1,0 +1,117 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-09-hud-ui-designer",
+  "slug": "09-hud-designer",
+  "name": "HUD and Game UI Designer",
+  "shortName": "HUD",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Check whether players can read the information they need, operate the controls and understand their first session on each target device.",
+  "stage": "Polish",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "hud-designer-getting-started",
+  "skills": [
+    "hud-designer-getting-started",
+    "live-hud-updates-and-cost",
+    "event-cues-and-recaps",
+    "wcag-luminance-and-ui-frame-gate",
+    "first-30s-onboarding-and-friction-killer",
+    "hud-designer-lens-engine"
+  ],
+  "routines": [
+    "hud-designer-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-09-hud-ui-designer",
+    "version": "1.2.0",
+    "hash": "sha256:be3ed5b4badfd5254011e55efeab926074c12e8af7803501fae1944466f90f8d"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 65,
+    "externalReviewMin": 5.5,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Playtest evidence and Game Feel findings.",
+    "handsTo": "Access, Input and Localization QA, Game Feel."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "feel-findings": "^1.0.0",
+      "atlas-manifest": "^1.0.0",
+      "loop-report": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "hud-capture-set",
+      "version": "1.0.0",
+      "format": "JSON manifest plus lossless PNG screenshots and UI traces",
+      "schema": "spec/artifacts/hud-capture-set.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "feel-findings",
+      "required": false,
+      "schema": "spec/artifacts/feel-findings.schema.json",
+      "whenMissing": "Continue: review the HUD cues for the main actions yourself and write \"ASSUMPTION: no feel-findings available\" in the report."
+    },
+    {
+      "artifact": "atlas-manifest",
+      "required": false,
+      "schema": "spec/artifacts/atlas-manifest.schema.json"
+    },
+    {
+      "artifact": "loop-report",
+      "required": false,
+      "schema": "spec/artifacts/loop-report.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

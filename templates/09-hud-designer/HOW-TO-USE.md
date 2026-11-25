@@ -1,0 +1,124 @@
+# How to use: HUD and Game UI Designer
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Check whether players can read the information they need, operate the controls and understand their first session on each target device.
+
+The short name of this template is HUD Designer (09). It reviews any game's HUD and menus: score, timer, inventory, dialogue, map, health and anything else players must read. "Combat telemetry" (hit direction, damage recaps) is one optional part for games with combat, and "UI skin" means the visual theme of the interface. A browser DOM UI is one adapter; engine UI and canvas UI work the same way.
+
+- **Pipeline stage:** Polish
+- **When:** When HUD or menus change, and before any store or creator push.
+- **You provide:** HUD and menu screenshots at your supported screen sizes, UI frame traces, your game profile (`game-profile`) and an evidence pack (`evidence-pack`).
+- **You get:** A 100-point HUD grade (`grade-record`), a contrast and touch target report, a first-session friction list, the captures used (`hud-capture-set`) and local ticket drafts.
+- **Takes from:** Your evidence pack, and optionally `feel-findings` from Game Feel (01).
+- **Hands to:** Access, Input and Localization (21) through `hud-capture-set`, and Game Feel (01) when a fix changes action feedback. See Team handoffs in [README.md](README.md#team-handoffs).
+
+Evidence comes from a CI run, a test harness or a manual capture of your build. Playtest QA (template 02) is coming later.
+
+## Install
+
+### Option A: Add to Grok Bot after review
+
+Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+
+### Option B: Manual setup in Grok Bot
+
+1. For each folder in `skills/`, paste its `SKILL.md` into a Grok Bot chat and say: "Save this as a skill." Start with the `-lens-engine` skill, then the getting-started skill.
+2. Paste each fact from [MEMORY.md](MEMORY.md) and say: "Remember this for this project."
+3. Create each routine from the routine prompts in [PROMPTS.md](PROMPTS.md): "Create a weekly routine with this prompt: ...".
+4. Say: "Run the hud-designer-getting-started skill."
+
+### Option C: Other agents (Cursor, Claude Code, Codex)
+
+Copy `skills/<name>/SKILL.md` into your agent's skills folder (for example `.cursor/skills/`, `.claude/skills/` or the folder your Codex setup reads). Copy `engine/` and `fixtures/` into your repo so the agent can run the engine. See [INSTALL.md](../../INSTALL.md).
+
+## First grade in two minutes
+
+```
+cd templates/09-hud-designer
+node engine/lens.mjs fixtures/good-pack.json      # worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # your build
+```
+
+## Skills
+
+| Skill | Use it when |
+|---|---|
+| [`hud-designer-getting-started`](skills/hud-designer-getting-started/SKILL.md) | Use on first run with a new owner: onboard them one question at a time, list what they provide, and run the first HUD and Game UI Designer grade. |
+| [`live-hud-updates-and-cost`](skills/live-hud-updates-and-cost/SKILL.md) | Keep HUD elements that change often (score, timer, health, resources, lap time) readable during the busiest moment, and measure what updating them costs on each target device, in any engine. |
+| [`event-cues-and-recaps`](skills/event-cues-and-recaps/SKILL.md) | Show players what just happened and where: a direction cue for an off-screen event, or a short recap after a fail, a turn or a choice. Combat cues such as hit direction are one optional case. |
+| [`wcag-luminance-and-ui-frame-gate`](skills/wcag-luminance-and-ui-frame-gate/SKILL.md) | Measure text and icon contrast (the WCAG contrast ratio) in real gameplay captures, and compare UI frame cost with each target device's budget. |
+| [`first-30s-onboarding-and-friction-killer`](skills/first-30s-onboarding-and-friction-killer/SKILL.md) | Observe a new player's first task and identify where discovery, controls or feedback interrupt progress. |
+| [`hud-designer-lens-engine`](skills/hud-designer-lens-engine/SKILL.md) | Use when you need to grade a HUD and Game UI Designer evidence pack: write the engine files from this skill and run them. |
+
+## Rubric
+
+`gbf-09-hud-ui-designer` v1.2.0, 100 points: 5 pillars of 20, 2 lines each, levels 0 to 4 or U. Full table: [RUBRIC.md](RUBRIC.md).
+
+| Line | Name | Weight | Evidence |
+|---|---|---|---|
+| `information-priority:1` | Captures of required game states | 10 | capture |
+| `information-priority:2` | String inventory | 10 | static |
+| `readable-combat-states:1` | Contrast from pack screenshots | 10 | capture |
+| `readable-combat-states:2` | Colour distinction across the two tested palettes | 10 | capture |
+| `operability:1` | Focus and navigation with keyboard or gamepad | 10 | capture |
+| `operability:2` | Touch targets | 10 | capture |
+| `responsive-behaviour:1` | Minimum rendered text size | 10 | capture |
+| `responsive-behaviour:2` | Supported orientations and aspect ratios | 10 | capture |
+| `measured-ui-cost:1` | UI frame cost | 10 | trace |
+| `measured-ui-cost:2` | Text expansion | 10 | capture |
+
+## Decisions only you make
+
+- The smallest text size, the smallest touch target (if you support touch) and how many milliseconds per frame the UI may use on each device.
+- The contrast each element must reach, and which two palettes to check for colour blindness.
+- Which rubric profiles apply (`no-touch` or `touch-only`, `fixed-orientation`, `single-language`), approved before scoring and set as `rubricProfile` in the game profile.
+
+## Known limits
+
+- Contrast and colour-blindness inputs must come from captures of your build; the worked example is synthetic.
+- Four approved profiles mark a line not applicable: `no-touch` (`operability:2`), `touch-only` (`operability:1`), `fixed-orientation` (`responsive-behaviour:2`) and `single-language` (`measured-ui-cost:2`). The owner approves them before scoring and sets `rubricProfile` in the game profile. The line then reads N/A, its partner line takes the pillar's 20 points, and the verdict can reach PASS.
+- A game with no player-facing text has no profile for `information-priority:2`: it stays U and the verdict stays CONDITIONAL. The report says the line does not apply.
+
+<!-- team:begin (generated by scripts/build-team.mjs from template.json; edit template.json, not this block) -->
+
+## Works with other templates
+
+This template works on its own. When other templates from the kit run in the same game project, they exchange files under `.grokbot-team/artifacts/<artifact>/` (read the newest file) and share an append-only memory under `.grokbot-team/memory/`. Team spec 1.0.0.
+
+Before acting, look for these inputs:
+
+| Input | From | Where to look | If it is missing |
+|---|---|---|---|
+| `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
+| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `feel-findings` (optional, ^1.0.0) | 01 Game Feel | `.grokbot-team/artifacts/feel-findings/` | Continue: review the HUD cues for the main actions yourself and write "ASSUMPTION: no feel-findings available" in the report. |
+| `atlas-manifest` (optional, ^1.0.0) | 17 Sprites | `.grokbot-team/artifacts/atlas-manifest/` | Continue without it. Start the report with "ASSUMPTION: no atlas-manifest available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+| `loop-report` (optional, ^1.0.0) | 05 Game Loop | `.grokbot-team/artifacts/loop-report/` | Continue without it. Start the report with "ASSUMPTION: no loop-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
+
+After acting, save these outputs as local files for the human to review:
+
+| Output | Format | Where | Read by |
+|---|---|---|---|
+| `hud-capture-set` 1.0.0 | JSON manifest plus lossless PNG screenshots and UI traces | `.grokbot-team/artifacts/hud-capture-set/` | 01 Game Feel, 10 Trailer, 11 Environment, 19 Store Page, 21 Access |
+| `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
+| `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
+
+Each output file is JSON with `artifact`, `version`, `producer` (this template's id and version), `createdAt` (UTC), `synthetic` and `items`, as the kit's `spec/artifacts/<artifact>.schema.json` describes. Name files `<UTC date>-<short label>.json` so the newest sorts last.
+
+Shared memory:
+
+- Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-09-hud-ui-designer` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
+- Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
+
+<!-- team:end -->
+
+## Safety defaults
+
+- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
+- Missing evidence grades U (unmeasured), never a made-up number. Worked examples are labelled synthetic.
+- Thresholds live in your game profile (`pack.profile`), never inside the engine.

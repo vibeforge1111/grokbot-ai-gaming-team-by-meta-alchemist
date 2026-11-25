@@ -1,0 +1,568 @@
+{
+ "packId": "example-22-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "maxRequestsPerMinute": 120,
+  "storageCases": [
+   "storage-failure",
+   "corrupted",
+   "migration",
+   "memory-fallback"
+  ],
+  "recoveryCases": [
+   "crash",
+   "concurrent-clients",
+   "deploy"
+  ],
+  "cases": {
+   "transactionOutcomes": [
+    {
+     "id": "failure",
+     "scenario": "failure"
+    },
+    {
+     "id": "duplicate",
+     "scenario": "duplicate"
+    },
+    {
+     "id": "reorder",
+     "scenario": "reorder"
+    }
+   ],
+   "storageOutcomes": [
+    {
+     "id": "storage-failure",
+     "scenario": "storage-failure",
+     "expected": "d47b53ef49172e39e02ff6427a532d10bc7e77d85b60cbb01972896a3fc02bdd"
+    },
+    {
+     "id": "corrupted",
+     "scenario": "corrupted",
+     "expected": "3dbb3963d11aa418de8b61f846c3dbd5af43b40d252842adb823f90936fe6920"
+    },
+    {
+     "id": "migration",
+     "scenario": "migration",
+     "expected": "8a6cead4385ed4394247b71692fb729b0563f8e1bd4818a8c6c82940e9e099ba"
+    },
+    {
+     "id": "memory-fallback",
+     "scenario": "memory-fallback",
+     "expected": "007cec0fae4ac618f7244b9ead90bfd18cef943278c45b842c323c7ec3ac1315"
+    }
+   ],
+   "recoveryOutcomes": [
+    {
+     "id": "crash",
+     "scenario": "crash",
+     "expected": "cdb2e0d0f873ce5326e87cf7dec48de8da3043cfc950a7eba05a059150e873f5"
+    },
+    {
+     "id": "concurrent-clients",
+     "scenario": "concurrent-clients",
+     "expected": "e35864cf3e96157268712873f1be5c62f007f683c8b27c71f24216d4d09908f3"
+    },
+    {
+     "id": "deploy",
+     "scenario": "deploy",
+     "expected": "b7bd55c11b781b0ccc43aa6e57f9dadf0660e9d1d4e27e0979ee43a407d454ae"
+    }
+   ],
+   "runningBuild": [
+    {
+     "id": "runtime"
+    }
+   ],
+   "rollback": [
+    {
+     "id": "exercise"
+    }
+   ],
+   "privacyReview": [
+    {
+     "id": "deletion",
+     "topic": "deletion"
+    },
+    {
+     "id": "retention",
+     "topic": "retention"
+    }
+   ],
+   "rightsReview": [
+    {
+     "id": "rights",
+     "topic": "rights"
+    },
+    {
+     "id": "age",
+     "topic": "age"
+    },
+    {
+     "id": "safety",
+     "topic": "safety"
+    },
+    {
+     "id": "support",
+     "topic": "support"
+    }
+   ]
+  }
+ },
+ "artifacts": [
+  {
+   "id": "art-tx",
+   "kind": "trace",
+   "path": "traces/tx.json",
+   "sha256": null
+  },
+  {
+   "id": "art-restore",
+   "kind": "trace",
+   "path": "traces/restore.json",
+   "sha256": null
+  },
+  {
+   "id": "art-authz",
+   "kind": "trace",
+   "path": "traces/authz.json",
+   "sha256": null
+  },
+  {
+   "id": "art-replay",
+   "kind": "trace",
+   "path": "traces/replay.json",
+   "sha256": null
+  },
+  {
+   "id": "art-storage",
+   "kind": "trace",
+   "path": "traces/storage.json",
+   "sha256": null
+  },
+  {
+   "id": "art-recovery",
+   "kind": "trace",
+   "path": "traces/recovery.json",
+   "sha256": null
+  },
+  {
+   "id": "art-live",
+   "kind": "config",
+   "path": "config/live.json",
+   "sha256": null
+  },
+  {
+   "id": "art-ops",
+   "kind": "trace",
+   "path": "traces/ops.json",
+   "sha256": null
+  },
+  {
+   "id": "art-privacy",
+   "kind": "static",
+   "path": "static/privacy.json",
+   "sha256": null
+  },
+  {
+   "id": "art-rights",
+   "kind": "static",
+   "path": "static/rights.json",
+   "sha256": null
+  },
+  {
+   "id": "art-storePolicy",
+   "kind": "static",
+   "path": "static/storePolicy.json",
+   "sha256": null
+  },
+  {
+   "id": "art-contestRules",
+   "kind": "static",
+   "path": "static/contestRules.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-transactionOutcomes-failure",
+   "kind": "trace",
+   "path": "receipts/transactionOutcomes/failure.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-transactionOutcomes-duplicate",
+   "kind": "trace",
+   "path": "receipts/transactionOutcomes/duplicate.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-transactionOutcomes-reorder",
+   "kind": "trace",
+   "path": "receipts/transactionOutcomes/reorder.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-storageOutcomes-storage-failure",
+   "kind": "trace",
+   "path": "receipts/storageOutcomes/storage-failure.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-storageOutcomes-corrupted",
+   "kind": "trace",
+   "path": "receipts/storageOutcomes/corrupted.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-storageOutcomes-migration",
+   "kind": "trace",
+   "path": "receipts/storageOutcomes/migration.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-storageOutcomes-memory-fallback",
+   "kind": "trace",
+   "path": "receipts/storageOutcomes/memory-fallback.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-recoveryOutcomes-crash",
+   "kind": "trace",
+   "path": "receipts/recoveryOutcomes/crash.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-recoveryOutcomes-concurrent-clients",
+   "kind": "trace",
+   "path": "receipts/recoveryOutcomes/concurrent-clients.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-recoveryOutcomes-deploy",
+   "kind": "trace",
+   "path": "receipts/recoveryOutcomes/deploy.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-runningBuild-runtime",
+   "kind": "config",
+   "path": "receipts/runningBuild/runtime.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-rollback-exercise",
+   "kind": "trace",
+   "path": "receipts/rollback/exercise.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-privacyReview-deletion",
+   "kind": "static",
+   "path": "receipts/privacyReview/deletion.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-privacyReview-retention",
+   "kind": "static",
+   "path": "receipts/privacyReview/retention.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-rightsReview-rights",
+   "kind": "static",
+   "path": "receipts/rightsReview/rights.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-rightsReview-age",
+   "kind": "static",
+   "path": "receipts/rightsReview/age.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-rightsReview-safety",
+   "kind": "static",
+   "path": "receipts/rightsReview/safety.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-rightsReview-support",
+   "kind": "static",
+   "path": "receipts/rightsReview/support.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "tx": {
+   "artifact": "art-tx",
+   "isolated": true,
+   "injectedCases": [
+    "failure",
+    "duplicate",
+    "reorder"
+   ],
+   "lostPaid": 0,
+   "duplicatedPaid": 0
+  },
+  "restore": {
+   "artifact": "art-restore",
+   "restored": 6,
+   "expected": 6,
+   "displayVsAuthoritativeMismatch": 0
+  },
+  "authz": {
+   "artifact": "art-authz",
+   "forbiddenTransitionsAttempted": 14,
+   "forbiddenTransitionsSucceeded": 0,
+   "crossAccountReads": 0
+  },
+  "replay": {
+   "artifact": "art-replay",
+   "replaysAttempted": 10,
+   "replaysAccepted": 0,
+   "peakRequestsPerMinute": 90
+  },
+  "storage": {
+   "artifact": "art-storage",
+   "cases": [
+    "storage-failure",
+    "corrupted",
+    "migration",
+    "memory-fallback"
+   ],
+   "stateLost": 0
+  },
+  "recovery": {
+   "artifact": "art-recovery",
+   "cases": [
+    "crash",
+    "concurrent-clients",
+    "deploy"
+   ],
+   "unrecovered": 0
+  },
+  "live": {
+   "artifact": "art-live",
+   "liveShaRecorded": true,
+   "liveBehindRecorded": true,
+   "runningConfigRecorded": true,
+   "measuredCases": 1
+  },
+  "ops": {
+   "artifact": "art-ops",
+   "healthSignals": true,
+   "incidentDrill": true,
+   "rollbackExercised": true,
+   "measuredCases": 1
+  },
+  "privacy": {
+   "artifact": "art-privacy",
+   "dataHandlingDoc": true,
+   "retentionDoc": true,
+   "measuredCases": 1
+  },
+  "rights": {
+   "artifact": "art-rights",
+   "rightsInventory": true,
+   "qualifiedReviewRecorded": true,
+   "agentLegalSignoff": false,
+   "measuredCases": 1
+  },
+  "storePolicy": {
+   "artifact": "art-storePolicy",
+   "platforms": [
+    "web"
+   ],
+   "checked": [
+    "web"
+   ],
+   "disclosuresPresent": true
+  },
+  "contestRules": {
+   "artifact": "art-contestRules",
+   "rulesPublished": true,
+   "eligibilityStated": true,
+   "judgingDisclosed": true,
+   "qualifiedReviewRecorded": true,
+   "measuredCases": 1
+  }
+ },
+ "receipts": {
+  "transactionOutcomes": [
+   {
+    "id": "failure",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-transactionOutcomes-failure",
+    "scenario": "failure",
+    "isolated": true,
+    "lostPaid": 0,
+    "duplicatedPaid": 0,
+    "before": "art-tx",
+    "after": "art-restore"
+   },
+   {
+    "id": "duplicate",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-transactionOutcomes-duplicate",
+    "scenario": "duplicate",
+    "isolated": true,
+    "lostPaid": 0,
+    "duplicatedPaid": 0,
+    "before": "art-tx",
+    "after": "art-restore"
+   },
+   {
+    "id": "reorder",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-transactionOutcomes-reorder",
+    "scenario": "reorder",
+    "isolated": true,
+    "lostPaid": 0,
+    "duplicatedPaid": 0,
+    "before": "art-tx",
+    "after": "art-restore"
+   }
+  ],
+  "storageOutcomes": [
+   {
+    "id": "storage-failure",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-storageOutcomes-storage-failure",
+    "scenario": "storage-failure",
+    "expected": "d47b53ef49172e39e02ff6427a532d10bc7e77d85b60cbb01972896a3fc02bdd",
+    "recovered": "d47b53ef49172e39e02ff6427a532d10bc7e77d85b60cbb01972896a3fc02bdd"
+   },
+   {
+    "id": "corrupted",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-storageOutcomes-corrupted",
+    "scenario": "corrupted",
+    "expected": "3dbb3963d11aa418de8b61f846c3dbd5af43b40d252842adb823f90936fe6920",
+    "recovered": "3dbb3963d11aa418de8b61f846c3dbd5af43b40d252842adb823f90936fe6920"
+   },
+   {
+    "id": "migration",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-storageOutcomes-migration",
+    "scenario": "migration",
+    "expected": "8a6cead4385ed4394247b71692fb729b0563f8e1bd4818a8c6c82940e9e099ba",
+    "recovered": "8a6cead4385ed4394247b71692fb729b0563f8e1bd4818a8c6c82940e9e099ba"
+   },
+   {
+    "id": "memory-fallback",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-storageOutcomes-memory-fallback",
+    "scenario": "memory-fallback",
+    "expected": "007cec0fae4ac618f7244b9ead90bfd18cef943278c45b842c323c7ec3ac1315",
+    "recovered": "007cec0fae4ac618f7244b9ead90bfd18cef943278c45b842c323c7ec3ac1315"
+   }
+  ],
+  "recoveryOutcomes": [
+   {
+    "id": "crash",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-recoveryOutcomes-crash",
+    "scenario": "crash",
+    "expected": "cdb2e0d0f873ce5326e87cf7dec48de8da3043cfc950a7eba05a059150e873f5",
+    "recovered": "cdb2e0d0f873ce5326e87cf7dec48de8da3043cfc950a7eba05a059150e873f5"
+   },
+   {
+    "id": "concurrent-clients",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-recoveryOutcomes-concurrent-clients",
+    "scenario": "concurrent-clients",
+    "expected": "e35864cf3e96157268712873f1be5c62f007f683c8b27c71f24216d4d09908f3",
+    "recovered": "e35864cf3e96157268712873f1be5c62f007f683c8b27c71f24216d4d09908f3"
+   },
+   {
+    "id": "deploy",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-recoveryOutcomes-deploy",
+    "scenario": "deploy",
+    "expected": "b7bd55c11b781b0ccc43aa6e57f9dadf0660e9d1d4e27e0979ee43a407d454ae",
+    "recovered": "b7bd55c11b781b0ccc43aa6e57f9dadf0660e9d1d4e27e0979ee43a407d454ae"
+   }
+  ],
+  "runningBuild": [
+   {
+    "id": "runtime",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-runningBuild-runtime",
+    "source": "example-git-sha",
+    "running": "example-live-sha",
+    "configuration": "9b3002ceef661b196c908612edce8972fbff7126deb6e9ffc3d6f94ef557fb6c"
+   }
+  ],
+  "rollback": [
+   {
+    "id": "exercise",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-rollback-exercise",
+    "target": "previous-build",
+    "restored": "previous-build",
+    "isolated": true,
+    "ownerRole": "service-owner"
+   }
+  ],
+  "privacyReview": [
+   {
+    "id": "deletion",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-privacyReview-deletion",
+    "topic": "deletion",
+    "reviewer": "qualified-review-role",
+    "reviewedRecord": "art-privacy",
+    "accepted": true
+   },
+   {
+    "id": "retention",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-privacyReview-retention",
+    "topic": "retention",
+    "reviewer": "qualified-review-role",
+    "reviewedRecord": "art-privacy",
+    "accepted": true
+   }
+  ],
+  "rightsReview": [
+   {
+    "id": "rights",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-rightsReview-rights",
+    "topic": "rights",
+    "reviewer": "qualified-review-role",
+    "reviewedRecord": "art-rights",
+    "accepted": true
+   },
+   {
+    "id": "age",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-rightsReview-age",
+    "topic": "age",
+    "reviewer": "qualified-review-role",
+    "reviewedRecord": "art-rights",
+    "accepted": true
+   },
+   {
+    "id": "safety",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-rightsReview-safety",
+    "topic": "safety",
+    "reviewer": "qualified-review-role",
+    "reviewedRecord": "art-rights",
+    "accepted": true
+   },
+   {
+    "id": "support",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-rightsReview-support",
+    "topic": "support",
+    "reviewer": "qualified-review-role",
+    "reviewedRecord": "art-rights",
+    "accepted": true
+   }
+  ]
+ }
+}

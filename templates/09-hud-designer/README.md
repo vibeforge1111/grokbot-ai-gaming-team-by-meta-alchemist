@@ -1,0 +1,131 @@
+# HUD and Game UI Designer
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Check whether players can read the information they need, operate the controls and understand their first session on each target device.
+
+The short name of this template is HUD Designer (09). It reviews any game's HUD and menus: score, timer, inventory, dialogue, map, health and anything else players must read. "Combat telemetry" (hit direction, damage recaps) is one optional part for games with combat, and "UI skin" means the visual theme of the interface. It works with any UI stack: engine UI (Unity, Unreal, Godot or a custom engine), canvas or WebGL, or a browser DOM UI.
+
+Rubric: `gbf-09-hud-ui-designer` v1.2.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Evidence comes from a CI run, a test harness or a manual capture of your build. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+Run these from this folder (`templates/09-hud-designer`):
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks have the caps shown in the rubric. All conditions passing gives 4. A receipt is one row per approved test case (for example the contrast of one element in one state) with the values measured for it.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population (the array of samples or the case count) each line needs. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt (your capture tool's record of the build, device and files behind the pack) and the local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `information-priority:1` | Captures of required game states | computed | `priority.statesCaptured`, `priority.viewports`, `priority.essentialMissing` | priority.statesCaptured covers P.states; priority.viewports covers P.viewports; priority.essentialMissing == 0 (hard: level 1 on failure) |
+| `information-priority:2` | String inventory | computed | `strings.inventoryComplete`, `strings.hardcodedStrings` | strings.inventoryComplete is true; strings.hardcodedStrings == 0 |
+| `readable-combat-states:1` | Contrast from pack screenshots | computed | `contrast.source`, `contrast.pairs`, `receipts.elementContrast` | `contrast.source == "pack-screenshots"`, `contrastMin(contrast.pairs) >= P.minContrast`, approved receipt cases pass |
+| `readable-combat-states:2` | Colour distinction across the two tested palettes | computed | `cvd.paletteA`, `cvd.paletteB`, `cvd.infoSurvivesGreyscale` | cvdMinDeltaE(cvd.paletteA) >= P.minCvdDeltaE; cvdMinDeltaE(cvd.paletteB) >= P.minCvdDeltaE; cvd.infoSurvivesGreyscale is true |
+| `operability:1` | Focus and navigation with keyboard or gamepad | computed | `focus.focusVisible`, `focus.focusReturnsAfterDialog`, `focus.navReachableActions`, `focus.hudActions`, `receipts.actionBounds` | `focus.focusVisible is true`, `focus.focusReturnsAfterDialog is true`, `focus.navReachableActions == focus.hudActions`, approved receipt cases pass |
+| `operability:2` | Touch targets | computed | `touch.targetPx` | min(touch.targetPx) >= P.minTouchTargetPx |
+| `responsive-behaviour:1` | Minimum rendered text size | computed | `text.minPxLargeViewport`, `text.minPxSmallViewport` | text.minPxLargeViewport >= P.minTextPx; text.minPxSmallViewport >= P.minTextPx |
+| `responsive-behaviour:2` | Supported orientations and aspect ratios | computed | `orientation.clippedEssential`, `orientation.obscuredEssential` | orientation.clippedEssential == 0; orientation.obscuredEssential == 0 |
+| `measured-ui-cost:1` | UI frame cost | computed | `uiCost.uiMs` | p95(uiCost.uiMs) <= P.uiBudgetMs |
+| `measured-ui-cost:2` | Text expansion | computed | `expansion.factorTested`, `expansion.overflowingLayouts` | expansion.factorTested >= P.pseudoLocExpansion; expansion.overflowingLayouts == 0 |
+
+## Growth checks (reported beside the grade, not scored)
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `hud-chrome-coverage` | hud-clarity | `hudChrome.screenCoverPctMaxDuringPlay` | hudChrome.screenCoverPctMaxDuringPlay <= P.maxHudCoverPct |
+| `optional-retry` | navigation | `retryInput.withoutGesture`, `retryInput.afterGesture` | retryInput.withoutGesture == 0 (hard); retryInput.afterGesture == 1 (hard) |
+
+`screenCoverPctMaxDuringPlay` is the share of the screen the HUD covers at the busiest moment of play; the name comes from a combat game. `optional-retry` applies only when your game offers a retry: no input must start no new attempt and one retry input exactly one. Leave `retryInput` out if there is no retry.
+
+## Adapt to your game
+
+List the screens and moments players must read (`states` in the profile) and the information each one must show. The synthetic fixture uses state names from an action game; replace them with your own:
+
+| Genre | States to capture | Must stay readable |
+|---|---|---|
+| Mobile puzzle game | Board, level complete, out of moves | Score, moves left, goal |
+| Racing game | Race start, mid-race pack, results | Position, lap, speed, minimap |
+| Turn-based strategy | Planning, enemy turn, battle result | Whose turn it is, unit health, resources |
+| Narrative adventure | Dialogue, choice, inventory, map | Dialogue text, choices, timer if any |
+| Farming or life sim | Field, shop, inventory, end of day | Clock, energy, money, selected item |
+| 2D platformer | Level, pause, game over | Lives, collectibles, checkpoint |
+| 3D arena game, if your game has combat | A crowded fight, defeat, results | Health, ammo or cooldowns, threat direction |
+
+Field and pillar names that come from combat games still fit other genres: "Readable game states" means readable game states, and `hudChrome.screenCoverPctMaxDuringPlay` means HUD coverage at the busiest moment.
+
+### Lines that may not apply
+
+Four lines have an approved profile in `RUBRIC.json`. The owner approves the profile before scoring and sets it in the game profile, for example `"rubricProfile": ["no-touch", "single-language"]` in `pack.profile`:
+
+| Profile | Use when the game has | Line that reads N/A | Line that takes the pillar's 20 points | Group you can leave out |
+|---|---|---|---|---|
+| `no-touch` | No supported device that uses touch | `operability:2` | `operability:1` | `touch` |
+| `touch-only` | Touch on every supported device, with no keyboard or gamepad navigation | `operability:1` | `operability:2` | `focus` |
+| `fixed-orientation` | One orientation and aspect ratio only | `responsive-behaviour:2` | `responsive-behaviour:1` | `orientation` |
+| `single-language` | One language at release, so text expansion is not tested | `measured-ui-cost:2` | `measured-ui-cost:1` | `expansion` |
+
+Pick at most one of `no-touch` and `touch-only`. An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can be PASS. A console game shipped in one language, for example, selects `["no-touch", "single-language"]`. Name the profiles next to the grade.
+
+`information-priority:2` has no profile. A game with no player-facing text at all leaves `strings` out; the line grades U (0 points, lower coverage) and the verdict stays CONDITIONAL. Say in the report that it does not apply, and never fill a line with made-up values.
+
+### Set up the pack
+
+- Sample foreground and background hex pairs from real pack screenshots for the contrast line; a synthetic colour matrix is refused.
+- Supply the two UI palettes under review as hex values for the colour-blind check (CVD, colour vision deficiency, simulated with the Machado 2009 model; colour difference measured as deltaE76, where a bigger number means more different).
+- `text.minPxLargeViewport` is the smallest text on your wide layout and `text.minPxSmallViewport` the smallest on your small-screen layout. If you do not ship on phones, use your smallest supported screen and name it in the profile notes.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+## Owner calls
+
+- The smallest text size, the smallest touch target (if you support touch) and how many milliseconds per frame the UI may use on each device.
+- The contrast each element must reach, and which two palettes to check for colour blindness.
+- Which rubric profiles apply (`no-touch` or `touch-only`, `fixed-orientation`, `single-language`), approved before scoring and set as `rubricProfile` in the game profile.
+
+## Blockers
+
+- Contrast and colour-blindness inputs must come from captures of your build; the worked example is synthetic.
+
+## Team handoffs
+
+Files are exchanged locally under `.grokbot-team/artifacts/<artifact-id>/` in your game project. Nothing is sent anywhere.
+
+| Artifact | Direction | Required | Other end | If it is missing |
+|---|---|---|---|---|
+| `game-profile` | consumes | required | The owner, via the getting-started skill | Run the getting-started skill first; lines with no threshold grade U |
+| `evidence-pack` | consumes | required | Your CI run, test harness or manual capture | No grade; the engine refuses the pack (INVALID) |
+| `feel-findings` | consumes | optional | Game Feel (01) | Grade without it; review the HUD cues for your main actions yourself |
+| `hud-capture-set` | produces | optional | Access, Input and Localization (21); Game Feel (01) when a fix changes action feedback | They capture their own screens |
+| `grade-record` | produces | required | Bug Desk (18), the owner | Nothing to compare next week; run the engine again |
+| `ticket-draft` | produces | optional | Bug Desk (18), then the human files it | Findings stay in the report only |
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.
+

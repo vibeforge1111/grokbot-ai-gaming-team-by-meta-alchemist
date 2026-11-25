@@ -1,0 +1,132 @@
+# Game Vibes Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Measure how quickly a game responds to input and how clearly its camera, sound and visuals communicate each action.
+
+Game Vibes Director is this template's name. Its folder is `01-game-feel` and other templates call it Game Feel (01), because it measures *game feel*: how fast and how clearly the game answers what the player does. It works for any genre (platformer, puzzle, strategy, racing, narrative, life sim, action) and any engine.
+
+Rubric: `gbf-01-game-feel` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Evidence comes from a CI run, a test harness or a manual capture of your build. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+Run these from this folder (`templates/01-game-feel`):
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks have the caps shown in the rubric. All conditions passing gives 4. A receipt is one row per approved test case (for example one latency run on one device) with the values measured for it.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population (the array of samples or the case count) each line needs. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt (your capture tool's record of the build, device and files behind the pack) and the local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `response:1` | Input-to-action latency sample | computed | `latency.devices`, `latency.runs`, `receipts.deviceLatency` | `latency.devices covers P.inputDevices`, `latency.runs >= 3`, approved receipt cases pass |
+| `response:2` | Buffered and held input behaviour | computed | `heldInput.bufferedPressHonored`, `heldInput.heldRateDeltaPct`, `heldInput.onlineMatchesOffline` | countFalse(heldInput.bufferedPressHonored) == 0; max(heldInput.heldRateDeltaPct) <= P.heldInputMaxDeltaPct; heldInput.onlineMatchesOffline is true |
+| `readable-feedback:1` | Action feedback capture | computed | `hitFeedback.visualByDevice`, `hitFeedback.audioByDevice`, `hitFeedback.cueLatencyMs` | countFalse(hitFeedback.visualByDevice) == 0 (hard: level 1 on failure); countFalse(hitFeedback.audioByDevice) == 0; max(hitFeedback.cueLatencyMs) <= P.feedbackCueMaxMs |
+| `readable-feedback:2` | Ready-again cues | computed | `readyCue.emitCounts`, `receipts.readyEmissions` | `countLt(readyCue.emitCounts,1) == 0`, `countGt(readyCue.emitCounts,1) == 0`, approved receipt cases pass |
+| `control-intent:1` | Input task completion | computed | `tasks.devices`, `tasks.deviceSwitchOk`, `receipts.inputTasks` | `tasks.devices covers P.inputDevices`, `tasks.deviceSwitchOk is true`, approved receipt cases pass |
+| `control-intent:2` | Input intent and assist parity | computed | `targeting.errorDegP95`, `targeting.assistDocumented`, `targeting.touchAssist`, `targeting.padAssist` | max(targeting.errorDegP95) <= P.targetingErrorP95Deg; targeting.assistDocumented is true; absdiff(targeting.touchAssist,targeting.padAssist) <= P.assistParityTolerance |
+| `camera-comfort:1` | Camera framing of hazards | computed | `camera.viewports`, `camera.hazardsOffscreen`, `camera.edgeHazardVisibleRatio` | camera.viewports covers P.viewports; camera.hazardsOffscreen == 0 (hard: level 1 on failure); camera.edgeHazardVisibleRatio >= P.edgeHazardVisibleMin |
+| `camera-comfort:2` | Reduced motion respected | computed | `reducedMotion.applied`, `reducedMotion.promised`, `reducedMotion.shakePxWhenReduced` | missing(reducedMotion.applied,reducedMotion.promised) == 0 (hard: level 1 on failure); reducedMotion.shakePxWhenReduced <= P.reducedMotionShakeMaxPx |
+| `parity:1` | Feedback preserves simulation timing | computed | `simTiming.offlineWithFx`, `simTiming.offlineNoFx`, `simTiming.predictedWithFx`, `simTiming.predictedNoFx`, `receipts.pairedTiming` | `simTiming.offlineWithFx == simTiming.offlineNoFx`, `simTiming.predictedWithFx == simTiming.predictedNoFx`, approved receipt cases pass |
+| `parity:2` | Style effects are owner calls | computed | `style.designContractPresent`, `style.deductionsAgainstOwnerChoices` | style.designContractPresent is true; style.deductionsAgainstOwnerChoices == 0 |
+
+## Adapt to your game
+
+Pick the two or three actions players repeat most and the first cue that shows each one worked:
+
+| Genre | Action to measure | First cue |
+|---|---|---|
+| 2D platformer | Jump | The character leaves the ground; the jump sound starts |
+| Mobile puzzle game | Swap two tiles | The tiles start to move; a click or short vibration |
+| Turn-based strategy | Confirm a move | The unit starts to move; a confirm sound |
+| Racing game | Brake | The car slows; brake lights and tyre sound |
+| Narrative adventure | Pick a dialogue choice | The choice highlights; the next line starts |
+| Farming or life sim | Water a crop | The watering animation and splash sound |
+| 3D arena game | Attack | The swing starts; a hit flash and impact sound |
+
+Some field names come from action games. They still work for other genres:
+
+- `heldInput` covers any buffered or held input: a jump pressed just before landing, a held accelerate, a held drag, hold to fast-forward text. `onlineMatchesOffline` asks whether it behaves the same in the real game mode as in a practice or test scene.
+- `hitFeedback` is the feedback for whichever action you chose, not only hits.
+- `readyCue` is any "ready again" cue: a recharged ability, a crop ready to harvest, the player's turn, a refilled boost.
+- `camera` "threats" are anything that can hurt the player or make them fail: an enemy, a hazard, a rival car closing in, a falling piece.
+
+### Lines that may not apply
+
+Three lines have an approved profile in `RUBRIC.json`. The owner approves the profile before scoring and sets it in the game profile, for example `"rubricProfile": ["no-aiming", "offline-only"]` in `pack.profile`:
+
+| Profile | Use when the game has | Line that reads N/A | Line that takes the pillar's 20 points | Group you can leave out |
+|---|---|---|---|---|
+| `no-aiming` | No aimed, selected or steered input | `control-intent:2` | `control-intent:1` | `targeting` |
+| `no-hazards` | Nothing that can hurt the player or make them fail from off screen | `camera-comfort:1` | `camera-comfort:2` | `camera` |
+| `offline-only` | No online or predicted simulation path | `parity:1` | `parity:2` | `simTiming` (report the offline pair as a note) |
+
+An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can be PASS. An offline rhythm game with no aimed input, for example, selects `["no-aiming", "offline-only"]`. Name the profiles next to the grade.
+
+These lines have no profile. When your game lacks the feature, leave the group out; the line grades U (0 points, lower coverage) and the verdict stays CONDITIONAL. Say in the report that it does not apply, and never fill a line with made-up values:
+
+| Line | Applies when your game has | If it does not, leave out |
+|---|---|---|
+| `response:2` | Buffered or held input | `heldInput` |
+| `readable-feedback:2` | Something that becomes ready again | `readyCue` |
+| `camera-comfort:2` | Motion effects (shake, flash, zoom) and a reduced-motion setting | `reducedMotion` |
+
+### Set up the pack
+
+- Put `inputDevices`, `viewports` and the latency, aim and cue budgets in the pack profile (`pack.profile`).
+- Point your capture tool at the pack: per-device latency samples, held or buffered input results, ready-cue emit counts, and same-seed game state hashes with effects on and off.
+- List the reduced-motion promises your settings screen makes in `reducedMotion.promised`.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+## Owner calls
+
+- How fast each action must answer on each device, and how soon its first cue must appear.
+- If players aim: the acceptable aim error and how equal aim help must be across controls.
+- Which style effects are in the game on purpose (hitstop, a freeze of a few frames on impact; screen shake; platformer moves such as coyote time). This written list is the design contract, and nothing on it is ever marked down.
+
+## Blockers
+
+- Latency and aim evidence needs captures from each supported control; the shipped fixture is synthetic.
+
+## Team handoffs
+
+Files are exchanged locally under `.grokbot-team/artifacts/<artifact-id>/` in your game project. Nothing is sent anywhere.
+
+| Artifact | Direction | Required | Other end | If it is missing |
+|---|---|---|---|---|
+| `game-profile` | consumes | required | The owner, via the getting-started skill | Run the getting-started skill first; lines with no threshold grade U |
+| `evidence-pack` | consumes | required | Your CI run, test harness or manual capture | No grade; the engine refuses the pack (INVALID) |
+| `feel-findings` | produces | optional | HUD Designer (09), Audio Director (13) | They grade without it and simply miss the feel context |
+| `hud-capture-set` | consumes | optional | HUD Designer (09) | Capture the HUD side of each action yourself for `readable-feedback:1` |
+| `audio-mix-report` | consumes | optional | Audio Director (13) | Check the sound side of each action from your own recordings |
+| `grade-record` | produces | required | Bug Desk (18), the owner | Nothing to compare next week; run the engine again |
+| `ticket-draft` | produces | optional | Bug Desk (18), then the human files it | Findings stay in the report only |
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

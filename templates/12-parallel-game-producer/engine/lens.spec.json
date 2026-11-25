@@ -1,0 +1,157 @@
+{
+  "lensVersion": "2.0.0",
+  "lines": {
+    "milestone:1": {
+      "kind": "computed",
+      "why": "Inspect an included deliverable against its role, acceptance condition and verification source.",
+      "miss": "scope.samples",
+      "neg": [
+        {
+          "metrics.scope.samples": [
+            {
+              "caseId": "scope-1",
+              "testable": false
+            }
+          ]
+        }
+      ]
+    },
+    "milestone:2": {
+      "kind": "computed",
+      "why": "Sum task hours by executing role within the same wave. Compare each total with that role's approved hours in the profile.",
+      "miss": "capacity.samples",
+      "neg": [
+        {
+          "metrics.capacity.samples": [
+            {
+              "caseId": "capacity-1",
+              "hours": 12,
+              "role": "design"
+            }
+          ]
+        }
+      ]
+    },
+    "workstreams:1": {
+      "kind": "computed",
+      "why": "Check each dependency edge against the producer's receipt, build IDs and wave order. Include the final producer decision as a consumer.",
+      "miss": "dependency.samples",
+      "neg": [
+        {
+          "metrics.dependency.samples": [
+            {
+              "caseId": "dependency-1",
+              "ready": false
+            }
+          ]
+        }
+      ]
+    },
+    "workstreams:2": {
+      "kind": "computed",
+      "why": "Inspect actual or proposed wave membership. Check exclusive resource keys, including a role assigned to two jobs; capture the conflicting pair.",
+      "miss": "locks.samples",
+      "neg": [
+        {
+          "metrics.locks.samples": [
+            {
+              "caseId": "locks-1",
+              "conflictFree": false
+            }
+          ]
+        }
+      ]
+    },
+    "ledger:1": {
+      "kind": "computed",
+      "why": "Count distinct open ticket keys per severity in the approved snapshot. Compare each derived count with the milestone brief.",
+      "miss": "counts.samples",
+      "neg": [
+        {
+          "metrics.counts.samples": [
+            {
+              "caseId": "counts-1",
+              "derived": 2,
+              "reported": 7
+            }
+          ]
+        }
+      ]
+    },
+    "ledger:2": {
+      "kind": "computed",
+      "why": "Inspect each claimed closure. Preserve distinct source, live and config state with verifying role and receipt.",
+      "miss": "closure.samples",
+      "neg": [
+        {
+          "metrics.closure.samples": [
+            {
+              "caseId": "closure-1",
+              "verified": false
+            }
+          ]
+        }
+      ]
+    },
+    "release-decision:1": {
+      "kind": "computed",
+      "why": "Read each required gate's receipt. A witnessed failure blocks the grade even if all ticket counts reconcile.",
+      "miss": "gate.samples",
+      "neg": [
+        {
+          "metrics.gate.samples": [
+            {
+              "caseId": "gate-1",
+              "passed": false
+            }
+          ]
+        }
+      ]
+    },
+    "release-decision:2": {
+      "kind": "computed",
+      "why": "Check each risk row against named responsibility, the observable trigger, a concrete fallback and the decision milestone.",
+      "miss": "risk.samples",
+      "neg": [
+        {
+          "metrics.risk.samples": [
+            {
+              "caseId": "risk-1",
+              "actionable": false
+            }
+          ]
+        }
+      ]
+    },
+    "pitch:1": {
+      "kind": "computed",
+      "why": "Compare the actual local deck text with its cited fact and source. Mark forecasts explicitly as proposals.",
+      "miss": "claims.samples",
+      "neg": [
+        {
+          "metrics.claims.samples": [
+            {
+              "caseId": "claims-1",
+              "grounded": false
+            }
+          ]
+        }
+      ]
+    },
+    "pitch:2": {
+      "kind": "computed",
+      "why": "Read the reviewer receipt for the current slide revision. Cross-check required topics, audience and ask against the profile.",
+      "miss": "review.samples",
+      "neg": [
+        {
+          "metrics.review.samples": [
+            {
+              "caseId": "review-1",
+              "reviewed": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$id": "grokbot-template-kit/rubric.schema.json",
+  "title": "100-point rubric (RUBRIC.json)",
+  "type": "object",
+  "required": ["id", "version", "credit", "creditUrl", "scale", "gameProfile", "pillars", "lines", "hash"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+-[0-9]{2}-[a-z0-9-]+$" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "credit": { "const": "@meta_alchemist" },
+    "creditUrl": { "const": "https://x.com/meta_alchemist" },
+    "scale": { "const": 100 },
+    "gameProfile": { "type": "string", "minLength": 3 },
+    "hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "pillars": { "type": "array", "minItems": 5, "maxItems": 5, "items": { "type": "object", "required": ["id", "name", "points"], "properties": { "points": { "const": 20 } } } },
+    "lines": {
+      "type": "array", "minItems": 10, "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "pillar", "name", "weight", "passAt", "evidence", "anchors", "automatedGate"],
+        "properties": {
+          "weight": { "type": "number", "minimum": 0, "maximum": 20 },
+          "passAt": { "const": 3 },
+          "evidence": { "enum": ["static", "capture", "trace", "config", "na"] },
+          "anchors": { "type": "object", "required": ["0", "1", "2", "3", "4", "U"] }
+        }
+      }
+    }
+  }
+}

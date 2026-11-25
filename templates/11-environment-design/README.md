@@ -1,0 +1,99 @@
+# Environment Design Director
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+Review placement, sightlines and visual cues so players can identify landmarks and navigate the spaces in your game.
+
+It works for any view: a 2D side-scroller, a top-down or isometric map, a 3D third-person or first-person world, a race track or a puzzle board. The bot asks how your game is seen and which tool builds the scenes before it suggests any check.
+
+Rubric: `gbf-11-environment-design` v1.2.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks (one measured row per agreed test case, stored under `pack.receipts`) have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample population (the list of measured cases) required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Kind | Reads | Passes when |
+|---|---|---|---|---|
+| `visual-navigation:1` | Landmarks at the approved minimum display size | computed | `landmarks.landmarksChecked`, `landmarks.minOnScreenPx`, `landmarks.device` | `landmarks.landmarksChecked >= 1`, `landmarks.minOnScreenPx >= P.minLandmarkPx`, `landmarks.device == P.landmarkDevice` |
+| `visual-navigation:2` | Location overlays respect critical gameplay | computed | `locationOverlays.statesObserved`, `locationOverlays.unexpectedOverlays` | `locationOverlays.statesObserved covers P.overlayStates`, `locationOverlays.unexpectedOverlays == 0` |
+| `scene-composition:1` | Bright, dark and crowded states | judged | judgements["scene-composition:1"] with capture evidence ids from this pack | a named judge records a level 0 to 4 citing artifacts in the pack |
+| `scene-composition:2` | Prop hierarchy | judged | judgements["scene-composition:2"] with capture evidence ids from this pack | a named judge records a level 0 to 4 citing artifacts in the pack |
+| `camera-occlusion:1` | Shared level-design sightline test | computed | `occlusionProbe.probesRun`, `receipts.sightlines` | `occlusionProbe.probesRun > 0`, approved receipt cases pass |
+| `camera-occlusion:2` | Occlusion overlays | computed | `occlusion.routes`, `occlusion.occludedCueFrames` | occlusion.routes >= 1; occlusion.occludedCueFrames <= P.maxOccludedCueFrames |
+| `traversal-affordance:1` | Usable objects vs decoration readable | judged | judgements["traversal-affordance:1"] with capture evidence ids from this pack | a named judge records a level 0 to 4 citing artifacts in the pack |
+| `traversal-affordance:2` | Route clips | judged | judgements["traversal-affordance:2"] with capture evidence ids from this pack | a named judge records a level 0 to 4 citing artifacts in the pack |
+| `environment-consistency:1` | Art reference match | judged | judgements["environment-consistency:1"] with capture evidence ids from this pack | a named judge records a level 0 to 4 citing artifacts in the pack |
+| `environment-consistency:2` | Cross-device consistency | computed | `consistency.devices`, `consistency.pairs` | consistency.devices covers P.devices; deltaEMax(consistency.pairs) <= P.maxArtDeltaE |
+
+## Adapt to your game
+
+Choose routes, landmarks and critical moments from your own scenes. Examples (pick what fits, ignore the rest):
+
+| Game | A route to test | A landmark | A cue that must stay visible | A moment when overlays must stay quiet |
+|---|---|---|---|---|
+| 2D platformer | the approach to a moving platform | a lit tower in the background | the next ledge | a timed jump sequence |
+| Top-down RPG or life sim | the walk from home to the shop | a well in the town square | a door or pickup under a roof | a dialogue choice |
+| Isometric strategy game | a unit's path through a town | a castle on a hill | a unit behind a tall building | the final turn of a battle |
+| Racing game | one lap | a bridge over the track | the next corner | the last lap |
+| Mobile puzzle game | the board from start to goal | the goal tile | the tile the player must tap | the final move |
+| 3D adventure or arena game | a path between two rooms | a statue in the plaza | the next ledge or an opponent's outline | a boss fight or a closing phase |
+
+- `locationOverlays` and `overlayStates` are about location overlays (a banner that names an area). If your game has none, see the `no-location-overlays` profile below.
+- `traversal-affordance:1` asks whether players can tell usable or walkable objects (including cover, when the game has it) from decoration.
+- Use the same sightline probe (a scripted visibility test from the camera to each target along a route) for level geometry and environment art. Cite the versioned `receipts.sightlines` trace for the route and camera. Supply it from your own level tools or CI.
+- Name a judge for every judged line and cite capture ids that exist in the pack.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+### Lines that may not apply
+
+One line has an approved profile in `RUBRIC.json`. The owner approves it before scoring and sets it in the game profile, `"rubricProfile": ["no-location-overlays"]` in `pack.profile`:
+
+| Profile | Use when | Line that reads N/A | Line that takes the pillar's 20 points | Group you can leave out |
+|---|---|---|---|---|
+| `no-location-overlays` | The game shows no location names or area cards over play | `visual-navigation:2` | `visual-navigation:1` | `locationOverlays` (and `overlayStates` in the profile) |
+
+An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can be PASS. Name the profile next to the grade.
+
+The other lines have no profile. A line you cannot measure stays U (0 points, lower coverage, never a defect) and the verdict stays CONDITIONAL. Say so in the report, and never fill a line with made-up values.
+
+## Decisions only you make
+
+- Who judges the five visual lines (composition, usable objects and routes, art reference match)? For example an art director, a level designer or a small playtest panel.
+- Which cues must always stay visible, and when must location overlays stay out of the way?
+- Does the game show location names or area cards over play? If not, approve the `no-location-overlays` profile before scoring.
+
+## Blockers
+
+- Five lines are visual judgements and stay U until a named judge records them with real captures.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

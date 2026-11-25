@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/support-case-draft.schema.json",
+  "title": "Support case draft (team artifact)",
+  "description": "Redacted support and moderation case drafts from the Support Desk preview. Only the human replies or acts. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "support-case-draft"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One case.",
+      "items": {
+        "type": "object",
+        "required": [
+          "caseRef",
+          "topic",
+          "status"
+        ],
+        "properties": {
+          "caseRef": {
+            "type": "string",
+            "description": "Local case label, never a player id."
+          },
+          "topic": {
+            "type": "string",
+            "description": "Topic, for example bug, purchase, conduct."
+          },
+          "subject": {
+            "type": "string",
+            "description": "Hashed subject id (sub_ plus 32 hex), when needed."
+          },
+          "status": {
+            "type": "string",
+            "description": "Always draft.",
+            "enum": [
+              "draft"
+            ]
+          },
+          "routeTo": {
+            "type": "string",
+            "description": "Template that should see it, for example 18 or 24."
+          }
+        }
+      }
+    }
+  }
+}

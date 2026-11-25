@@ -1,0 +1,721 @@
+{
+ "packId": "example-21-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "devices": [
+   "gamepad",
+   "touch",
+   "keyboard-mouse"
+  ],
+  "minTextPx": 12,
+  "minContrast": 4.5,
+  "minCvdDeltaE": 12,
+  "maxFlashesPerSecond": 3,
+  "journeyTasks": [
+   "title-screen",
+   "core-play",
+   "results",
+   "play-again"
+  ],
+  "maxCaptionOffsetMs": 80,
+  "cases": {
+   "cueMatches": [
+    {
+     "id": "arrival",
+     "event": "arrival",
+     "caption": "arrival"
+    },
+    {
+     "id": "prompt",
+     "event": "prompt",
+     "caption": "prompt"
+    }
+   ],
+   "motionPairs": [
+    {
+     "id": "pad-pan",
+     "scenario": "pan",
+     "device": "gamepad",
+     "maxAmplitude": 1
+    },
+    {
+     "id": "touch-pan",
+     "scenario": "pan",
+     "device": "touch",
+     "maxAmplitude": 1
+    },
+    {
+     "id": "mouse-pan",
+     "scenario": "pan",
+     "device": "keyboard-mouse",
+     "maxAmplitude": 1
+    }
+   ],
+   "stringGuard": [
+    {
+     "id": "disposable-control"
+    }
+   ],
+   "localeCaptures": [
+    {
+     "id": "source-wide",
+     "locale": "source",
+     "viewport": "wide"
+    },
+    {
+     "id": "source-compact",
+     "locale": "source",
+     "viewport": "compact"
+    },
+    {
+     "id": "pseudo-wide",
+     "locale": "pseudo",
+     "viewport": "wide"
+    },
+    {
+     "id": "pseudo-compact",
+     "locale": "pseudo",
+     "viewport": "compact"
+    }
+   ],
+   "navigationRecovery": [
+    {
+     "id": "pad-lobby",
+     "device": "gamepad",
+     "task": "title-screen"
+    },
+    {
+     "id": "pad-match",
+     "device": "gamepad",
+     "task": "core-play"
+    },
+    {
+     "id": "pad-results",
+     "device": "gamepad",
+     "task": "results"
+    },
+    {
+     "id": "pad-rematch",
+     "device": "gamepad",
+     "task": "play-again"
+    },
+    {
+     "id": "touch-lobby",
+     "device": "touch",
+     "task": "title-screen"
+    },
+    {
+     "id": "touch-match",
+     "device": "touch",
+     "task": "core-play"
+    },
+    {
+     "id": "touch-results",
+     "device": "touch",
+     "task": "results"
+    },
+    {
+     "id": "touch-rematch",
+     "device": "touch",
+     "task": "play-again"
+    },
+    {
+     "id": "mouse-lobby",
+     "device": "keyboard-mouse",
+     "task": "title-screen"
+    },
+    {
+     "id": "mouse-match",
+     "device": "keyboard-mouse",
+     "task": "core-play"
+    },
+    {
+     "id": "mouse-results",
+     "device": "keyboard-mouse",
+     "task": "results"
+    },
+    {
+     "id": "mouse-rematch",
+     "device": "keyboard-mouse",
+     "task": "play-again"
+    }
+   ]
+  },
+  "motionScenarios": [
+   "pan"
+  ],
+  "reviewLocales": [
+   "source",
+   "pseudo"
+  ],
+  "localeViewports": [
+   "wide",
+   "compact"
+  ]
+ },
+ "artifacts": [
+  {
+   "id": "art-journey",
+   "kind": "capture",
+   "path": "captures/journey.json",
+   "sha256": null
+  },
+  {
+   "id": "art-remap",
+   "kind": "capture",
+   "path": "captures/remap.json",
+   "sha256": null
+  },
+  {
+   "id": "art-text",
+   "kind": "capture",
+   "path": "captures/text.json",
+   "sha256": null
+  },
+  {
+   "id": "art-colour",
+   "kind": "capture",
+   "path": "captures/colour.json",
+   "sha256": null
+  },
+  {
+   "id": "art-captions",
+   "kind": "trace",
+   "path": "traces/captions.json",
+   "sha256": null
+  },
+  {
+   "id": "art-menus",
+   "kind": "capture",
+   "path": "captures/menus.json",
+   "sha256": null
+  },
+  {
+   "id": "art-motion",
+   "kind": "capture",
+   "path": "captures/motion.json",
+   "sha256": null
+  },
+  {
+   "id": "art-flash",
+   "kind": "capture",
+   "path": "captures/flash.json",
+   "sha256": null
+  },
+  {
+   "id": "art-strings",
+   "kind": "static",
+   "path": "static/strings.json",
+   "sha256": null
+  },
+  {
+   "id": "art-locale",
+   "kind": "capture",
+   "path": "captures/locale.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-cueMatches-arrival",
+   "kind": "trace",
+   "path": "receipts/cueMatches/arrival.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-cueMatches-prompt",
+   "kind": "trace",
+   "path": "receipts/cueMatches/prompt.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-motionPairs-pad-pan",
+   "kind": "capture",
+   "path": "receipts/motionPairs/pad-pan.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-motionPairs-touch-pan",
+   "kind": "capture",
+   "path": "receipts/motionPairs/touch-pan.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-motionPairs-mouse-pan",
+   "kind": "capture",
+   "path": "receipts/motionPairs/mouse-pan.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-stringGuard-disposable-control",
+   "kind": "static",
+   "path": "receipts/stringGuard/disposable-control.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-localeCaptures-source-wide",
+   "kind": "capture",
+   "path": "receipts/localeCaptures/source-wide.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-localeCaptures-source-compact",
+   "kind": "capture",
+   "path": "receipts/localeCaptures/source-compact.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-localeCaptures-pseudo-wide",
+   "kind": "capture",
+   "path": "receipts/localeCaptures/pseudo-wide.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-localeCaptures-pseudo-compact",
+   "kind": "capture",
+   "path": "receipts/localeCaptures/pseudo-compact.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-pad-lobby",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/pad-lobby.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-pad-match",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/pad-match.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-pad-results",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/pad-results.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-pad-rematch",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/pad-rematch.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-touch-lobby",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/touch-lobby.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-touch-match",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/touch-match.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-touch-results",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/touch-results.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-touch-rematch",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/touch-rematch.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-mouse-lobby",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/mouse-lobby.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-mouse-match",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/mouse-match.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-mouse-results",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/mouse-results.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-navigationRecovery-mouse-rematch",
+   "kind": "capture",
+   "path": "receipts/navigationRecovery/mouse-rematch.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "journey": {
+   "artifact": "art-journey",
+   "devicesPassed": [
+    "gamepad",
+    "touch",
+    "keyboard-mouse"
+   ],
+   "tasksPassed": [
+    "title-screen",
+    "core-play",
+    "results",
+    "play-again"
+   ],
+   "passedByDevice": [
+    {
+     "device": "gamepad",
+     "task": "title-screen"
+    },
+    {
+     "device": "gamepad",
+     "task": "core-play"
+    },
+    {
+     "device": "gamepad",
+     "task": "results"
+    },
+    {
+     "device": "gamepad",
+     "task": "play-again"
+    },
+    {
+     "device": "touch",
+     "task": "title-screen"
+    },
+    {
+     "device": "touch",
+     "task": "core-play"
+    },
+    {
+     "device": "touch",
+     "task": "results"
+    },
+    {
+     "device": "touch",
+     "task": "play-again"
+    },
+    {
+     "device": "keyboard-mouse",
+     "task": "title-screen"
+    },
+    {
+     "device": "keyboard-mouse",
+     "task": "core-play"
+    },
+    {
+     "device": "keyboard-mouse",
+     "task": "results"
+    },
+    {
+     "device": "keyboard-mouse",
+     "task": "play-again"
+    }
+   ]
+  },
+  "remap": {
+   "artifact": "art-remap",
+   "remapWorks": true,
+   "promptsSwitch": true,
+   "disconnectRecovers": true,
+   "focusRecovers": true,
+   "measuredCases": 1
+  },
+  "text": {
+   "artifact": "art-text",
+   "minPx": 12,
+   "pairs": [
+    [
+     "#ffffff",
+     "#1b2330"
+    ],
+    [
+     "#ffd54f",
+     "#2a2116"
+    ]
+   ]
+  },
+  "colour": {
+   "artifact": "art-colour",
+   "palette": [
+    "#d81b60",
+    "#1e88e5",
+    "#ffc107"
+   ],
+   "shapeOrLabelBacked": true
+  },
+  "captions": {
+   "artifact": "art-captions",
+   "requiredCues": 2,
+   "captionedCues": 2
+  },
+  "menus": {
+   "artifact": "art-menus",
+   "navigableWithSupportedInputs": true,
+   "errorsUnderstandable": true,
+   "measuredCases": 1
+  },
+  "motion": {
+   "artifact": "art-motion",
+   "promisedReductions": 5,
+   "appliedInPairedCaptures": 5
+  },
+  "flash": {
+   "artifact": "art-flash",
+   "maxFlashesPerSecond": 2,
+   "holdToggleAlternatives": true,
+   "measuredCases": 1
+  },
+  "strings": {
+   "artifact": "art-strings",
+   "inventoryComplete": true,
+   "hardcodedListed": true,
+   "measuredCases": 1,
+   "newHardcodedStringRejected": true
+  },
+  "locale": {
+   "artifact": "art-locale",
+   "pseudoLocalePass": true,
+   "supportedLocalesPass": true,
+   "truncations": 0,
+   "measuredCases": 1
+  }
+ },
+ "receipts": {
+  "cueMatches": [
+   {
+    "id": "arrival",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-cueMatches-arrival",
+    "event": "arrival",
+    "caption": "arrival",
+    "eventMs": 1000,
+    "captionMs": 1020
+   },
+   {
+    "id": "prompt",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-cueMatches-prompt",
+    "event": "prompt",
+    "caption": "prompt",
+    "eventMs": 1000,
+    "captionMs": 1020
+   }
+  ],
+  "motionPairs": [
+   {
+    "id": "pad-pan",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-motionPairs-pad-pan",
+    "scenario": "pan",
+    "normalDevice": "gamepad",
+    "reducedDevice": "gamepad",
+    "normalScenario": "pan",
+    "reducedArtifact": "art-motion",
+    "normalAmplitude": 4,
+    "reducedAmplitude": 0.5
+   },
+   {
+    "id": "touch-pan",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-motionPairs-touch-pan",
+    "scenario": "pan",
+    "normalDevice": "touch",
+    "reducedDevice": "touch",
+    "normalScenario": "pan",
+    "reducedArtifact": "art-motion",
+    "normalAmplitude": 4,
+    "reducedAmplitude": 0.5
+   },
+   {
+    "id": "mouse-pan",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-motionPairs-mouse-pan",
+    "scenario": "pan",
+    "normalDevice": "keyboard-mouse",
+    "reducedDevice": "keyboard-mouse",
+    "normalScenario": "pan",
+    "reducedArtifact": "art-motion",
+    "normalAmplitude": 4,
+    "reducedAmplitude": 0.5
+   }
+  ],
+  "stringGuard": [
+   {
+    "id": "disposable-control",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-stringGuard-disposable-control",
+    "planted": "temporary-ui-literal",
+    "rejected": true,
+    "guardOutput": "art-strings"
+   }
+  ],
+  "localeCaptures": [
+   {
+    "id": "source-wide",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-localeCaptures-source-wide",
+    "locale": "source",
+    "viewport": "wide",
+    "font": "sample-font",
+    "truncations": 0,
+    "missingGlyphs": 0
+   },
+   {
+    "id": "source-compact",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-localeCaptures-source-compact",
+    "locale": "source",
+    "viewport": "compact",
+    "font": "sample-font",
+    "truncations": 0,
+    "missingGlyphs": 0
+   },
+   {
+    "id": "pseudo-wide",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-localeCaptures-pseudo-wide",
+    "locale": "pseudo",
+    "viewport": "wide",
+    "font": "sample-font",
+    "truncations": 0,
+    "missingGlyphs": 0
+   },
+   {
+    "id": "pseudo-compact",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-localeCaptures-pseudo-compact",
+    "locale": "pseudo",
+    "viewport": "compact",
+    "font": "sample-font",
+    "truncations": 0,
+    "missingGlyphs": 0
+   }
+  ],
+  "navigationRecovery": [
+   {
+    "id": "pad-lobby",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-pad-lobby",
+    "device": "gamepad",
+    "task": "title-screen",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "pad-match",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-pad-match",
+    "device": "gamepad",
+    "task": "core-play",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "pad-results",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-pad-results",
+    "device": "gamepad",
+    "task": "results",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "pad-rematch",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-pad-rematch",
+    "device": "gamepad",
+    "task": "play-again",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "touch-lobby",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-touch-lobby",
+    "device": "touch",
+    "task": "title-screen",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "touch-match",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-touch-match",
+    "device": "touch",
+    "task": "core-play",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "touch-results",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-touch-results",
+    "device": "touch",
+    "task": "results",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "touch-rematch",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-touch-rematch",
+    "device": "touch",
+    "task": "play-again",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "mouse-lobby",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-mouse-lobby",
+    "device": "keyboard-mouse",
+    "task": "title-screen",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "mouse-match",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-mouse-match",
+    "device": "keyboard-mouse",
+    "task": "core-play",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "mouse-results",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-mouse-results",
+    "device": "keyboard-mouse",
+    "task": "results",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   },
+   {
+    "id": "mouse-rematch",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-navigationRecovery-mouse-rematch",
+    "device": "keyboard-mouse",
+    "task": "play-again",
+    "remapped": true,
+    "recovered": true,
+    "focusRestored": true
+   }
+  ]
+ }
+}

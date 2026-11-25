@@ -1,0 +1,284 @@
+{
+ "packId": "example-15-pack",
+ "status": "VALID",
+ "gitSha": "example-git-sha",
+ "liveSha": "example-live-sha",
+ "synthetic": true,
+ "note": "Synthetic worked example for engine tests and onboarding. Not a measurement of any game; replace every value with data from your own evidence pack.",
+ "profile": {
+  "lagCompMaxMs": 200,
+  "maxAssistDeltaPct": 5,
+  "maxMsgsPerSecond": 60,
+  "maxFalsePositiveRate": 0.001,
+  "maxFalseNegativeRate": 0.1,
+  "cases": {
+   "authorityCases": [
+    {
+     "id": "invalid-action",
+     "scenario": "invalid-action",
+     "expected": "reject",
+     "expectedReward": 1
+    },
+    {
+     "id": "duplicate-reward",
+     "scenario": "duplicate-reward",
+     "expected": "reject",
+     "expectedReward": 1
+    }
+   ],
+   "sceneParity": [
+    {
+     "id": "scene",
+     "scene": "sample-scene",
+     "coordinates": "right-handed-y-up-metres"
+    }
+   ],
+   "assistDevices": [
+    {
+     "id": "pad",
+     "device": "pad"
+    },
+    {
+     "id": "touch",
+     "device": "touch"
+    }
+   ]
+  },
+  "assistDevices": [
+   "pad",
+   "touch"
+  ]
+ },
+ "artifacts": [
+  {
+   "id": "art-authority",
+   "kind": "trace",
+   "path": "traces/authority.json",
+   "sha256": null
+  },
+  {
+   "id": "art-clamping",
+   "kind": "trace",
+   "path": "traces/clamping.json",
+   "sha256": null
+  },
+  {
+   "id": "art-cadence",
+   "kind": "trace",
+   "path": "traces/cadence.json",
+   "sha256": null
+  },
+  {
+   "id": "art-lagComp",
+   "kind": "trace",
+   "path": "traces/lagComp.json",
+   "sha256": null
+  },
+  {
+   "id": "art-actionParity",
+   "kind": "trace",
+   "path": "traces/actionParity.json",
+   "sha256": null
+  },
+  {
+   "id": "art-assist",
+   "kind": "trace",
+   "path": "traces/assist.json",
+   "sha256": null
+  },
+  {
+   "id": "art-interest",
+   "kind": "trace",
+   "path": "traces/hiddenInfo.json",
+   "sha256": null
+  },
+  {
+   "id": "art-flood",
+   "kind": "trace",
+   "path": "traces/flood.json",
+   "sha256": null
+  },
+  {
+   "id": "art-joins",
+   "kind": "trace",
+   "path": "traces/joins.json",
+   "sha256": null
+  },
+  {
+   "id": "art-detection",
+   "kind": "trace",
+   "path": "traces/detection.json",
+   "sha256": null
+  },
+  {
+   "id": "art-multi-account",
+   "kind": "trace",
+   "path": "traces/multi-account.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-authorityCases-invalid-action",
+   "kind": "trace",
+   "path": "receipts/authorityCases/invalid-action.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-authorityCases-duplicate-reward",
+   "kind": "trace",
+   "path": "receipts/authorityCases/duplicate-reward.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-sceneParity-scene",
+   "kind": "trace",
+   "path": "receipts/sceneParity/scene.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-assistDevices-pad",
+   "kind": "trace",
+   "path": "receipts/assistDevices/pad.json",
+   "sha256": null
+  },
+  {
+   "id": "sample-assistDevices-touch",
+   "kind": "trace",
+   "path": "receipts/assistDevices/touch.json",
+   "sha256": null
+  }
+ ],
+ "metrics": {
+  "authority": {
+   "artifact": "art-authority",
+   "impossibleActions": 2,
+   "rejected": 2,
+   "authorizedLocal": true
+  },
+  "clamping": {
+   "artifact": "art-clamping",
+   "malformedInputs": 25,
+   "clamped": 25
+  },
+  "cadence": {
+   "artifact": "art-cadence",
+   "overRateAttempts": 30,
+   "enforced": 30
+  },
+  "lagComp": {
+   "artifact": "art-lagComp",
+   "rewindMsObserved": [
+    60,
+    110,
+    180,
+    200
+   ],
+   "declaredPolicyMs": 200
+  },
+  "actionParity": {
+   "artifact": "art-actionParity",
+   "humanRules": "r1",
+   "botRules": "r1",
+   "scriptRules": "r1",
+   "measuredCases": 1
+  },
+  "assist": {
+   "artifact": "art-assist",
+   "strengthByDevicePct": [
+    20,
+    20
+   ]
+  },
+  "hiddenInfo": {
+   "artifact": "art-interest",
+   "hiddenStateSent": 0,
+   "relyOnDistanceOnly": false,
+   "measuredCases": 1
+  },
+  "flood": {
+   "artifact": "art-flood",
+   "peakAcceptedPerSecond": 58,
+   "malformedCrashes": 0,
+   "measuredCases": 1
+  },
+  "joins": {
+   "artifact": "art-joins",
+   "duplicateJoinAccepted": 0,
+   "reconnectStateLeaks": 0,
+   "measuredCases": 1
+  },
+  "detection": {
+   "artifact": "art-detection",
+   "fpRate": 0.0004,
+   "fnRate": 0.07,
+   "assistiveInputIncluded": true,
+   "negativeCases": 2500,
+   "positiveCases": 100,
+   "falsePositives": 1,
+   "falseNegatives": 7
+  },
+  "multiAccount": {
+   "artifact": "art-multi-account",
+   "flaggedClusters": 3,
+   "reviewedByHuman": 3,
+   "autoBans": 0,
+   "rulesDocumented": true
+  }
+ },
+ "receipts": {
+  "authorityCases": [
+   {
+    "id": "invalid-action",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-authorityCases-invalid-action",
+    "scenario": "invalid-action",
+    "isolated": true,
+    "decision": "reject",
+    "rewardBefore": 1,
+    "rewardAfter": 1
+   },
+   {
+    "id": "duplicate-reward",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-authorityCases-duplicate-reward",
+    "scenario": "duplicate-reward",
+    "isolated": true,
+    "decision": "reject",
+    "rewardBefore": 1,
+    "rewardAfter": 1
+   }
+  ],
+  "sceneParity": [
+   {
+    "id": "scene",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-sceneParity-scene",
+    "scene": "sample-scene",
+    "coordinates": "right-handed-y-up-metres",
+    "clientGeometry": "f58940a313992e6838ac3fc1f2356916cf8b53c42920a3f59cabc510f1236ec9",
+    "serverGeometry": "f58940a313992e6838ac3fc1f2356916cf8b53c42920a3f59cabc510f1236ec9",
+    "clientRotation": "224610f102890bc0e40c49ffb456bb93d45a6dee88dc9a7bef351fa10d3f8582",
+    "serverRotation": "224610f102890bc0e40c49ffb456bb93d45a6dee88dc9a7bef351fa10d3f8582",
+    "clientSpawn": "a04afb368a4946b069ebf8e3ceeeba94ff114ddb477c7b5a5e133c5d52544d43",
+    "serverSpawn": "a04afb368a4946b069ebf8e3ceeeba94ff114ddb477c7b5a5e133c5d52544d43",
+    "clientExport": "art-interest",
+    "serverExport": "art-authority"
+   }
+  ],
+  "assistDevices": [
+   {
+    "id": "pad",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-assistDevices-pad",
+    "device": "pad",
+    "strengthPct": 20
+   },
+   {
+    "id": "touch",
+    "liveSha": "example-live-sha",
+    "artifact": "sample-assistDevices-touch",
+    "device": "touch",
+    "strengthPct": 20
+   }
+  ]
+ }
+}

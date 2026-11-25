@@ -1,0 +1,113 @@
+# Server Fairness & Anti-Cheat Guard
+
+Created by @meta_alchemist (https://x.com/meta_alchemist).
+
+For games with a server, compare scene data across engines and review whether the server enforces your game's rules fairly.
+
+## Two parts, one job: a fair server
+
+| Part | What it is for | Skill |
+|---|---|---|
+| Scene Parity | When levels move between editors (Blender, Unity, Godot, Unreal) or an AI agent edits them over MCP (Model Context Protocol, a way to connect an agent to an editor), prove the server's collision, spawn and visibility data match what players see. A mismatch lets players walk through walls or see through cover. | `cross-editor-scene-parity` |
+| Anti-Cheat Guard | Review that your own server rejects impossible actions, bounds inputs and timing, hides what players should not see, survives floods and duplicate joins, and that any automatic detector is measured fairly. | `server-authority-fairness-audit` |
+
+Who it is for: any game with a server or host player that decides outcomes, such as an online arena game, a co-op farming sim, an asynchronous turn-based strategy game, an online card game, a racing game with server-checked lap times or a puzzle game with a server-checked leaderboard. A fully offline game has nothing to review here; skip this template.
+
+Defensive only: it reviews your own server's rules on a local or staging copy with your written go-ahead. It never targets players, live servers or other games, never writes or shares cheats, and never bans, mutes or contacts anyone. Suspected cheating and suspected multi-account groups go to a human review queue as local drafts.
+
+Rubric: `gbf-15-mcp-anticheat-director` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
+
+Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+
+Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
+
+## Quick start
+
+```
+node engine/lens.mjs fixtures/good-pack.json      # grade the worked example (synthetic, not a measurement)
+node tests/lens-negative-fixtures.mjs             # every negative and missing-input case must behave
+node tests/test-lens-contract.mjs                 # rubric match, recipe embed and text checks
+node engine/lens.mjs your-pack.json               # grade your own evidence pack
+```
+
+The engine prints one grade record: per-line level, evidence ids, findings, supported points, coverage, verdict (PASS, CONDITIONAL, BLOCKED or INVALID), growth checks and deduplicated ticket candidates. It refuses (verdict INVALID, grade null) a pack that is missing, not VALID, or has no liveSha, gitSha or packId.
+
+## How the engine decides a level
+
+- Computed lines read `metrics.<group>` from the pack. Each group must name an `artifact` id that exists in `pack.artifacts`; otherwise the line is U.
+- A failed condition caps the level: hard conditions at 1, normal ones at 2, level-4-only ones at 3. Receipt checks (one row per owner-approved test case) have the caps shown in the rubric. All conditions passing gives 4.
+- Judged lines (perception calls a script cannot make) accept `pack.judgements[lineId] = { level, judge, evidenceIds, note }` only when every evidence id is in the pack and at least one matches the line's evidence type. A made-up id gives U. All ten lines in this rubric are computed.
+- Thresholds come from `pack.profile` (your game profile). Missing thresholds give U, never a default.
+
+See `node engine/lens.mjs --meta` for the sample size (population) required by each line. Scalar summaries without a listed population require a positive `measuredCases`. Missing or empty evidence earns U. Each computed line requires an artifact of its declared type.
+
+For real packs, supply the producer receipt and local artifact files described in the [evidence contract](../../spec/TEMPLATE_SPEC.md#live-evidence). The [rubric](RUBRIC.md) lists case fields, comparisons and failure caps.
+
+## Pack fields (one row per rubric line)
+
+| Line | Name | Needs | Reads | Passes when |
+|---|---|---|---|---|
+| `server-authority:1` | Server decides every action and reward (for example moves, turns, hits, scores, rewards) | any server game | `authority.authorizedLocal`, `authority.rejected`, `authority.impossibleActions`, `receipts.authorityCases` | `authority.authorizedLocal` is true, `authority.rejected == authority.impossibleActions`, approved receipt cases pass |
+| `server-authority:2` | Input validation and clamping | any server game | `clamping.clamped`, `clamping.malformedInputs` | clamping.clamped == clamping.malformedInputs |
+| `cadence-and-timing:1` | Action rate and cooldown enforcement | any server game | `cadence.enforced`, `cadence.overRateAttempts` | cadence.enforced == cadence.overRateAttempts (hard: level 1 on failure) |
+| `cadence-and-timing:2` | Lag compensation window integrity (only for real-time hit judging) | real-time hit judging | `lagComp.rewindMsObserved`, `lagComp.declaredPolicyMs` | max(lagComp.rewindMsObserved) <= lagComp.declaredPolicyMs; lagComp.declaredPolicyMs <= P.lagCompMaxMs |
+| `parity:1` | Same action rules for humans, bots and scripted input | bots or scripted input | `actionParity.humanRules`, `actionParity.botRules`, `actionParity.scriptRules` | actionParity.humanRules == actionParity.botRules (hard: level 1 on failure); actionParity.humanRules == actionParity.scriptRules |
+| `parity:2` | Input assist parity across devices (only with input assists) | input assists on two or more devices | `assist.strengthByDevicePct`, `receipts.assistDevices` | `absdiff(max(assist.strengthByDevicePct),min(assist.strengthByDevicePct)) <= P.maxAssistDeltaPct`, `len(assist.strengthByDevicePct) >= 2`, approved receipt cases pass |
+| `exposure-and-abuse:1` | Hidden information stays hidden | level geometry | `hiddenInfo.hiddenStateSent`, `hiddenInfo.relyOnDistanceOnly`, `receipts.sceneParity` | `hiddenInfo.hiddenStateSent == 0`, `hiddenInfo.relyOnDistanceOnly` is false, approved receipt cases pass |
+| `exposure-and-abuse:2` | Flooding, malformed packets, connection abuse | any server game | `flood.peakAcceptedPerSecond`, `flood.malformedCrashes` | flood.peakAcceptedPerSecond <= P.maxMsgsPerSecond; flood.malformedCrashes == 0 (hard: level 1 on failure) |
+| `recovery-and-detection:1` | Reconnect and duplicate-join handling | any game with sessions | `joins.duplicateJoinAccepted`, `joins.reconnectStateLeaks` | joins.duplicateJoinAccepted == 0 (hard: level 1 on failure); joins.reconnectStateLeaks == 0 |
+| `recovery-and-detection:2` | Score and reward integrity, detection and review | an automatic detector | `detection.assistiveInputIncluded`, `detection.fpRate`, `detection.fnRate` | detection.assistiveInputIncluded is true (hard: level 1 on failure); detection.fpRate <= P.maxFalsePositiveRate; detection.fnRate <= P.maxFalseNegativeRate; both rates match their labelled case counts |
+
+The line names come from the frozen rubric and lean on shooter words. In plain words: "fire rate, cooldown and reload" means any limit on how often an action can happen (one move per turn, a daily reward once a day); "hold-to-fire parity" means humans, bots and scripted input get the same action rules; "aim assist" means any input assist (steering assist, touch snap); "interest management" means the server's rule for what each player's device is told. The `server-authority-fairness-audit` skill has a table with examples from several genres and what to do when a line does not apply.
+
+## Growth checks (reported beside the grade, not scored)
+
+| Check | Areas | Reads | Passes when |
+|---|---|---|---|
+| `multi-account` | multi-account | `multiAccount.reviewedByHuman`, `multiAccount.flaggedClusters`, `multiAccount.autoBans`, `multiAccount.rulesDocumented` | multiAccount.reviewedByHuman == multiAccount.flaggedClusters; multiAccount.autoBans == 0 (hard: level 1 on failure); multiAccount.rulesDocumented is true |
+
+The `multi-account` check covers suspected groups of accounts run by one person in an event, contest, guild or leaderboard. Each flagged group goes to a human reviewer as a local draft; automatic bans must be zero.
+
+## Adapt to your game
+
+Use this template when the game has a server or host that decides outcomes. Short examples (illustrative only):
+
+- Turn-based strategy or card game: check turn ownership, hidden information (the opponent's hand, units under fog of war) and the turn timer. No lag compensation and usually no aim assist: select the `turn-based` and `no-input-assist` profiles.
+- Racing game: check lap times against what the car can do, checkpoint order and steering assist per device.
+- Co-op farming or life sim: check that harvests, trades and gifts are decided by the server, and that two devices on one account cannot join one session.
+- Puzzle game with a server-checked leaderboard: check that a submitted score matches the moves the server can replay, and that submissions are rate limited.
+- 3D arena game: all ten lines usually apply, including lag compensation, aim assist and scene parity.
+
+Then:
+
+- Run only against your own local or staging server with written authorization; never against live players.
+- If the game has an automatic detector, set false positive and false negative budgets in the profile and include assistive input devices in the honest test set.
+- Two lines have an approved profile in `RUBRIC.json`. The owner approves the profile before scoring and sets it in the game profile, for example `"rubricProfile": ["turn-based", "no-input-assist"]` in `pack.profile`:
+
+  | Profile | Use when | Line that reads N/A | Line that takes the pillar's 20 points | Group you can leave out |
+  |---|---|---|---|---|
+  | `turn-based` | The server judges turns, not real-time hits, so there is no lag compensation window | `cadence-and-timing:2` | `cadence-and-timing:1` | `lagComp` |
+  | `no-input-assist` | No aim, steering or other input assist | `parity:2` | `parity:1` | `assist` |
+
+  An N/A line is not U and not a defect, and with every other line at level 3 or more the verdict can be PASS. Name the profiles next to the grade (see [docs/RUBRIC_GUIDE.md](../../docs/RUBRIC_GUIDE.md#applicability)).
+- These lines have no profile: `parity:1` (bots or scripted input), `exposure-and-abuse:1` (level geometry), `recovery-and-detection:1` (sessions) and `recovery-and-detection:2` (an automatic detector). When your game lacks the feature, leave the group out; the line stays U, is reported as "does not apply", and the verdict stays CONDITIONAL. Never fill a line with made-up values.
+- Copy `fixtures/good-pack.json`, keep its shape, and replace every value with numbers from your own build. Keep `synthetic` false (or remove it) for real packs.
+- Never edit thresholds inside the engine; put them in `pack.profile`.
+
+## Owner calls
+
+- If your game has an automatic cheat detector, how many honest sessions may it wrongly flag, and how many known-cheat test sessions may it miss?
+- If your game judges hits in real time, how far back may the server rewind time to judge a hit?
+- If your game has input assists, how strong should each be per device, and how much difference between devices is acceptable?
+- Which rubric profiles apply (`turn-based`, `no-input-assist`), approved before scoring and set as `rubricProfile` in the game profile.
+
+## Blockers
+
+- Detection rates need labelled sessions; the worked example is synthetic.
+
+## Files
+
+- `recipe.json`: the importable bot template. The `*-lens-engine` skill carries the engine source so a new owner gets it without this folder.
+- `engine/lens-kit.mjs`, `engine/lens.mjs`: the engine (no dependencies, Node 18+).
+- `fixtures/good-pack.json`, `fixtures/mutations.json`: worked example and its negative and missing-input cases.
+- `tests/`: portable tests. `RUBRIC.json` and `RUBRIC.md`: the frozen rubric.

@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/creator-shortlist.schema.json",
+  "title": "Creator shortlist (team artifact)",
+  "description": "Creators who fit the game's audience, with dated public sources and outreach drafts, from Streamer and Patch Notes. Only the owner contacts anyone. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "creator-shortlist"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One creator.",
+      "items": {
+        "type": "object",
+        "required": [
+          "ref",
+          "reason",
+          "sourceDate"
+        ],
+        "properties": {
+          "ref": {
+            "type": "string",
+            "description": "A label the owner can resolve; never stored in team memory."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why they fit."
+          },
+          "sourceDate": {
+            "type": "string",
+            "description": "UTC date the public source was checked."
+          },
+          "draft": {
+            "type": "string",
+            "description": "Outreach draft for the owner to send or not."
+          }
+        }
+      }
+    }
+  }
+}

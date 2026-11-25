@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "grokbot-template-kit/artifacts/tracker-export.schema.json",
+  "title": "Tracker export (team artifact)",
+  "description": "A read-only export from the team's issue tracker, made by the owner. The bot never writes to the tracker. Created by @meta_alchemist (https://x.com/meta_alchemist).",
+  "x-version": "1.0.0",
+  "type": "object",
+  "required": [
+    "artifact",
+    "version",
+    "producer",
+    "createdAt",
+    "synthetic",
+    "items"
+  ],
+  "properties": {
+    "artifact": {
+      "const": "tracker-export"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Artifact schema version the producer wrote. Same major as x-version."
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "version"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Template id, or owner for files the owner makes."
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC time the file was written."
+    },
+    "synthetic": {
+      "type": "boolean",
+      "description": "True for worked examples. Consumers never treat synthetic data as a measurement."
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string"
+        },
+        "liveSha": {
+          "type": "string"
+        }
+      },
+      "description": "The build the items describe, when they describe one."
+    },
+    "items": {
+      "type": "array",
+      "description": "One tracker item.",
+      "items": {
+        "type": "object",
+        "required": [
+          "ticket",
+          "status"
+        ],
+        "properties": {
+          "ticket": {
+            "type": "string",
+            "description": "Tracker item id."
+          },
+          "status": {
+            "type": "string",
+            "description": "Tracker status."
+          },
+          "severity": {
+            "type": "string",
+            "description": "Severity."
+          },
+          "opened": {
+            "type": "string",
+            "description": "UTC time opened."
+          },
+          "closed": {
+            "type": "string",
+            "description": "UTC time closed."
+          }
+        }
+      }
+    }
+  }
+}

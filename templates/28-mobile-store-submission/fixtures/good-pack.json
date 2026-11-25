@@ -1,0 +1,167 @@
+{
+  "packId": "synthetic-store",
+  "synthetic": true,
+  "gitSha": "synthetic",
+  "liveSha": "synthetic",
+  "status": "VALID",
+  "profile": {
+    "minTargetSdk": 35,
+    "minIosTarget": 15,
+    "allowedPermissions": [
+      "android.permission.INTERNET"
+    ],
+    "minProbeAttempts": 12,
+    "requirements": {
+      "config": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "hard": [
+        "H1",
+        "H2",
+        "H3",
+        "H4"
+      ],
+      "perm": [
+        "P1",
+        "P2"
+      ],
+      "privacy": [
+        "P3",
+        "P4",
+        "P6"
+      ],
+      "billing": [
+        "S1"
+      ],
+      "accounts": [
+        "S2",
+        "S3"
+      ],
+      "secrets": [
+        "K1",
+        "K2"
+      ],
+      "signing": [
+        "O1"
+      ],
+      "listing": [
+        "L-screenshots",
+        "L-description",
+        "L-ageRating",
+        "L-dataSafetyForm",
+        "L-appPrivacyLabels"
+      ]
+    }
+  },
+  "metrics": {
+    "config": {
+      "artifact": "config-review",
+      "measuredCases": 8,
+      "failures": 0,
+      "complete": true
+    },
+    "hard": {
+      "artifact": "hard-review",
+      "measuredCases": 4,
+      "failures": 0,
+      "complete": true
+    },
+    "perm": {
+      "artifact": "perm-review",
+      "measuredCases": 2,
+      "failures": 0,
+      "complete": true
+    },
+    "privacy": {
+      "artifact": "privacy-review",
+      "measuredCases": 3,
+      "failures": 0,
+      "complete": true
+    },
+    "billing": {
+      "artifact": "billing-review",
+      "measuredCases": 1,
+      "failures": 0,
+      "complete": true
+    },
+    "accounts": {
+      "artifact": "accounts-review",
+      "measuredCases": 2,
+      "failures": 0,
+      "complete": true
+    },
+    "secrets": {
+      "artifact": "secrets-review",
+      "measuredCases": 2,
+      "failures": 0,
+      "complete": true
+    },
+    "signing": {
+      "artifact": "signing-review",
+      "measuredCases": 1,
+      "failures": 0,
+      "complete": true
+    },
+    "listing": {
+      "artifact": "listing-review",
+      "measuredCases": 5,
+      "failures": 0,
+      "complete": true
+    },
+    "authority": {
+      "artifact": "inspection",
+      "forbiddenAttempted": 12,
+      "forbiddenSucceeded": 0,
+      "toolCalls": 0
+    }
+  },
+  "artifacts": [
+    {
+      "id": "config-review",
+      "kind": "static"
+    },
+    {
+      "id": "hard-review",
+      "kind": "static"
+    },
+    {
+      "id": "perm-review",
+      "kind": "static"
+    },
+    {
+      "id": "privacy-review",
+      "kind": "static"
+    },
+    {
+      "id": "billing-review",
+      "kind": "static"
+    },
+    {
+      "id": "accounts-review",
+      "kind": "static"
+    },
+    {
+      "id": "secrets-review",
+      "kind": "static"
+    },
+    {
+      "id": "signing-review",
+      "kind": "static"
+    },
+    {
+      "id": "listing-review",
+      "kind": "static"
+    },
+    {
+      "id": "inspection",
+      "kind": "trace"
+    }
+  ]
+}

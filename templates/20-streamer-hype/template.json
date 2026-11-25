@@ -1,0 +1,155 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-20-streamer-hype-director",
+  "slug": "20-streamer-hype",
+  "name": "Streamer Scout, Patch Notes & Update Hype Director",
+  "shortName": "Patch Notes",
+  "version": "1.0.0",
+  "status": "shipping",
+  "summary": "Match creators to your intended audience and turn verified build changes into patch notes and updates for players.",
+  "stage": "Ship, Live",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "streamer-hype-getting-started",
+  "skills": [
+    "streamer-hype-getting-started",
+    "creator-shortlist-scout",
+    "git-diff-patch-notes-hype-compiler",
+    "stream-and-replay-features-review",
+    "streamer-hype-lens-engine"
+  ],
+  "routines": [
+    "streamer-hype-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-20-streamer-hype-director",
+    "version": "1.4.0",
+    "hash": "sha256:fdc88981a6561afc9abeaba8f148fdaeb64950463794d0271511cb08686530f4"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "evidence": {
+    "legacyGrade": 68.5,
+    "externalReviewMin": 4,
+    "externalReadiness": "after-fixes"
+  },
+  "handoffs": {
+    "takesFrom": "Economy Director, Trailer Director.",
+    "handsTo": "The owner (every post and DM stays a draft)."
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "change-list": "^1.0.0",
+      "economy-change-list": "^1.0.0",
+      "balance-patch-draft": "^1.0.0",
+      "clip-list": "^1.0.0",
+      "media-export-manifest": "^1.0.0",
+      "store-asset-manifest": "^1.0.0",
+      "fairness-findings": "^1.0.0",
+      "work-plan": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "patch-notes-draft",
+      "version": "1.0.0",
+      "format": "Markdown draft plus a JSON map from each line to its change",
+      "schema": "spec/artifacts/patch-notes-draft.schema.json"
+    },
+    {
+      "artifact": "creator-shortlist",
+      "version": "1.0.0",
+      "format": "JSON with outreach drafts",
+      "schema": "spec/artifacts/creator-shortlist.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": true,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "change-list",
+      "required": false,
+      "schema": "spec/artifacts/change-list.schema.json",
+      "whenMissing": "Continue: build the change list from the repository history for the shipped range; without repository access, record NOT_RUN for patch notes."
+    },
+    {
+      "artifact": "economy-change-list",
+      "required": false,
+      "schema": "spec/artifacts/economy-change-list.schema.json"
+    },
+    {
+      "artifact": "balance-patch-draft",
+      "required": false,
+      "schema": "spec/artifacts/balance-patch-draft.schema.json"
+    },
+    {
+      "artifact": "clip-list",
+      "required": false,
+      "schema": "spec/artifacts/clip-list.schema.json"
+    },
+    {
+      "artifact": "media-export-manifest",
+      "required": false,
+      "schema": "spec/artifacts/media-export-manifest.schema.json"
+    },
+    {
+      "artifact": "store-asset-manifest",
+      "required": false,
+      "schema": "spec/artifacts/store-asset-manifest.schema.json",
+      "whenMissing": "Continue: outreach drafts leave out the press kit link and say so."
+    },
+    {
+      "artifact": "fairness-findings",
+      "required": false,
+      "schema": "spec/artifacts/fairness-findings.schema.json"
+    },
+    {
+      "artifact": "work-plan",
+      "required": false,
+      "schema": "spec/artifacts/work-plan.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions",
+      "releases",
+      "balance"
+    ],
+    "writes": [
+      "decisions",
+      "releases"
+    ]
+  }
+}
