@@ -8,6 +8,8 @@ How the templates fit into game development. One page per template covers when t
 
 Collect evidence from a playtest, a CI run or a manual capture. Playtest QA (template 02) is coming later. Bug Desk (18) prepares local ticket drafts. A human reviews them and files approved changes in the shared ledger. When several templates run in one game project they pass findings to each other as files; the [team map](../../docs/TEAM-MAP.md) shows who hands what to whom.
 
+A first game does not need every row below. The starter team is Game Feel, HUD, Bug Desk, and Producer, in that order. See [Get started with your AI gaming team](../../GETTING-STARTED.md). The stage column further down matches each template's own stage. A 2D game may still use Sprites (17) during a prototype, even though that bot's stage is Production.
+
 ```
 build ──> capture ──> evidence pack ──> lens templates grade it ──> findings ──> 18 Bug Desk local draft ──> human reviews and files
 ```
@@ -68,9 +70,9 @@ Enforcement is always a human decision. Templates propose; people ban.
 | [09 HUD Designer](09-hud-designer.md) | Polish |
 | [10 Trailer Director](10-trailer-director.md) | Ship, Live |
 | [11 Environment Design](11-environment-design.md) | Production, Polish |
-| [12 Parallel Game Producer](12-parallel-game-producer.md) | Production, Ship |
+| [12 Parallel Game Producer](12-parallel-game-producer.md) | Milestone planning and pitch review |
 | [13 Sound and Music](13-audio-director.md) | Polish |
-| [14 Living AI NPC and Lore](14-living-npc-lore.md) (preview) | Production |
+| [14 Living AI NPC and Lore](14-living-npc-lore.md) (preview) | Narrative prototyping and playtest |
 | [15 Server Fairness](15-mcp-anticheat.md) | Production, Live |
 | [17 Sprite and Hitbox Packer](17-sprite-hitbox-packer.md) | Production |
 | [18 Bug Desk](18-bug-desk-triage.md) | Playtest, Live |

@@ -2,6 +2,8 @@
 
 Created by @meta_alchemist (https://x.com/meta_alchemist).
 
+New here? Read [Get started with your AI gaming team](GETTING-STARTED.md) first. This page is the install reference those steps come from. If you get stuck, see [FAQ.md](FAQ.md).
+
 Grok Bot cannot import a template straight from GitHub. Use one of the three paths below. Each template's `HOW-TO-USE.md` repeats the steps with its own skill names.
 
 ## Option A: Add to Grok Bot (one click)

@@ -2,93 +2,81 @@
 
 Created by [@meta_alchemist](https://x.com/meta_alchemist). MIT licensed.
 
-**A team of AI game-dev specialists you add to Grok Bot.** Each one reviews one part of your game (game feel, HUD, audio, economy, bug triage, store page, live service and more), grades your build against a 100-point rubric using evidence you capture, and drafts fixes for you to approve. They work alone or as a team that hands findings to each other.
+A pack of AI game-dev bots you add to Grok Bot. Each bot looks at one part of your game, grades what you captured, and drafts fixes for you to approve. You stay in charge. Nothing is posted, filed, or sent until you do it.
 
-**Who it is for:** solo developers and small teams making any game, in any genre, on any engine or platform: a 2D platformer, a mobile puzzle game, a farming sim, a narrative adventure, a racing game or an online arena game. You stay in charge: every post, ticket, refund or upload stays a draft until you send it.
+It is for solo developers and small teams, in any genre, on any engine. A platformer, a mobile puzzle, a farming sim, a story game, a racing game, or an online arena all fit.
 
-**Start in under a minute:**
+## Five minute quickstart
 
-1. Pick one specialist from the table below. Not sure? Start with **Game Feel (01)** while prototyping, or **Bug Desk (18)** once people play.
-2. Open its `HOW-TO-USE.md` and paste its skills into Grok Bot (or Claude Code, Codex or Cursor).
-3. Say: "Run the getting-started skill." It asks about your game one question at a time.
+You do not need all 23 bots. Start with four, in this order: **Game Feel**, **HUD**, **Bug Desk**, **Producer**. The reasons, the paste steps, and a first prompt for each one are in [Get started with your AI gaming team](GETTING-STARTED.md).
 
-Want to see a grade first? With Node 18 or newer, from this folder (no install, no dependencies):
+1. Download this repo.
+2. If you have Node 18 or newer, grade the sample. It is synthetic, not your game. From this folder:
 
 ```bash
-node templates/18-bug-desk-triage/engine/lens.mjs templates/18-bug-desk-triage/fixtures/good-pack.json
+node templates/01-game-feel/engine/lens.mjs templates/01-game-feel/fixtures/good-pack.json
 ```
 
-It prints a verdict, a grade out of 100, how much of the rubric was measured, and a level for each line. The example is synthetic, not a real game.
+You should see `"verdict": "PASS"` and `"grade": 100`.
 
-## Pick a specialist
+3. Add Game Feel next, from `templates/01-game-feel`. Share links are not live yet, so paste each skill file into a Grok Bot chat. The guide has the exact words, including this first prompt: `Run the game-vibes-getting-started skill.`
 
-| Stage | Shipping templates |
-|---|---|
-| Prototype | [01 Game Feel](templates/01-game-feel/), [17 Sprites and Hitboxes](templates/17-sprite-hitbox-packer/) |
-| Playtest | [18 Bug Desk](templates/18-bug-desk-triage/) |
-| Production | [03 Props and Rigs](templates/03-prop-rig/), [11 Environment](templates/11-environment-design/), [06 Economy](templates/06-economy-director/), [15 Server Fairness](templates/15-mcp-anticheat/), [12 Producer](templates/12-parallel-game-producer/) |
-| Polish | [09 HUD and Game UI](templates/09-hud-designer/), [13 Sound and Music](templates/13-audio-director/), [21 Access, Input and Localization](templates/21-access-input-localization/) |
-| Ship and live | [10 Trailer](templates/10-trailer-director/), [19 Store Page](templates/19-presskit-director/), [20 Streamers and Patch Notes](templates/20-streamer-hype/), [22 Live Service and Trust](templates/22-live-service-trust/) |
+Stuck? Read the [FAQ](FAQ.md). The full list of bots is the [catalog](TEMPLATES.md).
 
-Eight more are **previews** (they work and their tests pass, but they are not yet held to the release standard): [05 Game Loop](templates/05-game-loop-alchemist/), [14 NPC and Lore](templates/14-living-npc-lore/), [23 Support Desk](templates/23-support-moderation-desk/), [24 Prize and Refund Ledger](templates/24-prize-refund-ledger/), [25 Matchmaking](templates/25-matchmaking-lobby-fill/), [26 Balance Patch](templates/26-balance-patch-director/), [27 Retention](templates/27-retention-cohort-analytics/) and [28 App Store Submission](templates/28-mobile-store-submission/).
+## The four bots to start with
 
-The full catalog with versions and install links is in [TEMPLATES.md](TEMPLATES.md).
+| Order | Bot | Add it when | Folder |
+|---|---|---|---|
+| 1 | Game Feel | The game responds to a button, a key, or a tap | [01 Game Feel](templates/01-game-feel/) |
+| 2 | HUD | Players have to read the screen | [09 HUD](templates/09-hud-designer/) |
+| 3 | Bug Desk | You have notes, or something broke | [18 Bug Desk](templates/18-bug-desk-triage/) |
+| 4 | Producer | The task list is bigger than the week | [12 Producer](templates/12-parallel-game-producer/) |
 
-## How a specialist works
+Each bot also has a longer official name inside its folder. Game Feel is "Game Vibes Director". Use the short name when you talk about it. The [catalog](TEMPLATES.md) lists both names, when to use the bot, and the links.
 
-1. **It asks.** The getting-started skill learns your game: genre, devices, budgets and which rubric lines apply. A game without aiming, a store or a spectator mode marks those lines not applicable instead of failing them.
-2. **You capture.** You (or your CI) record evidence from a real build: clips, traces, screenshots, exports.
-3. **It grades.** A small engine turns the evidence into a grade out of 100 with coverage. Anything not measured is marked unmeasured and earns zero; it is never guessed.
-4. **It drafts.** Findings become local ticket drafts and fix proposals. You decide what to file, post or ship.
+## How a bot works
 
-## How the team works together
+1. It asks about your game, one question at a time.
+2. You capture evidence from a real build. That can be a screenshot, a trace, a clip, or a JSON file called an evidence pack.
+3. A small local program turns that pack into a grade out of 100. Anything you did not measure is marked unmeasured and scores zero. It is never guessed.
+4. Findings become local drafts. You decide what to file or ship.
 
-Run several specialists in the same game project and they share work through files under `.grokbot-team/`:
+Several bots on one game can share files under `.grokbot-team/` in the game project. Ignore that until the first bot is grading. The map is [docs/TEAM-MAP.md](docs/TEAM-MAP.md).
 
-- **[Team map](docs/TEAM-MAP.md):** who makes which file and who reads it (for example Game Feel hands `feel-findings` to HUD and Audio; every specialist hands ticket drafts to Bug Desk). A missing input is never invented: the reader continues with a clearly marked assumption.
-- **[Shared memory](docs/SHARED-MEMORY.md):** a small append-only log of decisions, incidents, entitlements, balance changes, regions and releases. It never holds names, handles, emails, wallets or raw user ids.
-- **[Versions](docs/VERSIONING.md):** every template has a version and a changelog, and `npm run compat` reports OK, WARN or BREAK for every pair that exchanges files.
+## Install paths
 
-## Install
+Grok Bot does not import this repo from GitHub. Details are in [INSTALL.md](INSTALL.md).
 
-Grok Bot does not import templates from GitHub. Pick one path (details in [INSTALL.md](INSTALL.md)):
+- **Manual, works today.** Paste each `SKILL.md` into a Grok Bot chat and ask it to save the skill. Then run the getting-started skill named in that bot's guide.
+- **Share link, not ready.** Each bot will get a `grokbot://` link after review. Every link still says pending review.
+- **Other agents.** The same `SKILL.md` files work in Claude Code, Codex, Cursor, or Gemini CLI.
 
-- **Option A, share link:** each template gets a `grokbot://` link after review. They all read **pending review** for now, so use Option B.
-- **Option B, manual:** paste each `SKILL.md` into a Grok Bot chat and ask it to save the skill, add the facts from `MEMORY.md`, create the routines from `PROMPTS.md`, then run the getting-started skill.
-- **Option C, other agents:** the skills are plain `SKILL.md` files that also work in Claude Code, Codex, Cursor or Gemini CLI.
-
-New here? [GETTING-STARTED.md](GETTING-STARTED.md) walks you from this folder to your first grade. Bringing the kit into a team? Read [ADOPTING.md](ADOPTING.md).
+Already running a project and want the longer rollout? Read [ADOPTING.md](ADOPTING.md). Making your own bot template? Start at [starter/](starter/).
 
 ## What is in the box
 
 | Path | What it is |
 |---|---|
-| [templates/](templates/) | 15 shipping templates and 8 previews. Each has `HOW-TO-USE.md`, `PROMPTS.md`, `MEMORY.md`, `CHANGELOG.md`, `skills/`, `RUBRIC.json`, `engine/`, `fixtures/`, `tests/` and the Grok Bot `recipe.json`. |
-| [docs/](docs/) | The team map, shared memory, versioning, the skill format and the rubric guide. |
-| [spec/](spec/) | Template spec, JSON schemas for templates, rubrics, recipes, team artifacts and memory records, and the rubric hash. |
-| [shared/](shared/) | The grading engine and the team memory helper that every template carries a copy of. |
-| [guides/](guides/) | A pipeline guide per template, pairing with other AI tools, bridging to your own computer, rubrics and polish loops. |
-| [examples/pixel-pantry/](examples/pixel-pantry/) | A worked example: two builds of a browser cooking game, graded before and after fixes (synthetic). |
-| [starter/](starter/) | A small template to copy, and `npm run new` to scaffold your own. |
-| [scripts/](scripts/) | Validator, scrub check, link check, compat check, team map and recipe builders. |
+| [GETTING-STARTED.md](GETTING-STARTED.md) | The starter team, in order, with copy-paste prompts. |
+| [TEMPLATES.md](TEMPLATES.md) | Every bot: purpose, when to use it, and links. |
+| [FAQ.md](FAQ.md) | What to try when you get stuck. |
+| [templates/](templates/) | 15 shipping bots and 8 previews. Each README opens with what it does, setup, a first prompt, and a sample grade. |
+| [docs/](docs/) | How bots share files, shared memory, versions, the skill format, and rubrics. |
+| [guides/](guides/) | Pipelines, using other AI tools, rubrics, and polish. |
+| [examples/pixel-pantry/](examples/pixel-pantry/) | A fictional cooking game, graded before and after fixes. Synthetic. |
+| [starter/](starter/) | A small template to copy when you want to write your own. |
 
-## Checks
+Checks: `npm run check` (Node 18 or newer, no install). The last recorded run is in [TEST-RESULTS.md](TEST-RESULTS.md).
 
-```bash
-npm run check     # validator, scrub, links, team map, compat check and every test
-```
+## House rules
 
-Results from the last full run are in [TEST-RESULTS.md](TEST-RESULTS.md).
-
-## House rules every template follows
-
-- Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
-- Missing evidence grades U (unmeasured): zero points, never a made-up defect or a made-up pass.
-- Thresholds live in your game profile, never in the engine. Worked examples are labelled synthetic.
-- Every automated gate has a negative fixture that must fail.
+- Drafts stay local until a person sends, publishes, uploads, or files them.
+- Work on a branch. Push only when a person asks, and never to main. A person merges.
+- Missing evidence scores zero. It is not a made-up bug, and it is not a made-up pass.
+- Thresholds live in your game profile, not in the grader. Examples are labeled synthetic.
 
 ## Credits and license
 
-Created by [@meta_alchemist](https://x.com/meta_alchemist). Please keep the credit line in templates and skills you fork.
+Created by [@meta_alchemist](https://x.com/meta_alchemist). Please keep that credit if you fork a template or a skill.
 
 Released under the [MIT License](LICENSE).

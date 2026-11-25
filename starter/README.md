@@ -2,6 +2,8 @@
 
 Created by @meta_alchemist (https://x.com/meta_alchemist).
 
+This folder is for building a new template. To use the gaming team on your own game, start with [Get started with your AI gaming team](../GETTING-STARTED.md).
+
 `00-starter-template/` is a complete, small template that passes the validator: a first session rubric with ten computed lines, a getting-started skill, one evidence skill, a weekly routine and a synthetic worked example. Fork the repo, copy this folder or scaffold a fresh one:
 
 ```bash

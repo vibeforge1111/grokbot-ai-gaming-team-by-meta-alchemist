@@ -4,6 +4,8 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 This guide is for a team or a solo developer bringing these templates into a real project. It covers picking templates, setting up bots and skills, routines, the rubric loop, and outside judges. A full worked example lives in [examples/pixel-pantry/](examples/pixel-pantry/).
 
+For a first game, use the four bot starter team in [Get started with your AI gaming team](GETTING-STARTED.md#the-starter-team). Come back here when that team is running and you are fitting the kit to a real build.
+
 ## 1. Pick templates
 
 Start small. Pick one template for a question you want to answer about the next build.

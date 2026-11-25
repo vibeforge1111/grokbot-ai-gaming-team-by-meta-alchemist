@@ -6,6 +6,15 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+### Added
+
+- A five minute quickstart on the README, a starter team of four bots in GETTING-STARTED.md (Game Feel, HUD, Bug Desk, Producer) with copy-paste first prompts, and an FAQ.
+- A Start here block on every template README: what it does, when to use it, setup, a first prompt, and the synthetic sample grade. `npm run catalog` refreshes that block and the catalog.
+
+### Changed
+
+- The template catalog now shows the short name, the full name, and when to use each bot, and it points newcomers at the starter team before the full table.
+
 ## [1.0.1] - 2026-11-25
 
 ### Changed

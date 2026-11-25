@@ -9,3 +9,4 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 5. Every new automated gate needs a negative fixture that fails.
 6. Keep the credit line. Add yours beside it if you changed a template.
 7. No secrets, private hostnames, ids, personal handles or launch dates. No em or en dashes.
+8. `npm run catalog` rewrites [TEMPLATES.md](TEMPLATES.md) and the Start here block in each template README. Edit the generators, not those blocks.
