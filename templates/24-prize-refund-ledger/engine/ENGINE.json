@@ -11,13 +11,16 @@
   "embed": [
     "engine/lens-kit.mjs",
     "engine/lens.mjs",
-    "engine/team-memory.mjs"
+    "engine/team-memory.mjs",
+    "engine/write-pack.mjs"
   ],
   "domain": [
     "ledger/ledger.mjs",
     "ledger/scenario.mjs",
     "ledger/import-claim-ledger.mjs",
-    "tests/test-safety.mjs"
+    "tests/test-safety.mjs",
+    "engine/write-pack.mjs",
+    "ledger/build-journal.mjs"
   ],
   "contract": [
     "engine/ENGINE.json",

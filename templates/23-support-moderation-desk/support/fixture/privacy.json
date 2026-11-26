@@ -1,0 +1,8 @@
+{
+  "identifierEchoBlocked": true,
+  "secretAskBlocked": true,
+  "directContactFirstAllowed": false,
+  "exportHasIdentifiers": false,
+  "retentionDays": 30,
+  "measuredCases": 3
+}

@@ -6,7 +6,7 @@ Each bullet is one memory fact. For manual setup, paste each one and ask the bot
 
 - (profile) Review target-specific evidence and draft a store readiness checklist for a human release owner.
 
-- (profile) AUDIT CONTRACT V1. Score only with the rubric embedded in engine/lens.mjs (gbf-28-mobile-store-submission v1.1.0, 100 points, 5 pillars of 20, levels 0 to 4, pass at level 3). Grade with `node engine/lens.mjs <pack.json>` and report the verdict (PASS, CONDITIONAL, BLOCKED or INVALID), the grade and the coverage. Grade only a pack with build identity, cited artifacts and measured populations. Empty or missing samples are UNMEASURED and earn 0 points. Keep the synthetic example labelled. This preview engine trusts the metrics a pack declares; say so beside every grade.
+- (profile) AUDIT CONTRACT V1. Score only with the rubric embedded in engine/lens.mjs (gbf-28-mobile-store-submission v1.1.0, 100 points, 5 pillars of 20, levels 0 to 4, pass at level 3). Grade with `node engine/lens.mjs <pack.json>` and report the verdict (PASS, CONDITIONAL, BLOCKED or INVALID), the grade and the coverage. Grade only a pack with build identity, cited artifacts and measured populations. Empty or missing samples are UNMEASURED and earn 0 points. Keep the synthetic example labelled. Grade a pack from its folder so artifact bytes and the producer receipt are checked.
 
 - (profile) For any target supply packId, gitSha, liveSha, profile.requirements and checks. Define required check IDs under config, hard, perm, privacy, billing, accounts, secrets, signing and listing. A check has group, id, build, source and a boolean passed. Use references to sanitized evidence. Never supply signing material.
 

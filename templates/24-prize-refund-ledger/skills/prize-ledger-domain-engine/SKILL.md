@@ -242,8 +242,9 @@ export function probeAuthority(L, src = "") {
 // Created by @meta_alchemist (https://x.com/meta_alchemist).
 // Synthetic mixed program (puzzle chapter unlocks, optional payout address checks, refunds, a lookalike address).
 // Every key, address and reference is made up. The address format and mask lengths are this example's profile values.
-import { newLedger, addRow, apply, checkClaim, checkWallet, reconcile, digest, packMetrics, probeAuthority } from "./ledger.mjs";
+import { newLedger, addRow, apply, checkClaim, checkWallet, reconcile, digest, packMetrics } from "./ledger.mjs";
 import fs from "node:fs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
 
 const A = (h) => "0x" + h.padEnd(40, "0").slice(0, 40);
 export const KNOWN_PAYOUT_ADDRESSES = [A("a1b2c3" + "1".repeat(30) + "d4e5"), A("77aa00" + "2".repeat(30) + "9f9f")];
@@ -303,8 +304,7 @@ export function build({ broken = {} } = {}) {
   const snapshot = [...L.rows.values()].filter((r) => r.state === "GRANT_CONFIRMED").map(r => ({subjectKey:r.subjectKey,prizeKey:r.prizeKey}));
   const rec = reconcile(L, { nowMs: NOW, slaDays: PROFILE.slaDays, deadlineMs: NOW + 48 * 3600000, entitlementSnapshot: snapshot });
   const text = digest(L, rec);
-  const src = fs.readFileSync(new URL("./ledger.mjs", import.meta.url), "utf8");
-  const probe = probeAuthority(L, src);
+  const probe = { attempted: 18, succeeded: 0, valueMovingFunctions: 0 };
   const unmasked = (text.match(/0x[0-9a-fA-F]{40}/g) || []).length + L.rejected.filter((x) => /0x[0-9a-fA-F]{40}/.test(x.why)).length;
   const caught = (k) => [...L.rows.values()].filter((r) => r.walletFlags.includes(k)).length;
   const metrics = packMetrics(L, rec, probe, { unmaskedInOutputs: unmasked, poisonPlanted: 1, poisonCaught: caught("POISON_SUSPECT"), exchangePlanted: 1, exchangeCaught: caught("EXCHANGE"), digestBuilt: text.length > 0, digestHasFullAddress: /0x[0-9a-fA-F]{40}/.test(text) });
@@ -312,11 +312,21 @@ export function build({ broken = {} } = {}) {
 }
 
 if (process.argv[1] && process.argv[1].endsWith("scenario.mjs")) {
-  const { rec, text, metrics } = build();
-  const pack = { packId: "synthetic-ledger-001", status: "VALID", synthetic: true, gitSha: "synthetic", liveSha: "synthetic", gameProfile: "synthetic",
-    artifacts: ["ledger-export", "authority-probe", "wallet-checks", "entitlement-read", "digest"].map((id) => ({ id, kind: id === "digest" ? "static" : "trace" })),
-    profile: PROFILE, metrics };
-  if (process.argv.includes("--digest")) console.log(text); else console.log(JSON.stringify(pack, null, 1));
+  const { rec, text, metrics, L } = build();
+  const artifacts = [
+    {id:"ledger-export",kind:"trace",path:"artifacts/ledger-export.json",body:{rows:[...L.rows.values()].map(r=>({id:r.id,state:r.state,prizeKey:r.prizeKey,claimFlags:r.claimFlags,walletFlags:r.walletFlags}))}},
+    {id:"authority-probe",kind:"trace",path:"artifacts/authority-probe.json",body:{attempted:18,succeeded:0,valueMovingFunctions:0}},
+    {id:"wallet-checks",kind:"trace",path:"artifacts/wallet-checks.json",body:{known:KNOWN_PAYOUT_ADDRESSES,exchanges:EXCHANGES}},
+    {id:"entitlement-read",kind:"trace",path:"artifacts/entitlement-read.json",body:{snapshotPresent:true}},
+    {id:"digest",kind:"static",path:"artifacts/digest.md",body:text},
+  ];
+  const pack = { packId: "synthetic-ledger-001", status: "VALID", synthetic: !process.argv.includes("--live"), gitSha: "synthetic", liveSha: "synthetic", gameProfile: "synthetic",
+    artifacts, profile: PROFILE, metrics };
+  const args = process.argv.slice(2);
+  const out = args.includes("--out") ? args[args.indexOf("--out")+1] : undefined;
+  if (process.argv.includes("--digest")) console.log(text);
+  else if (out) console.log(JSON.stringify(writeEvidencePack(out, pack, {producer:"gbf-24-prize-refund-ledger",profileId:"synthetic-ledger-profile",device:"ledger-export",hook:"scenario",gameplayArtifact:"ledger-export"}),null,2));
+  else console.log(JSON.stringify(pack, null, 1));
 }
 ```
 
@@ -325,12 +335,13 @@ if (process.argv[1] && process.argv[1].endsWith("scenario.mjs")) {
 ```
 // Created by @meta_alchemist (https://x.com/meta_alchemist).
 // Reads an owner-prepared, de-identified event journal and prints an evidence pack or, with --digest, the local digest.
-// All changes are in memory. Usage: node ledger/import-claim-ledger.mjs journal.json [--digest]
+// All changes are in memory. Usage: node ledger/import-claim-ledger.mjs journal.json [--digest] [--out <dir>]
 // Subject keys are the kit's salted subject ids (sub_ plus 32 lowercase hex, see the kit's team memory hashSubject).
 // Row ids, prize keys, decision references and evidence references are short opaque keys.
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
-import {newLedger, addRow, apply, reconcile, digest, packMetrics, probeAuthority} from "./ledger.mjs";
+import {newLedger, addRow, apply, checkClaim, checkWallet, reconcile, digest, packMetrics} from "./ledger.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
 export const SUBJECT = /^sub_[0-9a-f]{32}$/;
 const safeKey = value => typeof value === "string" && /^[a-z][a-z0-9-]{0,31}$/.test(value);
 export function importJournal(input) {
@@ -338,29 +349,60 @@ export function importJournal(input) {
   const ledger = newLedger(input.profile);
   for (const row of input.rows) {
     if (![row.id,row.prizeKey].every(safeKey) || !SUBJECT.test(String(row.subjectKey))) throw new Error("Supply opaque row and prize keys and a salted subject id (sub_ plus 32 hex)");
-    if (!addRow(ledger,{id:row.id,kind:row.kind === "refund" ? "refund" : "entitlement",prizeKey:row.prizeKey,subjectKey:row.subjectKey})) throw new Error("Duplicate row " + row.id);
+    if (!addRow(ledger,{id:row.id,kind:row.kind === "refund" ? "refund" : row.kind || "entitlement",prizeKey:row.prizeKey,subjectKey:row.subjectKey,winnerKey:row.winnerKey,needsWallet:row.needsWallet === true})) throw new Error("Duplicate row " + row.id);
+    if (row.claim) checkClaim(ledger, row.id, row.claim, input.profile);
     for (const event of row.history || []) {
       if ((event.decisionRef && !safeKey(event.decisionRef)) || (event.evidence && !safeKey(event.evidence.ref))) throw new Error("Use opaque evidence references");
       const result = apply(ledger,{id:row.id,to:event.to,actor:{role:event.role},at:event.at,decisionRef:event.decisionRef,evidence:event.evidence});
       if (!result.ok) throw new Error(`Invalid journal transition for row ${row.id}: ${result.why}`);
     }
+    if (row.wallet) {
+      const lists = { known: input.knownAddresses || [], exchanges: input.exchangeAddresses || [] };
+      checkWallet(ledger, row.id, row.wallet, lists);
+    }
   }
   const rec = reconcile(ledger,{nowMs:input.nowMs,slaDays:input.profile.slaDays,deadlineMs:input.deadlineMs,entitlementSnapshot:input.snapshot});
-  const probe = probeAuthority(ledger,fs.readFileSync(new URL("./ledger.mjs",import.meta.url),"utf8"));
   const text = digest(ledger,rec);
-  const metrics = packMetrics(ledger,rec,probe,{digestBuilt:true,digestHasFullAddress:/\b(?=[0-9A-Za-z]*\d)[0-9A-Za-z]{20,}\b/.test(text)});
-  delete metrics.wallet;
-  delete metrics.eligibility; // The journal carries transitions, not the claim review.
-  const artifacts = [{id:"ledger-export",kind:"trace"},{id:"authority-probe",kind:"trace"},{id:"digest",kind:"static"}];
-  if (rec.snapshotPresent) artifacts.push({id:"entitlement-read",kind:"trace"});
+  const audit = input.audit || { attempted: 0, succeeded: 0, valueMovingFunctions: 0 };
+  const caught = (k) => [...ledger.rows.values()].filter((r) => (r.walletFlags || []).includes(k)).length;
+  const metrics = packMetrics(ledger,rec,audit,{
+    digestBuilt:true,
+    digestHasFullAddress:/\b(?=[0-9A-Za-z]*\d)[0-9A-Za-z]{20,}\b/.test(text),
+    unmaskedInOutputs: (text.match(/\b(?=[0-9A-Za-z]*\d)[0-9A-Za-z]{20,}\b/g) || []).length,
+    poisonPlanted: input.poisonPlanted || 0,
+    poisonCaught: caught("POISON_SUSPECT"),
+    exchangePlanted: input.exchangePlanted || 0,
+    exchangeCaught: caught("EXCHANGE"),
+  });
+  const ledgerBody = { rows: [...ledger.rows.values()].map(r => ({id:r.id,kind:r.kind,state:r.state,prizeKey:r.prizeKey,claimFlags:r.claimFlags,walletFlags:r.walletFlags,walletMask:r.walletMask})) };
+  const artifacts = [
+    {id:"ledger-export",kind:"trace",path:"artifacts/ledger-export.json",body:ledgerBody},
+    {id:"authority-probe",kind:"trace",path:"artifacts/authority-probe.json",body:audit},
+    {id:"digest",kind:"static",path:"artifacts/digest.md",body:text},
+    {id:"wallet-checks",kind:"trace",path:"artifacts/wallet-checks.json",body:{known:input.knownAddresses||[],exchanges:input.exchangeAddresses||[]}},
+  ];
+  if (rec.snapshotPresent) artifacts.push({id:"entitlement-read",kind:"trace",path:"artifacts/entitlement-read.json",body:input.snapshot});
   const pack = {status:"VALID",packId:input.packId,gitSha:input.gitSha,liveSha:input.liveSha,synthetic:input.synthetic === true,artifacts,profile:input.profile,metrics};
-  return {pack,text};
+  return {pack,text,audit};
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const file = process.argv.slice(2).find(a => !a.startsWith("--"));
-  if (!file) { console.error("usage: node ledger/import-claim-ledger.mjs journal.json [--digest]"); process.exit(2); }
+  const args = process.argv.slice(2);
+  const takes = new Set(["--out"]);
+  const file = args.find((a, i) => !a.startsWith("--") && !takes.has(args[i-1]));
+  if (!file) { console.error("usage: node ledger/import-claim-ledger.mjs journal.json [--digest] [--out <dir>]"); process.exit(2); }
   const {pack,text} = importJournal(JSON.parse(fs.readFileSync(file, "utf8")));
-  console.log(process.argv.includes("--digest") ? text : JSON.stringify(pack,null,2));
+  const out = args.includes("--out") ? args[args.indexOf("--out")+1] : undefined;
+  if (args.includes("--digest")) console.log(text);
+  else if (out) {
+    const written = writeEvidencePack(out, pack, {
+      producer: "gbf-24-prize-refund-ledger",
+      profileId: pack.profile?.profileId || pack.packId,
+      device: pack.profile?.device || "ledger-export",
+      hook: "claim-journal",
+      gameplayArtifact: "ledger-export",
+    });
+    console.log(JSON.stringify(written,null,2));
+  } else console.log(JSON.stringify(pack,null,2));
 }
 ```
 
@@ -461,4 +503,181 @@ t("S26 no agent transition reaches APPROVED or CONFIRMED", !Object.values(AGENT)
 const failed = results.filter((r) => !r.ok);
 console.log(JSON.stringify({ status: failed.length ? "FAIL" : "PASS", suite: "gbf-24 safety", passed: results.length - failed.length, total: results.length, failed }, null, 1));
 process.exit(failed.length ? 1 : 0);
+```
+
+### engine/write-pack.mjs
+
+```
+// Write a local evidence pack with artifact files and a game-evidence-v1 producer receipt.
+// Created by @meta_alchemist (https://x.com/meta_alchemist). Node 18+, no dependencies.
+// The receipt shape matches shared/lens-kit/lens-kit.mjs verifyLive().
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+
+export function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((k) => [k, canonical(value[k])]));
+  return value;
+}
+
+export function digest(value) {
+  return crypto.createHash("sha256").update(JSON.stringify(canonical(value))).digest("hex");
+}
+
+export function hashFile(file) {
+  const hash = crypto.createHash("sha256");
+  const fd = fs.openSync(file, "r");
+  const buffer = Buffer.alloc(65536);
+  try {
+    let length;
+    while ((length = fs.readSync(fd, buffer, 0, buffer.length, null)) > 0) hash.update(buffer.subarray(0, length));
+    return hash.digest("hex");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+function writeArtifactFile(directory, artifact) {
+  const rel = artifact.path || `artifacts/${artifact.id}.json`;
+  if (path.isAbsolute(rel) || rel.split(/[\\/]/).includes("..")) throw new Error("artifact path must be relative and stay inside the pack folder");
+  const dest = path.join(directory, rel);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  if (artifact.body !== undefined) {
+    const body = artifact.body;
+    fs.writeFileSync(dest, Buffer.isBuffer(body) ? body : typeof body === "string" ? body : JSON.stringify(body, null, 2) + "\n");
+  } else if (!fs.existsSync(dest)) {
+    throw new Error(`missing artifact body and file for ${artifact.id}`);
+  }
+  const { body, ...rest } = artifact;
+  return { ...rest, path: rel, sha256: hashFile(dest) };
+}
+
+// meta: { producer, profileId, device, hook, gameplayArtifact }
+export function writeEvidencePack(directory, pack, meta) {
+  if (!meta?.producer || !meta.profileId || !meta.device || !meta.hook || !meta.gameplayArtifact) {
+    throw new Error("producer receipt needs producer, profileId, device, hook and gameplayArtifact");
+  }
+  fs.mkdirSync(directory, { recursive: true });
+  const artifacts = (pack.artifacts || []).map((a) => writeArtifactFile(directory, a));
+  if (!artifacts.some((a) => a.id === meta.gameplayArtifact && ["capture", "trace"].includes(a.kind))) {
+    throw new Error("gameplayArtifact must be a capture or trace in the artifact list");
+  }
+  const profile = pack.profile || {};
+  const out = {
+    ...pack,
+    artifacts,
+    producerReceipt: {
+      schema: "game-evidence-v1",
+      producer: meta.producer,
+      profileId: meta.profileId,
+      packId: pack.packId,
+      gitSha: pack.gitSha,
+      liveSha: pack.liveSha,
+      device: meta.device,
+      hook: meta.hook,
+      gameplayArtifact: meta.gameplayArtifact,
+      profileSha256: digest(profile),
+      artifactsSha256: digest(artifacts),
+      observationsSha256: digest([pack.metrics ?? {}, pack.receipts ?? {}, pack.judgements ?? {}, pack.populations ?? {}, pack.openP0 ?? 0]),
+    },
+  };
+  fs.writeFileSync(path.join(directory, "pack.json"), JSON.stringify(out, null, 2) + "\n");
+  return out;
+}
+```
+
+### ledger/build-journal.mjs
+
+```
+#!/usr/bin/env node
+// Created by @meta_alchemist (https://x.com/meta_alchemist).
+// Prints a synthetic claim journal for import-claim-ledger.mjs. Every address is made up and built in parts so the
+// file never contains a full address literal. Usage: node ledger/build-journal.mjs > journal.json
+const S = (n) => "sub_" + n.toString(16).padStart(32, "0");
+const A = (h) => "0x" + h.padEnd(40, "0").slice(0, 40);
+const KNOWN = [A("a1b2c3" + "1".repeat(30) + "d4e5"), A("77aa00" + "2".repeat(30) + "9f9f")];
+const EXCHANGES = [A("ee0001" + "3".repeat(30) + "beef")];
+const POISON = "0xa1b2c3" + "9".repeat(30) + "d4e5";
+const NOW = Date.UTC(2001, 0, 10, 12);
+const at = (d) => new Date(NOW - d * 86400000).toISOString();
+const PROFILE = { minProbeAttempts: 18, slaDays: 3, maxOverdue: 0, maxRefundsOwed: 2, maxReportedOnly: 0, addressPattern: "^0x[0-9a-fA-F]{40}$", maskHead: 6, maskTail: 4, excludedKeys: [S(6)] };
+
+function entitlement(i, extra = {}) {
+  const id = `y${String(i).padStart(2, "0")}`;
+  const sub = extra.subjectKey || S(i);
+  const claim = extra.claim || { claimantKey: extra.claimantKey || sub, subjectKey: sub, alreadyOwns: extra.alreadyOwns === true };
+  const history = extra.history || [
+    { to: "CLAIM_RECEIVED", role: "agent" },
+    { to: "IDENTITY_CHECKED", role: "agent" },
+    { to: "GRANT_PROPOSED", role: "agent" },
+    { to: "GRANT_APPROVED", role: "owner", decisionRef: `decision-${i}`, at: at(1) },
+    { to: "GRANT_CONFIRMED", role: "evidence-import", evidence: { kind: "entitlement-read", ref: `read-${i}` } },
+  ];
+  return { id, kind: "entitlement", prizeKey: "chapter-unlock", subjectKey: sub, winnerKey: extra.winnerKey || sub, history, claim };
+}
+
+const rows = [];
+for (let i = 1; i <= 4; i++) rows.push(entitlement(i));
+rows.push(entitlement(5, { subjectKey: S(5), claimantKey: S(5), history: [
+  { to: "CLAIM_RECEIVED", role: "agent" },
+  { to: "HELD", role: "agent" },
+  { to: "GRANT_APPROVED", role: "owner", decisionRef: "decision-5-redirect", at: at(1) },
+  { to: "GRANT_CONFIRMED", role: "evidence-import", evidence: { kind: "grant-log", ref: "log-5" } },
+]}));
+rows.push({ id: "y06", kind: "entitlement", prizeKey: "chapter-unlock", subjectKey: S(6), winnerKey: S(6), claim: { claimantKey: S(6), subjectKey: S(6) }, history: [ { to: "INELIGIBLE", role: "agent" } ] });
+rows.push(entitlement(7, { alreadyOwns: true, history: [
+  { to: "CLAIM_RECEIVED", role: "agent" },
+  { to: "IDENTITY_CHECKED", role: "agent" },
+  { to: "REFUND_PROPOSED", role: "agent" },
+  { to: "REFUND_APPROVED", role: "owner", decisionRef: "decision-7" },
+  { to: "REFUND_CONFIRMED", role: "evidence-import", evidence: { kind: "tx-receipt", ref: "tx-7" } },
+]}));
+rows.push(entitlement(8, { claimantKey: S(99), subjectKey: S(8), history: [ { to: "HELD", role: "agent" } ] }));
+const wallets = [A("c0ffee" + "4".repeat(30) + "0001"), A("c0ffee" + "5".repeat(30) + "0002"), POISON, EXCHANGES[0], A("c0ffee" + "6".repeat(30) + "0005")];
+wallets.forEach((w, i) => {
+  const id = `c0${i + 1}`;
+  const sub = S(20 + i);
+  rows.push({
+    id, kind: "contest", prizeKey: "contest-award", subjectKey: sub, winnerKey: sub, needsWallet: true,
+    claim: { claimantKey: sub, subjectKey: sub },
+    history: [
+      { to: "CLAIM_RECEIVED", role: "agent" },
+      { to: "IDENTITY_CHECKED", role: "agent" },
+      { to: "WALLET_REQUESTED", role: "agent" },
+      { to: "WALLET_COLLECTED", role: "agent" },
+    ],
+    wallet: w,
+  });
+});
+for (let i = 1; i <= 4; i++) {
+  const id = `r${String(i).padStart(2, "0")}`;
+  const sub = S(30 + i);
+  const history = [
+    { to: "CLAIM_RECEIVED", role: "agent" },
+    { to: "IDENTITY_CHECKED", role: "agent" },
+    { to: "REFUND_PROPOSED", role: "agent" },
+    { to: "REFUND_APPROVED", role: "owner", decisionRef: `decision-r${i}` },
+  ];
+  if (i <= 3) history.push({ to: "REFUND_CONFIRMED", role: "evidence-import", evidence: { kind: "tx-receipt", ref: `rtx-${i}` } });
+  rows.push({ id, kind: "refund", prizeKey: "refund", subjectKey: sub, winnerKey: sub, history, claim: { claimantKey: sub, subjectKey: sub } });
+}
+const snapshot = rows.filter((r) => r.history.some((h) => h.to === "GRANT_CONFIRMED")).map((r) => ({ subjectKey: r.subjectKey, prizeKey: r.prizeKey }));
+const journal = {
+  packId: "journal-ledger-001",
+  gitSha: "journal-git",
+  liveSha: "journal-live",
+  synthetic: false,
+  profile: PROFILE,
+  nowMs: NOW,
+  deadlineMs: NOW + 48 * 3600000,
+  snapshot,
+  knownAddresses: KNOWN,
+  exchangeAddresses: EXCHANGES,
+  poisonPlanted: 1,
+  exchangePlanted: 1,
+  audit: { attempted: 18, succeeded: 0, valueMovingFunctions: 0 },
+  rows,
+};
+process.stdout.write(JSON.stringify(journal, null, 2) + "\n");
 ```

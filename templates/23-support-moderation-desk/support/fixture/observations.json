@@ -1,0 +1,5 @@
+{
+  "observationDays": 3,
+  "firstResponseP50Min": 2,
+  "sampleCases": 6
+}

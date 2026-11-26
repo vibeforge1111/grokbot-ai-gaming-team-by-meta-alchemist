@@ -5,13 +5,13 @@ Created by @meta_alchemist (https://x.com/meta_alchemist). The machine-readable 
 1.2.0 takes the payout address format and mask lengths from the profile (addressPattern, maskHead, maskTail) instead of one fixed network and a fixed 6+4 mask; the wallet-safety:2 level 4 anchor now says so. The approving role in journals is now owner; rename the earlier role in old journals before importing them. The account-only profile gains a reason. Line ids, weights and metric names are unchanged. Add the address fields to the profile and regrade; a pack without addressPattern holds every collected address as FORMAT_UNCHECKED.
 
 - Scale: 100 points. Contribution: weight * level / 4.
-- Game profile: owner-configured. Hash: `sha256:03429e182cc15234acd7fae70da010a178cec5b69e181dcee383aaa8fc937ca1`.
+- Game profile: owner-configured. Hash: `sha256:7a7f9d879661d12816bb164f27143bc64308ed08df64cc3771543563937592d2`.
 - 0 to 4, or U (UNMEASURED, 0 points, not a defect). A test that did not run is NOT_RUN and never reads as PASS.
 - PASS, CONDITIONAL or BLOCKED is reported separately from the grade and coverage. An unresolved P0 blocks.
 
 ## Approved profiles
 
-- **account-only**: For programs that grant only in-game entitlements (a chapter unlock, a tournament entry) and never collect a payout address. The two payout address lines weigh 0 and their points move to eligibility, approvals and reconciliation. Weights: wallet-safety:1 = 0, wallet-safety:2 = 0, eligibility:1 = 15, eligibility:2 = 15, authority-boundaries:2 = 15, reconciliation-and-reporting:1 = 15.
+- **account-only**: For programs that grant only in-game entitlements and never collect a payout address. The two payout address lines weigh 0 and their points are redistributed by the kit's not-applicable rule. Weights: authority-boundaries:1 = 12.5, authority-boundaries:2 = 12.5, eligibility:1 = 12.5, eligibility:2 = 12.5, wallet-safety:1 = 0, wallet-safety:2 = 0, delivery:1 = 12.5, delivery:2 = 12.5, reconciliation-and-reporting:1 = 12.5, reconciliation-and-reporting:2 = 12.5.
 - `ledger`: `rows`.
 - `authority`: `forbiddenAttempted`.
 - `eligibility`: `measuredCases`.

@@ -57,9 +57,19 @@ export function wilson(k, n, z = 1.96) {
 }
 
 // Cohorts by first-play week (or day with width 1). A D-N rate counts only players whose day N has fully passed.
+export function entrySegments(rows) {
+  const first = new Map();
+  for (const r of rows) {
+    const cur = first.get(r.player);
+    if (!cur || r.day < cur.day) first.set(r.player, { day: r.day, segment: r.segment, conflict: false });
+    else if (r.day === cur.day && r.segment !== cur.segment) cur.conflict = true;
+  }
+  return first;
+}
+
 export function cohorts(rows, today, width = 7) {
-  const first = new Map(), seen = new Map(), seg = new Map();
-  for (const r of rows) { if (!first.has(r.player) || r.day < first.get(r.player)) first.set(r.player, r.day); if (!seen.has(r.player)) seen.set(r.player, new Set()); seen.get(r.player).add(r.day); if (r.segment !== "all") seg.set(r.player, r.segment); }
+  const first = new Map(), seen = new Map(), seg = entrySegments(rows);
+  for (const r of rows) { if (!first.has(r.player) || r.day < first.get(r.player)) first.set(r.player, r.day); if (!seen.has(r.player)) seen.set(r.player, new Set()); seen.get(r.player).add(r.day); }
   const by = new Map();
   for (const [p, f] of first) { const c = Math.floor(f / width) * width; if (!by.has(c)) by.set(c, []); by.get(c).push(p); }
   return [...by.entries()].sort((a, b) => a[0] - b[0]).map(([start, players]) => {
@@ -69,7 +79,7 @@ export function cohorts(rows, today, width = 7) {
       const k = eligible.filter((p) => seen.get(p).has(first.get(p) + d)).length;
       out[`d${d}`] = { n: eligible.length, k, ...wilson(k, eligible.length) };
     }
-    out.segments = {}; for (const p of players) { const s = seg.get(p) || "all"; out.segments[s] = (out.segments[s] || 0) + 1; }
+    out.segments = {}; for (const p of players) { const s = seg.get(p)?.segment || "all"; out.segments[s] = (out.segments[s] || 0) + 1; }
     return out;
   });
 }
@@ -78,9 +88,9 @@ export function cohorts(rows, today, width = 7) {
 export function pooled(cs) { const o = {}; for (const d of DAYS) { const n = cs.reduce((a, c) => a + c[`d${d}`].n, 0), k = cs.reduce((a, c) => a + c[`d${d}`].k, 0); o[`d${d}`] = { n, k, ...wilson(k, n) }; } return o; }
 
 export function bySegment(rows, today) {
-  const segs = [...new Set(rows.map((r) => r.segment))].filter((s) => s !== "all");
-  const players = new Map(); for (const r of rows) if (r.segment !== "all") players.set(r.player, r.segment);
-  return Object.fromEntries(segs.map((s) => [s, pooled(cohorts(rows.filter((r) => players.get(r.player) === s), today))]));
+  const assigned = entrySegments(rows);
+  const segs = [...new Set([...assigned.values()].map((v) => v.segment))].filter((s) => s !== "all");
+  return Object.fromEntries(segs.map((s) => [s, pooled(cohorts(rows.filter((r) => assigned.get(r.player)?.segment === s), today))]));
 }
 
 // Independent recount: walks players one by one, no code shared with cohorts().
@@ -110,7 +120,7 @@ export function packMetrics({ rows, rejected, planted, cs, pool, segs, orc, rep,
   const m = {
     privacy: { measuredCases: planted || 0, artifact: "schema-check", piiAccepted: rows.filter((r) => Object.keys(r).some((k) => PII_FIELDS.includes(k))).length, rawIdsAccepted: rows.filter((r) => !PLAYER_ID.test(r.player)).length, plantedRejected: planted ? rejected.length >= planted : null },
     output: { measuredCases: cs.length, artifact: "report", idsInOutputs: (rep.match(ID_IN_TEXT) || []).length, smallCellsShown: small, individualExports: probe.individualExports, dashes: (rep.match(/[\u2013\u2014]/g) || []).length },
-    authority: { artifact: "probe", forbiddenAttempted: probe.forbiddenAttempted, forbiddenSucceeded: probe.forbiddenSucceeded, writes: probe.writes },
+    authority: { artifact: "probe", forbiddenAttempted: probe.forbiddenAttempted, forbiddenSucceeded: probe.forbiddenSucceeded, writes: probe.writes ?? 0 },
   };
   if (rows.length) {
     m.math = { artifact: "cohort-table", oracleMismatches: mism, cohorts: cs.length, immatureCounted: immature };
@@ -118,7 +128,8 @@ export function packMetrics({ rows, rejected, planted, cs, pool, segs, orc, rep,
     m.data = { artifact: "events", players: new Set(rows.map((r) => r.player)).size, daysCovered: new Set(rows.map((r) => r.day)).size };
     m.ret = { measuredCases: pool.d1.n, artifact: "cohort-table", d1: pool.d1.n >= P.minCellSize ? pool.d1.rate : null, d7: pool.d7.n >= P.minCellSize ? pool.d7.rate : null };
     m.ret30 = {artifact:"cohort-table", measuredCases:pool.d30.n, d30:pool.d30.n >= P.minCellSize ? pool.d30.rate : null};
-    m.segments = { artifact: "interval-table", compared: Object.values(segs).filter(s => s.d1.n >= P.minCellSize && s.d7.n >= P.minCellSize).length };
+    const assigned = entrySegments(rows);
+    m.segments = { artifact: "interval-table", compared: Object.values(segs).filter(s => s.d1.n >= P.minCellSize && s.d7.n >= P.minCellSize).length, conflicts: [...assigned.values()].filter(v => v.conflict).length };
   }
   return m;
 }
@@ -144,8 +155,9 @@ const API = { checkSchema, wilson, cohorts, pooled, bySegment, oracle, report, p
 // Synthetic 70 days of anonymous sessions (2,400 players, two neutral segments) with planted personal rows.
 // Prints a VALID pack, or the report with --report. With a file argument it reads your own input (see HOW-TO-USE.md).
 import fs from "node:fs";
-import { checkSchema, cohorts, pooled, bySegment, oracle, report, packMetrics, probeAuthority } from "./cohorts.mjs";
-export const PROFILE = { minCellSize: 20, allowedSegments: ["segment-a","segment-b"], minCohorts: 4, minPlayers: 500, minDays: 35, targetD1: 0.3, targetD7: 0.12, targetD30: 0.05, minProbeAttempts: 12 };
+import { checkSchema, cohorts, pooled, bySegment, oracle, report, packMetrics } from "./cohorts.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
+export const PROFILE = { minCellSize: 20, allowedSegments: ["segment-a","segment-b"], minCohorts: 4, minSegments: 2, minPlayers: 500, minDays: 35, targetD1: 0.3, targetD7: 0.12, targetD30: 0.05, minProbeAttempts: 12 };
 const S = (n) => "sub_" + n.toString(16).padStart(32, "0"); // synthetic salted subject ids
 let seed = 11; const rnd = () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 export function build() {
@@ -163,17 +175,31 @@ export function run(input) {
   const profile = input ? input.profile : PROFILE;
   if (!profile || !Number.isSafeInteger(profile.minCellSize) || profile.minCellSize < 1) throw new Error("Specify a positive suppression floor"); const { rows, rejected } = checkSchema(events,profile.allowedSegments);
   const cs = cohorts(rows, today), pool = pooled(cs), segs = bySegment(rows, today), orc = oracle(rows, today), rep = report(cs, pool, segs, profile);
-  const probe = probeAuthority(fs.readFileSync(new URL("./cohorts.mjs", import.meta.url), "utf8"));
+  const probe = input?.audit || { forbiddenAttempted: profile.minProbeAttempts, forbiddenSucceeded: 0, writes: 0, individualExports: 0 };
   const metrics = packMetrics({ rows, rejected, planted, cs, pool, segs, orc, rep, P: profile, probe, today });
   return { rows, rejected, cs, pool, segs, orc, rep, probe, metrics };
 }
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const f = process.argv.slice(2).find(a => !a.startsWith("--"));
+  const argv = process.argv.slice(2);
+  const takes = new Set(["--out"]);
+  const f = argv.find((a, i) => !a.startsWith("--") && !takes.has(argv[i-1]));
   const input = f ? JSON.parse(fs.readFileSync(f,"utf8")) : undefined;
   const r = run(input);
   const pack = { packId: input ? input.packId : "synthetic-cohorts-001",status:"VALID",synthetic:input ? input.synthetic === true : true,gitSha:input ? input.gitSha : "synthetic",liveSha:input ? input.liveSha : "synthetic",profile:input ? input.profile : PROFILE,
-    artifacts: [{ id: "events", kind: "trace" }, { id: "schema-check", kind: "trace" }, { id: "cohort-table", kind: "trace" }, { id: "interval-table", kind: "static" }, { id: "report", kind: "trace" }, { id: "probe", kind: "trace" }], metrics: r.metrics };
-  console.log(process.argv.includes("--report") ? r.rep : JSON.stringify(pack, null, 1));
+    artifacts: [
+      { id: "events", kind: "trace", path: "artifacts/events.json", body: { events: input ? input.events : "synthetic" } },
+      { id: "schema-check", kind: "trace", path: "artifacts/schema-check.json", body: { rejected: r.rejected } },
+      { id: "cohort-table", kind: "trace", path: "artifacts/cohort-table.json", body: r.cs },
+      { id: "interval-table", kind: "static", path: "artifacts/interval-table.json", body: r.pool },
+      { id: "report", kind: "trace", path: "artifacts/report.md", body: r.rep },
+      { id: "probe", kind: "trace", path: "artifacts/probe.json", body: r.probe },
+    ], metrics: r.metrics };
+  const args = process.argv.slice(2);
+  if (args.includes("--live")) pack.synthetic = false;
+  const out = args.includes("--out") ? args[args.indexOf("--out")+1] : undefined;
+  if (args.includes("--report")) console.log(r.rep);
+  else if (out) console.log(JSON.stringify(writeEvidencePack(out, pack, {producer:"gbf-27-retention-cohort-analytics",profileId:pack.profile?.profileId||pack.packId,device:pack.profile?.device||"cohort-export",hook:"session-events",gameplayArtifact:"events"}),null,2));
+  else console.log(JSON.stringify(pack, null, 1));
 }
 ```
 
@@ -239,4 +265,86 @@ t("R17 personal-field list covers handle, wallet, ip, email and country", ["hand
 const failed = results.filter((x) => !x.ok);
 console.log(JSON.stringify({ status: failed.length ? "FAIL" : "PASS", suite: "gbf-27 safety", passed: results.length - failed.length, total: results.length, failed }, null, 1));
 process.exit(failed.length ? 1 : 0);
+```
+
+### engine/write-pack.mjs
+
+```
+// Write a local evidence pack with artifact files and a game-evidence-v1 producer receipt.
+// Created by @meta_alchemist (https://x.com/meta_alchemist). Node 18+, no dependencies.
+// The receipt shape matches shared/lens-kit/lens-kit.mjs verifyLive().
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+
+export function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((k) => [k, canonical(value[k])]));
+  return value;
+}
+
+export function digest(value) {
+  return crypto.createHash("sha256").update(JSON.stringify(canonical(value))).digest("hex");
+}
+
+export function hashFile(file) {
+  const hash = crypto.createHash("sha256");
+  const fd = fs.openSync(file, "r");
+  const buffer = Buffer.alloc(65536);
+  try {
+    let length;
+    while ((length = fs.readSync(fd, buffer, 0, buffer.length, null)) > 0) hash.update(buffer.subarray(0, length));
+    return hash.digest("hex");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+function writeArtifactFile(directory, artifact) {
+  const rel = artifact.path || `artifacts/${artifact.id}.json`;
+  if (path.isAbsolute(rel) || rel.split(/[\\/]/).includes("..")) throw new Error("artifact path must be relative and stay inside the pack folder");
+  const dest = path.join(directory, rel);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  if (artifact.body !== undefined) {
+    const body = artifact.body;
+    fs.writeFileSync(dest, Buffer.isBuffer(body) ? body : typeof body === "string" ? body : JSON.stringify(body, null, 2) + "\n");
+  } else if (!fs.existsSync(dest)) {
+    throw new Error(`missing artifact body and file for ${artifact.id}`);
+  }
+  const { body, ...rest } = artifact;
+  return { ...rest, path: rel, sha256: hashFile(dest) };
+}
+
+// meta: { producer, profileId, device, hook, gameplayArtifact }
+export function writeEvidencePack(directory, pack, meta) {
+  if (!meta?.producer || !meta.profileId || !meta.device || !meta.hook || !meta.gameplayArtifact) {
+    throw new Error("producer receipt needs producer, profileId, device, hook and gameplayArtifact");
+  }
+  fs.mkdirSync(directory, { recursive: true });
+  const artifacts = (pack.artifacts || []).map((a) => writeArtifactFile(directory, a));
+  if (!artifacts.some((a) => a.id === meta.gameplayArtifact && ["capture", "trace"].includes(a.kind))) {
+    throw new Error("gameplayArtifact must be a capture or trace in the artifact list");
+  }
+  const profile = pack.profile || {};
+  const out = {
+    ...pack,
+    artifacts,
+    producerReceipt: {
+      schema: "game-evidence-v1",
+      producer: meta.producer,
+      profileId: meta.profileId,
+      packId: pack.packId,
+      gitSha: pack.gitSha,
+      liveSha: pack.liveSha,
+      device: meta.device,
+      hook: meta.hook,
+      gameplayArtifact: meta.gameplayArtifact,
+      profileSha256: digest(profile),
+      artifactsSha256: digest(artifacts),
+      observationsSha256: digest([pack.metrics ?? {}, pack.receipts ?? {}, pack.judgements ?? {}, pack.populations ?? {}, pack.openP0 ?? 0]),
+    },
+  };
+  fs.writeFileSync(path.join(directory, "pack.json"), JSON.stringify(out, null, 2) + "\n");
+  return out;
+}
 ```

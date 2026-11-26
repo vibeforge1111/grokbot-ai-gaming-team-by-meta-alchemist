@@ -11,13 +11,15 @@
   "embed": [
     "engine/lens-kit.mjs",
     "engine/lens.mjs",
-    "engine/team-memory.mjs"
+    "engine/team-memory.mjs",
+    "engine/write-pack.mjs"
   ],
   "domain": [
     "cohorts/cohorts.mjs",
     "cohorts/scenario.mjs",
     "cohorts/probe-only.mjs",
-    "tests/test-safety.mjs"
+    "tests/test-safety.mjs",
+    "engine/write-pack.mjs"
   ],
   "contract": [
     "engine/ENGINE.json",

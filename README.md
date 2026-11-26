@@ -120,7 +120,7 @@ Already running a project and want the longer rollout? Read [ADOPTING.md](ADOPTI
 | [GETTING-STARTED.md](GETTING-STARTED.md) | The starter team, in order, with copy-paste prompts. |
 | [TEMPLATES.md](TEMPLATES.md) | Every bot: purpose, when to use it, and links. |
 | [FAQ.md](FAQ.md) | What to try when you get stuck. |
-| [templates/](templates/) | 17 shipping bots and 7 previews. Each README opens with what it does, setup, a first prompt, and a sample grade. Honest status for every bot, including ones not in the repo yet, is in [READINESS.md](READINESS.md). |
+| [templates/](templates/) | 23 shipping bots and 1 preview. Each README opens with what it does, setup, a first prompt, and a sample grade. Honest status for every bot, including ones not in the repo yet, is in [READINESS.md](READINESS.md). |
 | [docs/](docs/) | How bots share files, shared memory, versions, the skill format, and rubrics. |
 | [guides/](guides/) | Pipelines, using other AI tools, rubrics, and polish. |
 | [examples/pixel-pantry/](examples/pixel-pantry/) | A fictional cooking game, graded before and after fixes. Synthetic. |

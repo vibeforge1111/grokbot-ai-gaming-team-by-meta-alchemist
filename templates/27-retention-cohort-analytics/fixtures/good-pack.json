@@ -16,7 +16,8 @@
     "targetD1": 0.3,
     "targetD7": 0.12,
     "targetD30": 0.05,
-    "minProbeAttempts": 12
+    "minProbeAttempts": 12,
+    "minSegments": 2
   },
   "artifacts": [
     {

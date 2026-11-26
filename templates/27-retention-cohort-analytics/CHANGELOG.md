@@ -6,6 +6,12 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-26
+
+### Added
+
+- First shipping release. Shared lens-kit 1.3.1 and `cohorts/scenario.mjs`, which writes artifact bytes and a producer receipt. Segments are assigned at first play. Cohort and segment floors come from the pack profile. Authority metrics come from an owner audit, not from this template's own source.
+
 ## [0.1.0] - 2026-11-25
 
 ### Added

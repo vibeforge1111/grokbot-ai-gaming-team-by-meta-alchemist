@@ -1,0 +1,267 @@
+{
+  "packId": "plain-store-example",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "profile": {
+    "minTargetSdk": 35,
+    "minIosTarget": 15,
+    "allowedPermissions": [
+      "android.permission.INTERNET"
+    ],
+    "minProbeAttempts": 12,
+    "requirements": {
+      "config": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "hard": [
+        "H1",
+        "H2",
+        "H3",
+        "H4"
+      ],
+      "perm": [
+        "P1",
+        "P2"
+      ],
+      "privacy": [
+        "P3",
+        "P4",
+        "P6"
+      ],
+      "billing": [
+        "S1"
+      ],
+      "accounts": [
+        "S2",
+        "S3"
+      ],
+      "secrets": [
+        "K1",
+        "K2"
+      ],
+      "signing": [
+        "O1"
+      ],
+      "listing": [
+        "L-screenshots",
+        "L-description",
+        "L-ageRating",
+        "L-dataSafetyForm",
+        "L-appPrivacyLabels"
+      ]
+    }
+  },
+  "pipeline": {
+    "submittedBy": "human",
+    "forbiddenAttempted": 12,
+    "forbiddenSucceeded": 0,
+    "toolCalls": 0,
+    "storeApiCalls": 0
+  },
+  "checks": [
+    {
+      "group": "config",
+      "id": "C1",
+      "build": "example-live-sha",
+      "source": "capacitor.config.ts:4",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C2",
+      "build": "example-live-sha",
+      "source": "variables.gradle:4",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C3",
+      "build": "example-live-sha",
+      "source": "app-build.gradle:6",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C4",
+      "build": "example-live-sha",
+      "source": "project.pbxproj:5",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C5",
+      "build": "example-live-sha",
+      "source": "project.pbxproj:2",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C6",
+      "build": "example-live-sha",
+      "source": "app-build.gradle:7",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C7",
+      "build": "example-live-sha",
+      "source": "Info.plist:9",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C8",
+      "build": "example-live-sha",
+      "source": "capacitor.config.ts:8",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H1",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:4",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H2",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:4",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H3",
+      "build": "example-live-sha",
+      "source": "app-build.gradle:11",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H4",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:5",
+      "passed": true
+    },
+    {
+      "group": "perm",
+      "id": "P1",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:15",
+      "passed": true
+    },
+    {
+      "group": "perm",
+      "id": "P2",
+      "build": "example-live-sha",
+      "source": "Info.plist:7",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "id": "P3",
+      "build": "example-live-sha",
+      "source": "PrivacyInfo.xcprivacy:6",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "id": "P4",
+      "build": "example-live-sha",
+      "source": "PrivacyInfo.xcprivacy:3",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "id": "P6",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "billing",
+      "id": "S1",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "accounts",
+      "id": "S2",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "accounts",
+      "id": "S3",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "secrets",
+      "id": "K1",
+      "build": "example-live-sha",
+      "source": "app-build.gradle",
+      "passed": true
+    },
+    {
+      "group": "secrets",
+      "id": "K2",
+      "build": "example-live-sha",
+      "source": "repo tree",
+      "passed": true
+    },
+    {
+      "group": "signing",
+      "id": "O1",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-screenshots",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-description",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-ageRating",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-dataSafetyForm",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-appPrivacyLabels",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    }
+  ]
+}

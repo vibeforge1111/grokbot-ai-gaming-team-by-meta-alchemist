@@ -1,0 +1,36 @@
+{
+  "entries": [
+    {
+      "question": "How do I start a run?",
+      "answer": "Open the game and choose Continue or New.",
+      "source": "kb-start",
+      "approved": true,
+      "topic": "support"
+    },
+    {
+      "question": "The screen went dark.",
+      "answer": "Check brightness and restart the session.",
+      "source": "kb-display",
+      "approved": true,
+      "topic": "support"
+    },
+    {
+      "question": "Can I change the control scheme?",
+      "answer": "Open Settings, then Controls.",
+      "source": "kb-controls",
+      "approved": true,
+      "topic": "support"
+    },
+    {
+      "question": "Where is the journal?",
+      "answer": "Open the pause menu, then Journal.",
+      "source": "kb-journal",
+      "approved": true,
+      "topic": "support"
+    }
+  ],
+  "editResetsApproval": true,
+  "revisionTests": {
+    "editResetsApproval": true
+  }
+}

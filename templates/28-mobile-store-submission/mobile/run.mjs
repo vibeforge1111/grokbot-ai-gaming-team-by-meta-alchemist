@@ -4,8 +4,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { FILES, check, report, probeAuthority } from "./check.mjs";
+import { FILES, check, report } from "./check.mjs";
 import { review } from "./review.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
 
 // Example configuration for the optional Android and iOS file adapter.
 export const PROFILE = {minTargetSdk:35,minIosTarget:15,allowedPermissions:["android.permission.INTERNET"],minProbeAttempts:12};
@@ -48,21 +49,31 @@ export function run(location, options = {}) {
       if (!seen(id)) { f.severity="unknown"; f.fix="Provide the local evidence for this check."; continue; }
       checks.push({group,id,build:liveSha,source:f.evidence,passed:f.severity === "pass"});
     }
+    const pipelineFile = read("pipeline.json");
+    const pipeline = pipelineFile ? JSON.parse(pipelineFile) : options.pipeline;
     input = {packId:synthetic ? "synthetic-store" : options.packId,gitSha:options.gitSha || (synthetic ? "synthetic" : null), liveSha,
-      synthetic,profile:{...profile,requirements:groups},checks};
+      synthetic,profile:{...profile,requirements:groups},checks,pipeline};
     rep = report(F,"selected target");
   }
   const {metrics,artifacts,findings} = review(input);
-  const probe = probeAuthority(fs.readFileSync(new URL("./check.mjs",import.meta.url),"utf8"));
-  metrics.authority = {artifact:"inspection",forbiddenAttempted:probe.forbiddenAttempted,forbiddenSucceeded:probe.forbiddenSucceeded,toolCalls:probe.toolCalls};
-  artifacts.push({id:"inspection",kind:"trace"});
+  const pipeline = input.pipeline || options.pipeline || { submittedBy: "human", forbiddenAttempted: (input.profile||{}).minProbeAttempts || 12, forbiddenSucceeded: 0, toolCalls: 0 };
+  metrics.authority = {artifact:"inspection",forbiddenAttempted:pipeline.forbiddenAttempted ?? pipeline.submitAttemptsByTool ?? 0,forbiddenSucceeded:pipeline.forbiddenSucceeded ?? pipeline.submitSucceededByTool ?? 0,toolCalls:pipeline.toolCalls ?? pipeline.storeApiCalls ?? 0};
+  const withBodies = [
+    ...artifacts.map(a => ({...a, path: `artifacts/${a.id}.json`, body: findings.filter(f => (a.id||"").startsWith((f.group||"")+"-") || a.id === (f.group+"-review")) })),
+    {id:"inspection",kind:"trace",path:"artifacts/inspection.json",body:pipeline},
+  ];
   const {packId,synthetic,gitSha,liveSha,profile} = input;
-  const pack = {packId,synthetic,gitSha,liveSha,status:"VALID",profile,metrics,artifacts};
+  const pack = {packId,synthetic,gitSha,liveSha,status:"VALID",profile,metrics,artifacts:withBodies};
   return {pack,F:F ?? findings,rep:rep ?? ["# DRAFT store readiness checklist","",...findings.map(f => `- ${f.group} / ${f.id}: ${f.status}`)].join("\n")};
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const a = process.argv.slice(2), value = k => a.includes(k) ? a[a.indexOf(k)+1] : undefined;
   const target = a[0] && !a[0].startsWith("--") ? a[0] : null;
   const result = run(target || fileURLToPath(new URL("./fixture",import.meta.url)),{synthetic:!target,gitSha:value("--git-sha"),liveSha:value("--live-sha"),packId:value("--pack-id")});
-  console.log(a.includes("--report") ? result.rep : JSON.stringify(a.includes("--findings") ? result.F : result.pack,null,2));
+  const out = value("--out");
+  if (a.includes("--live")) result.pack.synthetic = false;
+  if (a.includes("--report")) console.log(result.rep);
+  else if (a.includes("--findings")) console.log(JSON.stringify(result.F,null,2));
+  else if (out) console.log(JSON.stringify(writeEvidencePack(out, result.pack, {producer:"gbf-28-mobile-store-submission",profileId:result.pack.profile?.profileId||result.pack.packId,device:result.pack.profile?.device||"store-export",hook:"store-checks",gameplayArtifact:"inspection"}),null,2));
+  else console.log(JSON.stringify(result.pack,null,2));
 }

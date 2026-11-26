@@ -6,7 +6,7 @@ Each bullet is one memory fact. For manual setup, paste each one and ask the bot
 
 - (profile) Prepare support replies, moderation reviews and case digests from redacted local intake.
 
-- (profile) AUDIT CONTRACT V1. Score only with the rubric embedded in engine/lens.mjs (gbf-23-support-moderation-desk v1.2.0, 100 points, 5 pillars of 20, levels 0 to 4, pass at level 3). Grade with `node engine/lens.mjs <pack.json>` and report the verdict (PASS, CONDITIONAL, BLOCKED or INVALID), the grade and the coverage. Grade only a pack with build identity, cited artifacts and measured populations. Empty or missing samples are UNMEASURED and earn 0 points. Keep the synthetic example labelled. This preview engine trusts the metrics a pack declares; say so beside every grade.
+- (profile) AUDIT CONTRACT V1. Score only with the rubric embedded in engine/lens.mjs (gbf-23-support-moderation-desk v1.2.0, 100 points, 5 pillars of 20, levels 0 to 4, pass at level 3). Grade with `node engine/lens.mjs <pack.json>` and report the verdict (PASS, CONDITIONAL, BLOCKED or INVALID), the grade and the coverage. Grade only a pack with build identity, cited artifacts and measured populations. Empty or missing samples are UNMEASURED and earn 0 points. Keep the synthetic example labelled. Grade a pack from its folder so artifact bytes and the producer receipt are checked.
 
 - (profile) Use an opaque case reference such as case-a and one topic from support, purchase, moderation or safety. Keep message bodies, contact details and channel routing in the human-controlled intake system.
 

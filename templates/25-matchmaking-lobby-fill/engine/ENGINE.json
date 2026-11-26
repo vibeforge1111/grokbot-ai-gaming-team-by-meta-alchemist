@@ -11,13 +11,15 @@
   "embed": [
     "engine/lens-kit.mjs",
     "engine/lens.mjs",
-    "engine/team-memory.mjs"
+    "engine/team-memory.mjs",
+    "engine/write-pack.mjs"
   ],
   "domain": [
     "mm/fill.mjs",
     "mm/scenario.mjs",
     "mm/import-counts.mjs",
-    "tests/test-safety.mjs"
+    "tests/test-safety.mjs",
+    "engine/write-pack.mjs"
   ],
   "contract": [
     "engine/ENGINE.json",
@@ -27,6 +29,7 @@
     "tests/test-lens-contract.mjs",
     "tests/lens-negative-fixtures.mjs",
     "tests/test-empty-sample.mjs",
-    "tests/run-all.mjs"
+    "tests/run-all.mjs",
+    "tests/test-window.mjs"
   ]
 }

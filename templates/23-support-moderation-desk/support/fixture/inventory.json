@@ -1,0 +1,135 @@
+{
+  "packId": "synthetic-support-001",
+  "gitSha": "synthetic",
+  "liveSha": "synthetic",
+  "tools": [
+    {
+      "name": "tool-0",
+      "privileged": false,
+      "exposed": false
+    },
+    {
+      "name": "tool-1",
+      "privileged": false,
+      "exposed": false
+    },
+    {
+      "name": "tool-2",
+      "privileged": false,
+      "exposed": false
+    },
+    {
+      "name": "tool-3",
+      "privileged": false,
+      "exposed": false
+    },
+    {
+      "name": "tool-4",
+      "privileged": false,
+      "exposed": false
+    },
+    {
+      "name": "tool-5",
+      "privileged": false,
+      "exposed": false
+    }
+  ],
+  "unknownAttempts": [
+    {
+      "tool": "unknown-0",
+      "denied": true
+    },
+    {
+      "tool": "unknown-1",
+      "denied": true
+    },
+    {
+      "tool": "unknown-2",
+      "denied": true
+    },
+    {
+      "tool": "unknown-3",
+      "denied": true
+    },
+    {
+      "tool": "unknown-4",
+      "denied": true
+    },
+    {
+      "tool": "unknown-5",
+      "denied": true
+    },
+    {
+      "tool": "unknown-6",
+      "denied": true
+    },
+    {
+      "tool": "unknown-7",
+      "denied": true
+    },
+    {
+      "tool": "unknown-8",
+      "denied": true
+    },
+    {
+      "tool": "unknown-9",
+      "denied": true
+    },
+    {
+      "tool": "unknown-10",
+      "denied": true
+    },
+    {
+      "tool": "unknown-11",
+      "denied": true
+    },
+    {
+      "tool": "unknown-12",
+      "denied": true
+    },
+    {
+      "tool": "unknown-13",
+      "denied": true
+    },
+    {
+      "tool": "unknown-14",
+      "denied": true
+    },
+    {
+      "tool": "unknown-15",
+      "denied": true
+    },
+    {
+      "tool": "unknown-16",
+      "denied": true
+    },
+    {
+      "tool": "unknown-17",
+      "denied": true
+    },
+    {
+      "tool": "unknown-18",
+      "denied": true
+    },
+    {
+      "tool": "unknown-19",
+      "denied": true
+    },
+    {
+      "tool": "unknown-20",
+      "denied": true
+    },
+    {
+      "tool": "unknown-21",
+      "denied": true
+    },
+    {
+      "tool": "unknown-22",
+      "denied": true
+    },
+    {
+      "tool": "unknown-23",
+      "denied": true
+    }
+  ]
+}

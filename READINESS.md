@@ -10,8 +10,8 @@ This page is the scorecard. The [catalog](TEMPLATES.md) is the index of folders 
 
 | State | Count |
 |---|---|
-| Ready (shipping) | 17 |
-| Preview | 7 |
+| Ready (shipping) | 23 |
+| Preview | 1 |
 | Missing | 6 |
 
 The starter template (`starter/00-starter-template`) is a scaffold for a new bot, not a game-dev helper, so it is not in these counts.
@@ -39,6 +39,12 @@ These are held to the release standard. Start with Game Feel, Game Loop, HUD, Bu
 | 20 | [Streamer and Patch Notes](templates/20-streamer-hype/) | Ready. Local outreach and notes drafts. You send them. |
 | 21 | [Access, Input and Localization](templates/21-access-input-localization/) | Ready. Journeys, captions, motion, and locale checks. |
 | 22 | [Live Service and Trust](templates/22-live-service-trust/) | Ready. Use when the game has accounts, purchases, or recovery flows. |
+| 23 | [Support Desk](templates/23-support-moderation-desk/) | Ready. Drafts from redacted local intake, with a pack producer and receipts. |
+| 24 | [Ledger](templates/24-prize-refund-ledger/) | Ready. Claim and wallet checks from an owner journal, with receipts. |
+| 25 | [Matchmaking](templates/25-matchmaking-lobby-fill/) | Ready. Lobby fill proposals from observed seats. Silent hours count as zero. |
+| 26 | [Balance Patch](templates/26-balance-patch-director/) | Ready. Parameter proposals checked against the next build's outcomes. |
+| 27 | [Retention](templates/27-retention-cohort-analytics/) | Ready. Cohort rates from session events, with segments assigned at first play. |
+| 28 | [App Store](templates/28-mobile-store-submission/) | Ready. Store checks from a pipeline export or a plain checks file. |
 
 ## Preview
 
@@ -46,13 +52,7 @@ These work, and their tests pass, but they are not held to the release standard.
 
 | # | Template | Status line |
 |---|---|---|
-| 02 | [Playtest and Performance](templates/02-playtest-performance/) | Preview. First draft. No bundled Playwright or GPU sampler. Needs more real-game examples, build-scope receipts, and grades from a live capture, not only the synthetic pack. |
-| 23 | [Support Desk](templates/23-support-moderation-desk/) | Preview. Still on lens-kit 1.1.0. Needs a pack producer with receipts, worked examples in the evidence skills, and grades that come from the game's support system, not hand-declared counts. |
-| 24 | [Ledger](templates/24-prize-refund-ledger/) | Preview. Still on lens-kit 1.1.0. The importer prints a pack without receipts, drops some groups on the real path, and one line probes this template's own code. |
-| 25 | [Matchmaking](templates/25-matchmaking-lobby-fill/) | Preview. Still on lens-kit 1.1.0. Needs receipts, a full-window average that counts silent hours, and grades from observed lobbies, not this template's own code. |
-| 26 | [Balance Patch](templates/26-balance-patch-director/) | Preview. Still on lens-kit 1.1.0. Needs receipts, a check against the next build's outcomes, and grades from the game, not this template's own code. |
-| 27 | [Retention](templates/27-retention-cohort-analytics/) | Preview. Still on lens-kit 1.1.0. Needs receipts, segment assignment at cohort entry, and grades from the game rather than planted rows. |
-| 28 | [App Store](templates/28-mobile-store-submission/) | Preview. Still on lens-kit 1.1.0. Needs receipts, a second non-Capacitor example, and grades from the release pipeline, not this template's own code. |
+| 02 | [Playtest and Performance](templates/02-playtest-performance/) | Preview. Shared lens-kit and a pack producer are in place. Still needs worked examples from at least two real games, a live capture grade, and you bring your own capture tools (no bundled Playwright or GPU sampler). |
 
 ## Missing
 

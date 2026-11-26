@@ -1,369 +1,369 @@
 {
-  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
-  "cases": [
-    {
-      "id": "authority-boundaries:1#empty-authority.forbiddenAttempted",
-      "line": "authority-boundaries:1",
-      "expect": "U",
-      "set": {
-        "metrics.authority.forbiddenAttempted": 0
-      }
-    },
-    {
-      "id": "authority-boundaries:1#neg1",
-      "line": "authority-boundaries:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.authority.forbiddenSucceeded": 1
-      }
-    },
-    {
-      "id": "authority-boundaries:1#neg2",
-      "line": "authority-boundaries:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.authority.valueMovingFunctions": 2
-      }
-    },
-    {
-      "id": "authority-boundaries:1#missing",
-      "line": "authority-boundaries:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.authority.forbiddenAttempted"
-      ]
-    },
-    {
-      "id": "authority-boundaries:2#empty-ledger.rows",
-      "line": "authority-boundaries:2",
-      "expect": "U",
-      "set": {
-        "metrics.ledger.rows": 0
-      }
-    },
-    {
-      "id": "authority-boundaries:2#neg1",
-      "line": "authority-boundaries:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.ledger.approvedWithoutDecision": 1
-      }
-    },
-    {
-      "id": "authority-boundaries:2#neg2",
-      "line": "authority-boundaries:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.ledger.confirmedWithoutEvidence": 3
-      }
-    },
-    {
-      "id": "authority-boundaries:2#missing",
-      "line": "authority-boundaries:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.ledger.approvedWithoutDecision"
-      ]
-    },
-    {
-      "id": "eligibility:1#empty-eligibility.measuredCases",
-      "line": "eligibility:1",
-      "expect": "U",
-      "set": {
-        "metrics.eligibility.measuredCases": 0
-      }
-    },
-    {
-      "id": "eligibility:1#empty-ledger.rows",
-      "line": "eligibility:1",
-      "expect": "U",
-      "set": {
-        "metrics.ledger.rows": 0
-      }
-    },
-    {
-      "id": "eligibility:1#neg1",
-      "line": "eligibility:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.eligibility.ineligibleProposedOrApproved": 1
-      }
-    },
-    {
-      "id": "eligibility:1#neg2",
-      "line": "eligibility:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.ledger.doubleGrants": 1
-      }
-    },
-    {
-      "id": "eligibility:1#missing",
-      "line": "eligibility:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.eligibility.ineligibleProposedOrApproved"
-      ]
-    },
-    {
-      "id": "eligibility:2#empty-eligibility.measuredCases",
-      "line": "eligibility:2",
-      "expect": "U",
-      "set": {
-        "metrics.eligibility.measuredCases": 0
-      }
-    },
-    {
-      "id": "eligibility:2#neg1",
-      "line": "eligibility:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.eligibility.notWinnerAccepted": 1
-      }
-    },
-    {
-      "id": "eligibility:2#neg2",
-      "line": "eligibility:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.eligibility.redirectsWithoutDecision": 1
-      }
-    },
-    {
-      "id": "eligibility:2#missing",
-      "line": "eligibility:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.eligibility.notWinnerAccepted"
-      ]
-    },
-    {
-      "id": "wallet-safety:1#empty-wallet.poisonPlanted",
-      "line": "wallet-safety:1",
-      "expect": "U",
-      "set": {
-        "metrics.wallet.poisonPlanted": 0
-      }
-    },
-    {
-      "id": "wallet-safety:1#empty-wallet.exchangePlanted",
-      "line": "wallet-safety:1",
-      "expect": "U",
-      "set": {
-        "metrics.wallet.exchangePlanted": 0
-      }
-    },
-    {
-      "id": "wallet-safety:1#neg1",
-      "line": "wallet-safety:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.wallet.poisonCaught": 0
-      }
-    },
-    {
-      "id": "wallet-safety:1#neg2",
-      "line": "wallet-safety:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.wallet.flaggedProposed": 1
-      }
-    },
-    {
-      "id": "wallet-safety:1#missing",
-      "line": "wallet-safety:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.wallet.poisonPlanted"
-      ]
-    },
-    {
-      "id": "wallet-safety:2#empty-wallet.poisonPlanted",
-      "line": "wallet-safety:2",
-      "expect": "U",
-      "set": {
-        "metrics.wallet.poisonPlanted": 0
-      }
-    },
-    {
-      "id": "wallet-safety:2#empty-wallet.exchangePlanted",
-      "line": "wallet-safety:2",
-      "expect": "U",
-      "set": {
-        "metrics.wallet.exchangePlanted": 0
-      }
-    },
-    {
-      "id": "wallet-safety:2#empty-ops.measuredCases",
-      "line": "wallet-safety:2",
-      "expect": "U",
-      "set": {
-        "metrics.ops.measuredCases": 0
-      }
-    },
-    {
-      "id": "wallet-safety:2#neg1",
-      "line": "wallet-safety:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.wallet.unmaskedInOutputs": 1
-      }
-    },
-    {
-      "id": "wallet-safety:2#neg2",
-      "line": "wallet-safety:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.ops.digestHasFullAddress": true
-      }
-    },
-    {
-      "id": "wallet-safety:2#missing",
-      "line": "wallet-safety:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.wallet.unmaskedInOutputs"
-      ]
-    },
-    {
-      "id": "delivery:1#empty-sla.measuredCases",
-      "line": "delivery:1",
-      "expect": "U",
-      "set": {
-        "metrics.sla.measuredCases": 0
-      }
-    },
-    {
-      "id": "delivery:1#neg1",
-      "line": "delivery:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.sla.overdue": 4
-      }
-    },
-    {
-      "id": "delivery:1#neg2",
-      "line": "delivery:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.sla.maxWaitDays": 9
-      }
-    },
-    {
-      "id": "delivery:1#missing",
-      "line": "delivery:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.sla.overdue"
-      ]
-    },
-    {
-      "id": "delivery:2#empty-refunds.measuredCases",
-      "line": "delivery:2",
-      "expect": "U",
-      "set": {
-        "metrics.refunds.measuredCases": 0
-      }
-    },
-    {
-      "id": "delivery:2#neg1",
-      "line": "delivery:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.refunds.owed": 9
-      }
-    },
-    {
-      "id": "delivery:2#missing",
-      "line": "delivery:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.refunds.owed"
-      ]
-    },
-    {
-      "id": "reconciliation-and-reporting:1#empty-recon.measuredCases",
-      "line": "reconciliation-and-reporting:1",
-      "expect": "U",
-      "set": {
-        "metrics.recon.measuredCases": 0
-      }
-    },
-    {
-      "id": "reconciliation-and-reporting:1#neg1",
-      "line": "reconciliation-and-reporting:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.recon.mismatches": 2
-      }
-    },
-    {
-      "id": "reconciliation-and-reporting:1#neg2",
-      "line": "reconciliation-and-reporting:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.recon.confirmedReportedOnly": 25
-      }
-    },
-    {
-      "id": "reconciliation-and-reporting:1#missing",
-      "line": "reconciliation-and-reporting:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.recon.snapshotPresent"
-      ]
-    },
-    {
-      "id": "reconciliation-and-reporting:2#empty-ops.measuredCases",
-      "line": "reconciliation-and-reporting:2",
-      "expect": "U",
-      "set": {
-        "metrics.ops.measuredCases": 0
-      }
-    },
-    {
-      "id": "reconciliation-and-reporting:2#neg1",
-      "line": "reconciliation-and-reporting:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.ops.digestBuilt": false
-      }
-    },
-    {
-      "id": "reconciliation-and-reporting:2#missing",
-      "line": "reconciliation-and-reporting:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.ops.digestBuilt"
-      ]
-    }
-  ]
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "authority-boundaries:1#empty-authority.forbiddenAttempted",
+   "line": "authority-boundaries:1",
+   "expect": "U",
+   "set": {
+    "metrics.authority.forbiddenAttempted": 0
+   }
+  },
+  {
+   "id": "authority-boundaries:1#neg1",
+   "line": "authority-boundaries:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.authority.forbiddenSucceeded": 1
+   }
+  },
+  {
+   "id": "authority-boundaries:1#neg2",
+   "line": "authority-boundaries:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.authority.valueMovingFunctions": 2
+   }
+  },
+  {
+   "id": "authority-boundaries:1#missing",
+   "line": "authority-boundaries:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.authority.forbiddenAttempted"
+   ]
+  },
+  {
+   "id": "authority-boundaries:2#empty-ledger.rows",
+   "line": "authority-boundaries:2",
+   "expect": "U",
+   "set": {
+    "metrics.ledger.rows": 0
+   }
+  },
+  {
+   "id": "authority-boundaries:2#neg1",
+   "line": "authority-boundaries:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.ledger.approvedWithoutDecision": 1
+   }
+  },
+  {
+   "id": "authority-boundaries:2#neg2",
+   "line": "authority-boundaries:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.ledger.confirmedWithoutEvidence": 3
+   }
+  },
+  {
+   "id": "authority-boundaries:2#missing",
+   "line": "authority-boundaries:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.ledger.approvedWithoutDecision"
+   ]
+  },
+  {
+   "id": "eligibility:1#empty-eligibility.measuredCases",
+   "line": "eligibility:1",
+   "expect": "U",
+   "set": {
+    "metrics.eligibility.measuredCases": 0
+   }
+  },
+  {
+   "id": "eligibility:1#empty-ledger.rows",
+   "line": "eligibility:1",
+   "expect": "U",
+   "set": {
+    "metrics.ledger.rows": 0
+   }
+  },
+  {
+   "id": "eligibility:1#neg1",
+   "line": "eligibility:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.eligibility.ineligibleProposedOrApproved": 1
+   }
+  },
+  {
+   "id": "eligibility:1#neg2",
+   "line": "eligibility:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.ledger.doubleGrants": 1
+   }
+  },
+  {
+   "id": "eligibility:1#missing",
+   "line": "eligibility:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.eligibility.ineligibleProposedOrApproved"
+   ]
+  },
+  {
+   "id": "eligibility:2#empty-eligibility.measuredCases",
+   "line": "eligibility:2",
+   "expect": "U",
+   "set": {
+    "metrics.eligibility.measuredCases": 0
+   }
+  },
+  {
+   "id": "eligibility:2#neg1",
+   "line": "eligibility:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.eligibility.notWinnerAccepted": 1
+   }
+  },
+  {
+   "id": "eligibility:2#neg2",
+   "line": "eligibility:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.eligibility.redirectsWithoutDecision": 1
+   }
+  },
+  {
+   "id": "eligibility:2#missing",
+   "line": "eligibility:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.eligibility.notWinnerAccepted"
+   ]
+  },
+  {
+   "id": "wallet-safety:1#empty-wallet.poisonPlanted",
+   "line": "wallet-safety:1",
+   "expect": "U",
+   "set": {
+    "metrics.wallet.poisonPlanted": 0
+   }
+  },
+  {
+   "id": "wallet-safety:1#empty-wallet.exchangePlanted",
+   "line": "wallet-safety:1",
+   "expect": "U",
+   "set": {
+    "metrics.wallet.exchangePlanted": 0
+   }
+  },
+  {
+   "id": "wallet-safety:1#neg1",
+   "line": "wallet-safety:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.wallet.poisonCaught": 0
+   }
+  },
+  {
+   "id": "wallet-safety:1#neg2",
+   "line": "wallet-safety:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.wallet.flaggedProposed": 1
+   }
+  },
+  {
+   "id": "wallet-safety:1#missing",
+   "line": "wallet-safety:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.wallet.poisonPlanted"
+   ]
+  },
+  {
+   "id": "wallet-safety:2#empty-wallet.poisonPlanted",
+   "line": "wallet-safety:2",
+   "expect": "U",
+   "set": {
+    "metrics.wallet.poisonPlanted": 0
+   }
+  },
+  {
+   "id": "wallet-safety:2#empty-wallet.exchangePlanted",
+   "line": "wallet-safety:2",
+   "expect": "U",
+   "set": {
+    "metrics.wallet.exchangePlanted": 0
+   }
+  },
+  {
+   "id": "wallet-safety:2#empty-ops.measuredCases",
+   "line": "wallet-safety:2",
+   "expect": "U",
+   "set": {
+    "metrics.ops.measuredCases": 0
+   }
+  },
+  {
+   "id": "wallet-safety:2#neg1",
+   "line": "wallet-safety:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.wallet.unmaskedInOutputs": 1
+   }
+  },
+  {
+   "id": "wallet-safety:2#neg2",
+   "line": "wallet-safety:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.ops.digestHasFullAddress": true
+   }
+  },
+  {
+   "id": "wallet-safety:2#missing",
+   "line": "wallet-safety:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.wallet.unmaskedInOutputs"
+   ]
+  },
+  {
+   "id": "delivery:1#empty-sla.measuredCases",
+   "line": "delivery:1",
+   "expect": "U",
+   "set": {
+    "metrics.sla.measuredCases": 0
+   }
+  },
+  {
+   "id": "delivery:1#neg1",
+   "line": "delivery:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.sla.overdue": 4
+   }
+  },
+  {
+   "id": "delivery:1#neg2",
+   "line": "delivery:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.sla.maxWaitDays": 9
+   }
+  },
+  {
+   "id": "delivery:1#missing",
+   "line": "delivery:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.sla.overdue"
+   ]
+  },
+  {
+   "id": "delivery:2#empty-refunds.measuredCases",
+   "line": "delivery:2",
+   "expect": "U",
+   "set": {
+    "metrics.refunds.measuredCases": 0
+   }
+  },
+  {
+   "id": "delivery:2#neg1",
+   "line": "delivery:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.refunds.owed": 9
+   }
+  },
+  {
+   "id": "delivery:2#missing",
+   "line": "delivery:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.refunds.owed"
+   ]
+  },
+  {
+   "id": "reconciliation-and-reporting:1#empty-recon.measuredCases",
+   "line": "reconciliation-and-reporting:1",
+   "expect": "U",
+   "set": {
+    "metrics.recon.measuredCases": 0
+   }
+  },
+  {
+   "id": "reconciliation-and-reporting:1#neg1",
+   "line": "reconciliation-and-reporting:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.recon.mismatches": 2
+   }
+  },
+  {
+   "id": "reconciliation-and-reporting:1#neg2",
+   "line": "reconciliation-and-reporting:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.recon.confirmedReportedOnly": 25
+   }
+  },
+  {
+   "id": "reconciliation-and-reporting:1#missing",
+   "line": "reconciliation-and-reporting:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.recon.snapshotPresent"
+   ]
+  },
+  {
+   "id": "reconciliation-and-reporting:2#empty-ops.measuredCases",
+   "line": "reconciliation-and-reporting:2",
+   "expect": "U",
+   "set": {
+    "metrics.ops.measuredCases": 0
+   }
+  },
+  {
+   "id": "reconciliation-and-reporting:2#neg1",
+   "line": "reconciliation-and-reporting:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.ops.digestBuilt": false
+   }
+  },
+  {
+   "id": "reconciliation-and-reporting:2#missing",
+   "line": "reconciliation-and-reporting:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.ops.digestBuilt"
+   ]
+  }
+ ]
 }

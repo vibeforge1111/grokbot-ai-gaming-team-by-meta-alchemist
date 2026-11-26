@@ -7,7 +7,7 @@ description: "Use when the lobby shows bots alongside players and you need to co
 > - Score only with the rubric embedded in `engine/lens.mjs` (`LENS.rubric`, gbf-25-matchmaking-lobby-fill v1.2.0). `node engine/lens.mjs <pack.json>` computes the grade; this skill only gathers evidence for it and never adds points of its own.
 > - Missing evidence is UNMEASURED (0 points, not a defect). A step that did not run is NOT_RUN, never PASS. Never invent a measurement; label every worked example synthetic.
 > - Thresholds and codes come from the owner's profile (`pack.profile`). Treat sample numbers as illustrative.
-> - Preview engine: the vendored lens kit 1.1.0 trusts the metrics a pack declares and does not check artifact bytes or a producer receipt. Say so beside every grade.
+> - Grade a pack from its folder so lens-kit 1.3.1 can check artifact bytes and the producer receipt.
 > Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
 
 # Bot representation

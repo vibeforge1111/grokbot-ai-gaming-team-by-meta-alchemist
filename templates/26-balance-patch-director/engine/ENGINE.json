@@ -11,13 +11,15 @@
   "embed": [
     "engine/lens-kit.mjs",
     "engine/lens.mjs",
-    "engine/team-memory.mjs"
+    "engine/team-memory.mjs",
+    "engine/write-pack.mjs"
   ],
   "domain": [
     "balance/director.mjs",
     "balance/run.mjs",
     "balance/data/fixture-ledger.json",
-    "tests/test-safety.mjs"
+    "tests/test-safety.mjs",
+    "engine/write-pack.mjs"
   ],
   "contract": [
     "engine/ENGINE.json",

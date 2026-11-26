@@ -1,7 +1,7 @@
 // Created by @meta_alchemist (https://x.com/meta_alchemist).
 import {spawnSync} from "node:child_process";
 import {fileURLToPath} from "node:url";
-const tests = ["test-lens-contract","lens-negative-fixtures","test-empty-sample","test-safety"];
+const tests = ["test-lens-contract","lens-negative-fixtures","test-empty-sample","test-safety","test-window"];
 const cwd = fileURLToPath(new URL("..",import.meta.url));
 const results = tests.map(test => {
   const run = spawnSync(process.execPath,["tests/"+test+".mjs"],{cwd,encoding:"utf8"});

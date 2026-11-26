@@ -254,7 +254,7 @@ export const LENS = {
         [
           "conf.rates",
           ">=",
-          3
+          "P.minCohorts"
         ]
       ],
       "neg": [
@@ -376,7 +376,7 @@ export const LENS = {
         [
           "segments.compared",
           ">=",
-          2
+          "P.minSegments"
         ]
       ],
       "neg": [

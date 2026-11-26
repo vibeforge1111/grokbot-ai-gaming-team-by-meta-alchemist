@@ -11,11 +11,14 @@
   "embed": [
     "engine/lens-kit.mjs",
     "engine/lens.mjs",
-    "engine/team-memory.mjs"
+    "engine/team-memory.mjs",
+    "engine/write-pack.mjs"
   ],
   "domain": [
     "support/drafts.mjs",
-    "tests/test-safety.mjs"
+    "tests/test-safety.mjs",
+    "support/build-pack.mjs",
+    "engine/write-pack.mjs"
   ],
   "contract": [
     "engine/ENGINE.json",

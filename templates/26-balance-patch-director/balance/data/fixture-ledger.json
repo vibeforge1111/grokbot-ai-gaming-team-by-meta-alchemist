@@ -3,16 +3,82 @@
   "packId": "balance-example",
   "gitSha": "example-source",
   "liveSha": "example-build",
-  "profile": {"minParameters": 2, "stepPct": 10, "maxStepPct": 15, "maxLevers": 2, "maxTelemetryAgeDays": 5, "minObservations": 20, "minProbeAttempts": 4},
+  "profile": {
+    "minParameters": 2,
+    "stepPct": 10,
+    "maxStepPct": 15,
+    "maxLevers": 2,
+    "maxTelemetryAgeDays": 5,
+    "minObservations": 20,
+    "minProbeAttempts": 4
+  },
   "parameters": [
-    {"id":"turn-budget","value":8,"unit":"turns","aliases":["round length","duration"]},
-    {"id":"harvest-cycle","value":100,"unit":"seconds","aliases":["growth interval","duration"]},
-    {"id":"hint-delay","value":40,"unit":"seconds","aliases":["hint wait"]}
+    {
+      "id": "turn-budget",
+      "value": 8,
+      "unit": "turns",
+      "aliases": [
+        "round length",
+        "duration"
+      ]
+    },
+    {
+      "id": "harvest-cycle",
+      "value": 100,
+      "unit": "seconds",
+      "aliases": [
+        "growth interval",
+        "duration"
+      ]
+    },
+    {
+      "id": "hint-delay",
+      "value": 40,
+      "unit": "seconds",
+      "aliases": [
+        "hint wait"
+      ]
+    }
   ],
-  "referenceValues": {"turn-budget":8,"harvest-cycle":100,"hint-delay":40},
-  "requests": ["round length","duration","hint wait"],
+  "referenceValues": {
+    "turn-budget": 8,
+    "harvest-cycle": 100,
+    "hint-delay": 40
+  },
+  "requests": [
+    "round length",
+    "duration",
+    "hint wait"
+  ],
   "observations": [
-    {"id":"turn-budget","cases":60,"ageDays":2,"observed":10,"target":8},
-    {"id":"hint-delay","cases":32,"ageDays":1,"observed":30,"target":38}
-  ]
+    {
+      "id": "turn-budget",
+      "cases": 60,
+      "ageDays": 2,
+      "observed": 10,
+      "target": 8
+    },
+    {
+      "id": "hint-delay",
+      "cases": 32,
+      "ageDays": 1,
+      "observed": 30,
+      "target": 38
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "turn-budget",
+      "observed": 9
+    },
+    {
+      "id": "hint-delay",
+      "observed": 33
+    }
+  ],
+  "audit": {
+    "forbiddenAttempted": 4,
+    "forbiddenSucceeded": 0,
+    "repoWrites": 0
+  }
 }

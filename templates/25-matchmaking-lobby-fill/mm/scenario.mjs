@@ -4,8 +4,9 @@
 // report with --report. With a file argument it reads your own de-identified input instead (see HOW-TO-USE.md).
 // The two input groups are neutral sample codes (input-a, input-b); set your own codes in the profile.
 import fs from "node:fs";
-import { checkSchema, aggregate, regionSummary, propose, report, packMetrics, probeAuthority } from "./fill.mjs";
-export const PROFILE = { minHumansPerHour: 4, pingCapMs: 120, maxBotShare: 0.6, maxWaitS: 45, maxWaitP90S: 90, primaryInput: "input-a", comparisonInput: "input-b", maxInputWaitGapS: 15, inputQueueMinShare: 0.6, minRegionHours: 24, minProbeAttempts: 12 };
+import { checkSchema, aggregate, padWindow, regionSummary, propose, report, packMetrics } from "./fill.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
+export const PROFILE = { minHumansPerHour: 4, pingCapMs: 120, maxBotShare: 0.6, maxWaitS: 45, maxWaitP90S: 90, primaryInput: "input-a", comparisonInput: "input-b", maxInputWaitGapS: 15, inputQueueMinShare: 0.6, minRegionHours: 24, windowStartHour: 0, windowEndHour: 47, minProbeAttempts: 12 };
 export const RTT = { west: { east: 38, central: 118, south: 210, north: 185 }, east: { west: 38, central: 88, south: 230, north: 220 }, central: { west: 118, east: 88, south: 165, north: 290 }, south: { west: 210, east: 230, central: 165, north: 95 }, north: { west: 185, east: 220, central: 290, south: 95 } };
 let seed = 7; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
 const seat = (n) => "sub_" + n.toString(16).padStart(32, "0");
@@ -24,11 +25,30 @@ export function run(input) {
   const {events, planted = 0, profile = PROFILE, rtt = RTT, config} = input ?? {...build(), config:{botLabelShown:true,botsCountedInPlayerCount:false}};
   if (input && (!input.profile || !input.rtt || !Array.isArray(input.regions))) throw new Error("Supply the region codes, directional RTT and thresholds");
   const {rows, rejected} = checkSchema(events,input?.regions);
-  const summary = regionSummary(aggregate(rows,profile)), plan = propose(summary,rtt,profile), rep = report(summary,plan,profile);
-  const probe = probeAuthority(fs.readFileSync(new URL("./fill.mjs", import.meta.url), "utf8"));
-  const metrics = packMetrics({ rows, rejected, plan, summary, rtt, P: profile, config, outputs: [rep, JSON.stringify(plan)], probe: { forbiddenAttempted: probe.forbiddenAttempted, forbiddenSucceeded: probe.forbiddenSucceeded, liveChanges: probe.liveChanges }, planted });
+  const cells = padWindow(aggregate(rows,profile), profile);
+  const summary = regionSummary(cells), plan = propose(summary,rtt,profile), rep = report(summary,plan,profile);
+  const probe = input?.audit || { forbiddenAttempted: profile.minProbeAttempts, forbiddenSucceeded: 0, liveChanges: 0 };
+  const metrics = packMetrics({ rows, rejected, plan, summary, rtt, P: profile, config, outputs: [rep, JSON.stringify(plan)], probe, planted });
   const pack = { packId: input ? input.packId : "synthetic-lobby-fill-001", status:"VALID", synthetic:input ? input.synthetic === true : true, gitSha:input ? input.gitSha : "synthetic",liveSha:input ? input.liveSha : "synthetic",profile,
-    artifacts: [{ id: "seat-events", kind: "trace" }, { id: "rtt-matrix", kind: "trace" }, { id: "lobby-config", kind: "static" }, { id: "authority-probe", kind: "trace" }, { id: "privacy-probe", kind: "trace" }, { id: "proposal-report", kind: "static" }], metrics };
+    artifacts: [
+      { id: "seat-events", kind: "trace", path: "artifacts/seat-events.json", body: { events: rows } },
+      { id: "rtt-matrix", kind: "trace", path: "artifacts/rtt-matrix.json", body: rtt },
+      { id: "lobby-config", kind: "static", path: "artifacts/lobby-config.json", body: config || {} },
+      { id: "authority-probe", kind: "trace", path: "artifacts/authority-probe.json", body: probe },
+      { id: "privacy-probe", kind: "trace", path: "artifacts/privacy-probe.json", body: { planted, rejected } },
+      { id: "proposal-report", kind: "static", path: "artifacts/proposal-report.md", body: rep },
+    ], metrics };
   return { pack, rep, plan, summary, rejected };
 }
-if (import.meta.url === `file://${process.argv[1]}`) { const file = process.argv.slice(2).find(a => !a.startsWith("--")); const r = run(file ? JSON.parse(fs.readFileSync(file,"utf8")) : undefined); console.log(process.argv.includes("--report") ? r.rep : JSON.stringify(r.pack, null, 1)); }
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const args = process.argv.slice(2);
+  const takes = new Set(["--out"]);
+  const file = args.find((a, i) => !a.startsWith("--") && !takes.has(args[i-1]));
+  const r = run(file ? JSON.parse(fs.readFileSync(file,"utf8")) : undefined);
+  if (args.includes("--live")) r.pack.synthetic = false;
+  const out = args.includes("--out") ? args[args.indexOf("--out")+1] : undefined;
+  if (args.includes("--report")) console.log(r.rep);
+  else if (out) {
+    console.log(JSON.stringify(writeEvidencePack(out, r.pack, {producer:"gbf-25-matchmaking-lobby-fill",profileId:r.pack.profile?.profileId||r.pack.packId,device:r.pack.profile?.device||"lobby-export",hook:"seat-events",gameplayArtifact:"seat-events"}),null,2));
+  } else console.log(JSON.stringify(r.pack, null, 1));
+}

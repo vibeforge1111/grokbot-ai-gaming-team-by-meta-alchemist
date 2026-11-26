@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "ref": "case-1",
+      "drafted": true,
+      "outboundCalls": 0,
+      "topic": "support"
+    },
+    {
+      "ref": "case-2",
+      "drafted": true,
+      "outboundCalls": 0,
+      "topic": "support"
+    },
+    {
+      "ref": "case-3",
+      "drafted": true,
+      "outboundCalls": 0,
+      "topic": "support"
+    },
+    {
+      "ref": "case-4",
+      "drafted": true,
+      "outboundCalls": 0,
+      "topic": "support"
+    },
+    {
+      "ref": "case-5",
+      "drafted": true,
+      "outboundCalls": 0,
+      "topic": "support"
+    }
+  ]
+}

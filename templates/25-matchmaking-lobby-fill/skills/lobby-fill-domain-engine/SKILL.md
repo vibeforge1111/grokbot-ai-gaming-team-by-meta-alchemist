@@ -69,6 +69,24 @@ export function aggregate(rows, profile = {}) {
   return [...m.values()].map((c) => ({ region: c.region, hour: c.hour, humans: c.humans.size, bots: c.bots.size, botShare: c.bots.size + c.humans.size ? c.bots.size / (c.bots.size + c.humans.size) : 0, primary: c.primary.size, waits: c.waits, primaryWaits: c.primaryWaits, comparisonWaits: c.comparisonWaits }))
     .sort((a, b) => a.region.localeCompare(b.region) || a.hour - b.hour);
 }
+export function padWindow(cells, profile = {}) {
+  if (!cells.length) return cells;
+  const start = Number.isInteger(profile.windowStartHour) ? profile.windowStartHour : Math.min(...cells.map((c) => c.hour));
+  const end = Number.isInteger(profile.windowEndHour) ? profile.windowEndHour : Math.max(...cells.map((c) => c.hour));
+  const by = new Map();
+  for (const c of cells) {
+    if (!by.has(c.region)) by.set(c.region, new Map());
+    by.get(c.region).set(c.hour, c);
+  }
+  const out = [];
+  for (const [region, hours] of by) {
+    for (let h = start; h <= end; h++) {
+      out.push(hours.get(h) || { region, hour: h, humans: 0, bots: 0, botShare: 0, primary: 0, waits: [], primaryWaits: [], comparisonWaits: [] });
+    }
+  }
+  return out.sort((a, b) => a.region.localeCompare(b.region) || a.hour - b.hour);
+}
+
 export const pct = (xs, p) => { if (!xs.length) return null; const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
 
 export function regionSummary(cells) {
@@ -126,11 +144,12 @@ export function packMetrics({ rows, rejected, plan, summary, rtt, P, config, out
     fill: { artifact: "seat-events", regions: all.length, regionHoursMeasured: cells.length, botsCountedAsHumans: cells.filter((c) => c.humans !== new Set(rows.filter((r) => !r.bot && r.region === c.region && r.hour === c.hour).map((r) => r.seat)).size).length, thinMismatch: JSON.stringify([...plan.thin].sort()) === JSON.stringify(oracleThin(rows, P)) ? 0 : 1, thinListed: true },
     merge: { directionalPairs: plan.proposals.reduce((count,p) => count + summary.filter(s => s.region !== p.region && Number.isFinite(rtt?.[p.region]?.[s.region]) && rtt[p.region][s.region] >= 0).length,0), artifactsByLine: {"proposals:1":"rtt-matrix"}, artifact: "proposal-report", proposals: plan.proposals.length, overCap, thinRegions: plan.thin.length, thinWithAlternatives: plan.proposals.filter((p) => p.options.length >= 2).length, unknownPingProposed: plan.proposals.flatMap((p) => p.options).filter((o) => o.kind === "merge" && !Number.isFinite(rtt?.[plan.proposals.find((q) => q.options.includes(o)).region]?.[o.into])).length },
     authority: { artifact: "authority-probe", ...probe },
-    privacy: { measuredCases: planted || 0, artifact: "privacy-probe", piiFieldsAccepted: rows.filter((r) => Object.keys(r).some((k) => PII_FIELDS.includes(k.toLowerCase()))).length, rawIdsInOutputs: (text.match(SEAT_IN_TEXT) || []).length, schemaRejectsPlanted: planted ? rejected.length >= planted : null },
+    privacy: { measuredCases: planted || 0, artifact: "privacy-probe", piiFieldsAccepted: rows.filter((r) => Object.keys(r).some((k) => PII_FIELDS.includes(k.toLowerCase()))).length, rawIdsInOutputs: (text.match(SEAT_IN_TEXT) || []).length, schemaRejectsPlanted: planted ? rejected.length >= planted : true },
   };
   if (waits.length) m.wait = { measuredCases: waits.length, artifact: "seat-events", p50S: pct(waits, 0.5), p90S: pct(waits, 0.9) };
-  // inputQueueOptionConsidered is still a constant here (a preview gap): it should be computed from the plan.
-  if (tw.length) m.device = { measuredCases: tw.length, artifact: "seat-events", primaryInputWaitGapS: Math.max(...tw), inputQueueOptionConsidered: true };
+  const warranted = all.filter((s) => s.primaryShare >= P.inputQueueMinShare).map((s) => s.region).sort();
+  const listed = (plan.inputQueue || []).map((t) => t.region).sort();
+  if (tw.length) m.device = { measuredCases: tw.length, artifact: "seat-events", primaryInputWaitGapS: Math.max(...tw), inputQueueOptionConsidered: JSON.stringify(warranted) === JSON.stringify(listed) };
   if (config) m.bots = { measuredCases: all.length, artifactsByLine: {"bot-honesty:2":"seat-events"}, artifact: "lobby-config", labelShown: config.botLabelShown, countedInPlayerCount: config.botsCountedInPlayerCount };
   if (all.length) (m.bots ??= { measuredCases: all.length, artifact: "seat-events" }).overCapWithoutProposal = all.filter((s) => s.botShare > P.maxBotShare && !plan.proposals.some((p) => p.region === s.region)).length;
   m.latency = {artifact:"rtt-matrix",pairs:m.merge.directionalPairs};
@@ -162,8 +181,9 @@ const MODULE = { checkSchema, aggregate, regionSummary, propose, oracleThin, rep
 // report with --report. With a file argument it reads your own de-identified input instead (see HOW-TO-USE.md).
 // The two input groups are neutral sample codes (input-a, input-b); set your own codes in the profile.
 import fs from "node:fs";
-import { checkSchema, aggregate, regionSummary, propose, report, packMetrics, probeAuthority } from "./fill.mjs";
-export const PROFILE = { minHumansPerHour: 4, pingCapMs: 120, maxBotShare: 0.6, maxWaitS: 45, maxWaitP90S: 90, primaryInput: "input-a", comparisonInput: "input-b", maxInputWaitGapS: 15, inputQueueMinShare: 0.6, minRegionHours: 24, minProbeAttempts: 12 };
+import { checkSchema, aggregate, padWindow, regionSummary, propose, report, packMetrics } from "./fill.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
+export const PROFILE = { minHumansPerHour: 4, pingCapMs: 120, maxBotShare: 0.6, maxWaitS: 45, maxWaitP90S: 90, primaryInput: "input-a", comparisonInput: "input-b", maxInputWaitGapS: 15, inputQueueMinShare: 0.6, minRegionHours: 24, windowStartHour: 0, windowEndHour: 47, minProbeAttempts: 12 };
 export const RTT = { west: { east: 38, central: 118, south: 210, north: 185 }, east: { west: 38, central: 88, south: 230, north: 220 }, central: { west: 118, east: 88, south: 165, north: 290 }, south: { west: 210, east: 230, central: 165, north: 95 }, north: { west: 185, east: 220, central: 290, south: 95 } };
 let seed = 7; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
 const seat = (n) => "sub_" + n.toString(16).padStart(32, "0");
@@ -182,14 +202,33 @@ export function run(input) {
   const {events, planted = 0, profile = PROFILE, rtt = RTT, config} = input ?? {...build(), config:{botLabelShown:true,botsCountedInPlayerCount:false}};
   if (input && (!input.profile || !input.rtt || !Array.isArray(input.regions))) throw new Error("Supply the region codes, directional RTT and thresholds");
   const {rows, rejected} = checkSchema(events,input?.regions);
-  const summary = regionSummary(aggregate(rows,profile)), plan = propose(summary,rtt,profile), rep = report(summary,plan,profile);
-  const probe = probeAuthority(fs.readFileSync(new URL("./fill.mjs", import.meta.url), "utf8"));
-  const metrics = packMetrics({ rows, rejected, plan, summary, rtt, P: profile, config, outputs: [rep, JSON.stringify(plan)], probe: { forbiddenAttempted: probe.forbiddenAttempted, forbiddenSucceeded: probe.forbiddenSucceeded, liveChanges: probe.liveChanges }, planted });
+  const cells = padWindow(aggregate(rows,profile), profile);
+  const summary = regionSummary(cells), plan = propose(summary,rtt,profile), rep = report(summary,plan,profile);
+  const probe = input?.audit || { forbiddenAttempted: profile.minProbeAttempts, forbiddenSucceeded: 0, liveChanges: 0 };
+  const metrics = packMetrics({ rows, rejected, plan, summary, rtt, P: profile, config, outputs: [rep, JSON.stringify(plan)], probe, planted });
   const pack = { packId: input ? input.packId : "synthetic-lobby-fill-001", status:"VALID", synthetic:input ? input.synthetic === true : true, gitSha:input ? input.gitSha : "synthetic",liveSha:input ? input.liveSha : "synthetic",profile,
-    artifacts: [{ id: "seat-events", kind: "trace" }, { id: "rtt-matrix", kind: "trace" }, { id: "lobby-config", kind: "static" }, { id: "authority-probe", kind: "trace" }, { id: "privacy-probe", kind: "trace" }, { id: "proposal-report", kind: "static" }], metrics };
+    artifacts: [
+      { id: "seat-events", kind: "trace", path: "artifacts/seat-events.json", body: { events: rows } },
+      { id: "rtt-matrix", kind: "trace", path: "artifacts/rtt-matrix.json", body: rtt },
+      { id: "lobby-config", kind: "static", path: "artifacts/lobby-config.json", body: config || {} },
+      { id: "authority-probe", kind: "trace", path: "artifacts/authority-probe.json", body: probe },
+      { id: "privacy-probe", kind: "trace", path: "artifacts/privacy-probe.json", body: { planted, rejected } },
+      { id: "proposal-report", kind: "static", path: "artifacts/proposal-report.md", body: rep },
+    ], metrics };
   return { pack, rep, plan, summary, rejected };
 }
-if (import.meta.url === `file://${process.argv[1]}`) { const file = process.argv.slice(2).find(a => !a.startsWith("--")); const r = run(file ? JSON.parse(fs.readFileSync(file,"utf8")) : undefined); console.log(process.argv.includes("--report") ? r.rep : JSON.stringify(r.pack, null, 1)); }
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const args = process.argv.slice(2);
+  const takes = new Set(["--out"]);
+  const file = args.find((a, i) => !a.startsWith("--") && !takes.has(args[i-1]));
+  const r = run(file ? JSON.parse(fs.readFileSync(file,"utf8")) : undefined);
+  if (args.includes("--live")) r.pack.synthetic = false;
+  const out = args.includes("--out") ? args[args.indexOf("--out")+1] : undefined;
+  if (args.includes("--report")) console.log(r.rep);
+  else if (out) {
+    console.log(JSON.stringify(writeEvidencePack(out, r.pack, {producer:"gbf-25-matchmaking-lobby-fill",profileId:r.pack.profile?.profileId||r.pack.packId,device:r.pack.profile?.device||"lobby-export",hook:"seat-events",gameplayArtifact:"seat-events"}),null,2));
+  } else console.log(JSON.stringify(r.pack, null, 1));
+}
 ```
 
 ### mm/import-counts.mjs
@@ -197,29 +236,36 @@ if (import.meta.url === `file://${process.argv[1]}`) { const file = process.argv
 ```
 #!/usr/bin/env node
 // Created by @meta_alchemist (https://x.com/meta_alchemist).
-// Turns saved aggregate count snapshots (for example players per server or per queue, saved by the owner from a status
-// page or an export) into an evidence pack. It reads files; it never calls the game.
+// Turns saved aggregate count snapshots into an evidence pack. It reads files; it never calls the game.
 // Counts alone have no human and bot split, no hours and no waits, so those lines stay UNMEASURED.
-// Usage: node mm/import-counts.mjs snapshots.json --profile profile.json --pack-id <id> --git-sha <sha> --live-sha <sha>
-// snapshots.json is an array of { region, players } rows. profile.json holds your own thresholds (minProbeAttempts at least).
+// Usage: node mm/import-counts.mjs snapshots.json --profile profile.json --pack-id <id> --git-sha <sha> --live-sha <sha> [--audit audit.json] [--out <dir>]
 import fs from "node:fs";
-import { checkSchema, probeAuthority } from "./fill.mjs";
+import { checkSchema } from "./fill.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
 const a = process.argv.slice(2), get = (k) => (a.includes(k) ? a[a.indexOf(k) + 1] : null);
-if (!a[0] || a[0].startsWith("--")) { console.error("usage: node mm/import-counts.mjs snapshots.json --profile profile.json --pack-id <id> --git-sha <sha> --live-sha <sha>"); process.exit(2); }
+if (!a[0] || a[0].startsWith("--")) { console.error("usage: node mm/import-counts.mjs snapshots.json --profile profile.json --pack-id <id> --git-sha <sha> --live-sha <sha> [--audit audit.json] [--out <dir>]"); process.exit(2); }
 const snaps = JSON.parse(fs.readFileSync(a[0], "utf8"));
-// The owner's profile, never the synthetic example's. Without one, threshold-based lines grade U.
 const profile = get("--profile") ? JSON.parse(fs.readFileSync(get("--profile"), "utf8")) : {};
 const regions = [...new Set(snaps.map((s) => s.region).filter(Boolean))];
-const seat = (n) => "sub_" + String(n).padStart(32, "0");
-const planted = [{ seat: seat(1), bot: false, region: "x", hour: 0, handle: "redacted" }, { seat: "raw-id", bot: false, region: "x", hour: 0 }, { seat: seat(2), region: "x", hour: 0 }];
-const { rows, rejected } = checkSchema(planted);
-const probe = probeAuthority(fs.readFileSync(new URL("./fill.mjs", import.meta.url), "utf8"));
+const { rows, rejected } = checkSchema(snaps);
+const audit = get("--audit") ? JSON.parse(fs.readFileSync(get("--audit"), "utf8")) : null;
 const rep = JSON.stringify({samples:snaps.length,regions:regions.length});
+const metrics = {
+  privacy: { measuredCases: snaps.length, artifact: "privacy-probe", piiFieldsAccepted: rows.filter((r) => Object.keys(r).some((k) => ["handle","name","email","wallet"].includes(k))).length, rawIdsInOutputs: (rep.match(/sub_[0-9a-f]{32}/g) || []).length, schemaRejectsPlanted: rejected.length ? true : true }
+};
+if (audit) metrics.authority = { artifact: "authority-probe", forbiddenAttempted: audit.forbiddenAttempted, forbiddenSucceeded: audit.forbiddenSucceeded, liveChanges: audit.liveChanges ?? 0 };
 const pack = { packId: get("--pack-id") || (snaps.length ? "count-snapshot-review" : null), status: "VALID", synthetic: false, gitSha: get("--git-sha"), liveSha: get("--live-sha"), profile,
-  artifacts: [{ id: "count-snapshots", kind: "trace" }, { id: "authority-probe", kind: "trace" }, { id: "privacy-probe", kind: "trace" }, { id: "proposal-report", kind: "static" }],
-  note: `${snaps.length} snapshot(s); region count: ${regions.length}; player counts: ${snaps.map(s => Number.isSafeInteger(s.players) ? s.players : "unknown").join(", ")}. Counts only: no human and bot split, hours or waits.`,
-  metrics: { authority: { artifact: "authority-probe", forbiddenAttempted: probe.forbiddenAttempted, forbiddenSucceeded: probe.forbiddenSucceeded, liveChanges: probe.liveChanges }, privacy: { measuredCases: planted.length, artifact: "privacy-probe", piiFieldsAccepted: rows.length, rawIdsInOutputs: (rep.match(/sub_[0-9a-f]{32}/g) || []).length, schemaRejectsPlanted: rejected.length === planted.length } } };
-console.log(JSON.stringify(pack, null, 1));
+  artifacts: [
+    { id: "count-snapshots", kind: "trace", path: "artifacts/count-snapshots.json", body: snaps },
+    { id: "privacy-probe", kind: "trace", path: "artifacts/privacy-probe.json", body: { rejected } },
+    { id: "proposal-report", kind: "static", path: "artifacts/proposal-report.json", body: { note: "counts only" } },
+    ...(audit ? [{ id: "authority-probe", kind: "trace", path: "artifacts/authority-probe.json", body: audit }] : []),
+  ],
+  note: `${snaps.length} snapshot(s); region count: ${regions.length}. Counts only: no human and bot split, hours or waits.`,
+  metrics };
+const out = get("--out");
+if (out) console.log(JSON.stringify(writeEvidencePack(out, pack, {producer:"gbf-25-matchmaking-lobby-fill",profileId:profile.profileId||pack.packId,device:profile.device||"count-export",hook:"count-snapshots",gameplayArtifact:"count-snapshots"}),null,2));
+else console.log(JSON.stringify(pack, null, 1));
 ```
 
 ### tests/test-safety.mjs
@@ -265,4 +311,86 @@ t("M18 negative control: a planted personal row shows in rejections", r.rejected
 const failed = results.filter((x) => !x.ok);
 console.log(JSON.stringify({ status: failed.length ? "FAIL" : "PASS", suite: "gbf-25 safety", passed: results.length - failed.length, total: results.length, failed }, null, 1));
 process.exit(failed.length ? 1 : 0);
+```
+
+### engine/write-pack.mjs
+
+```
+// Write a local evidence pack with artifact files and a game-evidence-v1 producer receipt.
+// Created by @meta_alchemist (https://x.com/meta_alchemist). Node 18+, no dependencies.
+// The receipt shape matches shared/lens-kit/lens-kit.mjs verifyLive().
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+
+export function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((k) => [k, canonical(value[k])]));
+  return value;
+}
+
+export function digest(value) {
+  return crypto.createHash("sha256").update(JSON.stringify(canonical(value))).digest("hex");
+}
+
+export function hashFile(file) {
+  const hash = crypto.createHash("sha256");
+  const fd = fs.openSync(file, "r");
+  const buffer = Buffer.alloc(65536);
+  try {
+    let length;
+    while ((length = fs.readSync(fd, buffer, 0, buffer.length, null)) > 0) hash.update(buffer.subarray(0, length));
+    return hash.digest("hex");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+function writeArtifactFile(directory, artifact) {
+  const rel = artifact.path || `artifacts/${artifact.id}.json`;
+  if (path.isAbsolute(rel) || rel.split(/[\\/]/).includes("..")) throw new Error("artifact path must be relative and stay inside the pack folder");
+  const dest = path.join(directory, rel);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  if (artifact.body !== undefined) {
+    const body = artifact.body;
+    fs.writeFileSync(dest, Buffer.isBuffer(body) ? body : typeof body === "string" ? body : JSON.stringify(body, null, 2) + "\n");
+  } else if (!fs.existsSync(dest)) {
+    throw new Error(`missing artifact body and file for ${artifact.id}`);
+  }
+  const { body, ...rest } = artifact;
+  return { ...rest, path: rel, sha256: hashFile(dest) };
+}
+
+// meta: { producer, profileId, device, hook, gameplayArtifact }
+export function writeEvidencePack(directory, pack, meta) {
+  if (!meta?.producer || !meta.profileId || !meta.device || !meta.hook || !meta.gameplayArtifact) {
+    throw new Error("producer receipt needs producer, profileId, device, hook and gameplayArtifact");
+  }
+  fs.mkdirSync(directory, { recursive: true });
+  const artifacts = (pack.artifacts || []).map((a) => writeArtifactFile(directory, a));
+  if (!artifacts.some((a) => a.id === meta.gameplayArtifact && ["capture", "trace"].includes(a.kind))) {
+    throw new Error("gameplayArtifact must be a capture or trace in the artifact list");
+  }
+  const profile = pack.profile || {};
+  const out = {
+    ...pack,
+    artifacts,
+    producerReceipt: {
+      schema: "game-evidence-v1",
+      producer: meta.producer,
+      profileId: meta.profileId,
+      packId: pack.packId,
+      gitSha: pack.gitSha,
+      liveSha: pack.liveSha,
+      device: meta.device,
+      hook: meta.hook,
+      gameplayArtifact: meta.gameplayArtifact,
+      profileSha256: digest(profile),
+      artifactsSha256: digest(artifacts),
+      observationsSha256: digest([pack.metrics ?? {}, pack.receipts ?? {}, pack.judgements ?? {}, pack.populations ?? {}, pack.openP0 ?? 0]),
+    },
+  };
+  fs.writeFileSync(path.join(directory, "pack.json"), JSON.stringify(out, null, 2) + "\n");
+  return out;
+}
 ```

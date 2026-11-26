@@ -1,0 +1,9 @@
+{
+  "profileId": "synthetic-support-profile",
+  "device": "support-export",
+  "minUnknownTools": 12,
+  "minRedteamCases": 12,
+  "minKbApprovedShare": 0.8,
+  "minObservationDays": 3,
+  "maxFirstResponseMin": 5
+}

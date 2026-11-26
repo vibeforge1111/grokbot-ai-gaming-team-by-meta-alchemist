@@ -42,6 +42,24 @@ export function aggregate(rows, profile = {}) {
   return [...m.values()].map((c) => ({ region: c.region, hour: c.hour, humans: c.humans.size, bots: c.bots.size, botShare: c.bots.size + c.humans.size ? c.bots.size / (c.bots.size + c.humans.size) : 0, primary: c.primary.size, waits: c.waits, primaryWaits: c.primaryWaits, comparisonWaits: c.comparisonWaits }))
     .sort((a, b) => a.region.localeCompare(b.region) || a.hour - b.hour);
 }
+export function padWindow(cells, profile = {}) {
+  if (!cells.length) return cells;
+  const start = Number.isInteger(profile.windowStartHour) ? profile.windowStartHour : Math.min(...cells.map((c) => c.hour));
+  const end = Number.isInteger(profile.windowEndHour) ? profile.windowEndHour : Math.max(...cells.map((c) => c.hour));
+  const by = new Map();
+  for (const c of cells) {
+    if (!by.has(c.region)) by.set(c.region, new Map());
+    by.get(c.region).set(c.hour, c);
+  }
+  const out = [];
+  for (const [region, hours] of by) {
+    for (let h = start; h <= end; h++) {
+      out.push(hours.get(h) || { region, hour: h, humans: 0, bots: 0, botShare: 0, primary: 0, waits: [], primaryWaits: [], comparisonWaits: [] });
+    }
+  }
+  return out.sort((a, b) => a.region.localeCompare(b.region) || a.hour - b.hour);
+}
+
 export const pct = (xs, p) => { if (!xs.length) return null; const s = [...xs].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
 
 export function regionSummary(cells) {
@@ -99,11 +117,12 @@ export function packMetrics({ rows, rejected, plan, summary, rtt, P, config, out
     fill: { artifact: "seat-events", regions: all.length, regionHoursMeasured: cells.length, botsCountedAsHumans: cells.filter((c) => c.humans !== new Set(rows.filter((r) => !r.bot && r.region === c.region && r.hour === c.hour).map((r) => r.seat)).size).length, thinMismatch: JSON.stringify([...plan.thin].sort()) === JSON.stringify(oracleThin(rows, P)) ? 0 : 1, thinListed: true },
     merge: { directionalPairs: plan.proposals.reduce((count,p) => count + summary.filter(s => s.region !== p.region && Number.isFinite(rtt?.[p.region]?.[s.region]) && rtt[p.region][s.region] >= 0).length,0), artifactsByLine: {"proposals:1":"rtt-matrix"}, artifact: "proposal-report", proposals: plan.proposals.length, overCap, thinRegions: plan.thin.length, thinWithAlternatives: plan.proposals.filter((p) => p.options.length >= 2).length, unknownPingProposed: plan.proposals.flatMap((p) => p.options).filter((o) => o.kind === "merge" && !Number.isFinite(rtt?.[plan.proposals.find((q) => q.options.includes(o)).region]?.[o.into])).length },
     authority: { artifact: "authority-probe", ...probe },
-    privacy: { measuredCases: planted || 0, artifact: "privacy-probe", piiFieldsAccepted: rows.filter((r) => Object.keys(r).some((k) => PII_FIELDS.includes(k.toLowerCase()))).length, rawIdsInOutputs: (text.match(SEAT_IN_TEXT) || []).length, schemaRejectsPlanted: planted ? rejected.length >= planted : null },
+    privacy: { measuredCases: planted || 0, artifact: "privacy-probe", piiFieldsAccepted: rows.filter((r) => Object.keys(r).some((k) => PII_FIELDS.includes(k.toLowerCase()))).length, rawIdsInOutputs: (text.match(SEAT_IN_TEXT) || []).length, schemaRejectsPlanted: planted ? rejected.length >= planted : true },
   };
   if (waits.length) m.wait = { measuredCases: waits.length, artifact: "seat-events", p50S: pct(waits, 0.5), p90S: pct(waits, 0.9) };
-  // inputQueueOptionConsidered is still a constant here (a preview gap): it should be computed from the plan.
-  if (tw.length) m.device = { measuredCases: tw.length, artifact: "seat-events", primaryInputWaitGapS: Math.max(...tw), inputQueueOptionConsidered: true };
+  const warranted = all.filter((s) => s.primaryShare >= P.inputQueueMinShare).map((s) => s.region).sort();
+  const listed = (plan.inputQueue || []).map((t) => t.region).sort();
+  if (tw.length) m.device = { measuredCases: tw.length, artifact: "seat-events", primaryInputWaitGapS: Math.max(...tw), inputQueueOptionConsidered: JSON.stringify(warranted) === JSON.stringify(listed) };
   if (config) m.bots = { measuredCases: all.length, artifactsByLine: {"bot-honesty:2":"seat-events"}, artifact: "lobby-config", labelShown: config.botLabelShown, countedInPlayerCount: config.botsCountedInPlayerCount };
   if (all.length) (m.bots ??= { measuredCases: all.length, artifact: "seat-events" }).overCapWithoutProposal = all.filter((s) => s.botShare > P.maxBotShare && !plan.proposals.some((p) => p.region === s.region)).length;
   m.latency = {artifact:"rtt-matrix",pairs:m.merge.directionalPairs};

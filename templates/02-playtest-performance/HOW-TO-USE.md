@@ -6,10 +6,9 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Before it can ship:
 
-- Collect worked examples from at least two real games, not only the synthetic pack.
-- Ship or document a pack producer that writes artifact bytes and a producer receipt. This preview has no bundled Playwright runner or GPU sampler. The capture skills describe how to collect frame times and journeys. The owner, or the owner's own tools, still assembles the pack.
-- Earn points from captured frame samples and journey traces. Today a pack can still declare some counts by hand (scenario tallies, seed counts, SHA flags).
-- Confirm the single-device profile and the extra-device line against a real second device, not only the synthetic example.
+- Add worked examples from at least two real games. The current pack is a synthetic fixture, which is not enough.
+- Grade a live capture or trace from a build, not only the synthetic pack. `engine/build-pack.mjs` can write a pack and a producer receipt from owner-supplied journey and frame files once those files exist.
+- There is still no bundled Playwright runner or GPU sampler; bring your own capture tools.
 
 Grade playtest journeys and frame time for any game, then write a local evidence pack and ticket drafts.
 

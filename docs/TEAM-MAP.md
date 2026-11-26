@@ -30,12 +30,12 @@ flowchart LR
   T20["20 Patch Notes"]
   T21["21 Access"]
   T22["22 Live Service"]
-  T23["23 Support Desk (preview)"]
-  T24["24 Ledger (preview)"]
-  T25["25 Matchmaking (preview)"]
-  T26["26 Balance Patch (preview)"]
-  T27["27 Retention (preview)"]
-  T28["28 App Store (preview)"]
+  T23["23 Support Desk"]
+  T24["24 Ledger"]
+  T25["25 Matchmaking"]
+  T26["26 Balance Patch"]
+  T27["27 Retention"]
+  T28["28 App Store"]
   ALL -- grade-record --> T12
   ALL -- ticket-draft --> T12
   ALL -- ticket-draft --> T18
