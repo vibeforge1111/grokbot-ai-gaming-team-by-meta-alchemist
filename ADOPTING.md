@@ -4,6 +4,8 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 This guide is for a team or a solo developer bringing these templates into a real project. It covers picking templates, setting up bots and skills, routines, the rubric loop, and outside judges. A full worked example lives in [examples/pixel-pantry/](examples/pixel-pantry/).
 
+For a first game, use the four bot starter team in [Get started with your AI gaming team](GETTING-STARTED.md#the-starter-team). Come back here when that team is running and you are fitting the kit to a real build.
+
 ## 1. Pick templates
 
 Start small. Pick one template for a question you want to answer about the next build.
@@ -32,7 +34,7 @@ The pack fields table in each template README distinguishes fixed checks from ga
 
 ## 3. Set up bots and skills
 
-One bot per template keeps memory and routines focused. While share links are pending, install each with Option B from [INSTALL.md](INSTALL.md). Then:
+One bot per template keeps memory and routines focused. While share links are coming soon, install each with Option B from [INSTALL.md](INSTALL.md). Then:
 
 - **Answer the getting-started questions honestly.** The owner calls it asks (for example the P0 scope list in Bug Desk) are real decisions. Write them down in the profile.
 - **Share one bug ledger.** Give each bot a read-only tracker export and a local folder for draft changes. Bug Desk owns dedup. The ledger format is in [shared/ledger/LEDGER_SPEC.md](shared/ledger/LEDGER_SPEC.md).

@@ -33,7 +33,9 @@ jobs:
             [ -f "$d/template.json" ] || continue
             (cd "$d" && node tests/test-lens-contract.mjs && node tests/lens-negative-fixtures.mjs) || exit 1
           done
-      - name: Catalog is up to date
+      - name: Catalog and start blocks are up to date
         run: |
           node scripts/build-catalog.mjs
+          node scripts/build-start-here.mjs
           git diff --exit-code TEMPLATES.md
+          git diff --exit-code -- templates

@@ -6,6 +6,19 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+### Added
+
+- A five minute quickstart on the README, a starter team of four bots in GETTING-STARTED.md (Game Feel, HUD, Bug Desk, Producer) with copy-paste first prompts, and an FAQ.
+- A Start here block on every template README: what it does, when to use it, setup, a first prompt, and the synthetic sample grade. `npm run catalog` refreshes that block and the catalog.
+- README sections for what the kit helps with, how the same plain files work in Grok Bot, Claude, ChatGPT, Codex, Cursor, and Gemini, and what else is in the repo (rubrics, team map, shared memory, validator, versioning, MIT license).
+- A single "set up my AI gaming team" prompt on the README, plus a small starter-four handoff diagram that points at the full team map.
+- A README hero banner (`docs/images/hero-banner.png`) and a GitHub social preview image (`docs/images/social-preview.png`). Set the social preview in the repository Settings page; the API cannot do that.
+
+### Changed
+
+- The template catalog now shows the short name, the full name, and when to use each bot, and it points newcomers at the starter team before the full table.
+- Human-facing docs now say **Share link coming soon** when no live `grokbot://` id exists. Setup always leads with the paste steps. Importing `recipe.json` is mentioned only as an optional alternative if you see that action.
+
 ## [1.0.1] - 2026-11-25
 
 ### Changed
