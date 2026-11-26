@@ -5,7 +5,7 @@
   "slug": "17-sprite-hitbox-packer",
   "name": "2D Sprite Atlas & Hitbox Packer",
   "shortName": "Sprites",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Pack sprites into atlases and check their silhouettes, hitboxes, palettes and memory use on your target devices.",
   "stage": "Production",

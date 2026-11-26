@@ -5,7 +5,7 @@
   "slug": "09-hud-designer",
   "name": "HUD and Game UI Designer",
   "shortName": "HUD",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Check whether players can read the information they need, operate the controls and understand their first session on each target device.",
   "stage": "Polish",

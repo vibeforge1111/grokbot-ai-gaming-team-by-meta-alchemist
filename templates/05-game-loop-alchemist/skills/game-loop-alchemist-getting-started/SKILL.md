@@ -10,7 +10,7 @@ description: "Use on first run with a new owner: agree the Game Loop Alchemist g
 
 Map what the player chooses, what changes, and why the next turn is worth taking. This template checks a game's core loop: what the player does first, what that action changes, how long the player waits for the next choice, whether a different choice leads somewhere different, whether the player can stop when they want, and whether they come back by choice. It works for any genre: a puzzle board, a platformer level, a strategy turn, a race, a farming day or a story chapter.
 
-**Status: preview, not shipping.** One observed case can earn level 4 on a line today. Until the engine gains a minimum case count, tell the owner that any line backed by fewer cases than the playtest plan calls for is provisional.
+A line with fewer observed cases than `profile.bands.minCases` reads U, even if those cases would have passed. Ask the owner to set this number. If it is not set yet, write "not set" and tell them that thin lines are provisional until they set it.
 
 If `engine/lens.mjs` is not on disk, write the files from the `game-loop-alchemist-lens-engine` skill first (Node 18 or later, no dependencies). If `fixtures/session-notes.md` or `fixtures/rhythm-pack.json` is missing, write it from the "Worked example files" section of the `voluntary-replay` skill.
 
@@ -20,7 +20,7 @@ If `engine/lens.mjs` is not on disk, write the files from the `game-loop-alchemi
 - **Game profile (`pack.profile`):** the owner's settings: the meaningful action, its outcome, the time budgets, the cohort, the observation window and the bands. Thresholds live here, never in the engine.
 - **Case:** one observed opportunity (one tester's opening, one decision beat, one invitation to play again), with an anonymous `caseId`.
 - **Receipt:** the entry in `pack.artifacts` that names the rubric line, both build ids, the profile scope and the source file for one group of rows.
-- **Bands:** the `floor`, `pass` and `target` shares (between 0 and 1) that the share of passing cases is compared with.
+- **Bands:** the `floor`, `pass` and `target` shares (between 0 and 1) that the share of passing cases is compared with, and `minCases`, the fewest observed cases a line needs before that share is scored.
 - **Cohort and observation window:** who is eligible, and the period in which a return to play counts. Replay is only counted after the window closes.
 - **U (UNMEASURED) and NOT_RUN:** U means no usable evidence yet; it earns 0 points and is not a defect. NOT_RUN means a planned capture did not happen.
 
@@ -39,10 +39,11 @@ Ask one question, wait for the answer, then ask the next. Never stack questions 
 9. "Who is in the cohort, and when does the observation window for a return close? For example first-session testers, with the window closing when the session ends." (`cohort`, `window`)
 10. "How will observers code answers? I need a short key for the goal, for what changed, and for the reason to play again, with indifference and obligation as options."
 11. "What share of cases should count as the floor, the pass and the target? For example 0.5, 0.75 and 1, but choose what fits your playtest." (`bands`)
-12. "Who makes the captures and traces, and where will the files live?"
-13. "Where should I save local drafts (reports, loop maps, experiment cards, ticket drafts), and who reviews them before anything is filed or sent?"
+12. "How many observed cases must a line have before a share is scored? If it has fewer, that line reads U. For example 3." (`bands.minCases`)
+13. "Who makes the captures and traces, and where will the files live?"
+14. "Where should I save local drafts (reports, loop maps, experiment cards, ticket drafts), and who reviews them before anything is filed or sent?"
 
-Then choose a scope name for this approved profile revision (for example `opening-window-a`). Confirm the bands again before any change of scope. Run `node engine/lens.mjs --meta` to check that every profile value a line reads is set.
+Then choose a scope name for this approved profile revision (for example `opening-window-a`). Confirm the bands and minCases again before any change of scope. Run `node engine/lens.mjs --meta` to check that every profile value a line reads is set.
 
 ## 2. Run the synthetic example
 
@@ -120,7 +121,7 @@ Each output file is JSON with `artifact`, `version`, `producer` (this template's
 Shared memory:
 
 - Before acting, read `decisions`, `releases`, `balance` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
-- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-05-game-loop-alchemist` and `0.1.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-05-game-loop-alchemist` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
 - Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
 - Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
 

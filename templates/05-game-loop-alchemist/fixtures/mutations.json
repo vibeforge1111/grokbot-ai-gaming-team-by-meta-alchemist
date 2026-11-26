@@ -20,6 +20,16 @@
       "caseId": "goal-1",
       "expected": "connect exits",
       "readback": "collect tiles"
+     },
+     {
+      "caseId": "goal-1-x2",
+      "expected": "connect exits",
+      "readback": "collect tiles"
+     },
+     {
+      "caseId": "goal-1-x3",
+      "expected": "connect exits",
+      "readback": "collect tiles"
      }
     ]
    }
@@ -50,6 +60,16 @@
     "metrics.action.samples": [
      {
       "caseId": "action-1",
+      "startS": 3,
+      "actionS": 39
+     },
+     {
+      "caseId": "action-1-x2",
+      "startS": 3,
+      "actionS": 39
+     },
+     {
+      "caseId": "action-1-x3",
       "startS": 3,
       "actionS": 39
      }
@@ -84,6 +104,16 @@
       "caseId": "state-1",
       "expected": "connected",
       "actual": "unchanged"
+     },
+     {
+      "caseId": "state-1-x2",
+      "expected": "connected",
+      "actual": "unchanged"
+     },
+     {
+      "caseId": "state-1-x3",
+      "expected": "connected",
+      "actual": "unchanged"
      }
     ]
    }
@@ -114,6 +144,16 @@
     "metrics.feedback.samples": [
      {
       "caseId": "feedback-1",
+      "expected": "route opened",
+      "readback": "no change"
+     },
+     {
+      "caseId": "feedback-1-x2",
+      "expected": "route opened",
+      "readback": "no change"
+     },
+     {
+      "caseId": "feedback-1-x3",
       "expected": "route opened",
       "readback": "no change"
      }
@@ -148,6 +188,16 @@
       "caseId": "beat-1",
       "resolvedS": 12,
       "choiceS": 41
+     },
+     {
+      "caseId": "beat-1-x2",
+      "resolvedS": 12,
+      "choiceS": 41
+     },
+     {
+      "caseId": "beat-1-x3",
+      "resolvedS": 12,
+      "choiceS": 41
      }
     ]
    }
@@ -178,6 +228,16 @@
     "metrics.recovery.samples": [
      {
       "caseId": "recovery-1",
+      "setbackS": 14,
+      "controlS": 42
+     },
+     {
+      "caseId": "recovery-1-x2",
+      "setbackS": 14,
+      "controlS": 42
+     },
+     {
+      "caseId": "recovery-1-x3",
       "setbackS": 14,
       "controlS": 42
      }
@@ -212,6 +272,16 @@
       "caseId": "choice-1",
       "expected": "alternate route",
       "actual": "same route"
+     },
+     {
+      "caseId": "choice-1-x2",
+      "expected": "alternate route",
+      "actual": "same route"
+     },
+     {
+      "caseId": "choice-1-x3",
+      "expected": "alternate route",
+      "actual": "same route"
      }
     ]
    }
@@ -243,6 +313,14 @@
      {
       "caseId": "exit-1",
       "honored": false
+     },
+     {
+      "caseId": "exit-1-x2",
+      "honored": false
+     },
+     {
+      "caseId": "exit-1-x3",
+      "honored": false
      }
     ]
    }
@@ -273,6 +351,14 @@
     "metrics.reason.samples": [
      {
       "caseId": "reason-1",
+      "intrinsic": false
+     },
+     {
+      "caseId": "reason-1-x2",
+      "intrinsic": false
+     },
+     {
+      "caseId": "reason-1-x3",
       "intrinsic": false
      }
     ]
@@ -309,6 +395,22 @@
       "window": "next optional board offered before the session closes",
       "windowClosed": true,
       "returned": false
+     },
+     {
+      "caseId": "offer-board-x2",
+      "offerRef": "offer-board-x2",
+      "cohort": "first session",
+      "window": "next optional board offered before the session closes",
+      "windowClosed": true,
+      "returned": false
+     },
+     {
+      "caseId": "offer-board-x3",
+      "offerRef": "offer-board-x3",
+      "cohort": "first session",
+      "window": "next optional board offered before the session closes",
+      "windowClosed": true,
+      "returned": false
      }
     ]
    }
@@ -330,6 +432,14 @@
     "metrics.exit.samples": [
      {
       "caseId": "exit-1",
+      "honored": false
+     },
+     {
+      "caseId": "exit-1-x2",
+      "honored": false
+     },
+     {
+      "caseId": "exit-1-x3",
       "honored": false
      }
     ]

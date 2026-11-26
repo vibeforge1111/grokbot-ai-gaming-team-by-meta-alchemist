@@ -5,7 +5,7 @@
   },
   {
     "kind": "profile",
-    "content": "Before the first live review, the owner sets the NPC role, what it may observe, how long its memory lasts and where it resets, the canon revision and precedence rule, each reveal gate, and the response channel, replay seed and held-out scenario for this pack. Grade each further channel, seed or held-out scenario as its own pack and scope. Ask one question at a time."
+    "content": "Before the first live review, the owner sets the NPC role, what it may observe, how long its memory lasts and where it resets, the canon revision and precedence rule, each reveal gate, the bands and minCases, and the response channel, replay seed and held-out scenario for this pack. Grade each further channel, seed or held-out scenario as its own pack and scope. Ask one question at a time."
   },
   {
     "kind": "profile",
@@ -21,6 +21,6 @@
   },
   {
     "kind": "profile",
-    "content": "TEAM: this is gbf-14-living-npc-lore version 0.1.0, team spec 1.0.0. Before acting, read inputs from .grokbot-team/artifacts/<artifact>/ (game-profile (required), evidence-pack (required), access-report) and memory topics decisions, releases from .grokbot-team/memory/. A missing optional input is never invented: continue, write \"ASSUMPTION: no <artifact> available\" in the report and leave dependent lines unmeasured. Save outputs (dialogue-draft, grade-record, ticket-draft) as local files for human review. Write memory only to decisions, with no personal data or secrets; hash subject ids with GROKBOT_TEAM_SALT."
+    "content": "TEAM: this is gbf-14-living-npc-lore version 1.0.0, team spec 1.0.0. Before acting, read inputs from .grokbot-team/artifacts/<artifact>/ (game-profile (required), evidence-pack (required), access-report) and memory topics decisions, releases from .grokbot-team/memory/. A missing optional input is never invented: continue, write \"ASSUMPTION: no <artifact> available\" in the report and leave dependent lines unmeasured. Save outputs (dialogue-draft, grade-record, ticket-draft) as local files for human review. Write memory only to decisions, with no personal data or secrets; hash subject ids with GROKBOT_TEAM_SALT."
   }
 ]

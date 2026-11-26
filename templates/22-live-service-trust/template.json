@@ -5,7 +5,7 @@
   "slug": "22-live-service-trust",
   "name": "Live Service, Payments and Trust",
   "shortName": "Live Service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Review progress saves, entitlements and recovery after service failures. Include payment checks when your game sells items or access.",
   "stage": "Ship, Live",

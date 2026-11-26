@@ -30,6 +30,6 @@ if (preview.length) {
     "These work and their tests pass, but they are not yet held to the release standard. Each one's README lists what it needs before it can ship. Use them to try an idea, not to grade a release.", "",
     ...head, ...preview.map(row));
 }
-L.push("", "## Not included yet", "", "Template numbers 02, 04, 07, 08, and 16 are not in this release. See [CHANGELOG.md](CHANGELOG.md) for why. Numbers that are here stay stable.", "");
+L.push("", "## Not included yet", "", "Template numbers 02, 04, 07, 08, and 16 are not in this release, and neither are Studio Director or Game Clipmaker. See [READINESS.md](READINESS.md) and [CHANGELOG.md](CHANGELOG.md) for why. Numbers that are here stay stable.", "");
 fs.writeFileSync(path.join(ROOT, "TEMPLATES.md"), L.join("\n"));
 console.log(`TEMPLATES.md: ${shipping.length} shipping, ${preview.length} preview`);

@@ -10,7 +10,7 @@ description: "Use on first run with a new owner: agree the NPC role, canon and L
 
 Design what an NPC can remember, how it responds and which version of a world fact it may reveal, then audit those decisions against scoped transcripts and traces. An NPC is any non-player character: a shopkeeper, a guide, a rival, a companion, a witness. It works for hand-written dialogue trees and for generated (AI) dialogue, and for any response channel: spoken or written lines, a reply menu, a gesture or a sound.
 
-**Status: preview, not shipping.** One observed case can earn level 4 on a line today. Until the engine gains a minimum case count, tell the owner that any line backed by fewer cases than the test plan calls for is provisional. For generated dialogue, run each probe several times.
+A line with fewer observed cases than `profile.bands.minCases` reads U, even if those cases would have passed. Ask the owner to set this number. If it is not set yet, write "not set" and tell them that thin lines are provisional until they set it. For generated dialogue, run each probe at least that many times.
 
 If `engine/lens.mjs` is not on disk, write the files from the `living-npc-lore-lens-engine` skill first (Node 18 or later, no dependencies). If `fixtures/scene-book.md` is missing, write it from the "Worked example files" section of the `npc-replay-panel` skill.
 
@@ -40,7 +40,8 @@ Start with the game, the NPC role and the scene or canon change under review. As
 10. "Which seed should a known scene replay from? Pick one; each further seed is its own pack." (`scenarioSeed`)
 11. "Which scene have you held out, unseen and untuned, for a reviewer to read back? Pick one; each further held-out scenario is its own pack." (`heldOut`)
 12. "What share of cases should count as the floor, the pass and the target? For example 0.5, 0.75 and 1." (`bands`)
-13. "Where should I save local drafts (memory policy, dialogue drafts, canon diffs, ticket drafts), and who reviews them before anything is filed or sent?"
+13. "How many observed cases must a line have before a share is scored? If it has fewer, that line reads U. For example 3. For generated dialogue, use at least that many runs of each probe." (`bands.minCases`)
+14. "Where should I save local drafts (memory policy, dialogue drafts, canon diffs, ticket drafts), and who reviews them before anything is filed or sent?"
 
 Then choose a scope name for this profile revision (for example `shopkeeper-canon-b-text`). In short: the profile holds the response channel, replay seed and held-out scenario for this pack. Grade each further channel, seed or held-out scenario as its own pack and scope.
 
@@ -117,7 +118,7 @@ Each output file is JSON with `artifact`, `version`, `producer` (this template's
 Shared memory:
 
 - Before acting, read `decisions`, `releases` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
-- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-14-living-npc-lore` and `0.1.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-14-living-npc-lore` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
 - Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
 - Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
 

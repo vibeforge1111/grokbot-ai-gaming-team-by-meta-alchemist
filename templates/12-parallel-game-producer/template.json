@@ -5,7 +5,7 @@
   "slug": "12-parallel-game-producer",
   "name": "Parallel Game Producer and Pitch Architect",
   "shortName": "Producer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Plan parallel work against actual capacity, reconcile ticket rows and turn verified project evidence into a local pitch deck draft.",
   "stage": "Milestone planning and pitch review",

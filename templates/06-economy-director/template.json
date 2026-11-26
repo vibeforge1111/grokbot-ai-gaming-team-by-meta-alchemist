@@ -5,7 +5,7 @@
   "slug": "06-economy-director",
   "name": "Game Economy Director",
   "shortName": "Economy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Model sources and sinks for a currency or reward, compare progression paths, and simulate how balance changes affect player choices.",
   "stage": "Production, Live",

@@ -2,11 +2,7 @@
 
 Created by @meta_alchemist (https://x.com/meta_alchemist).
 
-**Status: preview, not shipping.** This template works and its tests pass, but it is not yet held to the kit's release standard.
-
-Before it can ship:
-
-- **Minimum sample size.** Today one observed case can earn level 4 on a line. The engine needs a profile setting (`profile.bands.minCases`) so a line backed by fewer observed cases reads U. Until then, treat any line with fewer cases than your playtest plan calls for as provisional, and say so in the report.
+A line with fewer observed cases than `profile.bands.minCases` reads U, even if those cases would have passed. The getting-started skill asks you to set this number. The synthetic example uses 3.
 
 Map what the player chooses, what changes, and why the next turn is worth taking. Measure the core loop, its pace and the freedom to stop. The playtest lead and the designer get a local loop map, a pacing diagnosis and an experiment card.
 

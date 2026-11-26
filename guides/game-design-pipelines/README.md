@@ -64,7 +64,7 @@ Enforcement is always a human decision. Templates propose; people ban.
 | Template | Stage |
 |---|---|
 | [01 Game Feel](01-game-feel.md) | Prototype, Polish |
-| [05 Game Loop Alchemist](05-game-loop-alchemist.md) (preview) | Prototype, Playtest |
+| [05 Game Loop Alchemist](05-game-loop-alchemist.md) | Prototype, Playtest |
 | [03 Prop and Rig](03-prop-rig.md) | Production |
 | [06 Economy Director](06-economy-director.md) | Production, Live |
 | [09 HUD Designer](09-hud-designer.md) | Polish |
@@ -72,7 +72,7 @@ Enforcement is always a human decision. Templates propose; people ban.
 | [11 Environment Design](11-environment-design.md) | Production, Polish |
 | [12 Parallel Game Producer](12-parallel-game-producer.md) | Milestone planning and pitch review |
 | [13 Sound and Music](13-audio-director.md) | Polish |
-| [14 Living AI NPC and Lore](14-living-npc-lore.md) (preview) | Narrative prototyping and playtest |
+| [14 Living AI NPC and Lore](14-living-npc-lore.md) | Narrative prototyping and playtest |
 | [15 Server Fairness](15-mcp-anticheat.md) | Production, Live |
 | [17 Sprite and Hitbox Packer](17-sprite-hitbox-packer.md) | Production |
 | [18 Bug Desk](18-bug-desk-triage.md) | Playtest, Live |
@@ -81,4 +81,11 @@ Enforcement is always a human decision. Templates propose; people ban.
 | [21 Access, Input and Localization](21-access-input-localization.md) | Polish, Ship |
 | [22 Live Service Trust](22-live-service-trust.md) | Ship, Live |
 
-Preview templates 23 to 28 have no pipeline page yet; each one's HOW-TO-USE.md covers its workflow.
+| [23 Support Desk](23-support-moderation-desk.md) (preview) | Live support |
+| [24 Ledger](24-prize-refund-ledger.md) (preview) | Live operations |
+| [25 Matchmaking](25-matchmaking-lobby-fill.md) (preview) | Live, late production |
+| [26 Balance Patch](26-balance-patch-director.md) (preview) | Live, late production |
+| [27 Retention](27-retention-cohort-analytics.md) (preview) | Live |
+| [28 App Store](28-mobile-store-submission.md) (preview) | Ship |
+
+Templates 23 to 28 are previews. Use the pipeline page and the template README together. Honest status for every bot, including ones not in this repo, is in [READINESS.md](../../READINESS.md).

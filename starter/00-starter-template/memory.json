@@ -29,6 +29,6 @@
   },
   {
     "kind": "profile",
-    "content": "TEAM: this is kit-00-starter-template version 1.0.0, team spec 1.0.0. Before acting, read inputs from .grokbot-team/artifacts/<artifact>/ (game-profile (required), evidence-pack (required)) and memory topics decisions from .grokbot-team/memory/. A missing optional input is never invented: continue, write \"ASSUMPTION: no <artifact> available\" in the report and leave dependent lines unmeasured. Save outputs (grade-record, ticket-draft) as local files for human review. Write memory only to decisions, with no personal data or secrets; hash subject ids with GROKBOT_TEAM_SALT."
+    "content": "TEAM: this is kit-00-starter-template version 1.0.1, team spec 1.0.0. Before acting, read inputs from .grokbot-team/artifacts/<artifact>/ (game-profile (required), evidence-pack (required)) and memory topics decisions from .grokbot-team/memory/. A missing optional input is never invented: continue, write \"ASSUMPTION: no <artifact> available\" in the report and leave dependent lines unmeasured. Save outputs (grade-record, ticket-draft) as local files for human review. Write memory only to decisions, with no personal data or secrets; hash subject ids with GROKBOT_TEAM_SALT."
   }
 ]

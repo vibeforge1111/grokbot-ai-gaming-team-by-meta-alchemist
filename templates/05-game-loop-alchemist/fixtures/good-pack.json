@@ -12,7 +12,8 @@
     "bands": {
       "floor": 0.5,
       "pass": 0.75,
-      "target": 1
+      "target": 1,
+      "minCases": 3
     },
     "cohort": "first session",
     "window": "next optional board offered before the session closes",
@@ -182,6 +183,16 @@
           "caseId": "goal-1",
           "expected": "connect exits",
           "readback": "connect exits"
+        },
+        {
+          "caseId": "goal-1-x2",
+          "expected": "connect exits",
+          "readback": "connect exits"
+        },
+        {
+          "caseId": "goal-1-x3",
+          "expected": "connect exits",
+          "readback": "connect exits"
         }
       ]
     },
@@ -190,6 +201,16 @@
       "samples": [
         {
           "caseId": "action-1",
+          "startS": 3,
+          "actionS": 15
+        },
+        {
+          "caseId": "action-1-x2",
+          "startS": 3,
+          "actionS": 15
+        },
+        {
+          "caseId": "action-1-x3",
           "startS": 3,
           "actionS": 15
         }
@@ -202,6 +223,16 @@
           "caseId": "state-1",
           "expected": "connected",
           "actual": "connected"
+        },
+        {
+          "caseId": "state-1-x2",
+          "expected": "connected",
+          "actual": "connected"
+        },
+        {
+          "caseId": "state-1-x3",
+          "expected": "connected",
+          "actual": "connected"
         }
       ]
     },
@@ -210,6 +241,16 @@
       "samples": [
         {
           "caseId": "feedback-1",
+          "expected": "route opened",
+          "readback": "route opened"
+        },
+        {
+          "caseId": "feedback-1-x2",
+          "expected": "route opened",
+          "readback": "route opened"
+        },
+        {
+          "caseId": "feedback-1-x3",
           "expected": "route opened",
           "readback": "route opened"
         }
@@ -222,6 +263,16 @@
           "caseId": "beat-1",
           "resolvedS": 12,
           "choiceS": 18
+        },
+        {
+          "caseId": "beat-1-x2",
+          "resolvedS": 12,
+          "choiceS": 18
+        },
+        {
+          "caseId": "beat-1-x3",
+          "resolvedS": 12,
+          "choiceS": 18
         }
       ]
     },
@@ -230,6 +281,16 @@
       "samples": [
         {
           "caseId": "recovery-1",
+          "setbackS": 14,
+          "controlS": 23
+        },
+        {
+          "caseId": "recovery-1-x2",
+          "setbackS": 14,
+          "controlS": 23
+        },
+        {
+          "caseId": "recovery-1-x3",
           "setbackS": 14,
           "controlS": 23
         }
@@ -242,6 +303,16 @@
           "caseId": "choice-1",
           "expected": "alternate route",
           "actual": "alternate route"
+        },
+        {
+          "caseId": "choice-1-x2",
+          "expected": "alternate route",
+          "actual": "alternate route"
+        },
+        {
+          "caseId": "choice-1-x3",
+          "expected": "alternate route",
+          "actual": "alternate route"
         }
       ]
     },
@@ -250,6 +321,14 @@
       "samples": [
         {
           "caseId": "exit-1",
+          "honored": true
+        },
+        {
+          "caseId": "exit-1-x2",
+          "honored": true
+        },
+        {
+          "caseId": "exit-1-x3",
           "honored": true
         }
       ]
@@ -260,6 +339,14 @@
         {
           "caseId": "reason-1",
           "intrinsic": true
+        },
+        {
+          "caseId": "reason-1-x2",
+          "intrinsic": true
+        },
+        {
+          "caseId": "reason-1-x3",
+          "intrinsic": true
         }
       ]
     },
@@ -269,6 +356,22 @@
         {
           "caseId": "offer-board",
           "offerRef": "offer-board",
+          "cohort": "first session",
+          "window": "next optional board offered before the session closes",
+          "windowClosed": true,
+          "returned": true
+        },
+        {
+          "caseId": "offer-board-x2",
+          "offerRef": "offer-board-x2",
+          "cohort": "first session",
+          "window": "next optional board offered before the session closes",
+          "windowClosed": true,
+          "returned": true
+        },
+        {
+          "caseId": "offer-board-x3",
+          "offerRef": "offer-board-x3",
           "cohort": "first session",
           "window": "next optional board offered before the session closes",
           "windowClosed": true,

@@ -5,7 +5,7 @@
   "slug": "01-game-feel",
   "name": "Game Vibes Director",
   "shortName": "Game Feel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Measure how quickly a game responds to input and how clearly its camera, sound and visuals communicate each action.",
   "stage": "Prototype, Polish",

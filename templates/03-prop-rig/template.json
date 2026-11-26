@@ -5,7 +5,7 @@
   "slug": "03-prop-rig",
   "name": "Prop & Rig Director",
   "shortName": "Prop and Rig",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "status": "shipping",
   "summary": "Build and optimize props and rigs for your runtime. Compare their appearance, animation and collision shapes with your art and performance targets.",
   "stage": "Production",

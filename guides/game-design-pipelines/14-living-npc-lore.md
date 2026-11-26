@@ -4,7 +4,7 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Design what an NPC can remember, how it responds and which version of a world fact it may reveal. Audit those decisions against scoped transcripts and traces.
 
-**Status: preview, not shipping.** The template works and its tests pass, but one observed case can still earn level 4 on a line until the engine gains a minimum case count. This matters most for generated (AI) dialogue; run each probe several times and read thin lines as provisional.
+A line with fewer observed cases than `profile.bands.minCases` reads U, even if those cases would have passed. The getting-started skill asks for this number. The synthetic example uses 3. For generated dialogue, run each probe at least that many times.
 
 An *NPC* is any non-player character: a shopkeeper, a guide, a rival, a companion, a witness. It works for hand-written dialogue trees and for generated dialogue, and for any response channel: spoken or written lines, a reply menu, a gesture or a sound. Each pack covers one role, one canon revision, one channel, one replay seed and one held-out scenario.
 

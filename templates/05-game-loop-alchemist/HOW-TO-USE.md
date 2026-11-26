@@ -2,11 +2,7 @@
 
 Created by @meta_alchemist (https://x.com/meta_alchemist).
 
-**Status: preview, not shipping.** This template works and its tests pass, but it is not yet held to the kit's release standard.
-
-Before it can ship:
-
-- **Minimum sample size.** Today one observed case can earn level 4 on a line. The engine needs a profile setting (`profile.bands.minCases`) so a line backed by fewer observed cases reads U. Until then, treat any line with fewer cases than your playtest plan calls for as provisional.
+A line with fewer observed cases than `profile.bands.minCases` reads U, even if those cases would have passed. The getting-started skill asks you to set this number. The synthetic example uses 3.
 
 Map what the player chooses, what changes, and why the next turn is worth taking. Measure the core loop, its pace and the freedom to stop.
 
@@ -118,7 +114,7 @@ Each output file is JSON with `artifact`, `version`, `producer` (this template's
 Shared memory:
 
 - Before acting, read `decisions`, `releases`, `balance` from `.grokbot-team/memory/<topic>.jsonl`. Skip records that have expired or that a later record supersedes.
-- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-05-game-loop-alchemist` and `0.1.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
+- Write only `decisions`. Append one line per record with `engine/team-memory.mjs` (or the same JSON by hand): id, UTC time, writer (`gbf-05-game-loop-alchemist` and `1.0.0`), topic, kind, summary, data, source, confidence (measured, reported or assumed), expires_at and supersedes. Never edit or delete a line; supersede it.
 - Never put secrets, names, handles, wallets, emails or raw user ids in memory. Refer to a person or account only by `node engine/team-memory.mjs hash <id>`, which needs the salt in `GROKBOT_TEAM_SALT`. Run `node engine/team-memory.mjs lint` before you finish.
 - Keep `.grokbot-team/` out of a public game repository (add it to `.gitignore`); in a private one, commit it so the append-only rule can be checked against history.
 

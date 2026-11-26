@@ -5,7 +5,7 @@
   "slug": "15-mcp-anticheat",
   "name": "Server Fairness & Anti-Cheat Guard",
   "shortName": "Server Fairness",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "For games with a server, compare scene data across engines and review whether the server enforces your game's rules fairly.",
   "stage": "Production, Live",

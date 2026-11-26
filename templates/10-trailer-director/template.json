@@ -5,7 +5,7 @@
   "slug": "10-trailer-director",
   "name": "Stream-to-Devlog & Trailer Cut Director",
   "shortName": "Trailer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Turn recorded gameplay into a devlog or trailer. Choose moments that show the player experience, frame them for each destination and check the cut for sensitive information.",
   "stage": "Ship, Live",
