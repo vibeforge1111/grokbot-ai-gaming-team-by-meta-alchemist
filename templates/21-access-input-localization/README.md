@@ -17,7 +17,7 @@ Keep every message, post, upload, submission and tracker change as a local draft
 
 **When to use it.** Before any wider release and when you add a platform or language.
 
-**Setup.** The Grok Bot share link is pending review, so there is no link to open. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `access-input-localization-lens-engine` first, then `access-input-localization-getting-started`. Then save the rest: `input-navigation-and-device-switch-audit`, `readability-and-caption-evidence`, `motion-flash-comfort-check`, `string-inventory-and-pseudo-locale`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Step by step: [HOW-TO-USE.md](HOW-TO-USE.md). The same files work in Cursor, Claude Code, Codex, or Gemini CLI. See [INSTALL.md](../../INSTALL.md).
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `access-input-localization-lens-engine` first, then `access-input-localization-getting-started`. Then save the rest: `input-navigation-and-device-switch-audit`, `readability-and-caption-evidence`, `motion-flash-comfort-check`, `string-inventory-and-pseudo-locale`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). Step by step: [HOW-TO-USE.md](HOW-TO-USE.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 

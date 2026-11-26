@@ -23,7 +23,7 @@ Short version (what it does, setup, first prompt, example output): [Start here](
 
 ### Option A: Add to Grok Bot after review
 
-Share link pending review. Use Option B for Grok Bot or Option C for other agents. Both work offline with the local files.
+Share link coming soon. Use Option B for Grok Bot or Option C for other agents. Both work offline with the local files.
 
 ### Option B: Manual setup in Grok Bot
 

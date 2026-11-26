@@ -81,7 +81,7 @@ See [../docs/RUBRIC_GUIDE.md](../docs/RUBRIC_GUIDE.md). Enforced: 5 pillars of 2
 
 ## Docs
 
-- `HOW-TO-USE.md` covers Option A (share link, `pending review` until published), Option B (manual) and Option C (other agents), and names the getting-started skill.
+- `HOW-TO-USE.md` covers Option A (share link, shown as Share link coming soon until a live `grokbot://` id is published), Option B (manual) and Option C (other agents), and names the getting-started skill.
 - `PROMPTS.md` has sections `## 1. Setup`, `## 2. Routine prompts`, `## 3. Audit prompts`.
 
 ## Text rules

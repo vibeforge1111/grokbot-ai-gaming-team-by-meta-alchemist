@@ -11,7 +11,7 @@ Review progress saves, entitlements and recovery after service failures. Include
 
 **When to use it.** Before you store progress or take money, before each update or live event, and after any save or payment incident.
 
-**Setup.** The Grok Bot share link is pending review, so there is no link to open. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `live-service-trust-lens-engine` first, then `live-service-trust-getting-started`. Then save the rest: `transaction-idempotency-and-entitlement-audit`, `persistence-fault-injection`, `live-ops-incident-drill-and-build-identity`, `rights-privacy-and-safety-review`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Step by step: [HOW-TO-USE.md](HOW-TO-USE.md). The same files work in Cursor, Claude Code, Codex, or Gemini CLI. See [INSTALL.md](../../INSTALL.md).
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `live-service-trust-lens-engine` first, then `live-service-trust-getting-started`. Then save the rest: `transaction-idempotency-and-entitlement-audit`, `persistence-fault-injection`, `live-ops-incident-drill-and-build-identity`, `rights-privacy-and-safety-review`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). Step by step: [HOW-TO-USE.md](HOW-TO-USE.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 

@@ -10,9 +10,9 @@ Four, in this order: Game Feel (01), HUD (09), Bug Desk (18), Producer (12). The
 
 Do not install all 23 on day one.
 
-## The share link says pending review. Did I miss a button?
+## The catalog says Share link coming soon. Did I miss a button?
 
-No. Grok Bot cannot import this repo from GitHub. A live install link looks like `grokbot://app/v1/bot-template?id=...`. In this release every bot still says **pending review**, and the preview bots do not have a link at all. Paste the skill files. That is Option B in [INSTALL.md](INSTALL.md).
+No. Grok Bot cannot import this repo from GitHub. A live install link looks like `grokbot://app/v1/bot-template?id=...`. In this release every bot says **Share link coming soon**, and there is no link to open yet. Paste the skill files, or if you see an import action for `recipe.json`, you can use that file. Paste steps are Option B in [INSTALL.md](INSTALL.md).
 
 ## Which file do I paste?
 
@@ -124,6 +124,6 @@ These stay generic until a maintainer confirms them. The pages do not invent Gro
 
 1. The exact app labels for saving a skill, saving memory, and creating a routine. The docs use the chat phrases from [INSTALL.md](INSTALL.md).
 2. Whether preview bots can import `recipe.json` in a bot editor, and what "leave connectors off" refers to. Newcomers are told to paste skills if they do not see an import action.
-3. Live `grokbot://` share links. All 23 bots are still pending review.
+3. Live `grokbot://` share links. All 23 bots still say Share link coming soon.
 4. Whether Game Loop (05, a preview) should replace Producer in the starter four. This pass keeps Producer, because it is shipping and it reads the other three. Game Loop is the optional fifth when the question is the core loop.
 5. Pipeline pages for bots 23 through 28. They are not written here, because the repo does not have them yet.

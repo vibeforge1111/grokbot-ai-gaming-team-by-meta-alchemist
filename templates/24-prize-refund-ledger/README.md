@@ -21,11 +21,9 @@ Reconcile local claim histories against owner decisions and fulfillment evidence
 
 **When to use it.** When you are reconciling claim, refund, or entitlement records on your own machine.
 
-**Setup.** The share link is pending review. [HOW-TO-USE.md](HOW-TO-USE.md) also says you can import `recipe.json` into a bot editor.
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `prize-ledger-lens-engine`, then `prize-ledger-domain-engine` first, then `prize-ledger-getting-started`. Then save the rest: `prize-ledger-claim-and-wallet-checks`, `prize-ledger-reconcile-and-digest`, `prize-ledger-public-note-draft`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). [HOW-TO-USE.md](HOW-TO-USE.md) also mentions importing `recipe.json` into a bot editor. If you do not see that action, use the paste steps. They are the path [INSTALL.md](../../INSTALL.md) documents.
 
 <!-- TODO: founder: confirm whether Grok Bot has an import action for recipe.json. Until that is confirmed, use the paste steps, which are the path INSTALL.md documents. -->
-
-If you do not see an import action, paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `prize-ledger-lens-engine`, then `prize-ledger-domain-engine` first, then `prize-ledger-getting-started`. Then save the rest: `prize-ledger-claim-and-wallet-checks`, `prize-ledger-reconcile-and-digest`, `prize-ledger-public-note-draft`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Kit-wide steps: [INSTALL.md](../../INSTALL.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 

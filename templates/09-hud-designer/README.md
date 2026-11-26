@@ -19,7 +19,7 @@ Keep every message, post, upload, submission and tracker change as a local draft
 
 **When to use it.** When HUD or menus change, and before any store or creator push.
 
-**Setup.** The Grok Bot share link is pending review, so there is no link to open. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `hud-designer-lens-engine` first, then `hud-designer-getting-started`. Then save the rest: `live-hud-updates-and-cost`, `event-cues-and-recaps`, `wcag-luminance-and-ui-frame-gate`, `first-30s-onboarding-and-friction-killer`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Step by step: [HOW-TO-USE.md](HOW-TO-USE.md). The same files work in Cursor, Claude Code, Codex, or Gemini CLI. See [INSTALL.md](../../INSTALL.md).
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `hud-designer-lens-engine` first, then `hud-designer-getting-started`. Then save the rest: `live-hud-updates-and-cost`, `event-cues-and-recaps`, `wcag-luminance-and-ui-frame-gate`, `first-30s-onboarding-and-friction-killer`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). Step by step: [HOW-TO-USE.md](HOW-TO-USE.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 

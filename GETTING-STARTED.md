@@ -48,7 +48,7 @@ Wait on Server Fairness, store pages, trailers, matchmaking, retention, and app 
 
 <!-- TODO: founder: Grok Bot steps below are the chat phrases from INSTALL.md ("Save this as a skill.", "Remember this for this project.", "Create a weekly routine with this prompt:"). If the app has a skills screen or an import button, replace these phrases with the verified labels. Do not invent menu names in this guide. -->
 
-Share links are not ready. A finished bot would install from a link shaped like `grokbot://app/v1/bot-template?id=...`. Every bot in this release still says **pending review**. There is no link to open. Use the paste steps.
+Share links are coming soon. A finished bot would install from a link shaped like `grokbot://app/v1/bot-template?id=...`. Every bot in this release still says **Share link coming soon**. There is no link to open. Use the paste steps, or import `recipe.json` if you see that action.
 
 ## 1. Game Feel
 

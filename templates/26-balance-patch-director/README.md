@@ -21,11 +21,9 @@ Compare configurable numeric parameters with observed outcomes and draft bounded
 
 **When to use it.** When you are comparing numeric balance values with observed outcomes.
 
-**Setup.** The share link is pending review. [HOW-TO-USE.md](HOW-TO-USE.md) also says you can import `recipe.json` into a bot editor.
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `balance-director-lens-engine`, then `balance-director-domain-engine` first, then `balance-director-getting-started`. Then save the rest: `balance-director-weekly-proposal`, `balance-director-patch-notes-draft`, `balance-director-post-release-read`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). [HOW-TO-USE.md](HOW-TO-USE.md) also mentions importing `recipe.json` into a bot editor. If you do not see that action, use the paste steps. They are the path [INSTALL.md](../../INSTALL.md) documents.
 
 <!-- TODO: founder: confirm whether Grok Bot has an import action for recipe.json. Until that is confirmed, use the paste steps, which are the path INSTALL.md documents. -->
-
-If you do not see an import action, paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `balance-director-lens-engine`, then `balance-director-domain-engine` first, then `balance-director-getting-started`. Then save the rest: `balance-director-weekly-proposal`, `balance-director-patch-notes-draft`, `balance-director-post-release-read`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Kit-wide steps: [INSTALL.md](../../INSTALL.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 

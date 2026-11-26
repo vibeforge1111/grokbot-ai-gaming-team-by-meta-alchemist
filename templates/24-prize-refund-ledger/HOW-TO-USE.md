@@ -20,7 +20,7 @@ Short version (what it does, setup, first prompt, example output): [Start here](
 
 ## Option A: share link
 
-Share link status is pending review. Use Option B for Grok Bot or Option C for other agents.
+Share link coming soon. Use Option B for Grok Bot or Option C for other agents.
 
 ## Option B: manual install
 

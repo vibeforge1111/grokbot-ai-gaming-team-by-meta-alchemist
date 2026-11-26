@@ -11,7 +11,7 @@ For games with a server, compare scene data across engines and review whether th
 
 **When to use it.** Before ranked play, tournaments or prize events, after a level moves between editors, and after cheating reports.
 
-**Setup.** The Grok Bot share link is pending review, so there is no link to open. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `mcp-anticheat-lens-engine` first, then `mcp-anticheat-getting-started`. Then save the rest: `cross-editor-scene-parity`, `server-authority-fairness-audit`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Step by step: [HOW-TO-USE.md](HOW-TO-USE.md). The same files work in Cursor, Claude Code, Codex, or Gemini CLI. See [INSTALL.md](../../INSTALL.md).
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `mcp-anticheat-lens-engine` first, then `mcp-anticheat-getting-started`. Then save the rest: `cross-editor-scene-parity`, `server-authority-fairness-audit`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). Step by step: [HOW-TO-USE.md](HOW-TO-USE.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 

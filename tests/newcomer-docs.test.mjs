@@ -12,6 +12,10 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), "utf8");
 test("the landing page points at the starter guide, the catalog, and the FAQ", () => {
   const readme = read("README.md");
   assert.match(readme, /Five minute quickstart/);
+  assert.match(readme, /What this helps with/);
+  assert.match(readme, /Works with any AI, not just Grok Bot/);
+  assert.match(readme, /What else is in the repo/);
+  assert.match(readme, /set up my AI gaming team/);
   assert.match(readme, /GETTING-STARTED\.md/);
   assert.match(readme, /TEMPLATES\.md/);
   assert.match(readme, /FAQ\.md/);

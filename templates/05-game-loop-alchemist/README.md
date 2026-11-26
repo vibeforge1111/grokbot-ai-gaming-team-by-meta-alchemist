@@ -25,7 +25,7 @@ Keep every message, post, upload, submission and tracker change as a local draft
 
 **When to use it.** After you change the opening, a repeating decision, a retry or setback, or the invitation to play again. Grade a fresh cohort each time.
 
-**Setup.** The Grok Bot share link is pending review, so there is no link to open. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `game-loop-alchemist-lens-engine` first, then `game-loop-alchemist-getting-started`. Then save the rest: `decision-pacing`, `loop-agency`, `loop-consequence`, `opening-playtest`, `voluntary-replay`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Step by step: [HOW-TO-USE.md](HOW-TO-USE.md). The same files work in Cursor, Claude Code, Codex, or Gemini CLI. See [INSTALL.md](../../INSTALL.md).
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `game-loop-alchemist-lens-engine` first, then `game-loop-alchemist-getting-started`. Then save the rest: `decision-pacing`, `loop-agency`, `loop-consequence`, `opening-playtest`, `voluntary-replay`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). Step by step: [HOW-TO-USE.md](HOW-TO-USE.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 

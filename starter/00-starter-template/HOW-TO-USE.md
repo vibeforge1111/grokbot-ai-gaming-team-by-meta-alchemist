@@ -6,7 +6,7 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ### Option A: Add to Grok Bot
 
-Share link pending review. Use Option B for Grok Bot or Option C for other agents.
+Share link coming soon. Use Option B for Grok Bot or Option C for other agents.
 
 ### Option B: Manual setup in Grok Bot
 

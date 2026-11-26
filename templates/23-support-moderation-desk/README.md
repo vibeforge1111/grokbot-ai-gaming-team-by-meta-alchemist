@@ -20,11 +20,9 @@ Prepare support replies, moderation reviews and case digests from redacted local
 
 **When to use it.** When you are drafting support replies or moderation reviews from local intake.
 
-**Setup.** The share link is pending review. [HOW-TO-USE.md](HOW-TO-USE.md) also says you can import `recipe.json` into a bot editor.
+**Setup.** The Grok Bot share link is coming soon, so there is no link to open yet. Paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `support-desk-lens-engine`, then `support-desk-domain-engine` first, then `support-desk-getting-started`. Then save the rest: `support-desk-ticket-intake`, `support-desk-scam-moderation`, `support-desk-kb-approval-batch`, `support-desk-daily-digest`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." The same files work in Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat. See [INSTALL.md](../../INSTALL.md). [HOW-TO-USE.md](HOW-TO-USE.md) also mentions importing `recipe.json` into a bot editor. If you do not see that action, use the paste steps. They are the path [INSTALL.md](../../INSTALL.md) documents.
 
 <!-- TODO: founder: confirm whether Grok Bot has an import action for recipe.json. Until that is confirmed, use the paste steps, which are the path INSTALL.md documents. -->
-
-If you do not see an import action, paste each `SKILL.md` from `skills/` into a Grok Bot chat and say: "Save this as a skill." Save `support-desk-lens-engine`, then `support-desk-domain-engine` first, then `support-desk-getting-started`. Then save the rest: `support-desk-ticket-intake`, `support-desk-scam-moderation`, `support-desk-kb-approval-batch`, `support-desk-daily-digest`, `file-to-shared-ledger`. Paste each fact in [MEMORY.md](MEMORY.md) and say: "Remember this for this project." Kit-wide steps: [INSTALL.md](../../INSTALL.md).
 
 **First prompt.** Copy this into the chat after the skills are saved. Fill in the angle brackets.
 
