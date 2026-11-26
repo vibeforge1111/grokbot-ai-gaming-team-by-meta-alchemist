@@ -15,8 +15,11 @@ flowchart LR
   T01["01 Game Feel"]
   T02["02 Playtest (preview)"]
   T03["03 Prop and Rig"]
+  T04["04 Netcode (preview)"]
   T05["05 Game Loop"]
   T06["06 Economy"]
+  T07["07 Shader (preview)"]
+  T08["08 World and Biome (preview)"]
   T09["09 HUD"]
   T10["10 Trailer"]
   T11["11 Environment"]
@@ -24,6 +27,7 @@ flowchart LR
   T13["13 Audio"]
   T14["14 NPC and Lore"]
   T15["15 Server Fairness"]
+  T16["16 Splat Cleaner (preview)"]
   T17["17 Sprites"]
   T18["18 Bug Desk"]
   T19["19 Store Page"]
@@ -36,6 +40,8 @@ flowchart LR
   T26["26 Balance Patch"]
   T27["27 Retention"]
   T28["28 App Store"]
+  T29["29 Studio (preview)"]
+  T30["30 Clipmaker (preview)"]
   ALL -- grade-record --> T12
   ALL -- ticket-draft --> T12
   ALL -- ticket-draft --> T18
@@ -57,6 +63,7 @@ flowchart LR
   T02 -- evidence-pack --> T03
   T02 -- evidence-pack --> T05
   T02 -- evidence-pack --> T06
+  T02 -- evidence-pack --> T07
   T02 -- evidence-pack --> T09
   T02 -- evidence-pack --> T10
   T02 -- evidence-pack --> T11
@@ -64,6 +71,7 @@ flowchart LR
   T02 -- evidence-pack --> T13
   T02 -- evidence-pack --> T14
   T02 -- evidence-pack --> T15
+  T02 -- evidence-pack --> T16
   T02 -- evidence-pack --> T17
   T02 -- evidence-pack --> T18
   T02 -- evidence-pack --> T19
@@ -76,7 +84,34 @@ flowchart LR
   T02 -- evidence-pack --> T26
   T02 -- evidence-pack --> T27
   T02 -- evidence-pack --> T28
+  T02 -- evidence-pack --> T30
   T03 -- asset-budget-report --> T11
+  T04 -- evidence-pack --> T01
+  T04 -- evidence-pack --> T03
+  T04 -- evidence-pack --> T05
+  T04 -- evidence-pack --> T06
+  T04 -- evidence-pack --> T07
+  T04 -- evidence-pack --> T09
+  T04 -- evidence-pack --> T10
+  T04 -- evidence-pack --> T11
+  T04 -- evidence-pack --> T12
+  T04 -- evidence-pack --> T13
+  T04 -- evidence-pack --> T14
+  T04 -- evidence-pack --> T15
+  T04 -- evidence-pack --> T16
+  T04 -- evidence-pack --> T17
+  T04 -- evidence-pack --> T18
+  T04 -- evidence-pack --> T19
+  T04 -- evidence-pack --> T20
+  T04 -- evidence-pack --> T21
+  T04 -- evidence-pack --> T22
+  T04 -- evidence-pack --> T23
+  T04 -- evidence-pack --> T24
+  T04 -- evidence-pack --> T25
+  T04 -- evidence-pack --> T26
+  T04 -- evidence-pack --> T27
+  T04 -- evidence-pack --> T28
+  T04 -- evidence-pack --> T30
   T05 -- loop-report --> T01
   T05 -- loop-report --> T02
   T05 -- loop-report --> T06
@@ -84,20 +119,77 @@ flowchart LR
   T06 -- economy-change-list --> T20
   T06 -- economy-change-list --> T22
   T06 -- economy-change-list --> T26
+  T07 -- evidence-pack --> T01
+  T07 -- evidence-pack --> T03
+  T07 -- evidence-pack --> T05
+  T07 -- evidence-pack --> T06
+  T07 -- evidence-pack --> T09
+  T07 -- evidence-pack --> T10
+  T07 -- evidence-pack --> T11
+  T07 -- evidence-pack --> T12
+  T07 -- evidence-pack --> T13
+  T07 -- evidence-pack --> T14
+  T07 -- evidence-pack --> T15
+  T07 -- evidence-pack --> T16
+  T07 -- evidence-pack --> T17
+  T07 -- evidence-pack --> T18
+  T07 -- evidence-pack --> T19
+  T07 -- evidence-pack --> T20
+  T07 -- evidence-pack --> T21
+  T07 -- evidence-pack --> T22
+  T07 -- evidence-pack --> T23
+  T07 -- evidence-pack --> T24
+  T07 -- evidence-pack --> T25
+  T07 -- evidence-pack --> T26
+  T07 -- evidence-pack --> T27
+  T07 -- evidence-pack --> T28
+  T07 -- evidence-pack --> T30
+  T08 -- evidence-pack --> T01
+  T08 -- evidence-pack --> T03
+  T08 -- evidence-pack --> T05
+  T08 -- evidence-pack --> T06
+  T08 -- evidence-pack --> T07
+  T08 -- evidence-pack --> T09
+  T08 -- evidence-pack --> T10
+  T08 -- evidence-pack --> T11
+  T08 -- evidence-pack --> T12
+  T08 -- evidence-pack --> T13
+  T08 -- evidence-pack --> T14
+  T08 -- evidence-pack --> T15
+  T08 -- evidence-pack --> T16
+  T08 -- evidence-pack --> T17
+  T08 -- evidence-pack --> T18
+  T08 -- evidence-pack --> T19
+  T08 -- evidence-pack --> T20
+  T08 -- evidence-pack --> T21
+  T08 -- evidence-pack --> T22
+  T08 -- evidence-pack --> T23
+  T08 -- evidence-pack --> T24
+  T08 -- evidence-pack --> T25
+  T08 -- evidence-pack --> T26
+  T08 -- evidence-pack --> T27
+  T08 -- evidence-pack --> T28
+  T08 -- evidence-pack --> T30
+  T08 -- layout-brief --> T03
+  T08 -- layout-brief --> T15
   T09 -- hud-capture-set --> T01
   T09 -- hud-capture-set --> T02
   T09 -- hud-capture-set --> T10
   T09 -- hud-capture-set --> T11
   T09 -- hud-capture-set --> T19
   T09 -- hud-capture-set --> T21
+  T09 -- hud-capture-set --> T30
   T10 -- clip-list --> T19
   T10 -- clip-list --> T20
+  T10 -- clip-list --> T29
   T10 -- media-export-manifest --> T19
   T10 -- media-export-manifest --> T20
   T11 -- layout-brief --> T03
+  T11 -- layout-brief --> T08
   T11 -- layout-brief --> T15
   T12 -- pitch-draft --> T10
   T12 -- pitch-draft --> T19
+  T12 -- pitch-draft --> T29
   T12 -- work-plan --> T20
   T13 -- audio-mix-report --> T01
   T13 -- audio-mix-report --> T10
@@ -106,9 +198,38 @@ flowchart LR
   T14 -- dialogue-draft --> T21
   T15 -- enforcement-policy-draft --> T22
   T15 -- enforcement-policy-draft --> T24
+  T15 -- fairness-findings --> T04
   T15 -- fairness-findings --> T17
   T15 -- fairness-findings --> T20
   T15 -- fairness-findings --> T22
+  T16 -- change-list --> T06
+  T16 -- change-list --> T10
+  T16 -- change-list --> T20
+  T16 -- evidence-pack --> T01
+  T16 -- evidence-pack --> T03
+  T16 -- evidence-pack --> T05
+  T16 -- evidence-pack --> T06
+  T16 -- evidence-pack --> T07
+  T16 -- evidence-pack --> T09
+  T16 -- evidence-pack --> T10
+  T16 -- evidence-pack --> T11
+  T16 -- evidence-pack --> T12
+  T16 -- evidence-pack --> T13
+  T16 -- evidence-pack --> T14
+  T16 -- evidence-pack --> T15
+  T16 -- evidence-pack --> T17
+  T16 -- evidence-pack --> T18
+  T16 -- evidence-pack --> T19
+  T16 -- evidence-pack --> T20
+  T16 -- evidence-pack --> T21
+  T16 -- evidence-pack --> T22
+  T16 -- evidence-pack --> T23
+  T16 -- evidence-pack --> T24
+  T16 -- evidence-pack --> T25
+  T16 -- evidence-pack --> T26
+  T16 -- evidence-pack --> T27
+  T16 -- evidence-pack --> T28
+  T16 -- evidence-pack --> T30
   T17 -- atlas-manifest --> T01
   T17 -- atlas-manifest --> T09
   T17 -- atlas-manifest --> T19
@@ -143,6 +264,12 @@ flowchart LR
   T27 -- cohort-report --> T12
   T27 -- cohort-report --> T26
   T28 -- store-submission-checklist --> T12
+  T29 -- media-export-manifest --> T19
+  T29 -- media-export-manifest --> T20
+  T29 -- work-plan --> T20
+  T30 -- clip-list --> T19
+  T30 -- clip-list --> T20
+  T30 -- clip-list --> T29
 ```
 
 ## Who makes what
@@ -154,34 +281,34 @@ flowchart LR
 | 17 Sprites | [`atlas-manifest`](../spec/artifacts/atlas-manifest.schema.json) | 01 Game Feel, 09 HUD, 19 Store Page | JSON plus the packed atlas images |
 | 13 Audio | [`audio-mix-report`](../spec/artifacts/audio-mix-report.schema.json) | 01 Game Feel, 10 Trailer, 21 Access | JSON |
 | 26 Balance Patch | [`balance-patch-draft`](../spec/artifacts/balance-patch-draft.schema.json) | 06 Economy, 20 Patch Notes, 27 Retention | Markdown proposal and patch-notes drafts plus JSON |
-| Owner, 18 Bug Desk | [`change-list`](../spec/artifacts/change-list.schema.json) | 06 Economy, 10 Trailer, 20 Patch Notes | JSON (closures verified on the fixed build) |
-| 10 Trailer | [`clip-list`](../spec/artifacts/clip-list.schema.json) | 19 Store Page, 20 Patch Notes | JSON |
+| Owner, 16 Splat Cleaner, 18 Bug Desk | [`change-list`](../spec/artifacts/change-list.schema.json) | 06 Economy, 10 Trailer, 20 Patch Notes | JSON change list |
+| 10 Trailer, 30 Clipmaker | [`clip-list`](../spec/artifacts/clip-list.schema.json) | 19 Store Page, 20 Patch Notes, 29 Studio | JSON |
 | 27 Retention | [`cohort-report`](../spec/artifacts/cohort-report.schema.json) | 05 Game Loop, 06 Economy, 12 Producer, 26 Balance Patch | JSON plus a Markdown report draft |
 | 20 Patch Notes | [`creator-shortlist`](../spec/artifacts/creator-shortlist.schema.json) | the owner | JSON with outreach drafts |
 | 14 NPC and Lore | [`dialogue-draft`](../spec/artifacts/dialogue-draft.schema.json) | 13 Audio, 21 Access | JSON plus a Markdown dialogue draft |
 | 06 Economy | [`economy-change-list`](../spec/artifacts/economy-change-list.schema.json) | 20 Patch Notes, 22 Live Service, 26 Balance Patch | JSON plus a Markdown proposal draft |
 | 15 Server Fairness | [`enforcement-policy-draft`](../spec/artifacts/enforcement-policy-draft.schema.json) | 22 Live Service, 24 Ledger | Markdown local draft plus a JSON rule list |
 | 24 Ledger | [`entitlement-ledger`](../spec/artifacts/entitlement-ledger.schema.json) | 06 Economy, 22 Live Service, 23 Support Desk, 28 App Store | JSON plus a text digest draft |
-| Owner, 02 Playtest | [`evidence-pack`](../spec/artifacts/evidence-pack.schema.json) | Every template | JSON evidence pack plus a local manifest |
-| 15 Server Fairness | [`fairness-findings`](../spec/artifacts/fairness-findings.schema.json) | 17 Sprites, 20 Patch Notes, 22 Live Service | JSON plus a Markdown summary |
+| Owner, 02 Playtest, 04 Netcode, 07 Shader, 08 World and Biome, 16 Splat Cleaner | [`evidence-pack`](../spec/artifacts/evidence-pack.schema.json) | Every template | JSON evidence pack plus a local manifest |
+| 15 Server Fairness | [`fairness-findings`](../spec/artifacts/fairness-findings.schema.json) | 04 Netcode, 17 Sprites, 20 Patch Notes, 22 Live Service | JSON plus a Markdown summary |
 | 01 Game Feel | [`feel-findings`](../spec/artifacts/feel-findings.schema.json) | 02 Playtest, 05 Game Loop, 09 HUD, 13 Audio, 17 Sprites | JSON |
 | Owner | [`game-profile`](../spec/artifacts/game-profile.schema.json) | Every template | JSON |
 | Every template | [`grade-record`](../spec/artifacts/grade-record.schema.json) | 12 Producer | JSON (the engine's grade record) |
-| 09 HUD | [`hud-capture-set`](../spec/artifacts/hud-capture-set.schema.json) | 01 Game Feel, 02 Playtest, 10 Trailer, 11 Environment, 19 Store Page, 21 Access | JSON manifest plus lossless PNG screenshots and UI traces |
+| 09 HUD | [`hud-capture-set`](../spec/artifacts/hud-capture-set.schema.json) | 01 Game Feel, 02 Playtest, 10 Trailer, 11 Environment, 19 Store Page, 21 Access, 30 Clipmaker | JSON manifest plus lossless PNG screenshots and UI traces |
 | 22 Live Service | [`incident-report`](../spec/artifacts/incident-report.schema.json) | 15 Server Fairness, 18 Bug Desk, 23 Support Desk | Markdown local draft plus JSON |
-| 11 Environment | [`layout-brief`](../spec/artifacts/layout-brief.schema.json) | 03 Prop and Rig, 15 Server Fairness | JSON plus a Markdown draft |
+| 08 World and Biome, 11 Environment | [`layout-brief`](../spec/artifacts/layout-brief.schema.json) | 03 Prop and Rig, 08 World and Biome, 15 Server Fairness | JSON layout brief |
 | 25 Matchmaking | [`lobby-fill-proposal`](../spec/artifacts/lobby-fill-proposal.schema.json) | 27 Retention | JSON plan plus a Markdown proposal draft |
 | 05 Game Loop | [`loop-report`](../spec/artifacts/loop-report.schema.json) | 01 Game Feel, 02 Playtest, 06 Economy, 09 HUD | JSON plus a Markdown loop map draft |
-| 10 Trailer | [`media-export-manifest`](../spec/artifacts/media-export-manifest.schema.json) | 19 Store Page, 20 Patch Notes | JSON manifest plus the exported video and still files |
+| 10 Trailer, 29 Studio | [`media-export-manifest`](../spec/artifacts/media-export-manifest.schema.json) | 19 Store Page, 20 Patch Notes | JSON manifest plus the exported video and still files |
 | 20 Patch Notes | [`patch-notes-draft`](../spec/artifacts/patch-notes-draft.schema.json) | 23 Support Desk | Markdown draft plus a JSON map from each line to its change |
-| 12 Producer | [`pitch-draft`](../spec/artifacts/pitch-draft.schema.json) | 10 Trailer, 19 Store Page | Markdown slide draft plus a JSON claim list |
+| 12 Producer | [`pitch-draft`](../spec/artifacts/pitch-draft.schema.json) | 10 Trailer, 19 Store Page, 29 Studio | Markdown slide draft plus a JSON claim list |
 | 19 Store Page | [`store-asset-manifest`](../spec/artifacts/store-asset-manifest.schema.json) | 20 Patch Notes, 28 App Store | JSON manifest plus the store copy, art and archive files |
 | 28 App Store | [`store-submission-checklist`](../spec/artifacts/store-submission-checklist.schema.json) | 12 Producer | Markdown checklist draft plus JSON findings |
 | 23 Support Desk | [`support-case-draft`](../spec/artifacts/support-case-draft.schema.json) | 15 Server Fairness, 18 Bug Desk, 24 Ledger, 26 Balance Patch | JSON local drafts plus a JSON digest |
 | Every template | [`ticket-draft`](../spec/artifacts/ticket-draft.schema.json) | 12 Producer, 18 Bug Desk | JSON or Markdown local draft |
 | Owner | [`tracker-export`](../spec/artifacts/tracker-export.schema.json) | 06 Economy, 12 Producer, 15 Server Fairness, 18 Bug Desk, 21 Access, 22 Live Service | JSON |
 | 22 Live Service | [`trust-records`](../spec/artifacts/trust-records.schema.json) | 19 Store Page, 28 App Store | JSON |
-| 12 Producer | [`work-plan`](../spec/artifacts/work-plan.schema.json) | 20 Patch Notes | JSON plus a Markdown plan draft |
+| 12 Producer, 29 Studio | [`work-plan`](../spec/artifacts/work-plan.schema.json) | 20 Patch Notes | JSON plus a Markdown plan draft |
 
 ## Where the files live in your game project
 

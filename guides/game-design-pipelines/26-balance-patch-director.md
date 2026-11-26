@@ -4,8 +4,6 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Compare configurable numeric parameters with observed outcomes and draft bounded, reversible changes.
 
-**Status: preview, not shipping.** The template works and its tests pass, but it is not held to the release standard. It still uses lens-kit 1.1.0, it has no pack producer with receipts, some checks compare a model with itself, and authority lines probe this template's own code. Use it to draft a reversible change. Do not treat the grade as a release gate. The template README lists the remaining ship blockers.
-
 Template folder: [templates/26-balance-patch-director](../../templates/26-balance-patch-director/). Install and prompts: [HOW-TO-USE.md](../../templates/26-balance-patch-director/HOW-TO-USE.md), [PROMPTS.md](../../templates/26-balance-patch-director/PROMPTS.md).
 
 ## When to use it

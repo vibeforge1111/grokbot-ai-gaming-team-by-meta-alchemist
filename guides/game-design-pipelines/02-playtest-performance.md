@@ -4,7 +4,7 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Grade playtest journeys and frame time for any game, then write a local evidence pack and ticket drafts.
 
-**Status: preview, not shipping.** The template works and its tests pass, but it is not held to the release standard. It has no bundled Playwright runner or GPU sampler, and some counts can still be declared by hand. Use it to try a first pass on journeys and frame time. Do not treat the grade as a release gate. The template README lists the remaining ship blockers.
+**Status: preview, not shipping.** The template works and its tests pass, but it is not held to the release standard. It has a pack producer that can write a receipt, but it still needs worked examples from at least two real games and a live capture grade. There is no bundled Playwright runner or GPU sampler; bring your own capture tools. Use it to try a first pass on journeys and frame time. Do not treat the grade as a release gate. The template README lists the remaining ship blockers.
 
 Template folder: [templates/02-playtest-performance](../../templates/02-playtest-performance/). Install and prompts: [HOW-TO-USE.md](../../templates/02-playtest-performance/HOW-TO-USE.md), [PROMPTS.md](../../templates/02-playtest-performance/PROMPTS.md).
 
@@ -30,7 +30,7 @@ Template folder: [templates/02-playtest-performance](../../templates/02-playtest
 2. **Capture journeys:** if the game runs in a browser, `autonomous-browser-playtest` can script the opening and core sessions. If it does not, record the same journeys by hand or with your own tools.
 3. **Capture frame time:** run `frame-pacing-and-gpu-profiler` on the primary device, and on any extra device the owner put in scope. GPU counters are optional.
 4. **Assemble a pack:** copy `fixtures/good-pack.json`, set `synthetic` to false, and replace every value with your own measurements.
-5. **Grade:** `node engine/lens.mjs fixtures/good-pack.json` from the template folder shows the synthetic example (verdict PASS, grade 100/100). For a real pack, run `node engine/lens.mjs <pack.json>`. Until a producer with receipts ships, treat declared counts as provisional.
+5. **Grade:** Build a pack with `node engine/build-pack.mjs <intake> --out <dir>` (see the template HOW-TO-USE). Then run `node engine/lens.mjs <pack.json>` from the template folder. `node engine/lens.mjs fixtures/good-pack.json` shows the synthetic example (verdict PASS, grade 100/100). Never copy a synthetic row into a real pack.
 6. **File locally:** keep the pack, the grade, and ticket drafts in your exchange folder. You decide what is sent or filed.
 
 See [README.md](README.md) for end to end pipelines that combine templates.

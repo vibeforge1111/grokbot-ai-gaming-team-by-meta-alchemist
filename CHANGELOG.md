@@ -8,6 +8,7 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ### Added
 
+- Preview templates for Multiplayer Netcode and Bot-Swarm (04), TSL and WebGPU Shader (07), Procedural World and Biome (08), Gaussian Splat Cleaner (16), Studio Director (29), and Game Clipmaker (30). Each has a shared lens-kit, a pack producer that can write a receipt, a synthetic worked example, and honest ship blockers in its README. Studio Director is 29 and Game Clipmaker is 30, so existing numbers stay stable.
 - Support Desk (23), Ledger (24), Matchmaking (25), Balance Patch (26), Retention (27), and App Store (28) are now 1.0.0 shipping. They use shared lens-kit 1.3.1, write a pack with a producer receipt, and grade from owner-supplied intake or exports rather than the template's own source.
 - Playtest and Performance (02) now has `engine/build-pack.mjs` to write a pack and a receipt. It stays preview until it has worked examples from at least two real games and a live capture grade.
 - A five minute quickstart on the README, a starter team of four bots in GETTING-STARTED.md (Game Feel, HUD, Bug Desk, Producer) with copy-paste first prompts, and an FAQ.
@@ -21,6 +22,7 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ### Changed
 
+- Human-facing counts now say 23 shipping templates and 7 previews, with none missing. Pipeline pages for Support Desk (23) through App Store (28) no longer describe them as previews.
 - The template catalog now shows the short name, the full name, and when to use each bot, and it points newcomers at the starter team before the full table.
 - Human-facing docs now say **Share link coming soon** when no live `grokbot://` id exists. Setup always leads with the paste steps. Importing `recipe.json` is mentioned only as an optional alternative if you see that action.
 - Game Loop Alchemist (05) and Living AI NPC and Lore (14) are now 1.0.0 shipping. The engine honors `minCases`, the getting-started skills ask for it, and the synthetic examples use three cases per line.

@@ -1,0 +1,91 @@
+{
+  "packId": "example-16-gaussian-splat-cleaner-pack",
+  "status": "VALID",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "note": "Synthetic worked example. Not a measurement of any game.",
+  "profile": {
+    "floatersLeftMax": 0,
+    "seamBreaksMax": 0,
+    "splatCountMax": 5000000,
+    "holesMax": 0,
+    "sourceOverwrites": 0
+  },
+  "artifacts": [
+    {
+      "id": "art-cleanup",
+      "kind": "static",
+      "path": "static/cleanup.json",
+      "sha256": null
+    },
+    {
+      "id": "art-continuity",
+      "kind": "static",
+      "path": "static/continuity.json",
+      "sha256": null
+    },
+    {
+      "id": "art-budget",
+      "kind": "static",
+      "path": "static/budget.json",
+      "sha256": null
+    },
+    {
+      "id": "art-navigation",
+      "kind": "trace",
+      "path": "traces/navigation.json",
+      "sha256": null
+    },
+    {
+      "id": "art-safety",
+      "kind": "static",
+      "path": "static/safety.json",
+      "sha256": null
+    },
+    {
+      "id": "art-identity",
+      "kind": "static",
+      "path": "static/identity.json",
+      "sha256": null
+    }
+  ],
+  "metrics": {
+    "cleanup": {
+      "artifact": "art-cleanup",
+      "floatersLeft": 0,
+      "beforeAfterReviewed": true,
+      "measuredCases": 2
+    },
+    "continuity": {
+      "artifact": "art-continuity",
+      "seamBreaks": 0,
+      "sameCapture": true,
+      "measuredCases": 2
+    },
+    "budget": {
+      "artifact": "art-budget",
+      "splatCount": 1200000,
+      "measured": true,
+      "measuredCases": 1
+    },
+    "navigation": {
+      "artifact": "art-navigation",
+      "holes": 0,
+      "proxyPresent": true,
+      "measuredCases": 1
+    },
+    "safety": {
+      "artifact": "art-safety",
+      "sourceOverwrites": 0,
+      "piiLeaks": 0,
+      "measuredCases": 1
+    },
+    "identity": {
+      "artifact": "art-identity",
+      "gitShaPresent": true,
+      "liveShaPresent": true,
+      "measuredCases": 1
+    }
+  }
+}

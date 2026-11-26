@@ -1,0 +1,98 @@
+{
+  "packId": "example-07-shader-alchemist-pack",
+  "status": "VALID",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "note": "Synthetic worked example. Not a measurement of any game.",
+  "profile": {
+    "compileFailsMax": 0,
+    "prewarmMsMax": 2000,
+    "backendsMin": 2,
+    "parityMismatchesMax": 0,
+    "gpuP95MsMax": 2,
+    "memoryMbMax": 256,
+    "requiredVariantsMin": 1
+  },
+  "artifacts": [
+    {
+      "id": "art-compile",
+      "kind": "trace",
+      "path": "traces/compile.json",
+      "sha256": null
+    },
+    {
+      "id": "art-parity",
+      "kind": "static",
+      "path": "static/parity.json",
+      "sha256": null
+    },
+    {
+      "id": "art-budget",
+      "kind": "trace",
+      "path": "traces/budget.json",
+      "sha256": null
+    },
+    {
+      "id": "art-variants",
+      "kind": "static",
+      "path": "static/variants.json",
+      "sha256": null
+    },
+    {
+      "id": "art-safety",
+      "kind": "static",
+      "path": "static/safety.json",
+      "sha256": null
+    },
+    {
+      "id": "art-identity",
+      "kind": "static",
+      "path": "static/identity.json",
+      "sha256": null
+    }
+  ],
+  "metrics": {
+    "compile": {
+      "artifact": "art-compile",
+      "failures": 0,
+      "prewarmMs": 800,
+      "measuredCases": 4
+    },
+    "parity": {
+      "artifact": "art-parity",
+      "backendsCompared": 2,
+      "mismatches": 0,
+      "silentFallbacks": 0,
+      "measuredCases": 2
+    },
+    "budget": {
+      "artifact": "art-budget",
+      "gpuMs": [
+        0.8,
+        0.9,
+        1.1,
+        1
+      ],
+      "memoryMb": 128,
+      "measuredCases": 4
+    },
+    "variants": {
+      "artifact": "art-variants",
+      "built": 4,
+      "debugShipped": 0,
+      "measuredCases": 4
+    },
+    "safety": {
+      "artifact": "art-safety",
+      "secretLeaks": 0,
+      "measuredCases": 1
+    },
+    "identity": {
+      "artifact": "art-identity",
+      "gitShaPresent": true,
+      "liveShaPresent": true,
+      "measuredCases": 1
+    }
+  }
+}

@@ -90,17 +90,17 @@ Before acting, look for these inputs:
 | Input | From | Where to look | If it is missing |
 |---|---|---|---|
 | `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
-| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest, 04 Netcode, 07 Shader, 08 World and Biome, 16 Splat Cleaner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
 | `hud-capture-set` (optional, ^1.0.0) | 09 HUD | `.grokbot-team/artifacts/hud-capture-set/` | Continue: mark the essential UI by hand while framing, and write "ASSUMPTION: no hud-capture-set available" in the report. |
 | `audio-mix-report` (optional, ^1.0.0) | 13 Audio | `.grokbot-team/artifacts/audio-mix-report/` | Continue: measure loudness on the decoded file yourself, and write "ASSUMPTION: no audio-mix-report available" in the report. |
-| `change-list` (optional, ^1.0.0) | the owner, 18 Bug Desk | `.grokbot-team/artifacts/change-list/` | Continue: check every feature claim directly against the build, and write "ASSUMPTION: no change-list available" in the report. |
+| `change-list` (optional, ^1.0.0) | the owner, 16 Splat Cleaner, 18 Bug Desk | `.grokbot-team/artifacts/change-list/` | Continue: check every feature claim directly against the build, and write "ASSUMPTION: no change-list available" in the report. |
 | `pitch-draft` (optional, ^1.0.0) | 12 Producer | `.grokbot-team/artifacts/pitch-draft/` | Continue without it. Start the report with "ASSUMPTION: no pitch-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
 
 After acting, save these outputs as local files for the human to review:
 
 | Output | Format | Where | Read by |
 |---|---|---|---|
-| `clip-list` 1.0.0 | JSON | `.grokbot-team/artifacts/clip-list/` | 19 Store Page, 20 Patch Notes |
+| `clip-list` 1.0.0 | JSON | `.grokbot-team/artifacts/clip-list/` | 19 Store Page, 20 Patch Notes, 29 Studio |
 | `media-export-manifest` 1.0.0 | JSON manifest plus the exported video and still files | `.grokbot-team/artifacts/media-export-manifest/` | 19 Store Page, 20 Patch Notes |
 | `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
 | `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |

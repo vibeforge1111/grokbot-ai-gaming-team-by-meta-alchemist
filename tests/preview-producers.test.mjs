@@ -28,6 +28,49 @@ function grade(lens, packPath) {
 
 const cases = [
   {
+    id: "04-netcode-swarm",
+    args: ["templates/04-netcode-swarm/engine/build-pack.mjs", "templates/04-netcode-swarm/fixtures/good-pack.json"],
+    lens: "templates/04-netcode-swarm/engine/lens.mjs",
+    expectPass: true,
+    allowSynthetic: true,
+  },
+  {
+    id: "07-shader-alchemist",
+    args: ["templates/07-shader-alchemist/engine/build-pack.mjs", "templates/07-shader-alchemist/fixtures/good-pack.json"],
+    lens: "templates/07-shader-alchemist/engine/lens.mjs",
+    expectPass: true,
+    allowSynthetic: true,
+  },
+  {
+    id: "08-world-biome",
+    args: ["templates/08-world-biome/engine/build-pack.mjs", "templates/08-world-biome/fixtures/good-pack.json"],
+    lens: "templates/08-world-biome/engine/lens.mjs",
+    expectPass: true,
+    allowSynthetic: true,
+  },
+  {
+    id: "16-gaussian-splat-cleaner",
+    args: ["templates/16-gaussian-splat-cleaner/engine/build-pack.mjs", "templates/16-gaussian-splat-cleaner/fixtures/good-pack.json"],
+    lens: "templates/16-gaussian-splat-cleaner/engine/lens.mjs",
+    expectPass: true,
+    allowSynthetic: true,
+  },
+  {
+    id: "29-studio-director",
+    args: ["templates/29-studio-director/engine/build-pack.mjs", "templates/29-studio-director/fixtures/good-pack.json"],
+    lens: "templates/29-studio-director/engine/lens.mjs",
+    expectPass: true,
+    allowSynthetic: true,
+  },
+  {
+    id: "30-game-clipmaker",
+    args: ["templates/30-game-clipmaker/engine/build-pack.mjs", "templates/30-game-clipmaker/fixtures/good-pack.json"],
+    lens: "templates/30-game-clipmaker/engine/lens.mjs",
+    expectPass: true,
+    allowSynthetic: true,
+  },
+
+  {
     id: "02-playtest-performance",
     args: ["templates/02-playtest-performance/engine/build-pack.mjs", "templates/02-playtest-performance/fixtures/good-pack.json"],
     lens: "templates/02-playtest-performance/engine/lens.mjs",

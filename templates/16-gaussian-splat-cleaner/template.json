@@ -1,0 +1,93 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-16-gaussian-splat-cleaner",
+  "slug": "16-gaussian-splat-cleaner",
+  "name": "Gaussian Splat Cleaner",
+  "shortName": "Splat Cleaner",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Grade splat cleanup, continuity, and navigation proxies from owner-supplied captures, then write a local evidence pack and ticket drafts.",
+  "stage": "Production",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "splat-cleaner-getting-started",
+  "skills": [
+    "splat-cleaner-getting-started",
+    "floater-and-seam-cleanup-review",
+    "splat-proxy-and-budget-check",
+    "splat-source-safety-and-identity",
+    "splat-cleaner-lens-engine"
+  ],
+  "routines": [
+    "splat-cleaner-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-16-gaussian-splat-cleaner",
+    "version": "0.1.0",
+    "hash": "sha256:bc5790843ff55127ce8aac98e20a4c8923803e6db26477ef1fc3891a6a59dc65"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "evidence-pack",
+      "version": "1.0.0",
+      "format": "JSON evidence pack plus a local manifest",
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "change-list",
+      "version": "1.0.0",
+      "format": "JSON change list",
+      "schema": "spec/artifacts/change-list.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": false,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

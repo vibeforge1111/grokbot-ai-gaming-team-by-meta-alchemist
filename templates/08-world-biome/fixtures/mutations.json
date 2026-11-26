@@ -1,0 +1,279 @@
+{
+  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+  "cases": [
+    {
+      "id": "seed:1#empty-seed.measuredCases",
+      "line": "seed:1",
+      "expect": "U",
+      "set": {
+        "metrics.seed.measuredCases": 0
+      }
+    },
+    {
+      "id": "seed:1#neg1",
+      "line": "seed:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.seed.knownRun": 0
+      }
+    },
+    {
+      "id": "seed:1#missing",
+      "line": "seed:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.seed.knownRun"
+      ]
+    },
+    {
+      "id": "seed:2#empty-seed.measuredCases",
+      "line": "seed:2",
+      "expect": "U",
+      "set": {
+        "metrics.seed.measuredCases": 0
+      }
+    },
+    {
+      "id": "seed:2#neg1",
+      "line": "seed:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.seed.mismatches": 4,
+        "metrics.seed.heldOutRun": 0
+      }
+    },
+    {
+      "id": "seed:2#missing",
+      "line": "seed:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.seed.mismatches"
+      ]
+    },
+    {
+      "id": "layout:1#empty-layout.measuredCases",
+      "line": "layout:1",
+      "expect": "U",
+      "set": {
+        "metrics.layout.measuredCases": 0
+      }
+    },
+    {
+      "id": "layout:1#neg1",
+      "line": "layout:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.layout.biomeGaps": 2
+      }
+    },
+    {
+      "id": "layout:1#missing",
+      "line": "layout:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.layout.biomeGaps"
+      ]
+    },
+    {
+      "id": "layout:2#empty-layout.measuredCases",
+      "line": "layout:2",
+      "expect": "U",
+      "set": {
+        "metrics.layout.measuredCases": 0
+      }
+    },
+    {
+      "id": "layout:2#neg1",
+      "line": "layout:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.layout.coverGaps": 5
+      }
+    },
+    {
+      "id": "layout:2#missing",
+      "line": "layout:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.layout.coverGaps"
+      ]
+    },
+    {
+      "id": "traversal:1#empty-traversal.measuredCases",
+      "line": "traversal:1",
+      "expect": "U",
+      "set": {
+        "metrics.traversal.measuredCases": 0
+      }
+    },
+    {
+      "id": "traversal:1#neg1",
+      "line": "traversal:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.traversal.unwalkableTraps": 3
+      }
+    },
+    {
+      "id": "traversal:1#missing",
+      "line": "traversal:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.traversal.unwalkableTraps"
+      ]
+    },
+    {
+      "id": "traversal:2#empty-traversal.streamMs",
+      "line": "traversal:2",
+      "expect": "U",
+      "set": {
+        "metrics.traversal.streamMs": []
+      }
+    },
+    {
+      "id": "traversal:2#empty-traversal.measuredCases",
+      "line": "traversal:2",
+      "expect": "U",
+      "set": {
+        "metrics.traversal.measuredCases": 0
+      }
+    },
+    {
+      "id": "traversal:2#neg1",
+      "line": "traversal:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.traversal.streamMs": [
+          80,
+          90,
+          120
+        ]
+      }
+    },
+    {
+      "id": "traversal:2#missing",
+      "line": "traversal:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.traversal.streamMs"
+      ]
+    },
+    {
+      "id": "encounters:1#empty-encounters.measuredCases",
+      "line": "encounters:1",
+      "expect": "U",
+      "set": {
+        "metrics.encounters.measuredCases": 0
+      }
+    },
+    {
+      "id": "encounters:1#neg1",
+      "line": "encounters:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.encounters.density": 8
+      }
+    },
+    {
+      "id": "encounters:1#missing",
+      "line": "encounters:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.encounters.density"
+      ]
+    },
+    {
+      "id": "encounters:2#empty-encounters.measuredCases",
+      "line": "encounters:2",
+      "expect": "U",
+      "set": {
+        "metrics.encounters.measuredCases": 0
+      }
+    },
+    {
+      "id": "encounters:2#neg1",
+      "line": "encounters:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.encounters.unfairSpawns": 2
+      }
+    },
+    {
+      "id": "encounters:2#missing",
+      "line": "encounters:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.encounters.unfairSpawns"
+      ]
+    },
+    {
+      "id": "safety:1#empty-safety.measuredCases",
+      "line": "safety:1",
+      "expect": "U",
+      "set": {
+        "metrics.safety.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:1#neg1",
+      "line": "safety:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.safety.piiLeaks": 2
+      }
+    },
+    {
+      "id": "safety:1#missing",
+      "line": "safety:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.safety.piiLeaks"
+      ]
+    },
+    {
+      "id": "safety:2#empty-identity.measuredCases",
+      "line": "safety:2",
+      "expect": "U",
+      "set": {
+        "metrics.identity.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:2#neg1",
+      "line": "safety:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.identity.gitShaPresent": false,
+        "metrics.identity.liveShaPresent": false
+      }
+    },
+    {
+      "id": "safety:2#missing",
+      "line": "safety:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.identity.gitShaPresent"
+      ]
+    }
+  ]
+}

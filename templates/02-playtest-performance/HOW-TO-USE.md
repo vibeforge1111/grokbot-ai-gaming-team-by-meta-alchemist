@@ -67,10 +67,10 @@ The synthetic example prints verdict **PASS** and grade **100/100**. It is not a
 
 1. Agree the profile with the getting-started skill, including the frame-time budget and whether a second device is in scope.
 2. Collect journey traces and frame samples with the evidence skills, or with the owner's own capture tools. Keep each source file on disk under the pack's folder.
-3. Copy the shape of `fixtures/good-pack.json`, set `synthetic` to false, and replace every value with your own.
-4. Run `node engine/lens.mjs your-pack.json`. Lead with verdict, grade and coverage.
+3. Write the pack with `node engine/build-pack.mjs <intake> --out <dir>`. The producer writes a receipt and checks artifact bytes. You can also start from the shape of `fixtures/good-pack.json`, set `synthetic` to false, and replace every value with your own, then stamp it with the same command.
+4. Run `node engine/lens.mjs <pack.json>`. Lead with verdict, grade and coverage.
 
-This preview does not yet require a producer receipt. A later shipping version should check artifact bytes and a receipt. Keep the worked examples labelled synthetic. Never copy a synthetic row into a real pack.
+Keep the worked examples labelled synthetic. Never copy a synthetic row into a real pack. A later shipping version still needs worked examples from at least two real games and a live capture grade.
 
 ## Decisions only you make
 
@@ -107,7 +107,7 @@ After acting, save these outputs as local files for the human to review:
 
 | Output | Format | Where | Read by |
 |---|---|---|---|
-| `evidence-pack` 1.0.0 | JSON evidence pack plus a local manifest | `.grokbot-team/artifacts/evidence-pack/` | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 09 HUD, 10 Trailer, 11 Environment, 12 Producer, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 17 Sprites, 18 Bug Desk, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 00 Starter |
+| `evidence-pack` 1.0.0 | JSON evidence pack plus a local manifest | `.grokbot-team/artifacts/evidence-pack/` | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 07 Shader, 09 HUD, 10 Trailer, 11 Environment, 12 Producer, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 16 Splat Cleaner, 17 Sprites, 18 Bug Desk, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 30 Clipmaker, 00 Starter |
 | `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
 | `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
 

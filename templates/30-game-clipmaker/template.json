@@ -1,0 +1,93 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-30-game-clipmaker",
+  "slug": "30-game-clipmaker",
+  "name": "Game Clipmaker",
+  "shortName": "Clipmaker",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Grade peak-moment detection and a local clip list from gameplay recordings, then write ticket drafts. Trailer Director still covers trailer-shaped cuts; this bot finds in-match moments.",
+  "stage": "Ship, Live",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "game-clipmaker-getting-started",
+  "skills": [
+    "game-clipmaker-getting-started",
+    "peak-moment-and-timecode-pass",
+    "clip-clarity-and-rights-check",
+    "clip-list-safety-and-identity",
+    "game-clipmaker-lens-engine"
+  ],
+  "routines": [
+    "game-clipmaker-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-30-game-clipmaker",
+    "version": "0.1.0",
+    "hash": "sha256:ce332ebd6a68f3866e1dd896fd3383520b3bdb6d26db5f72e1e81720c9b766f2"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0",
+      "hud-capture-set": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "clip-list",
+      "version": "1.0.0",
+      "format": "JSON clip list",
+      "schema": "spec/artifacts/clip-list.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": false,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "hud-capture-set",
+      "required": false,
+      "schema": "spec/artifacts/hud-capture-set.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

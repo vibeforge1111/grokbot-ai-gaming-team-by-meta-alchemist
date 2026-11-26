@@ -2,7 +2,7 @@
 
 Created by @meta_alchemist (https://x.com/meta_alchemist).
 
-A short, honest list of what you can use today, what still carries ship blockers, and what is not in this repo. Shipping means the template is held to the kit's release standard: a full prompt, skills, starter tasks, a pipeline page, a worked example, and a passing validator. Preview means it works and its tests pass, but it is not yet held to that standard. Missing means there is no template folder in this release.
+A short, honest list of what you can use today and what still carries ship blockers. Every planned template has a folder in this release. Shipping means the template is held to the kit's release standard: a full prompt, skills, starter tasks, a pipeline page, a worked example, and a passing validator. Preview means it works and its tests pass, but it is not yet held to that standard. Missing would mean there is no template folder; the count is zero.
 
 This page is the scorecard. The [catalog](TEMPLATES.md) is the index of folders that exist.
 
@@ -11,8 +11,8 @@ This page is the scorecard. The [catalog](TEMPLATES.md) is the index of folders 
 | State | Count |
 |---|---|
 | Ready (shipping) | 23 |
-| Preview | 1 |
-| Missing | 6 |
+| Preview | 7 |
+| Missing | 0 |
 
 The starter template (`starter/00-starter-template`) is a scaffold for a new bot, not a game-dev helper, so it is not in these counts.
 
@@ -53,18 +53,15 @@ These work, and their tests pass, but they are not held to the release standard.
 | # | Template | Status line |
 |---|---|---|
 | 02 | [Playtest and Performance](templates/02-playtest-performance/) | Preview. Shared lens-kit and a pack producer are in place. Still needs worked examples from at least two real games, a live capture grade, and you bring your own capture tools (no bundled Playwright or GPU sampler). |
+| 04 | [Netcode](templates/04-netcode-swarm/) | Preview. Shared lens-kit and a pack producer are in place. Still needs worked examples from at least two real multiplayer games, a live session grade, and you bring your own swarm or netcode tools. |
+| 07 | [Shader](templates/07-shader-alchemist/) | Preview. Shared lens-kit and a pack producer are in place. Still needs worked examples from at least two real projects, compile and GPU evidence from a real build, and you bring your own compiler or sampler. |
+| 08 | [World and Biome](templates/08-world-biome/) | Preview. Shared lens-kit and a pack producer are in place. Still needs worked examples from at least two real seeded worlds, and you bring your own generator or nav tools. |
+| 16 | [Splat Cleaner](templates/16-gaussian-splat-cleaner/) | Preview. Shared lens-kit and a pack producer are in place. Still needs evidence from a working cleanup on a real capture, examples from at least two captures, and you bring your own cleaner. The source capture must stay untouched. |
+| 29 | [Studio](templates/29-studio-director/) | Preview. Shared lens-kit and a pack producer are in place. Still needs worked examples from at least two real shoots or stills sequences, and you bring your own editor. This bot never publishes. |
+| 30 | [Clipmaker](templates/30-game-clipmaker/) | Preview. Shared lens-kit and a pack producer are in place. Still needs worked examples from at least two real gameplay recordings, and you bring your own encoder. This bot never uploads. Trailer Director (10) still covers trailer-shaped cuts. |
 
 ## Missing
 
-There is no folder for these in this release. Template numbers that already exist stay stable. Studio Director and Game Clipmaker have no number here (this repo's 26 is Balance Patch).
+Every planned template has a folder in this release. None are missing. Numbers that already existed stayed stable. Studio Director is 29 and Game Clipmaker is 30, so this repo's 26 remains Balance Patch.
 
-| Name | Status line |
-|---|---|
-| 04 Multiplayer Netcode and Bot-Swarm | Missing. Held back after outside review. |
-| 07 TSL and WebGPU Shader | Missing. Held back after outside review. |
-| 08 Procedural World and Biome | Missing. Held back after outside review. |
-| 16 Gaussian Splat Cleaner | Missing. Held back pending evidence from a working build. |
-| Studio Director | Missing. Not in this repo. |
-| Game Clipmaker | Missing. Trailer Director (10) covers clip selection in this release. |
-
-Why the numbered ones were held back is also noted in [CHANGELOG.md](CHANGELOG.md).
+Preview is not the same as missing. The bots above work, and their tests pass, but they are not held to the release standard yet.

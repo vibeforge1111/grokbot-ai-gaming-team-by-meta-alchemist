@@ -20,10 +20,10 @@ build ──> capture ──> evidence pack ──> lens templates grade it ─�
 |---|---|---|---|
 | Prototype | A tester can complete the first meaningful action | 01 Game Feel; 17 Sprite and Hitbox (2D) or 03 Prop and Rig (3D) | Game Feel measured lines at level 3 or better on input and camera |
 | First playtest | Strangers can play without you in the room | 18 Bug Desk, 09 HUD (first session) | No open P0; onboarding friction list triaged |
-| Multiplayer hardening, when applicable | Fair and stable under load | 15 Server Fairness | Soak passes at target room size; authority gaps closed or ticketed |
-| Content and balance | Worth replaying | 11 Environment, 06 Economy | Compare strategies or upgrades where relevant and review route readability |
-| Polish | Feels finished | 01 again, 09 HUD, 13 Audio, 21 Access, Input and Localization | Adopted templates meet the project's target grade and coverage |
-| Ship | People can find it and trust it | 10 Trailer, 19 Presskit, 22 Live Service Trust | Applicable store assets pass review. Games with purchases or services also check payments or rehearse recovery |
+| Multiplayer hardening, when applicable | Fair and stable under load | 15 Server Fairness; 04 Netcode (preview) when you also want prediction, desync, or a bot-swarm read | Soak passes at target room size; authority gaps closed or ticketed |
+| Content and balance | Worth replaying | 11 Environment, 06 Economy; 08 World and Biome (preview) when the world is generated | Compare strategies or upgrades where relevant and review route readability |
+| Polish | Feels finished | 01 again, 09 HUD, 13 Audio, 21 Access, Input and Localization; 07 Shader (preview) when materials are in play | Adopted templates meet the project's target grade and coverage |
+| Ship | People can find it and trust it | 10 Trailer, 19 Presskit, 22 Live Service Trust; 29 Studio and 30 Clipmaker (previews) when you also want a shoot plan or peak-moment clip list | Applicable store assets pass review. Games with purchases or services also check payments or rehearse recovery |
 | Live | Keep players and fix fast | 18 daily, 06 per patch, 20 patch notes and creators; 12 Producer for the go or hold call on each release | Critical issues meet the project's response target and patch notes reflect the build |
 
 ## Pipeline 2: balance patch
@@ -89,4 +89,4 @@ Enforcement is always a human decision. Templates propose; people ban.
 | [27 Retention](27-retention-cohort-analytics.md) (preview) | Live |
 | [28 App Store](28-mobile-store-submission.md) (preview) | Ship |
 
-Templates 23 to 28 are previews. Use the pipeline page and the template README together. Honest status for every bot, including ones not in this repo, is in [READINESS.md](../../READINESS.md).
+Templates 02, 04, 07, 08, 16, 29, and 30 are previews. Use the pipeline page and the template README together. Honest status for every bot is in [READINESS.md](../../READINESS.md).

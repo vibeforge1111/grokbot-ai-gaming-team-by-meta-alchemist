@@ -1,0 +1,246 @@
+{
+  "id": "gbf-30-game-clipmaker",
+  "version": "0.1.0",
+  "migration": "Initial 0.1.0 preview: clipmaker grades from owner-supplied evidence.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "verdict": "Report the verdict and coverage beside the grade.",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty or missing evidence earns U.",
+  "source": null,
+  "receiptPolicy": null,
+  "releaseBlockers": null,
+  "pillars": [
+    {
+      "id": "detection",
+      "name": "Detection",
+      "points": 20
+    },
+    {
+      "id": "timing",
+      "name": "Timing",
+      "points": 20
+    },
+    {
+      "id": "clarity",
+      "name": "Clarity",
+      "points": 20
+    },
+    {
+      "id": "rights",
+      "name": "Rights",
+      "points": 20
+    },
+    {
+      "id": "safety",
+      "name": "Safety",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "detection:1",
+      "pillar": "Detection",
+      "name": "Peak moments meet the owner minimum",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Too few peak moments were listed",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Listed peak moments meet the owner-set minimum",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line detection:1"
+      }
+    },
+    {
+      "id": "detection:2",
+      "pillar": "Detection",
+      "name": "The clip list is ranked",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "The clip list has no rank or priority order",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The clip list is ranked in priority order",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line detection:2"
+      }
+    },
+    {
+      "id": "timing:1",
+      "pillar": "Timing",
+      "name": "Clip durations stay inside the owner range",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Clips are far shorter or far longer than the agreed range",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every listed duration is inside the owner-set range, in seconds",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line timing:1"
+      }
+    },
+    {
+      "id": "timing:2",
+      "pillar": "Timing",
+      "name": "Overlapping clips are zero",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Clips overlap in a way the owner did not accept",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Overlapping clips are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line timing:2"
+      }
+    },
+    {
+      "id": "clarity:1",
+      "pillar": "Clarity",
+      "name": "Listed clips are watchable without missing context",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A listed clip cannot be understood without missing context",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Unwatchable clips are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line clarity:1"
+      }
+    },
+    {
+      "id": "clarity:2",
+      "pillar": "Clarity",
+      "name": "Required redaction was applied",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "HUD, chat, or other UI the owner asked to hide is still visible",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Redaction misses are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line clarity:2"
+      }
+    },
+    {
+      "id": "rights:1",
+      "pillar": "Rights",
+      "name": "Rights notes are present",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Required rights notes are missing",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Missing rights notes are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line rights:1"
+      }
+    },
+    {
+      "id": "rights:2",
+      "pillar": "Rights",
+      "name": "Each clip names the source build",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A clip is missing its source build",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every clip names its source build",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line rights:2"
+      }
+    },
+    {
+      "id": "safety:1",
+      "pillar": "Safety",
+      "name": "The run did not upload or post anything",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "The run uploaded or posted a clip",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Uploads and posts from this run are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line safety:1"
+      }
+    },
+    {
+      "id": "safety:2",
+      "pillar": "Safety",
+      "name": "The pack names its build",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "The pack is missing a git SHA or a live SHA",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The pack records both a git SHA and a live SHA",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line safety:2"
+      }
+    }
+  ],
+  "hash": "sha256:ce332ebd6a68f3866e1dd896fd3383520b3bdb6d26db5f72e1e81720c9b766f2"
+}
