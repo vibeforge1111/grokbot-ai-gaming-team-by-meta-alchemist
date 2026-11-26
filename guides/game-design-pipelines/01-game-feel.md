@@ -28,7 +28,7 @@ Template folder: [templates/01-game-feel](../../templates/01-game-feel/). Instal
 ## Recommended process
 
 1. **Set up once:** run `game-vibes-getting-started`; answer its questions one at a time; write the answers into your game profile. It also asks which rubric profiles apply (`no-aiming`, `no-hazards`, `offline-only`); you approve them before scoring and they go in `rubricProfile` in the game profile.
-2. **Get a pack:** use your CI run, a test harness or a manual capture of this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** use your CI run, a test harness or a manual capture of this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **game-feel-audit:** Measure how fast and how clearly the game answers the actions players use most, in any genre and any engine, and gather the evidence for each rubric line.
 4. **ship-juice-module:** Add visual, audio or haptic feedback (often called juice) to an action without changing input handling or game timing, behind a switch that is off by default.
 5. **before-after-feel-proof:** Compare the same player action before and after a feedback change and record both timing and perception.

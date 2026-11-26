@@ -88,7 +88,7 @@ Before acting, look for these inputs:
 | Input | From | Where to look | If it is missing |
 |---|---|---|---|
 | `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
-| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
 | `media-export-manifest` (optional, ^1.0.0) | 10 Trailer | `.grokbot-team/artifacts/media-export-manifest/` | Continue: decode media from the current build yourself; media:1 stays unmeasured until you do. Never reuse unreviewed exports. |
 | `clip-list` (optional, ^1.0.0) | 10 Trailer | `.grokbot-team/artifacts/clip-list/` | Continue without it. Start the report with "ASSUMPTION: no clip-list available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
 | `hud-capture-set` (optional, ^1.0.0) | 09 HUD | `.grokbot-team/artifacts/hud-capture-set/` | Continue without it. Start the report with "ASSUMPTION: no hud-capture-set available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |

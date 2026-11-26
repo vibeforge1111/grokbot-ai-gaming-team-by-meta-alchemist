@@ -27,7 +27,7 @@ Template folder: [templates/06-economy-director](../../templates/06-economy-dire
 ## Recommended process
 
 1. **Set up once:** run `economy-director-getting-started`. It asks what players earn and spend, where progress is saved, and whether the game has random rewards, combat or anything for sale, then the targets for the systems it has. No combat means `no-combat` and nothing for sale means `no-store`; you approve them before scoring and they go in `rubricProfile` in the game profile.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **resource-sources-and-sinks-model (every game):** list where each resource comes from and where it goes, model balances over time, and find stuck players, unreachable goals and double-counted rewards.
 4. **monte-carlo-meta-balancer:** run many seeded simulations of player choices to measure progression time, whether one choice dominates (the meta) and what a proposed change would do.
 5. **combat-timing-auditor (only if the game has combat):** compare simulated and recorded time to defeat a target with the build's real rules. Skip it otherwise.

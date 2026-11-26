@@ -11,7 +11,7 @@ Turn playtest observations into reproducible local issue drafts, group duplicate
 - **Takes from:** Manual or CI playtests, accessibility reviews and service logs where applicable.
 - **Hands to:** The owner, who reviews local drafts, sets priority and updates the tracker.
 
-Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+Use a CI run or a manual capture for build evidence. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 
 New to terms such as evidence pack, receipt, liveSha or flaky? See [Words used here](README.md#words-used-here).
 
@@ -95,9 +95,9 @@ Before acting, look for these inputs:
 | Input | From | Where to look | If it is missing |
 |---|---|---|---|
 | `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
-| `evidence-pack` (required, ^1.0.0) | the owner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
 | `tracker-export` (optional, ^1.0.0) | the owner | `.grokbot-team/artifacts/tracker-export/` | Continue: intake and closure receipts are NOT_RUN and their lines stay unmeasured; write "ASSUMPTION: no tracker-export available" in the report and ask the owner for a read-only export. |
-| `ticket-draft` (optional, ^1.0.0) | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 09 HUD, 10 Trailer, 11 Environment, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 17 Sprites, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 00 Starter | `.grokbot-team/artifacts/ticket-draft/` | Continue: group only crash and player reports, and say cross-template grouping was not measured. |
+| `ticket-draft` (optional, ^1.0.0) | 01 Game Feel, 02 Playtest, 03 Prop and Rig, 05 Game Loop, 06 Economy, 09 HUD, 10 Trailer, 11 Environment, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 17 Sprites, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 00 Starter | `.grokbot-team/artifacts/ticket-draft/` | Continue: group only crash and player reports, and say cross-template grouping was not measured. |
 | `incident-report` (optional, ^1.0.0) | 22 Live Service | `.grokbot-team/artifacts/incident-report/` | Continue without it. Start the report with "ASSUMPTION: no incident-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
 | `support-case-draft` (optional, ^1.0.0) | 23 Support Desk | `.grokbot-team/artifacts/support-case-draft/` | Continue without it. Start the report with "ASSUMPTION: no support-case-draft available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
 

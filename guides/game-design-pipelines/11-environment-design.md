@@ -26,7 +26,7 @@ Template folder: [templates/11-environment-design](../../templates/11-environmen
 ## Recommended process
 
 1. **Set up once:** run `environment-design-getting-started`. It asks how your game is seen, which tool builds the scenes, which cues must stay visible, who judges the visual lines and whether the `no-location-overlays` rubric profile applies (no location names or area cards over play), then helps you write the values into your game profile. You approve the profile before scoring; it goes in `rubricProfile`, `visual-navigation:2` then reads N/A, `visual-navigation:1` takes the pillar's 20 points, and the verdict can reach PASS.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **environment-set-dressing-and-grounding-director:** Place decorative detail so players can recognize landmarks, tell usable objects from decoration and read the intended routes, in 2D or 3D.
 4. **placement-and-support-surface-auditor:** Check that placed objects rest on the surface they belong on (floor, tile, shelf, terrain) and follow the project's placement rules.
 5. **sightline-silhouette-and-value-composition-gate:** Check whether important objects and actions stay readable from the cameras and routes players actually use, in 2D, top-down or 3D views.

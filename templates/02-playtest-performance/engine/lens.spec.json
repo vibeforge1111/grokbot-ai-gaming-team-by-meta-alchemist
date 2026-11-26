@@ -1,0 +1,284 @@
+{
+  "lensVersion": "1.1.0",
+  "lines": {
+    "journeys:1": {
+      "kind": "computed",
+      "why": "Record opening-journey duration in seconds and whether each attempt completed.",
+      "miss": "opening.durationS",
+      "conds": [
+        [
+          "opening.completedShare",
+          ">=",
+          "P.openingShareMin"
+        ],
+        [
+          "p95(opening.durationS)",
+          "<=",
+          "P.openingBudgetS",
+          "h"
+        ],
+        [
+          "len(opening.durationS)",
+          ">=",
+          3,
+          "4"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.opening.durationS": [
+            80,
+            90,
+            100
+          ],
+          "metrics.opening.completedShare": 0.2
+        }
+      ]
+    },
+    "journeys:2": {
+      "kind": "computed",
+      "why": "Record a core-journey completion on each required viewport.",
+      "miss": "core.viewportsCompleted",
+      "conds": [
+        [
+          "missing(core.viewportsCompleted, P.requiredViewports)",
+          "==",
+          0,
+          "h"
+        ],
+        [
+          "core.completedShare",
+          ">=",
+          "P.coreShareMin"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.core.viewportsCompleted": [
+            "tablet"
+          ],
+          "metrics.core.completedShare": 0
+        }
+      ]
+    },
+    "scenarios:1": {
+      "kind": "computed",
+      "why": "Count planned scenarios that have a trace and that failed without a record.",
+      "miss": "scenarios.planned",
+      "conds": [
+        [
+          "scenarios.missingTrace",
+          "==",
+          0,
+          "h"
+        ],
+        [
+          "scenarios.failedUnrecorded",
+          "==",
+          0,
+          "h"
+        ],
+        [
+          "scenarios.planned",
+          ">=",
+          3
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.scenarios.missingTrace": 2,
+          "metrics.scenarios.failedUnrecorded": 1,
+          "metrics.scenarios.planned": 3
+        }
+      ]
+    },
+    "scenarios:2": {
+      "kind": "computed",
+      "why": "Every failed scenario is explained or tagged as a known issue.",
+      "miss": "scenarios.unexplainedFails",
+      "conds": [
+        [
+          "scenarios.unexplainedFails",
+          "==",
+          0,
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.scenarios.unexplainedFails": 2
+        }
+      ]
+    },
+    "stability:1": {
+      "kind": "computed",
+      "why": "Record crash-free share and unexplained errors from the same sessions.",
+      "miss": "stability.crashFreeShare",
+      "conds": [
+        [
+          "stability.crashFreeShare",
+          ">=",
+          "P.crashFreeMin",
+          "h"
+        ],
+        [
+          "stability.unexplainedErrors",
+          "==",
+          0,
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.stability.crashFreeShare": 0.5,
+          "metrics.stability.unexplainedErrors": 3
+        }
+      ]
+    },
+    "stability:2": {
+      "kind": "computed",
+      "why": "Record heap size after cleanup at the end of each repeated session.",
+      "miss": "stability.heapPostCleanupMb",
+      "conds": [
+        [
+          "slope(stability.heapPostCleanupMb)",
+          "<=",
+          "P.heapSlopeMax"
+        ],
+        [
+          "len(stability.heapPostCleanupMb)",
+          ">=",
+          5,
+          "4"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.stability.heapPostCleanupMb": [
+            80,
+            96,
+            120,
+            150,
+            190
+          ]
+        }
+      ]
+    },
+    "performance:1": {
+      "kind": "computed",
+      "why": "Record frame times in milliseconds on the primary device. The budget is the owner's, not a fixed frame rate.",
+      "miss": "performance.primaryFrameMs",
+      "conds": [
+        [
+          "p95(performance.primaryFrameMs)",
+          "<=",
+          "P.frameP95BudgetMs",
+          "h"
+        ],
+        [
+          "len(performance.primaryFrameMs)",
+          ">=",
+          3,
+          "4"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.performance.primaryFrameMs": [
+            28,
+            30,
+            32,
+            34,
+            40
+          ]
+        }
+      ]
+    },
+    "performance:2": {
+      "kind": "computed",
+      "why": "Record frame times for every additional device profile the owner put in scope.",
+      "miss": "performance.extraProfilesOverBudget",
+      "conds": [
+        [
+          "performance.extraProfilesOverBudget",
+          "==",
+          0,
+          "h"
+        ],
+        [
+          "missing(performance.profilesMeasured, P.requiredProfiles)",
+          "==",
+          0,
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.performance.extraProfilesOverBudget": 1,
+          "metrics.performance.profilesMeasured": [
+            "primary"
+          ]
+        }
+      ]
+    },
+    "coverage:1": {
+      "kind": "computed",
+      "why": "List viewports and seeds that were actually run.",
+      "miss": "coverage.viewportsRun",
+      "conds": [
+        [
+          "missing(coverage.viewportsRun, P.requiredViewports)",
+          "==",
+          0,
+          "h"
+        ],
+        [
+          "coverage.knownSeedsRun",
+          ">=",
+          "P.knownSeedsMin"
+        ],
+        [
+          "coverage.heldOutSeedsRun",
+          ">=",
+          "P.heldOutSeedsMin",
+          "4"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.coverage.viewportsRun": [
+            "tablet"
+          ],
+          "metrics.coverage.knownSeedsRun": 0,
+          "metrics.coverage.heldOutSeedsRun": 0
+        }
+      ]
+    },
+    "coverage:2": {
+      "kind": "computed",
+      "why": "The pack must name the git SHA and the live SHA of the intended build.",
+      "miss": "identity.gitShaPresent",
+      "conds": [
+        [
+          "identity.gitShaPresent",
+          "==",
+          true,
+          "h"
+        ],
+        [
+          "identity.liveShaPresent",
+          "==",
+          true,
+          "h"
+        ]
+      ],
+      "neg": [
+        {
+          "metrics.identity.gitShaPresent": false,
+          "metrics.identity.liveShaPresent": false
+        }
+      ]
+    }
+  },
+  "checks": {}
+}

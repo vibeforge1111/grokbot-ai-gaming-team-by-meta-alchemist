@@ -27,7 +27,7 @@ Template folder: [templates/22-live-service-trust](../../templates/22-live-servi
 ## Recommended process
 
 1. **Set up once:** run `live-service-trust-getting-started`. It asks where progress is kept, which failures the game must survive, whether it sells anything (if not, you approve the `no-store` profile before scoring and it goes in `rubricProfile`), whether players sign in, and who the qualified reviewer is.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **persistence-fault-injection (every game that saves):** review the owner's failure tests for each save path and interruption.
 4. **live-ops-incident-drill-and-build-identity:** record which build is really published or running; for a running service, review the owner's health, incident and rollback drill.
 5. **rights-privacy-and-safety-review (every game):** check privacy, retention, age, rights, safety and support records as files. Never gives legal sign-off.

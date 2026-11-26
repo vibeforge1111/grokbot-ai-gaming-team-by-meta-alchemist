@@ -1,0 +1,263 @@
+{
+  "id": "gbf-02-playtest-performance",
+  "version": "0.1.0",
+  "migration": "Initial 0.1.0 preview: journeys, planned scenarios, stability, owner-set frame budgets, and coverage.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "verdict": "Report the verdict and coverage beside the grade.",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty or missing evidence earns U.",
+  "source": null,
+  "receiptPolicy": null,
+  "releaseBlockers": null,
+  "pillars": [
+    {
+      "id": "journeys",
+      "name": "Journeys",
+      "points": 20
+    },
+    {
+      "id": "scenarios",
+      "name": "Scenarios",
+      "points": 20
+    },
+    {
+      "id": "stability",
+      "name": "Stability",
+      "points": 20
+    },
+    {
+      "id": "performance",
+      "name": "Performance",
+      "points": 20
+    },
+    {
+      "id": "coverage",
+      "name": "Coverage",
+      "points": 20
+    }
+  ],
+  "profiles": {
+    "single-device": {
+      "reason": "The owner has one device profile in scope, so additional device lines are not scored. Select only after the owner approves it, before scoring.",
+      "weights": {
+        "journeys:1": 10,
+        "journeys:2": 10,
+        "scenarios:1": 10,
+        "scenarios:2": 10,
+        "stability:1": 10,
+        "stability:2": 10,
+        "performance:1": 20,
+        "performance:2": 0,
+        "coverage:1": 10,
+        "coverage:2": 10
+      }
+    }
+  },
+  "lines": [
+    {
+      "id": "journeys:1",
+      "pillar": "Journeys",
+      "name": "Opening journey completes inside the time budget",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "capture",
+      "anchors": {
+        "0": "Testers rarely finish the opening journey, or they finish well past the budget",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "p95 opening time is inside the profile budget and the completion share meets the minimum",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line journeys:1"
+      }
+    },
+    {
+      "id": "journeys:2",
+      "pillar": "Journeys",
+      "name": "Core journey completes on each required viewport",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "The core journey is missing on a required viewport, or testers rarely finish it",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every required viewport has a completed core journey at or above the profile share",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line journeys:2"
+      }
+    },
+    {
+      "id": "scenarios:1",
+      "pillar": "Scenarios",
+      "name": "Planned scenarios have a trace",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Planned scenarios are missing a trace, or they fail without a record",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every planned scenario has a trace and none are left failed without a reason",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line scenarios:1"
+      }
+    },
+    {
+      "id": "scenarios:2",
+      "pillar": "Scenarios",
+      "name": "Failed scenarios are explained or tagged as known",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Failures are left unexplained, or a known issue is not tagged",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every failed scenario is explained or tagged as a known issue the owner already accepted",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line scenarios:2"
+      }
+    },
+    {
+      "id": "stability:1",
+      "pillar": "Stability",
+      "name": "Sessions stay crash-free, with errors explained",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Crashes or unexplained errors appear in the recorded sessions",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Crash-free share meets the profile minimum and every recorded error has an explanation",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line stability:1"
+      }
+    },
+    {
+      "id": "stability:2",
+      "pillar": "Stability",
+      "name": "Repeated sessions do not grow memory past the slope budget",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Memory after cleanup climbs past the profile slope across repeated sessions",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The heap trend after cleanup stays inside the slope budget across at least five sessions",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line stability:2"
+      }
+    },
+    {
+      "id": "performance:1",
+      "pillar": "Performance",
+      "name": "Primary device frame time stays inside the owner budget",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "p95 frame time on the primary device is over the owner-set budget",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "p95 frame time on the primary device is inside the owner-set budget",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line performance:1"
+      }
+    },
+    {
+      "id": "performance:2",
+      "pillar": "Performance",
+      "name": "Additional required device profiles stay inside their budgets",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "A required extra device profile is missing or over its frame budget",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every additional required device profile has samples inside its frame budget",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line performance:2"
+      }
+    },
+    {
+      "id": "coverage:1",
+      "pillar": "Coverage",
+      "name": "Required viewports and seeds were run",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A required viewport or known seed was skipped",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "All required viewports and known seeds were run, and held-out seeds were run too",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line coverage:1"
+      }
+    },
+    {
+      "id": "coverage:2",
+      "pillar": "Coverage",
+      "name": "The pack names the build it came from",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "The pack is missing a git SHA or a live SHA for the build",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The pack records both a git SHA and a live SHA for the intended build",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line coverage:2"
+      }
+    }
+  ],
+  "hash": "sha256:571d88f660b6bf188877cb641fe0842235a33dd7ff7af09378c8b87deb35bd28"
+}

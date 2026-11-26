@@ -8,7 +8,7 @@ It fits any game. Spectator, streamer-mode and season features apply only if you
 
 Rubric: `gbf-20-streamer-hype-director` v1.4.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
 
-Use a CI run or a manual capture for build evidence. Playtest QA (template 02) is coming later.
+Use a CI run or a manual capture for build evidence. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 
 Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
 

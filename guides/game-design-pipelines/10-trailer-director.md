@@ -25,7 +25,7 @@ Template folder: [templates/10-trailer-director](../../templates/10-trailer-dire
 ## Recommended process
 
 1. **Set up once:** run `trailer-director-getting-started`; answer its questions one at a time (formats, loudness, length, reviewers); write the values into your game profile.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **gameplay-moment-finder:** pick moments from the game's own events and the footage, or by hand when the game logs none. A platformer might pick a hard jump landed, a puzzle game a board cleared, a strategy game a turning-point move, a racing game a last-corner overtake, a narrative game a choice and its result, a farming sim the first harvest.
 4. **multi-aspect-smart-framing-exporter:** reframe each approved cut so the subject, essential UI and captions stay visible, then export and decode every cut, including one interrupted render.
 5. **beat-sync-and-secret-redaction-gate:** time the cut, then review every final export for private or unlicensed material, captions and loudness.

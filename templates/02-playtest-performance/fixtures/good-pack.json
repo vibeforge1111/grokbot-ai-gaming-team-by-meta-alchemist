@@ -1,0 +1,168 @@
+{
+  "packId": "example-playtest-performance-pack",
+  "status": "VALID",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "note": "Synthetic worked example. Not a measurement of any game.",
+  "profile": {
+    "openingBudgetS": 20,
+    "openingShareMin": 0.8,
+    "coreShareMin": 0.8,
+    "requiredViewports": [
+      "phone-portrait",
+      "desktop"
+    ],
+    "crashFreeMin": 0.99,
+    "heapSlopeMax": 1.0,
+    "frameP95BudgetMs": 16.67,
+    "requiredProfiles": [
+      "primary",
+      "desktop"
+    ],
+    "knownSeedsMin": 3,
+    "heldOutSeedsMin": 1
+  },
+  "artifacts": [
+    {
+      "id": "art-opening",
+      "kind": "capture",
+      "path": "captures/opening.json",
+      "sha256": null
+    },
+    {
+      "id": "art-core",
+      "kind": "trace",
+      "path": "traces/core.json",
+      "sha256": null
+    },
+    {
+      "id": "art-scenarios",
+      "kind": "trace",
+      "path": "traces/scenarios.json",
+      "sha256": null
+    },
+    {
+      "id": "art-scenarios-static",
+      "kind": "static",
+      "path": "static/scenarios.json",
+      "sha256": null
+    },
+    {
+      "id": "art-stability",
+      "kind": "trace",
+      "path": "traces/stability.json",
+      "sha256": null
+    },
+    {
+      "id": "art-performance",
+      "kind": "trace",
+      "path": "traces/performance.json",
+      "sha256": null
+    },
+    {
+      "id": "art-coverage",
+      "kind": "static",
+      "path": "static/coverage.json",
+      "sha256": null
+    },
+    {
+      "id": "art-identity",
+      "kind": "static",
+      "path": "static/identity.json",
+      "sha256": null
+    }
+  ],
+  "metrics": {
+    "opening": {
+      "durationS": [
+        8,
+        9,
+        10
+      ],
+      "completedShare": 1.0,
+      "artifact": "art-opening",
+      "measuredCases": 3
+    },
+    "core": {
+      "viewportsCompleted": [
+        "phone-portrait",
+        "desktop"
+      ],
+      "completedShare": 1.0,
+      "artifact": "art-core",
+      "measuredCases": 3
+    },
+    "scenarios": {
+      "planned": 3,
+      "missingTrace": 0,
+      "failedUnrecorded": 0,
+      "unexplainedFails": 0,
+      "artifact": "art-scenarios",
+      "measuredCases": 3,
+      "artifactsByLine": {
+        "scenarios:2": "art-scenarios-static"
+      }
+    },
+    "stability": {
+      "crashFreeShare": 1.0,
+      "unexplainedErrors": 0,
+      "heapPostCleanupMb": [
+        80,
+        80,
+        79,
+        79,
+        78
+      ],
+      "artifact": "art-stability",
+      "measuredCases": 5
+    },
+    "performance": {
+      "primaryFrameMs": [
+        12.0,
+        12.4,
+        12.8,
+        13.0,
+        13.1,
+        13.2,
+        13.4,
+        13.5,
+        13.6,
+        13.8,
+        14.0,
+        14.1,
+        14.2,
+        14.4,
+        14.5,
+        14.6,
+        14.8,
+        15.0,
+        15.2,
+        15.4
+      ],
+      "extraProfilesOverBudget": 0,
+      "profilesMeasured": [
+        "primary",
+        "desktop"
+      ],
+      "artifact": "art-performance",
+      "measuredCases": 20
+    },
+    "coverage": {
+      "viewportsRun": [
+        "phone-portrait",
+        "desktop"
+      ],
+      "knownSeedsRun": 3,
+      "heldOutSeedsRun": 1,
+      "artifact": "art-coverage",
+      "measuredCases": 3
+    },
+    "identity": {
+      "gitShaPresent": true,
+      "liveShaPresent": true,
+      "artifact": "art-identity",
+      "measuredCases": 1
+    }
+  }
+}

@@ -6,9 +6,9 @@ How the templates fit into game development. One page per template covers when t
 
 ## The backbone
 
-Collect evidence from a playtest, a CI run or a manual capture. Playtest QA (template 02) is coming later. Bug Desk (18) prepares local ticket drafts. A human reviews them and files approved changes in the shared ledger. When several templates run in one game project they pass findings to each other as files; the [team map](../../docs/TEAM-MAP.md) shows who hands what to whom.
+Collect evidence from a playtest, a CI run or a manual capture. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required. Bug Desk (18) prepares local ticket drafts. A human reviews them and files approved changes in the shared ledger. When several templates run in one game project they pass findings to each other as files; the [team map](../../docs/TEAM-MAP.md) shows who hands what to whom.
 
-A first game does not need every row below. The starter team is Game Feel, HUD, Bug Desk, and Producer, in that order. See [Get started with your AI gaming team](../../GETTING-STARTED.md). The stage column further down matches each template's own stage. A 2D game may still use Sprites (17) during a prototype, even though that bot's stage is Production.
+A first game does not need every row below. The starter team is Game Feel, Game Loop, HUD, Bug Desk, and Producer, in that order. See [Get started with your AI gaming team](../../GETTING-STARTED.md). The stage column further down matches each template's own stage. A 2D game may still use Sprites (17) during a prototype, even though that bot's stage is Production.
 
 ```
 build ──> capture ──> evidence pack ──> lens templates grade it ──> findings ──> 18 Bug Desk local draft ──> human reviews and files
@@ -64,6 +64,7 @@ Enforcement is always a human decision. Templates propose; people ban.
 | Template | Stage |
 |---|---|
 | [01 Game Feel](01-game-feel.md) | Prototype, Polish |
+| [02 Playtest and Performance](02-playtest-performance.md) (preview) | Playtest |
 | [05 Game Loop Alchemist](05-game-loop-alchemist.md) | Prototype, Playtest |
 | [03 Prop and Rig](03-prop-rig.md) | Production |
 | [06 Economy Director](06-economy-director.md) | Production, Live |

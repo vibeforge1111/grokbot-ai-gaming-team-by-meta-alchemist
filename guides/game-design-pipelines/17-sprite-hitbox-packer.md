@@ -25,7 +25,7 @@ Template folder: [templates/17-sprite-hitbox-packer](../../templates/17-sprite-h
 ## Recommended process
 
 1. **Set up once:** run `sprite-hitbox-packer-getting-started`. It asks about your art style, packing tool and which features your game has (hit shapes, a height layer, install icons, colour tiers), then helps you write the values into your game profile. A missing feature selects its profile (`no-hit-shapes`, `no-height-layer`, `no-install-icons` or `no-item-tiers`), which you approve before scoring and which goes in `rubricProfile` in the game profile. Those lines read N/A, their points move to the lines that still apply, and the verdict can reach PASS.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **sprite-atlas-packer:** Pack sprites, icons or interface art into atlases with padding and extruded edges so filtering never bleeds, for pixel art or smooth art, and prove they render clean on every device. Also covers install icons if your game ships them.
 4. **sprite-hit-shape-checker:** Check the shapes the game uses to decide what touches what (attack hitboxes, platform collision, pickups, click or tap areas) against the code that really uses them, frame by frame.
 5. **sprite-palette-and-readability-checker:** Check that reward, item or collectible art reads at its displayed size and that colour tiers and palette swaps stay distinct and match the palette rules.

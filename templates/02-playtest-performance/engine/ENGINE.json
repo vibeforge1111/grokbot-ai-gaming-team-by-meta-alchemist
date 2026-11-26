@@ -1,0 +1,16 @@
+{
+ "cmd": [
+  "node",
+  "engine/lens.mjs"
+ ],
+ "meta": [
+  "node",
+  "engine/lens.mjs",
+  "--meta"
+ ],
+ "embed": [
+  "engine/lens-kit.mjs",
+  "engine/lens.mjs",
+  "engine/team-memory.mjs"
+ ]
+}

@@ -25,7 +25,7 @@ Template folder: [templates/18-bug-desk-triage](../../templates/18-bug-desk-tria
 ## Recommended process
 
 1. **Set up once:** run `bug-desk-triage-getting-started`; answer its questions about P0 scopes, the flaky run count and share links; write the answers into your game profile.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **duplicate-report-grouping:** propose candidate duplicate groups from crash reports, error logs, player reports and other templates' findings. The human confirms every merge.
 4. **minimal-repro-builder:** turn a crash, desync or report into a replay that fails on the affected build, shrink it to the smallest input, and keep flaky bugs flaky until they pass the profile's run count.
 5. **severity-and-regression-bisect:** record severity and confidence separately, keep P0 to the profile's scopes, send grading mistakes to the audit fix list, and bisect to the change that caused a regression.

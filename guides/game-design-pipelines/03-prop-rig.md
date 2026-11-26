@@ -26,7 +26,7 @@ Template folder: [templates/03-prop-rig](../../templates/03-prop-rig/). Install 
 ## Recommended process
 
 1. **Set up once:** run `prop-rig-getting-started`. It asks which engine and pipeline you use, which props are in scope and whether the `static-props` rubric profile applies (no prop is held, attached or animated through extreme poses), then helps you write the values into your game profile. You approve the profile before scoring; it goes in `rubricProfile`, the two pose lines then read N/A, their partner lines take each pillar's 20 points, and the verdict can reach PASS.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **procedural-prop-builder:** Build a prop or rig from art references in your engine, with reproducible seeded variation and measurable clearance.
 4. **asset-lod-and-compression-pipeline:** Make simpler and smaller versions of a 3D asset for your target devices and check that its look, animation and collision still match the original.
 5. **turntable-collider-proof:** Use after building a prop or rig: prove its collision shape matches the visible model from every angle and that clearance and grounding hold in real poses.

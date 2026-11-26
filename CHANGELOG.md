@@ -11,9 +11,10 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 - A five minute quickstart on the README, a starter team of four bots in GETTING-STARTED.md (Game Feel, HUD, Bug Desk, Producer) with copy-paste first prompts, and an FAQ.
 - A Start here block on every template README: what it does, when to use it, setup, a first prompt, and the synthetic sample grade. `npm run catalog` refreshes that block and the catalog.
 - README sections for what the kit helps with, how the same plain files work in Grok Bot, Claude, ChatGPT, Codex, Cursor, and Gemini, and what else is in the repo (rubrics, team map, shared memory, validator, versioning, MIT license).
-- A single "set up my AI gaming team" prompt on the README, plus a small starter-four handoff diagram that points at the full team map.
+- A single "set up my AI gaming team" prompt on the README, plus a small starter-team handoff diagram that points at the full team map.
 - [READINESS.md](READINESS.md), an honest status line for every shipping, preview, and missing template.
 - Pipeline pages for preview templates 23 to 28.
+- Playtest and Performance Director (02) as a 0.1.0 preview: journeys, frame time, and a local evidence pack, with honest ship blockers in its README.
 - lens-kit 1.3.1: optional `profile.bands.minCases`. A line with fewer observed cases than that number reads U.
 
 ### Changed
@@ -23,6 +24,7 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 - Game Loop Alchemist (05) and Living AI NPC and Lore (14) are now 1.0.0 shipping. The engine honors `minCases`, the getting-started skills ask for it, and the synthetic examples use three cases per line.
 - GETTING-STARTED.md is written for any chat, not only Grok Bot, and includes a filled first-prompt example.
 - Shipping templates and the starter vendor lens-kit 1.3.1 as a patch release. Templates that do not set `minCases` grade as before.
+- The starter team is now five bots: Game Feel, Game Loop, HUD, Bug Desk, and Producer. Game Loop joins the team. It does not replace Producer.
 
 ### Removed
 

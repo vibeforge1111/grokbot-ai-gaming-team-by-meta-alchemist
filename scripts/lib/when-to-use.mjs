@@ -1,9 +1,10 @@
 // When to use each bot, for the catalog and the Start here blocks.
 // Shipping templates (and the previews that have the line) take it from HOW-TO-USE.md.
-// The six older preview pages have no When line, so the fallback is their stage and summary.
+// Some older preview pages have no When line, so the fallback is their stage and summary.
 // Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 export const PREVIEW_WHEN = {
+  "02-playtest-performance": "After a playable build can be clicked, tapped, or driven through its opening and a core session, and you want a first read of journeys and frame time.",
   "23-support-moderation-desk": "When you are drafting support replies or moderation reviews from local intake.",
   "24-prize-refund-ledger": "When you are reconciling claim, refund, or entitlement records on your own machine.",
   "25-matchmaking-lobby-fill": "When queue fill, wait times, or lobby composition is the question.",

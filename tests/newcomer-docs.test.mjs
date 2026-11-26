@@ -23,14 +23,16 @@ test("the landing page points at the starter guide, the catalog, and the FAQ", (
   assert.doesNotMatch(readme, /[\u2013\u2014]/);
 });
 
-test("the starter guide names the four shipping bots and their real getting-started skills", () => {
+test("the starter guide names the five shipping bots and their real getting-started skills", () => {
   const guide = read("GETTING-STARTED.md");
   for (const bit of [
     "templates/01-game-feel/",
+    "templates/05-game-loop-alchemist/",
     "templates/09-hud-designer/",
     "templates/18-bug-desk-triage/",
     "templates/12-parallel-game-producer/",
     "game-vibes-getting-started",
+    "game-loop-alchemist-getting-started",
     "hud-designer-getting-started",
     "bug-desk-triage-getting-started",
     "parallel-game-producer-getting-started",
@@ -45,7 +47,7 @@ test("every template README has the same Start here shape, and the catalog names
   assert.match(catalog, /When to use/);
   assert.match(catalog, /GETTING-STARTED\.md/);
   const slugs = fs.readdirSync(path.join(ROOT, "templates")).filter((d) => fs.existsSync(path.join(ROOT, "templates", d, "template.json")));
-  assert.ok(slugs.length >= 23);
+  assert.ok(slugs.length >= 24);
   for (const slug of slugs) {
     const man = JSON.parse(read(`templates/${slug}/template.json`));
     const page = read(`templates/${slug}/README.md`);

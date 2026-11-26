@@ -25,7 +25,7 @@ Template folder: [templates/19-presskit-director](../../templates/19-presskit-di
 ## Recommended process
 
 1. **Set up once:** run `store-presskit-getting-started` (it covers every destination, not only Steam); answer its questions one at a time (destinations, spec versions, viewports, pages you control); write the values into your game profile. A game with no web page you control selects the `no-own-web-page` profile, approved before scoring and set as `rubricProfile` in the game profile.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **store-copy-and-metadata-checker:** put the hook on the first screen, back every advertised feature with the build, and check page metadata and share previews on pages you control.
 4. **store-art-format-auditor:** check every required image for each destination against its current spec: a Steam capsule set, an itch.io cover, console key art and tiles, mobile app icons and screenshots, or a website hero image.
 5. **presskit-zip-zero-leak-compiler:** assemble the press page, factsheet, logo pack and current-build media, then scan the final archive for anything private.

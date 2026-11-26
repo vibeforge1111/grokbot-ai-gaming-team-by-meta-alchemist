@@ -6,9 +6,9 @@ Short answers for the first afternoon. The starter path is [Get started with you
 
 ## Which bots should I add first?
 
-Four, in this order: Game Feel (01), HUD (09), Bug Desk (18), Producer (12). They are all shipping bots. Reasons and first prompts are in the getting started guide. What is shipping, preview, or missing is listed in [READINESS.md](READINESS.md).
+Five, in this order: Game Feel (01), Game Loop (05), HUD (09), Bug Desk (18), Producer (12). They are all shipping bots. Game Loop joins the team; it does not replace Producer. Reasons and first prompts are in the getting started guide. What is shipping, preview, or missing is listed in [READINESS.md](READINESS.md).
 
-Do not install all 23 on day one.
+Do not install all 24 on day one.
 
 ## The catalog says Share link coming soon. Did I miss a button?
 
@@ -88,15 +88,15 @@ The sample grade does not need `npm install`. This repo has no dependencies.
 
 ## Why are some numbers missing?
 
-02, 04, 07, 08, and 16 are not in this release. The reasons are in [CHANGELOG.md](CHANGELOG.md). The numbers that are here stay stable, so 03 stays 03 even though 02 is absent.
+04, 07, 08, and 16 are not in this release. The reasons are in [CHANGELOG.md](CHANGELOG.md). The numbers that are here stay stable, so 03 stays 03 even though 04 is absent.
 
-Playtest QA (template 02) is the one people ask about. Until it exists, capture evidence yourself, from a playtest or from CI, and hand it to Bug Desk.
+Playtest and Performance (template 02) is now a preview. You can try it for journeys and frame time. You can still capture evidence yourself, from a playtest or from CI, and hand it to Bug Desk.
 
 ## What does preview mean?
 
 The bot runs and its tests pass. It is not held to the release standard yet. Its README lists what it still needs. Use a preview to try an idea. Do not use it as the grade that decides a release. The starter team does not include a preview.
 
-Templates 23 through 28 also have no pipeline page yet. Use their HOW-TO-USE file. Their install notes mention importing `recipe.json`. If you do not see that action, paste skills the same way as the starter team.
+Preview templates 23 through 28 have pipeline pages. Their install notes mention importing `recipe.json`. If you do not see that action, paste skills the same way as the starter team.
 
 ## The bot says connectors, a bot editor, or a share link
 
@@ -124,6 +124,5 @@ These stay generic until a maintainer confirms them. The pages do not invent Gro
 
 1. The exact app labels for saving a skill, saving memory, and creating a routine. The docs use the chat phrases from [INSTALL.md](INSTALL.md).
 2. Whether preview bots can import `recipe.json` in a bot editor, and what "leave connectors off" refers to. Newcomers are told to paste skills if they do not see an import action.
-3. Live `grokbot://` share links. All 23 bots still say Share link coming soon.
-4. Whether Game Loop (05, now shipping) should replace Producer in the starter four. This pass keeps Producer, because it reads the other three and plans the week. Game Loop stays the optional fifth when the question is the core loop.
+3. Live `grokbot://` share links. All 24 bots still say Share link coming soon.
 5. Pipeline pages for bots 23 through 28. They are not written here, because the repo does not have them yet.
