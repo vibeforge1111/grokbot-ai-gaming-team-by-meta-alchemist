@@ -251,14 +251,18 @@
   "hashAlgo": "gbf-sorted-json-v2",
   "profiles": {
     "account-only": {
-      "reason": "For programs that grant only in-game entitlements (a chapter unlock, a tournament entry) and never collect a payout address. The two payout address lines weigh 0 and their points move to eligibility, approvals and reconciliation.",
+      "reason": "For programs that grant only in-game entitlements and never collect a payout address. The two payout address lines weigh 0 and their points are redistributed by the kit's not-applicable rule.",
       "weights": {
+        "authority-boundaries:1": 12.5,
+        "authority-boundaries:2": 12.5,
+        "eligibility:1": 12.5,
+        "eligibility:2": 12.5,
         "wallet-safety:1": 0,
         "wallet-safety:2": 0,
-        "eligibility:1": 15,
-        "eligibility:2": 15,
-        "authority-boundaries:2": 15,
-        "reconciliation-and-reporting:1": 15
+        "delivery:1": 12.5,
+        "delivery:2": 12.5,
+        "reconciliation-and-reporting:1": 12.5,
+        "reconciliation-and-reporting:2": 12.5
       }
     }
   },
@@ -290,5 +294,5 @@
     ]
   },
   "releaseBlockers": [],
-  "hash": "sha256:03429e182cc15234acd7fae70da010a178cec5b69e181dcee383aaa8fc937ca1"
+  "hash": "sha256:7a7f9d879661d12816bb164f27143bc64308ed08df64cc3771543563937592d2"
 }

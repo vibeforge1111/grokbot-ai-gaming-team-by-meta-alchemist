@@ -30,9 +30,19 @@ export function wilson(k, n, z = 1.96) {
 }
 
 // Cohorts by first-play week (or day with width 1). A D-N rate counts only players whose day N has fully passed.
+export function entrySegments(rows) {
+  const first = new Map();
+  for (const r of rows) {
+    const cur = first.get(r.player);
+    if (!cur || r.day < cur.day) first.set(r.player, { day: r.day, segment: r.segment, conflict: false });
+    else if (r.day === cur.day && r.segment !== cur.segment) cur.conflict = true;
+  }
+  return first;
+}
+
 export function cohorts(rows, today, width = 7) {
-  const first = new Map(), seen = new Map(), seg = new Map();
-  for (const r of rows) { if (!first.has(r.player) || r.day < first.get(r.player)) first.set(r.player, r.day); if (!seen.has(r.player)) seen.set(r.player, new Set()); seen.get(r.player).add(r.day); if (r.segment !== "all") seg.set(r.player, r.segment); }
+  const first = new Map(), seen = new Map(), seg = entrySegments(rows);
+  for (const r of rows) { if (!first.has(r.player) || r.day < first.get(r.player)) first.set(r.player, r.day); if (!seen.has(r.player)) seen.set(r.player, new Set()); seen.get(r.player).add(r.day); }
   const by = new Map();
   for (const [p, f] of first) { const c = Math.floor(f / width) * width; if (!by.has(c)) by.set(c, []); by.get(c).push(p); }
   return [...by.entries()].sort((a, b) => a[0] - b[0]).map(([start, players]) => {
@@ -42,7 +52,7 @@ export function cohorts(rows, today, width = 7) {
       const k = eligible.filter((p) => seen.get(p).has(first.get(p) + d)).length;
       out[`d${d}`] = { n: eligible.length, k, ...wilson(k, eligible.length) };
     }
-    out.segments = {}; for (const p of players) { const s = seg.get(p) || "all"; out.segments[s] = (out.segments[s] || 0) + 1; }
+    out.segments = {}; for (const p of players) { const s = seg.get(p)?.segment || "all"; out.segments[s] = (out.segments[s] || 0) + 1; }
     return out;
   });
 }
@@ -51,9 +61,9 @@ export function cohorts(rows, today, width = 7) {
 export function pooled(cs) { const o = {}; for (const d of DAYS) { const n = cs.reduce((a, c) => a + c[`d${d}`].n, 0), k = cs.reduce((a, c) => a + c[`d${d}`].k, 0); o[`d${d}`] = { n, k, ...wilson(k, n) }; } return o; }
 
 export function bySegment(rows, today) {
-  const segs = [...new Set(rows.map((r) => r.segment))].filter((s) => s !== "all");
-  const players = new Map(); for (const r of rows) if (r.segment !== "all") players.set(r.player, r.segment);
-  return Object.fromEntries(segs.map((s) => [s, pooled(cohorts(rows.filter((r) => players.get(r.player) === s), today))]));
+  const assigned = entrySegments(rows);
+  const segs = [...new Set([...assigned.values()].map((v) => v.segment))].filter((s) => s !== "all");
+  return Object.fromEntries(segs.map((s) => [s, pooled(cohorts(rows.filter((r) => assigned.get(r.player)?.segment === s), today))]));
 }
 
 // Independent recount: walks players one by one, no code shared with cohorts().
@@ -83,7 +93,7 @@ export function packMetrics({ rows, rejected, planted, cs, pool, segs, orc, rep,
   const m = {
     privacy: { measuredCases: planted || 0, artifact: "schema-check", piiAccepted: rows.filter((r) => Object.keys(r).some((k) => PII_FIELDS.includes(k))).length, rawIdsAccepted: rows.filter((r) => !PLAYER_ID.test(r.player)).length, plantedRejected: planted ? rejected.length >= planted : null },
     output: { measuredCases: cs.length, artifact: "report", idsInOutputs: (rep.match(ID_IN_TEXT) || []).length, smallCellsShown: small, individualExports: probe.individualExports, dashes: (rep.match(/[\u2013\u2014]/g) || []).length },
-    authority: { artifact: "probe", forbiddenAttempted: probe.forbiddenAttempted, forbiddenSucceeded: probe.forbiddenSucceeded, writes: probe.writes },
+    authority: { artifact: "probe", forbiddenAttempted: probe.forbiddenAttempted, forbiddenSucceeded: probe.forbiddenSucceeded, writes: probe.writes ?? 0 },
   };
   if (rows.length) {
     m.math = { artifact: "cohort-table", oracleMismatches: mism, cohorts: cs.length, immatureCounted: immature };
@@ -91,7 +101,8 @@ export function packMetrics({ rows, rejected, planted, cs, pool, segs, orc, rep,
     m.data = { artifact: "events", players: new Set(rows.map((r) => r.player)).size, daysCovered: new Set(rows.map((r) => r.day)).size };
     m.ret = { measuredCases: pool.d1.n, artifact: "cohort-table", d1: pool.d1.n >= P.minCellSize ? pool.d1.rate : null, d7: pool.d7.n >= P.minCellSize ? pool.d7.rate : null };
     m.ret30 = {artifact:"cohort-table", measuredCases:pool.d30.n, d30:pool.d30.n >= P.minCellSize ? pool.d30.rate : null};
-    m.segments = { artifact: "interval-table", compared: Object.values(segs).filter(s => s.d1.n >= P.minCellSize && s.d7.n >= P.minCellSize).length };
+    const assigned = entrySegments(rows);
+    m.segments = { artifact: "interval-table", compared: Object.values(segs).filter(s => s.d1.n >= P.minCellSize && s.d7.n >= P.minCellSize).length, conflicts: [...assigned.values()].filter(v => v.conflict).length };
   }
   return m;
 }

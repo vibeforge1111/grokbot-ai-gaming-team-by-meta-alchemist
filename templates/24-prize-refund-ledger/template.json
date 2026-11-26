@@ -4,8 +4,8 @@
   "slug": "24-prize-refund-ledger",
   "name": "Prize, Refund and Entitlement Ledger",
   "shortName": "Ledger",
-  "version": "0.1.0",
-  "status": "preview",
+  "version": "1.0.0",
+  "status": "shipping",
   "summary": "Reconcile local claim histories against owner decisions and fulfillment evidence, then draft a review digest.",
   "stage": "Player operations",
   "credit": "@meta_alchemist",
@@ -33,7 +33,7 @@
     "path": "RUBRIC.json",
     "id": "gbf-24-prize-refund-ledger",
     "version": "1.2.0",
-    "hash": "sha256:03429e182cc15234acd7fae70da010a178cec5b69e181dcee383aaa8fc937ca1"
+    "hash": "sha256:7a7f9d879661d12816bb164f27143bc64308ed08df64cc3771543563937592d2"
   },
   "engine": {
     "cmd": [

@@ -11,7 +11,8 @@
   "embed": [
     "engine/lens-kit.mjs",
     "engine/lens.mjs",
-    "engine/team-memory.mjs"
+    "engine/team-memory.mjs",
+    "engine/write-pack.mjs"
   ],
   "domain": [
     "mobile/check.mjs",
@@ -26,7 +27,10 @@
     "mobile/fixture/project.pbxproj",
     "mobile/fixture/tree.json",
     "mobile/fixture/variables.gradle",
-    "tests/test-safety.mjs"
+    "tests/test-safety.mjs",
+    "engine/write-pack.mjs",
+    "mobile/fixture/pipeline.json",
+    "fixtures/plain-checks.json"
   ],
   "contract": [
     "engine/ENGINE.json",

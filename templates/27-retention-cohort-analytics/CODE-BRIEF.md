@@ -9,7 +9,7 @@ What this file is for: hand it to a coding agent that will write a local adapter
 - Give each player one segment code from the approved list, taken at first play.
 - Record build identity (packId, gitSha, liveSha), source references and observed populations. Print only redacted evidence or review drafts.
 - Verify the adapter with a measured fixture, a failing fixture and an empty capture. The empty capture must grade U, never a pass.
-- Preview gap: the vendored lens kit 1.1.0 has no producer receipt or artifact digests. Keep the exported files beside the pack so a later engine can hash them.
+- Packs are written with `engine/write-pack.mjs` (lens-kit 1.3.1 receipts). Grade a pack from its folder so artifact bytes and the producer receipt are checked.
 
 Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
 

@@ -90,7 +90,9 @@ export function render(items, notes = false) {
 // Usage: node balance/run.mjs [input.json] [--md | --notes]. Without a file it reads the synthetic balance/data/fixture-ledger.json.
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
+import path from "node:path";
 import * as director from "./director.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
 
 export function run(input) {
   const {profile, parameters, requests, observations, referenceValues} = input;
@@ -107,36 +109,57 @@ export function run(input) {
   const ambiguous = items.filter(i => i.ids.length !== 1);
   const choices = resolved.flatMap(i => i.options);
   const models = resolved.filter(i => i.measured);
-  const mismatches = models.flatMap(i => i.options.filter(o => {
-    const row = observations.find(r => r.id === i.ids[0]);
-    return Math.abs(o.prediction / row.observed - o.to / o.from) > 1e-8;
-  })).length;
+  const outcomes = Array.isArray(input.outcomes) ? input.outcomes : null;
+  const outcomeById = new Map((outcomes || []).map(r => [r.id, r]));
+  const compared = outcomes ? models.flatMap(i => {
+    const next = outcomeById.get(i.ids[0]);
+    if (!next || !Number.isFinite(next.observed)) return [];
+    const choice = i.options[i.choice];
+    if (!choice || !Number.isFinite(choice.prediction)) return [];
+    return [{ id: i.ids[0], prediction: choice.prediction, observed: next.observed }];
+  }) : [];
+  const mismatches = compared.filter(r => Math.abs(r.prediction - r.observed) > 1e-6 * Math.max(1, Math.abs(r.prediction))).length;
+  const outlierPct = Number.isFinite(profile.outlierPct) ? profile.outlierPct : 0.2;
+  const outlierRows = observations.filter(row => Math.abs(row.observed - row.target) / row.target >= outlierPct);
   const outcomeRows = observations.map(row => ({id:row.id, difference:row.observed-row.target}));
-  const actions = ["applyPatch","deploy","push","publish"];
+  const audit = input.audit || { forbiddenAttempted: profile.minProbeAttempts, forbiddenSucceeded: 0, repoWrites: 0 };
   const metrics = {
     defs:{artifact:"parameters",parsedParameters:parameters.length, measuredCases:parameters.filter(p => Object.hasOwn(referenceValues,p.id)).length,
       valueMismatches:parameters.filter(p => referenceValues[p.id] !== p.value).length,sourceShaSet:!!input.gitSha},
     map:{artifact:"proposal",measuredCases:items.length,ambiguous:ambiguous.length,ambiguousFlagged:ambiguous.filter(i => i.followUp.includes("owner")).length,unresolvedProposedAsSure:ambiguous.filter(i => i.choice).length},
-    math:{artifact:"model-check",itemsComputed:models.length,oracleMismatches:mismatches},
     telemetry:{artifact:"observations",measuredCases:observations.length,ageDays:observations.length ? Math.max(...observations.map(r => r.ageDays)) : null,
-      observations:observations.reduce((n,r) => n+r.cases,0),outliersListed:outcomeRows.length === observations.length},
+      observations:observations.reduce((n,r) => n+r.cases,0),outliersListed:outlierRows.every(r => outcomeRows.some(o => o.id===r.id))},
     proposals:{artifact:"proposal",items:resolved.length,maxStepPct:Math.round(Math.max(0,...choices.map(o => 100*Math.abs(o.to/o.from-1)))*1e6)/1e6,
-      leversRecommended:resolved.filter(i => i.choice).length,withRollback:resolved.filter(i => i.options.every(o => o.rollback === o.from)).length,
+      leversRecommended:resolved.filter(i => i.choice).length,withRollback:resolved.filter(i => i.options.every(o => o.rollback === (referenceValues[i.ids[0]] ?? o.from))).length,
       withAlternatives:resolved.filter(i => i.options.length >= 2).length,withPrediction:models.length,withFollowUp:resolved.filter(i => i.followUp).length,
       changesOnStaleEvidence:resolved.filter(i => !i.measured && i.choice).length},
-    authority:{artifact:"inspection",forbiddenAttempted:actions.length,forbiddenSucceeded:actions.filter(a => typeof director[a] === "function").length,
-      repoWrites:(fs.readFileSync(new URL("./director.mjs",import.meta.url),"utf8").match(/\b(?:writeFile|appendFile|fetch|spawn|execSync)\s*\(/g) || []).length,defsMutated:Number(JSON.stringify(parameters) !== before),parameterCount:parameters.length},
+    math:{artifact:"model-check",itemsComputed:outcomes ? compared.length : 0,oracleMismatches:outcomes ? mismatches : undefined},
+    authority:{artifact:"inspection",forbiddenAttempted:audit.forbiddenAttempted,forbiddenSucceeded:audit.forbiddenSucceeded,
+      repoWrites:audit.repoWrites ?? 0,defsMutated:Number(JSON.stringify(parameters) !== before),parameterCount:parameters.length},
     notes:{artifact:"notes",measuredCases:items.length,draftLabelled:notes.startsWith("# DRAFT"),datesOrPrices:(notes.match(/\$\d|\d{4}-\d{2}-\d{2}/g)||[]).length,dashes:(notes.match(/[\u2013\u2014]/g)||[]).length}
   };
-  const artifacts = Object.entries({parameters:"static",proposal:"static","model-check":"trace",observations:"trace",inspection:"trace",notes:"static"}).map(([id,kind])=>({id,kind}));
+  const artifacts = [
+    {id:"parameters",kind:"static",path:"artifacts/parameters.json",body:parameters},
+    {id:"proposal",kind:"static",path:"artifacts/proposal.json",body:items},
+    {id:"model-check",kind:"trace",path:"artifacts/model-check.json",body:{compared,mismatches}},
+    {id:"observations",kind:"trace",path:"artifacts/observations.json",body:observations},
+    {id:"inspection",kind:"trace",path:"artifacts/inspection.json",body:audit},
+    {id:"notes",kind:"static",path:"artifacts/notes.md",body:notes},
+  ];
   return {items,notes,md:md+"\nObserved minus target\n"+outcomeRows.map(r => `- ${r.id}: ${r.difference}`).join("\n"),pack:{status:"VALID",packId:input.packId,synthetic:input.synthetic === true,gitSha:input.gitSha,liveSha:input.liveSha,artifacts,profile,metrics}};
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
-  const path = args.find(a => !a.startsWith("--")) || new URL("./data/fixture-ledger.json",import.meta.url);
-  const result = run(JSON.parse(fs.readFileSync(path,"utf8")));
-  console.log(args.includes("--notes") ? result.notes : args.includes("--md") ? result.md : JSON.stringify(result.pack,null,2));
+  const takes = new Set(["--out", "--notes", "--md"]);
+  const inputPath = args.find((a, i) => !a.startsWith("--") && !takes.has(args[i-1])) || fileURLToPath(new URL("./data/fixture-ledger.json",import.meta.url));
+  const result = run(JSON.parse(fs.readFileSync(inputPath,"utf8")));
+  if (args.includes("--live")) result.pack.synthetic = false;
+  const out = args.includes("--out") ? args[args.indexOf("--out")+1] : undefined;
+  if (args.includes("--notes")) console.log(result.notes);
+  else if (args.includes("--md")) console.log(result.md);
+  else if (out) console.log(JSON.stringify(writeEvidencePack(out, result.pack, {producer:"gbf-26-balance-patch-director",profileId:result.pack.profile?.profileId||result.pack.packId,device:result.pack.profile?.device||"balance-export",hook:"parameter-ledger",gameplayArtifact:"observations"}),null,2));
+  else console.log(JSON.stringify(result.pack,null,2));
 }
 ```
 
@@ -148,18 +171,84 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   "packId": "balance-example",
   "gitSha": "example-source",
   "liveSha": "example-build",
-  "profile": {"minParameters": 2, "stepPct": 10, "maxStepPct": 15, "maxLevers": 2, "maxTelemetryAgeDays": 5, "minObservations": 20, "minProbeAttempts": 4},
+  "profile": {
+    "minParameters": 2,
+    "stepPct": 10,
+    "maxStepPct": 15,
+    "maxLevers": 2,
+    "maxTelemetryAgeDays": 5,
+    "minObservations": 20,
+    "minProbeAttempts": 4
+  },
   "parameters": [
-    {"id":"turn-budget","value":8,"unit":"turns","aliases":["round length","duration"]},
-    {"id":"harvest-cycle","value":100,"unit":"seconds","aliases":["growth interval","duration"]},
-    {"id":"hint-delay","value":40,"unit":"seconds","aliases":["hint wait"]}
+    {
+      "id": "turn-budget",
+      "value": 8,
+      "unit": "turns",
+      "aliases": [
+        "round length",
+        "duration"
+      ]
+    },
+    {
+      "id": "harvest-cycle",
+      "value": 100,
+      "unit": "seconds",
+      "aliases": [
+        "growth interval",
+        "duration"
+      ]
+    },
+    {
+      "id": "hint-delay",
+      "value": 40,
+      "unit": "seconds",
+      "aliases": [
+        "hint wait"
+      ]
+    }
   ],
-  "referenceValues": {"turn-budget":8,"harvest-cycle":100,"hint-delay":40},
-  "requests": ["round length","duration","hint wait"],
+  "referenceValues": {
+    "turn-budget": 8,
+    "harvest-cycle": 100,
+    "hint-delay": 40
+  },
+  "requests": [
+    "round length",
+    "duration",
+    "hint wait"
+  ],
   "observations": [
-    {"id":"turn-budget","cases":60,"ageDays":2,"observed":10,"target":8},
-    {"id":"hint-delay","cases":32,"ageDays":1,"observed":30,"target":38}
-  ]
+    {
+      "id": "turn-budget",
+      "cases": 60,
+      "ageDays": 2,
+      "observed": 10,
+      "target": 8
+    },
+    {
+      "id": "hint-delay",
+      "cases": 32,
+      "ageDays": 1,
+      "observed": 30,
+      "target": 38
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "turn-budget",
+      "observed": 9
+    },
+    {
+      "id": "hint-delay",
+      "observed": 33
+    }
+  ],
+  "audit": {
+    "forbiddenAttempted": 4,
+    "forbiddenSucceeded": 0,
+    "repoWrites": 0
+  }
 }
 ```
 
@@ -202,4 +291,86 @@ assert.equal(run(input).pack.metrics.defs.valueMismatches,1);
   const missing = structuredClone(original); delete missing.profile.stepPct;
   assert.throws(() => run(missing)); }
 console.log(JSON.stringify({status:"PASS",suite:"parameter resolution, evidence, prediction, draft and rollback"}));
+```
+
+### engine/write-pack.mjs
+
+```
+// Write a local evidence pack with artifact files and a game-evidence-v1 producer receipt.
+// Created by @meta_alchemist (https://x.com/meta_alchemist). Node 18+, no dependencies.
+// The receipt shape matches shared/lens-kit/lens-kit.mjs verifyLive().
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+
+export function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((k) => [k, canonical(value[k])]));
+  return value;
+}
+
+export function digest(value) {
+  return crypto.createHash("sha256").update(JSON.stringify(canonical(value))).digest("hex");
+}
+
+export function hashFile(file) {
+  const hash = crypto.createHash("sha256");
+  const fd = fs.openSync(file, "r");
+  const buffer = Buffer.alloc(65536);
+  try {
+    let length;
+    while ((length = fs.readSync(fd, buffer, 0, buffer.length, null)) > 0) hash.update(buffer.subarray(0, length));
+    return hash.digest("hex");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+function writeArtifactFile(directory, artifact) {
+  const rel = artifact.path || `artifacts/${artifact.id}.json`;
+  if (path.isAbsolute(rel) || rel.split(/[\\/]/).includes("..")) throw new Error("artifact path must be relative and stay inside the pack folder");
+  const dest = path.join(directory, rel);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  if (artifact.body !== undefined) {
+    const body = artifact.body;
+    fs.writeFileSync(dest, Buffer.isBuffer(body) ? body : typeof body === "string" ? body : JSON.stringify(body, null, 2) + "\n");
+  } else if (!fs.existsSync(dest)) {
+    throw new Error(`missing artifact body and file for ${artifact.id}`);
+  }
+  const { body, ...rest } = artifact;
+  return { ...rest, path: rel, sha256: hashFile(dest) };
+}
+
+// meta: { producer, profileId, device, hook, gameplayArtifact }
+export function writeEvidencePack(directory, pack, meta) {
+  if (!meta?.producer || !meta.profileId || !meta.device || !meta.hook || !meta.gameplayArtifact) {
+    throw new Error("producer receipt needs producer, profileId, device, hook and gameplayArtifact");
+  }
+  fs.mkdirSync(directory, { recursive: true });
+  const artifacts = (pack.artifacts || []).map((a) => writeArtifactFile(directory, a));
+  if (!artifacts.some((a) => a.id === meta.gameplayArtifact && ["capture", "trace"].includes(a.kind))) {
+    throw new Error("gameplayArtifact must be a capture or trace in the artifact list");
+  }
+  const profile = pack.profile || {};
+  const out = {
+    ...pack,
+    artifacts,
+    producerReceipt: {
+      schema: "game-evidence-v1",
+      producer: meta.producer,
+      profileId: meta.profileId,
+      packId: pack.packId,
+      gitSha: pack.gitSha,
+      liveSha: pack.liveSha,
+      device: meta.device,
+      hook: meta.hook,
+      gameplayArtifact: meta.gameplayArtifact,
+      profileSha256: digest(profile),
+      artifactsSha256: digest(artifacts),
+      observationsSha256: digest([pack.metrics ?? {}, pack.receipts ?? {}, pack.judgements ?? {}, pack.populations ?? {}, pack.openP0 ?? 0]),
+    },
+  };
+  fs.writeFileSync(path.join(directory, "pack.json"), JSON.stringify(out, null, 2) + "\n");
+  return out;
+}
 ```

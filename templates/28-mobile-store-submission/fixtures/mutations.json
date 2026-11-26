@@ -1,274 +1,274 @@
 {
-  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
-  "cases": [
-    {
-      "id": "build-config:1#empty-config.measuredCases",
-      "line": "build-config:1",
-      "expect": "U",
-      "set": {
-        "metrics.config.measuredCases": 0
-      }
-    },
-    {
-      "id": "build-config:1#neg1",
-      "line": "build-config:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.config.failures": 1
-      }
-    },
-    {
-      "id": "build-config:1#missing",
-      "line": "build-config:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.config.complete"
-      ]
-    },
-    {
-      "id": "build-config:2#empty-hard.measuredCases",
-      "line": "build-config:2",
-      "expect": "U",
-      "set": {
-        "metrics.hard.measuredCases": 0
-      }
-    },
-    {
-      "id": "build-config:2#neg1",
-      "line": "build-config:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.hard.failures": 1
-      }
-    },
-    {
-      "id": "build-config:2#missing",
-      "line": "build-config:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.hard.complete"
-      ]
-    },
-    {
-      "id": "privacy:1#empty-perm.measuredCases",
-      "line": "privacy:1",
-      "expect": "U",
-      "set": {
-        "metrics.perm.measuredCases": 0
-      }
-    },
-    {
-      "id": "privacy:1#neg1",
-      "line": "privacy:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.perm.failures": 1
-      }
-    },
-    {
-      "id": "privacy:1#missing",
-      "line": "privacy:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.perm.complete"
-      ]
-    },
-    {
-      "id": "privacy:2#empty-privacy.measuredCases",
-      "line": "privacy:2",
-      "expect": "U",
-      "set": {
-        "metrics.privacy.measuredCases": 0
-      }
-    },
-    {
-      "id": "privacy:2#neg1",
-      "line": "privacy:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.privacy.failures": 1
-      }
-    },
-    {
-      "id": "privacy:2#missing",
-      "line": "privacy:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.privacy.complete"
-      ]
-    },
-    {
-      "id": "store-policy:1#empty-billing.measuredCases",
-      "line": "store-policy:1",
-      "expect": "U",
-      "set": {
-        "metrics.billing.measuredCases": 0
-      }
-    },
-    {
-      "id": "store-policy:1#neg1",
-      "line": "store-policy:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.billing.failures": 1
-      }
-    },
-    {
-      "id": "store-policy:1#missing",
-      "line": "store-policy:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.billing.complete"
-      ]
-    },
-    {
-      "id": "store-policy:2#empty-accounts.measuredCases",
-      "line": "store-policy:2",
-      "expect": "U",
-      "set": {
-        "metrics.accounts.measuredCases": 0
-      }
-    },
-    {
-      "id": "store-policy:2#neg1",
-      "line": "store-policy:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.accounts.failures": 1
-      }
-    },
-    {
-      "id": "store-policy:2#missing",
-      "line": "store-policy:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.accounts.complete"
-      ]
-    },
-    {
-      "id": "signing:1#empty-secrets.measuredCases",
-      "line": "signing:1",
-      "expect": "U",
-      "set": {
-        "metrics.secrets.measuredCases": 0
-      }
-    },
-    {
-      "id": "signing:1#neg1",
-      "line": "signing:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.secrets.failures": 1
-      }
-    },
-    {
-      "id": "signing:1#missing",
-      "line": "signing:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.secrets.complete"
-      ]
-    },
-    {
-      "id": "signing:2#empty-signing.measuredCases",
-      "line": "signing:2",
-      "expect": "U",
-      "set": {
-        "metrics.signing.measuredCases": 0
-      }
-    },
-    {
-      "id": "signing:2#neg1",
-      "line": "signing:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.signing.failures": 1
-      }
-    },
-    {
-      "id": "signing:2#missing",
-      "line": "signing:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.signing.complete"
-      ]
-    },
-    {
-      "id": "submission:1#empty-authority.forbiddenAttempted",
-      "line": "submission:1",
-      "expect": "U",
-      "set": {
-        "metrics.authority.forbiddenAttempted": 0
-      }
-    },
-    {
-      "id": "submission:1#neg1",
-      "line": "submission:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.authority.forbiddenSucceeded": 1
-      }
-    },
-    {
-      "id": "submission:1#neg2",
-      "line": "submission:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.authority.toolCalls": 1
-      }
-    },
-    {
-      "id": "submission:1#missing",
-      "line": "submission:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.authority.forbiddenAttempted"
-      ]
-    },
-    {
-      "id": "submission:2#empty-listing.measuredCases",
-      "line": "submission:2",
-      "expect": "U",
-      "set": {
-        "metrics.listing.measuredCases": 0
-      }
-    },
-    {
-      "id": "submission:2#neg1",
-      "line": "submission:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.listing.failures": 1
-      }
-    },
-    {
-      "id": "submission:2#missing",
-      "line": "submission:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.listing.complete"
-      ]
-    }
-  ]
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "build-config:1#empty-config.measuredCases",
+   "line": "build-config:1",
+   "expect": "U",
+   "set": {
+    "metrics.config.measuredCases": 0
+   }
+  },
+  {
+   "id": "build-config:1#neg1",
+   "line": "build-config:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.config.failures": 1
+   }
+  },
+  {
+   "id": "build-config:1#missing",
+   "line": "build-config:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.config.complete"
+   ]
+  },
+  {
+   "id": "build-config:2#empty-hard.measuredCases",
+   "line": "build-config:2",
+   "expect": "U",
+   "set": {
+    "metrics.hard.measuredCases": 0
+   }
+  },
+  {
+   "id": "build-config:2#neg1",
+   "line": "build-config:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.hard.failures": 1
+   }
+  },
+  {
+   "id": "build-config:2#missing",
+   "line": "build-config:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.hard.complete"
+   ]
+  },
+  {
+   "id": "privacy:1#empty-perm.measuredCases",
+   "line": "privacy:1",
+   "expect": "U",
+   "set": {
+    "metrics.perm.measuredCases": 0
+   }
+  },
+  {
+   "id": "privacy:1#neg1",
+   "line": "privacy:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.perm.failures": 1
+   }
+  },
+  {
+   "id": "privacy:1#missing",
+   "line": "privacy:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.perm.complete"
+   ]
+  },
+  {
+   "id": "privacy:2#empty-privacy.measuredCases",
+   "line": "privacy:2",
+   "expect": "U",
+   "set": {
+    "metrics.privacy.measuredCases": 0
+   }
+  },
+  {
+   "id": "privacy:2#neg1",
+   "line": "privacy:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.privacy.failures": 1
+   }
+  },
+  {
+   "id": "privacy:2#missing",
+   "line": "privacy:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.privacy.complete"
+   ]
+  },
+  {
+   "id": "store-policy:1#empty-billing.measuredCases",
+   "line": "store-policy:1",
+   "expect": "U",
+   "set": {
+    "metrics.billing.measuredCases": 0
+   }
+  },
+  {
+   "id": "store-policy:1#neg1",
+   "line": "store-policy:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.billing.failures": 1
+   }
+  },
+  {
+   "id": "store-policy:1#missing",
+   "line": "store-policy:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.billing.complete"
+   ]
+  },
+  {
+   "id": "store-policy:2#empty-accounts.measuredCases",
+   "line": "store-policy:2",
+   "expect": "U",
+   "set": {
+    "metrics.accounts.measuredCases": 0
+   }
+  },
+  {
+   "id": "store-policy:2#neg1",
+   "line": "store-policy:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.accounts.failures": 1
+   }
+  },
+  {
+   "id": "store-policy:2#missing",
+   "line": "store-policy:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.accounts.complete"
+   ]
+  },
+  {
+   "id": "signing:1#empty-secrets.measuredCases",
+   "line": "signing:1",
+   "expect": "U",
+   "set": {
+    "metrics.secrets.measuredCases": 0
+   }
+  },
+  {
+   "id": "signing:1#neg1",
+   "line": "signing:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.secrets.failures": 1
+   }
+  },
+  {
+   "id": "signing:1#missing",
+   "line": "signing:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.secrets.complete"
+   ]
+  },
+  {
+   "id": "signing:2#empty-signing.measuredCases",
+   "line": "signing:2",
+   "expect": "U",
+   "set": {
+    "metrics.signing.measuredCases": 0
+   }
+  },
+  {
+   "id": "signing:2#neg1",
+   "line": "signing:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.signing.failures": 1
+   }
+  },
+  {
+   "id": "signing:2#missing",
+   "line": "signing:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.signing.complete"
+   ]
+  },
+  {
+   "id": "submission:1#empty-authority.forbiddenAttempted",
+   "line": "submission:1",
+   "expect": "U",
+   "set": {
+    "metrics.authority.forbiddenAttempted": 0
+   }
+  },
+  {
+   "id": "submission:1#neg1",
+   "line": "submission:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.authority.forbiddenSucceeded": 1
+   }
+  },
+  {
+   "id": "submission:1#neg2",
+   "line": "submission:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.authority.toolCalls": 1
+   }
+  },
+  {
+   "id": "submission:1#missing",
+   "line": "submission:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.authority.forbiddenAttempted"
+   ]
+  },
+  {
+   "id": "submission:2#empty-listing.measuredCases",
+   "line": "submission:2",
+   "expect": "U",
+   "set": {
+    "metrics.listing.measuredCases": 0
+   }
+  },
+  {
+   "id": "submission:2#neg1",
+   "line": "submission:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.listing.failures": 1
+   }
+  },
+  {
+   "id": "submission:2#missing",
+   "line": "submission:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.listing.complete"
+   ]
+  }
+ ]
 }

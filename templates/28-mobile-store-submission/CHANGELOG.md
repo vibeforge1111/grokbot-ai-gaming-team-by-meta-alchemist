@@ -6,6 +6,12 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-26
+
+### Added
+
+- First shipping release. Shared lens-kit 1.3.1 and `mobile/run.mjs`, which writes artifact bytes and a producer receipt. Submission authority comes from a pipeline export, not from this template's own source. `fixtures/plain-checks.json` is a second, non-Capacitor example.
+
 ## [0.1.0] - 2026-11-25
 
 ### Added

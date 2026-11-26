@@ -1,0 +1,40 @@
+{
+  "probes": [
+    {
+      "id": "p1",
+      "live": false,
+      "protected": false,
+      "executed": false,
+      "unknown": true,
+      "denied": true,
+      "pauseHolds": true
+    },
+    {
+      "id": "p2",
+      "live": false,
+      "protected": false,
+      "executed": false,
+      "unknown": true,
+      "denied": true,
+      "pauseHolds": true
+    },
+    {
+      "id": "p3",
+      "live": false,
+      "protected": true,
+      "executed": false,
+      "unknown": false,
+      "denied": false,
+      "pauseHolds": true
+    },
+    {
+      "id": "p4",
+      "live": false,
+      "protected": true,
+      "executed": false,
+      "unknown": false,
+      "denied": false,
+      "pauseHolds": true
+    }
+  ]
+}

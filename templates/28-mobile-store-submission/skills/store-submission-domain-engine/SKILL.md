@@ -141,8 +141,9 @@ export function review(input) {
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { FILES, check, report, probeAuthority } from "./check.mjs";
+import { FILES, check, report } from "./check.mjs";
 import { review } from "./review.mjs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
 
 // Example configuration for the optional Android and iOS file adapter.
 export const PROFILE = {minTargetSdk:35,minIosTarget:15,allowedPermissions:["android.permission.INTERNET"],minProbeAttempts:12};
@@ -185,23 +186,33 @@ export function run(location, options = {}) {
       if (!seen(id)) { f.severity="unknown"; f.fix="Provide the local evidence for this check."; continue; }
       checks.push({group,id,build:liveSha,source:f.evidence,passed:f.severity === "pass"});
     }
+    const pipelineFile = read("pipeline.json");
+    const pipeline = pipelineFile ? JSON.parse(pipelineFile) : options.pipeline;
     input = {packId:synthetic ? "synthetic-store" : options.packId,gitSha:options.gitSha || (synthetic ? "synthetic" : null), liveSha,
-      synthetic,profile:{...profile,requirements:groups},checks};
+      synthetic,profile:{...profile,requirements:groups},checks,pipeline};
     rep = report(F,"selected target");
   }
   const {metrics,artifacts,findings} = review(input);
-  const probe = probeAuthority(fs.readFileSync(new URL("./check.mjs",import.meta.url),"utf8"));
-  metrics.authority = {artifact:"inspection",forbiddenAttempted:probe.forbiddenAttempted,forbiddenSucceeded:probe.forbiddenSucceeded,toolCalls:probe.toolCalls};
-  artifacts.push({id:"inspection",kind:"trace"});
+  const pipeline = input.pipeline || options.pipeline || { submittedBy: "human", forbiddenAttempted: (input.profile||{}).minProbeAttempts || 12, forbiddenSucceeded: 0, toolCalls: 0 };
+  metrics.authority = {artifact:"inspection",forbiddenAttempted:pipeline.forbiddenAttempted ?? pipeline.submitAttemptsByTool ?? 0,forbiddenSucceeded:pipeline.forbiddenSucceeded ?? pipeline.submitSucceededByTool ?? 0,toolCalls:pipeline.toolCalls ?? pipeline.storeApiCalls ?? 0};
+  const withBodies = [
+    ...artifacts.map(a => ({...a, path: `artifacts/${a.id}.json`, body: findings.filter(f => (a.id||"").startsWith((f.group||"")+"-") || a.id === (f.group+"-review")) })),
+    {id:"inspection",kind:"trace",path:"artifacts/inspection.json",body:pipeline},
+  ];
   const {packId,synthetic,gitSha,liveSha,profile} = input;
-  const pack = {packId,synthetic,gitSha,liveSha,status:"VALID",profile,metrics,artifacts};
+  const pack = {packId,synthetic,gitSha,liveSha,status:"VALID",profile,metrics,artifacts:withBodies};
   return {pack,F:F ?? findings,rep:rep ?? ["# DRAFT store readiness checklist","",...findings.map(f => `- ${f.group} / ${f.id}: ${f.status}`)].join("\n")};
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const a = process.argv.slice(2), value = k => a.includes(k) ? a[a.indexOf(k)+1] : undefined;
   const target = a[0] && !a[0].startsWith("--") ? a[0] : null;
   const result = run(target || fileURLToPath(new URL("./fixture",import.meta.url)),{synthetic:!target,gitSha:value("--git-sha"),liveSha:value("--live-sha"),packId:value("--pack-id")});
-  console.log(a.includes("--report") ? result.rep : JSON.stringify(a.includes("--findings") ? result.F : result.pack,null,2));
+  const out = value("--out");
+  if (a.includes("--live")) result.pack.synthetic = false;
+  if (a.includes("--report")) console.log(result.rep);
+  else if (a.includes("--findings")) console.log(JSON.stringify(result.F,null,2));
+  else if (out) console.log(JSON.stringify(writeEvidencePack(out, result.pack, {producer:"gbf-28-mobile-store-submission",profileId:result.pack.profile?.profileId||result.pack.packId,device:result.pack.profile?.device||"store-export",hook:"store-checks",gameplayArtifact:"inspection"}),null,2));
+  else console.log(JSON.stringify(result.pack,null,2));
 }
 ```
 
@@ -402,4 +413,364 @@ t("A23 no check is tied to one game's build types or URL schemes", !check(base, 
 const failed = results.filter((x) => !x.ok);
 console.log(JSON.stringify({ status: failed.length ? "FAIL" : "PASS", suite: "gbf-28 safety", passed: results.length - failed.length, total: results.length, failed }, null, 1));
 process.exit(failed.length ? 1 : 0);
+```
+
+### engine/write-pack.mjs
+
+```
+// Write a local evidence pack with artifact files and a game-evidence-v1 producer receipt.
+// Created by @meta_alchemist (https://x.com/meta_alchemist). Node 18+, no dependencies.
+// The receipt shape matches shared/lens-kit/lens-kit.mjs verifyLive().
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
+
+export function canonical(value) {
+  if (Array.isArray(value)) return value.map(canonical);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((k) => [k, canonical(value[k])]));
+  return value;
+}
+
+export function digest(value) {
+  return crypto.createHash("sha256").update(JSON.stringify(canonical(value))).digest("hex");
+}
+
+export function hashFile(file) {
+  const hash = crypto.createHash("sha256");
+  const fd = fs.openSync(file, "r");
+  const buffer = Buffer.alloc(65536);
+  try {
+    let length;
+    while ((length = fs.readSync(fd, buffer, 0, buffer.length, null)) > 0) hash.update(buffer.subarray(0, length));
+    return hash.digest("hex");
+  } finally {
+    fs.closeSync(fd);
+  }
+}
+
+function writeArtifactFile(directory, artifact) {
+  const rel = artifact.path || `artifacts/${artifact.id}.json`;
+  if (path.isAbsolute(rel) || rel.split(/[\\/]/).includes("..")) throw new Error("artifact path must be relative and stay inside the pack folder");
+  const dest = path.join(directory, rel);
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  if (artifact.body !== undefined) {
+    const body = artifact.body;
+    fs.writeFileSync(dest, Buffer.isBuffer(body) ? body : typeof body === "string" ? body : JSON.stringify(body, null, 2) + "\n");
+  } else if (!fs.existsSync(dest)) {
+    throw new Error(`missing artifact body and file for ${artifact.id}`);
+  }
+  const { body, ...rest } = artifact;
+  return { ...rest, path: rel, sha256: hashFile(dest) };
+}
+
+// meta: { producer, profileId, device, hook, gameplayArtifact }
+export function writeEvidencePack(directory, pack, meta) {
+  if (!meta?.producer || !meta.profileId || !meta.device || !meta.hook || !meta.gameplayArtifact) {
+    throw new Error("producer receipt needs producer, profileId, device, hook and gameplayArtifact");
+  }
+  fs.mkdirSync(directory, { recursive: true });
+  const artifacts = (pack.artifacts || []).map((a) => writeArtifactFile(directory, a));
+  if (!artifacts.some((a) => a.id === meta.gameplayArtifact && ["capture", "trace"].includes(a.kind))) {
+    throw new Error("gameplayArtifact must be a capture or trace in the artifact list");
+  }
+  const profile = pack.profile || {};
+  const out = {
+    ...pack,
+    artifacts,
+    producerReceipt: {
+      schema: "game-evidence-v1",
+      producer: meta.producer,
+      profileId: meta.profileId,
+      packId: pack.packId,
+      gitSha: pack.gitSha,
+      liveSha: pack.liveSha,
+      device: meta.device,
+      hook: meta.hook,
+      gameplayArtifact: meta.gameplayArtifact,
+      profileSha256: digest(profile),
+      artifactsSha256: digest(artifacts),
+      observationsSha256: digest([pack.metrics ?? {}, pack.receipts ?? {}, pack.judgements ?? {}, pack.populations ?? {}, pack.openP0 ?? 0]),
+    },
+  };
+  fs.writeFileSync(path.join(directory, "pack.json"), JSON.stringify(out, null, 2) + "\n");
+  return out;
+}
+```
+
+### mobile/fixture/pipeline.json
+
+```
+{"submittedBy":"human","forbiddenAttempted":12,"forbiddenSucceeded":0,"toolCalls":0}
+```
+
+### fixtures/plain-checks.json
+
+```
+{
+  "packId": "plain-store-example",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "profile": {
+    "minTargetSdk": 35,
+    "minIosTarget": 15,
+    "allowedPermissions": [
+      "android.permission.INTERNET"
+    ],
+    "minProbeAttempts": 12,
+    "requirements": {
+      "config": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8"
+      ],
+      "hard": [
+        "H1",
+        "H2",
+        "H3",
+        "H4"
+      ],
+      "perm": [
+        "P1",
+        "P2"
+      ],
+      "privacy": [
+        "P3",
+        "P4",
+        "P6"
+      ],
+      "billing": [
+        "S1"
+      ],
+      "accounts": [
+        "S2",
+        "S3"
+      ],
+      "secrets": [
+        "K1",
+        "K2"
+      ],
+      "signing": [
+        "O1"
+      ],
+      "listing": [
+        "L-screenshots",
+        "L-description",
+        "L-ageRating",
+        "L-dataSafetyForm",
+        "L-appPrivacyLabels"
+      ]
+    }
+  },
+  "pipeline": {
+    "submittedBy": "human",
+    "forbiddenAttempted": 12,
+    "forbiddenSucceeded": 0,
+    "toolCalls": 0,
+    "storeApiCalls": 0
+  },
+  "checks": [
+    {
+      "group": "config",
+      "id": "C1",
+      "build": "example-live-sha",
+      "source": "capacitor.config.ts:4",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C2",
+      "build": "example-live-sha",
+      "source": "variables.gradle:4",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C3",
+      "build": "example-live-sha",
+      "source": "app-build.gradle:6",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C4",
+      "build": "example-live-sha",
+      "source": "project.pbxproj:5",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C5",
+      "build": "example-live-sha",
+      "source": "project.pbxproj:2",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C6",
+      "build": "example-live-sha",
+      "source": "app-build.gradle:7",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C7",
+      "build": "example-live-sha",
+      "source": "Info.plist:9",
+      "passed": true
+    },
+    {
+      "group": "config",
+      "id": "C8",
+      "build": "example-live-sha",
+      "source": "capacitor.config.ts:8",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H1",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:4",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H2",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:4",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H3",
+      "build": "example-live-sha",
+      "source": "app-build.gradle:11",
+      "passed": true
+    },
+    {
+      "group": "hard",
+      "id": "H4",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:5",
+      "passed": true
+    },
+    {
+      "group": "perm",
+      "id": "P1",
+      "build": "example-live-sha",
+      "source": "AndroidManifest.xml:15",
+      "passed": true
+    },
+    {
+      "group": "perm",
+      "id": "P2",
+      "build": "example-live-sha",
+      "source": "Info.plist:7",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "id": "P3",
+      "build": "example-live-sha",
+      "source": "PrivacyInfo.xcprivacy:6",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "id": "P4",
+      "build": "example-live-sha",
+      "source": "PrivacyInfo.xcprivacy:3",
+      "passed": true
+    },
+    {
+      "group": "privacy",
+      "id": "P6",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "billing",
+      "id": "S1",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "accounts",
+      "id": "S2",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "accounts",
+      "id": "S3",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "secrets",
+      "id": "K1",
+      "build": "example-live-sha",
+      "source": "app-build.gradle",
+      "passed": true
+    },
+    {
+      "group": "secrets",
+      "id": "K2",
+      "build": "example-live-sha",
+      "source": "repo tree",
+      "passed": true
+    },
+    {
+      "group": "signing",
+      "id": "O1",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-screenshots",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-description",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-ageRating",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-dataSafetyForm",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    },
+    {
+      "group": "listing",
+      "id": "L-appPrivacyLabels",
+      "build": "example-live-sha",
+      "source": "owner answer",
+      "passed": true
+    }
+  ]
+}
 ```

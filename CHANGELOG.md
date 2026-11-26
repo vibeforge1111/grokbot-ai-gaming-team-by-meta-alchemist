@@ -8,6 +8,8 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ### Added
 
+- Support Desk (23), Ledger (24), Matchmaking (25), Balance Patch (26), Retention (27), and App Store (28) are now 1.0.0 shipping. They use shared lens-kit 1.3.1, write a pack with a producer receipt, and grade from owner-supplied intake or exports rather than the template's own source.
+- Playtest and Performance (02) now has `engine/build-pack.mjs` to write a pack and a receipt. It stays preview until it has worked examples from at least two real games and a live capture grade.
 - A five minute quickstart on the README, a starter team of four bots in GETTING-STARTED.md (Game Feel, HUD, Bug Desk, Producer) with copy-paste first prompts, and an FAQ.
 - A Start here block on every template README: what it does, when to use it, setup, a first prompt, and the synthetic sample grade. `npm run catalog` refreshes that block and the catalog.
 - README sections for what the kit helps with, how the same plain files work in Grok Bot, Claude, ChatGPT, Codex, Cursor, and Gemini, and what else is in the repo (rubrics, team map, shared memory, validator, versioning, MIT license).

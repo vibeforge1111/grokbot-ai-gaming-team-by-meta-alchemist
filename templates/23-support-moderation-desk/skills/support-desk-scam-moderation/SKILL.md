@@ -7,7 +7,7 @@ description: "Use when a reported conduct case (a scam attempt, impersonation of
 > - Score only with the rubric embedded in `engine/lens.mjs` (`LENS.rubric`, gbf-23-support-moderation-desk v1.2.0). `node engine/lens.mjs <pack.json>` computes the grade; this skill only gathers evidence for it and never adds points of its own.
 > - Missing evidence is UNMEASURED (0 points, not a defect). A step that did not run is NOT_RUN, never PASS. Never invent a measurement; label every worked example synthetic.
 > - Thresholds and codes come from the owner's profile (`pack.profile`). Treat sample numbers as illustrative.
-> - Preview engine: the vendored lens kit 1.1.0 trusts the metrics a pack declares and does not check artifact bytes or a producer receipt. Say so beside every grade.
+> - Grade a pack from its folder so lens-kit 1.3.1 can check artifact bytes and the producer receipt.
 > Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it. Work only on a working branch. Push only when the human asks and only to that branch. Never push to main. The human merges and deploys. Any feature switch you add is off by default.
 
 # Moderation review
@@ -28,3 +28,12 @@ Rubric lines this informs: `moderation-safety:1` and `moderation-safety:2`.
 ## Output
 
 One moderation review draft per case for the human moderator, and the `mod` counts for the pack.
+
+
+## Worked examples (synthetic)
+
+These are teaching samples, not measurements of a real game. Do not treat them as live evidence.
+
+**Protected-role case.** A redacted report names an account whose role in the owner's list is "moderator." Draft the relevant rule, your confidence, the evidence references, a clear "protected role: yes" line, and two or three proportionate options (for example: take no action pending a second reviewer, or hold the case for the owner). Take no action yourself. `mod.liveActions` and `mod.protectedActions` stay 0.
+
+**Empty or paused queue.** If the owner paused moderation, write no draft and record NOT_RUN. Do not invent a judgement so a line can pass.

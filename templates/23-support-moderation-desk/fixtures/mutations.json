@@ -1,346 +1,346 @@
 {
-  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
-  "cases": [
-    {
-      "id": "authority-boundaries:1#empty-tools.unknownAttempted",
-      "line": "authority-boundaries:1",
-      "expect": "U",
-      "set": {
-        "metrics.tools.unknownAttempted": 0
-      }
-    },
-    {
-      "id": "authority-boundaries:1#neg1",
-      "line": "authority-boundaries:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.tools.privilegedExposed": 1
-      }
-    },
-    {
-      "id": "authority-boundaries:1#neg2",
-      "line": "authority-boundaries:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.tools.unknownDenied": 20
-      }
-    },
-    {
-      "id": "authority-boundaries:1#missing",
-      "line": "authority-boundaries:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.tools.privilegedExposed"
-      ]
-    },
-    {
-      "id": "authority-boundaries:2#empty-redteam.categories",
-      "line": "authority-boundaries:2",
-      "expect": "U",
-      "set": {
-        "metrics.redteam.categories": []
-      }
-    },
-    {
-      "id": "authority-boundaries:2#empty-redteam.cases",
-      "line": "authority-boundaries:2",
-      "expect": "U",
-      "set": {
-        "metrics.redteam.cases": 0
-      }
-    },
-    {
-      "id": "authority-boundaries:2#neg1",
-      "line": "authority-boundaries:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.redteam.failed": 1
-      }
-    },
-    {
-      "id": "authority-boundaries:2#neg2",
-      "line": "authority-boundaries:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.redteam.categories": [
-          "phishing"
-        ]
-      }
-    },
-    {
-      "id": "authority-boundaries:2#missing",
-      "line": "authority-boundaries:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.redteam.failed"
-      ]
-    },
-    {
-      "id": "moderation-safety:1#empty-mod.measuredCases",
-      "line": "moderation-safety:1",
-      "expect": "U",
-      "set": {
-        "metrics.mod.measuredCases": 0
-      }
-    },
-    {
-      "id": "moderation-safety:1#neg1",
-      "line": "moderation-safety:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.mod.liveActions": 1
-      }
-    },
-    {
-      "id": "moderation-safety:1#neg2",
-      "line": "moderation-safety:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.mod.protectedActions": 1
-      }
-    },
-    {
-      "id": "moderation-safety:1#missing",
-      "line": "moderation-safety:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.mod.liveActions"
-      ]
-    },
-    {
-      "id": "moderation-safety:2#empty-mod.measuredCases",
-      "line": "moderation-safety:2",
-      "expect": "U",
-      "set": {
-        "metrics.mod.measuredCases": 0
-      }
-    },
-    {
-      "id": "moderation-safety:2#neg1",
-      "line": "moderation-safety:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.mod.localPauseHolds": false
-      }
-    },
-    {
-      "id": "moderation-safety:2#missing",
-      "line": "moderation-safety:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.mod.localPauseHolds"
-      ]
-    },
-    {
-      "id": "answers:1#empty-kb.entries",
-      "line": "answers:1",
-      "expect": "U",
-      "set": {
-        "metrics.kb.entries": 0
-      }
-    },
-    {
-      "id": "answers:1#neg1",
-      "line": "answers:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.kb.entriesGuardPass": 30
-      }
-    },
-    {
-      "id": "answers:1#neg2",
-      "line": "answers:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.kb.approvedShare": 0
-      }
-    },
-    {
-      "id": "answers:1#missing",
-      "line": "answers:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.kb.entriesGuardPass"
-      ]
-    },
-    {
-      "id": "answers:2#empty-kb.entries",
-      "line": "answers:2",
-      "expect": "U",
-      "set": {
-        "metrics.kb.entries": 0
-      }
-    },
-    {
-      "id": "answers:2#neg1",
-      "line": "answers:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.kb.purchaseRepliesWithoutReview": 1
-      }
-    },
-    {
-      "id": "answers:2#neg2",
-      "line": "answers:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.kb.editResetsApproval": false
-      }
-    },
-    {
-      "id": "answers:2#missing",
-      "line": "answers:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.kb.purchaseRepliesWithoutReview"
-      ]
-    },
-    {
-      "id": "cases-and-drafts:1#empty-cases.measuredCases",
-      "line": "cases-and-drafts:1",
-      "expect": "U",
-      "set": {
-        "metrics.cases.measuredCases": 0
-      }
-    },
-    {
-      "id": "cases-and-drafts:1#neg1",
-      "line": "cases-and-drafts:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.cases.outboundCalls": 1
-      }
-    },
-    {
-      "id": "cases-and-drafts:1#missing",
-      "line": "cases-and-drafts:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.cases.draftsWithRef"
-      ]
-    },
-    {
-      "id": "cases-and-drafts:2#empty-live.sampleCases",
-      "line": "cases-and-drafts:2",
-      "expect": "U",
-      "set": {
-        "metrics.live.sampleCases": 0
-      }
-    },
-    {
-      "id": "cases-and-drafts:2#empty-live.observationDays",
-      "line": "cases-and-drafts:2",
-      "expect": "U",
-      "set": {
-        "metrics.live.observationDays": 0
-      }
-    },
-    {
-      "id": "cases-and-drafts:2#neg1",
-      "line": "cases-and-drafts:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.live.firstResponseP50Min": 60
-      }
-    },
-    {
-      "id": "cases-and-drafts:2#missing",
-      "line": "cases-and-drafts:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.live.observationDays"
-      ]
-    },
-    {
-      "id": "privacy:1#empty-privacy.measuredCases",
-      "line": "privacy:1",
-      "expect": "U",
-      "set": {
-        "metrics.privacy.measuredCases": 0
-      }
-    },
-    {
-      "id": "privacy:1#neg1",
-      "line": "privacy:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.privacy.identifierEchoBlocked": false
-      }
-    },
-    {
-      "id": "privacy:1#neg2",
-      "line": "privacy:1",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.privacy.directContactFirstAllowed": true
-      }
-    },
-    {
-      "id": "privacy:1#missing",
-      "line": "privacy:1",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.privacy.identifierEchoBlocked"
-      ]
-    },
-    {
-      "id": "privacy:2#empty-privacy.measuredCases",
-      "line": "privacy:2",
-      "expect": "U",
-      "set": {
-        "metrics.privacy.measuredCases": 0
-      }
-    },
-    {
-      "id": "privacy:2#neg1",
-      "line": "privacy:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.privacy.retentionDaysSet": false
-      }
-    },
-    {
-      "id": "privacy:2#neg2",
-      "line": "privacy:2",
-      "expect": "fail",
-      "areas": [],
-      "set": {
-        "metrics.privacy.exportHasIdentifiers": true
-      }
-    },
-    {
-      "id": "privacy:2#missing",
-      "line": "privacy:2",
-      "expect": "U",
-      "areas": [],
-      "del": [
-        "metrics.privacy.retentionDaysSet"
-      ]
-    }
-  ]
+ "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+ "cases": [
+  {
+   "id": "authority-boundaries:1#empty-tools.unknownAttempted",
+   "line": "authority-boundaries:1",
+   "expect": "U",
+   "set": {
+    "metrics.tools.unknownAttempted": 0
+   }
+  },
+  {
+   "id": "authority-boundaries:1#neg1",
+   "line": "authority-boundaries:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.tools.privilegedExposed": 1
+   }
+  },
+  {
+   "id": "authority-boundaries:1#neg2",
+   "line": "authority-boundaries:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.tools.unknownDenied": 20
+   }
+  },
+  {
+   "id": "authority-boundaries:1#missing",
+   "line": "authority-boundaries:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.tools.privilegedExposed"
+   ]
+  },
+  {
+   "id": "authority-boundaries:2#empty-redteam.categories",
+   "line": "authority-boundaries:2",
+   "expect": "U",
+   "set": {
+    "metrics.redteam.categories": []
+   }
+  },
+  {
+   "id": "authority-boundaries:2#empty-redteam.cases",
+   "line": "authority-boundaries:2",
+   "expect": "U",
+   "set": {
+    "metrics.redteam.cases": 0
+   }
+  },
+  {
+   "id": "authority-boundaries:2#neg1",
+   "line": "authority-boundaries:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.redteam.failed": 1
+   }
+  },
+  {
+   "id": "authority-boundaries:2#neg2",
+   "line": "authority-boundaries:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.redteam.categories": [
+     "phishing"
+    ]
+   }
+  },
+  {
+   "id": "authority-boundaries:2#missing",
+   "line": "authority-boundaries:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.redteam.failed"
+   ]
+  },
+  {
+   "id": "moderation-safety:1#empty-mod.measuredCases",
+   "line": "moderation-safety:1",
+   "expect": "U",
+   "set": {
+    "metrics.mod.measuredCases": 0
+   }
+  },
+  {
+   "id": "moderation-safety:1#neg1",
+   "line": "moderation-safety:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.mod.liveActions": 1
+   }
+  },
+  {
+   "id": "moderation-safety:1#neg2",
+   "line": "moderation-safety:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.mod.protectedActions": 1
+   }
+  },
+  {
+   "id": "moderation-safety:1#missing",
+   "line": "moderation-safety:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.mod.liveActions"
+   ]
+  },
+  {
+   "id": "moderation-safety:2#empty-mod.measuredCases",
+   "line": "moderation-safety:2",
+   "expect": "U",
+   "set": {
+    "metrics.mod.measuredCases": 0
+   }
+  },
+  {
+   "id": "moderation-safety:2#neg1",
+   "line": "moderation-safety:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.mod.localPauseHolds": false
+   }
+  },
+  {
+   "id": "moderation-safety:2#missing",
+   "line": "moderation-safety:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.mod.localPauseHolds"
+   ]
+  },
+  {
+   "id": "answers:1#empty-kb.entries",
+   "line": "answers:1",
+   "expect": "U",
+   "set": {
+    "metrics.kb.entries": 0
+   }
+  },
+  {
+   "id": "answers:1#neg1",
+   "line": "answers:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.kb.entriesGuardPass": 30
+   }
+  },
+  {
+   "id": "answers:1#neg2",
+   "line": "answers:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.kb.approvedShare": 0
+   }
+  },
+  {
+   "id": "answers:1#missing",
+   "line": "answers:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.kb.entriesGuardPass"
+   ]
+  },
+  {
+   "id": "answers:2#empty-kb.entries",
+   "line": "answers:2",
+   "expect": "U",
+   "set": {
+    "metrics.kb.entries": 0
+   }
+  },
+  {
+   "id": "answers:2#neg1",
+   "line": "answers:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.kb.purchaseRepliesWithoutReview": 1
+   }
+  },
+  {
+   "id": "answers:2#neg2",
+   "line": "answers:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.kb.editResetsApproval": false
+   }
+  },
+  {
+   "id": "answers:2#missing",
+   "line": "answers:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.kb.purchaseRepliesWithoutReview"
+   ]
+  },
+  {
+   "id": "cases-and-drafts:1#empty-cases.measuredCases",
+   "line": "cases-and-drafts:1",
+   "expect": "U",
+   "set": {
+    "metrics.cases.measuredCases": 0
+   }
+  },
+  {
+   "id": "cases-and-drafts:1#neg1",
+   "line": "cases-and-drafts:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.cases.outboundCalls": 1
+   }
+  },
+  {
+   "id": "cases-and-drafts:1#missing",
+   "line": "cases-and-drafts:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.cases.draftsWithRef"
+   ]
+  },
+  {
+   "id": "cases-and-drafts:2#empty-live.sampleCases",
+   "line": "cases-and-drafts:2",
+   "expect": "U",
+   "set": {
+    "metrics.live.sampleCases": 0
+   }
+  },
+  {
+   "id": "cases-and-drafts:2#empty-live.observationDays",
+   "line": "cases-and-drafts:2",
+   "expect": "U",
+   "set": {
+    "metrics.live.observationDays": 0
+   }
+  },
+  {
+   "id": "cases-and-drafts:2#neg1",
+   "line": "cases-and-drafts:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.live.firstResponseP50Min": 60
+   }
+  },
+  {
+   "id": "cases-and-drafts:2#missing",
+   "line": "cases-and-drafts:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.live.observationDays"
+   ]
+  },
+  {
+   "id": "privacy:1#empty-privacy.measuredCases",
+   "line": "privacy:1",
+   "expect": "U",
+   "set": {
+    "metrics.privacy.measuredCases": 0
+   }
+  },
+  {
+   "id": "privacy:1#neg1",
+   "line": "privacy:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.privacy.identifierEchoBlocked": false
+   }
+  },
+  {
+   "id": "privacy:1#neg2",
+   "line": "privacy:1",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.privacy.directContactFirstAllowed": true
+   }
+  },
+  {
+   "id": "privacy:1#missing",
+   "line": "privacy:1",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.privacy.identifierEchoBlocked"
+   ]
+  },
+  {
+   "id": "privacy:2#empty-privacy.measuredCases",
+   "line": "privacy:2",
+   "expect": "U",
+   "set": {
+    "metrics.privacy.measuredCases": 0
+   }
+  },
+  {
+   "id": "privacy:2#neg1",
+   "line": "privacy:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.privacy.retentionDaysSet": false
+   }
+  },
+  {
+   "id": "privacy:2#neg2",
+   "line": "privacy:2",
+   "expect": "fail",
+   "areas": [],
+   "set": {
+    "metrics.privacy.exportHasIdentifiers": true
+   }
+  },
+  {
+   "id": "privacy:2#missing",
+   "line": "privacy:2",
+   "expect": "U",
+   "areas": [],
+   "del": [
+    "metrics.privacy.retentionDaysSet"
+   ]
+  }
+ ]
 }

@@ -6,6 +6,12 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-26
+
+### Added
+
+- First shipping release. Shared lens-kit 1.3.1 and `ledger/import-claim-ledger.mjs`, which writes artifact bytes and a producer receipt from an owner-prepared journal, including claim and wallet checks. Grades come from that journal and an owner audit file, not from this template's own source. The account-only rubric profile follows the kit's not-applicable rule.
+
 ## [0.1.0] - 2026-11-25
 
 ### Added

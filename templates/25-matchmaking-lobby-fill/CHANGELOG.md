@@ -6,6 +6,12 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-26
+
+### Added
+
+- First shipping release. Shared lens-kit 1.3.1 and pack producers (`mm/scenario.mjs`, `mm/import-counts.mjs`) that write artifact bytes and a producer receipt. Silent hours inside the declared window count as zero. The input-queue option is computed from the plan. Authority metrics come from an owner audit or export, not from this template's own source.
+
 ## [0.1.0] - 2026-11-25
 
 ### Added

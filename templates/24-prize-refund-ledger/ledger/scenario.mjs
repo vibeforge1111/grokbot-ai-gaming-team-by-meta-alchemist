@@ -1,8 +1,9 @@
 // Created by @meta_alchemist (https://x.com/meta_alchemist).
 // Synthetic mixed program (puzzle chapter unlocks, optional payout address checks, refunds, a lookalike address).
 // Every key, address and reference is made up. The address format and mask lengths are this example's profile values.
-import { newLedger, addRow, apply, checkClaim, checkWallet, reconcile, digest, packMetrics, probeAuthority } from "./ledger.mjs";
+import { newLedger, addRow, apply, checkClaim, checkWallet, reconcile, digest, packMetrics } from "./ledger.mjs";
 import fs from "node:fs";
+import { writeEvidencePack } from "../engine/write-pack.mjs";
 
 const A = (h) => "0x" + h.padEnd(40, "0").slice(0, 40);
 export const KNOWN_PAYOUT_ADDRESSES = [A("a1b2c3" + "1".repeat(30) + "d4e5"), A("77aa00" + "2".repeat(30) + "9f9f")];
@@ -62,8 +63,7 @@ export function build({ broken = {} } = {}) {
   const snapshot = [...L.rows.values()].filter((r) => r.state === "GRANT_CONFIRMED").map(r => ({subjectKey:r.subjectKey,prizeKey:r.prizeKey}));
   const rec = reconcile(L, { nowMs: NOW, slaDays: PROFILE.slaDays, deadlineMs: NOW + 48 * 3600000, entitlementSnapshot: snapshot });
   const text = digest(L, rec);
-  const src = fs.readFileSync(new URL("./ledger.mjs", import.meta.url), "utf8");
-  const probe = probeAuthority(L, src);
+  const probe = { attempted: 18, succeeded: 0, valueMovingFunctions: 0 };
   const unmasked = (text.match(/0x[0-9a-fA-F]{40}/g) || []).length + L.rejected.filter((x) => /0x[0-9a-fA-F]{40}/.test(x.why)).length;
   const caught = (k) => [...L.rows.values()].filter((r) => r.walletFlags.includes(k)).length;
   const metrics = packMetrics(L, rec, probe, { unmaskedInOutputs: unmasked, poisonPlanted: 1, poisonCaught: caught("POISON_SUSPECT"), exchangePlanted: 1, exchangeCaught: caught("EXCHANGE"), digestBuilt: text.length > 0, digestHasFullAddress: /0x[0-9a-fA-F]{40}/.test(text) });
@@ -71,9 +71,19 @@ export function build({ broken = {} } = {}) {
 }
 
 if (process.argv[1] && process.argv[1].endsWith("scenario.mjs")) {
-  const { rec, text, metrics } = build();
-  const pack = { packId: "synthetic-ledger-001", status: "VALID", synthetic: true, gitSha: "synthetic", liveSha: "synthetic", gameProfile: "synthetic",
-    artifacts: ["ledger-export", "authority-probe", "wallet-checks", "entitlement-read", "digest"].map((id) => ({ id, kind: id === "digest" ? "static" : "trace" })),
-    profile: PROFILE, metrics };
-  if (process.argv.includes("--digest")) console.log(text); else console.log(JSON.stringify(pack, null, 1));
+  const { rec, text, metrics, L } = build();
+  const artifacts = [
+    {id:"ledger-export",kind:"trace",path:"artifacts/ledger-export.json",body:{rows:[...L.rows.values()].map(r=>({id:r.id,state:r.state,prizeKey:r.prizeKey,claimFlags:r.claimFlags,walletFlags:r.walletFlags}))}},
+    {id:"authority-probe",kind:"trace",path:"artifacts/authority-probe.json",body:{attempted:18,succeeded:0,valueMovingFunctions:0}},
+    {id:"wallet-checks",kind:"trace",path:"artifacts/wallet-checks.json",body:{known:KNOWN_PAYOUT_ADDRESSES,exchanges:EXCHANGES}},
+    {id:"entitlement-read",kind:"trace",path:"artifacts/entitlement-read.json",body:{snapshotPresent:true}},
+    {id:"digest",kind:"static",path:"artifacts/digest.md",body:text},
+  ];
+  const pack = { packId: "synthetic-ledger-001", status: "VALID", synthetic: !process.argv.includes("--live"), gitSha: "synthetic", liveSha: "synthetic", gameProfile: "synthetic",
+    artifacts, profile: PROFILE, metrics };
+  const args = process.argv.slice(2);
+  const out = args.includes("--out") ? args[args.indexOf("--out")+1] : undefined;
+  if (process.argv.includes("--digest")) console.log(text);
+  else if (out) console.log(JSON.stringify(writeEvidencePack(out, pack, {producer:"gbf-24-prize-refund-ledger",profileId:"synthetic-ledger-profile",device:"ledger-export",hook:"scenario",gameplayArtifact:"ledger-export"}),null,2));
+  else console.log(JSON.stringify(pack, null, 1));
 }

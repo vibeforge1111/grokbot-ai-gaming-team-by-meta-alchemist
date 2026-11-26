@@ -6,7 +6,7 @@ export const LENS = {
   "rubric": {
     "id": "gbf-24-prize-refund-ledger",
     "version": "1.2.0",
-    "hash": "sha256:03429e182cc15234acd7fae70da010a178cec5b69e181dcee383aaa8fc937ca1",
+    "hash": "sha256:7a7f9d879661d12816bb164f27143bc64308ed08df64cc3771543563937592d2",
     "sampleFields": {
       "ledger": [
         "rows"
