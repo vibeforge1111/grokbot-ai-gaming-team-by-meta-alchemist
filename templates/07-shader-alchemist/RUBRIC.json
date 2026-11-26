@@ -1,0 +1,246 @@
+{
+  "id": "gbf-07-shader-alchemist",
+  "version": "0.1.0",
+  "migration": "Initial 0.1.0 preview: shader grades from owner-supplied evidence.",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "scale": 100,
+  "gameProfile": "your-game-profile@1.0.0",
+  "contribution": "weight * level / 4",
+  "levels": "Levels 0 to 4, or U. U earns zero points and excludes the line weight from measured coverage. Record skipped execution as NOT_RUN.",
+  "verdict": "Report the verdict and coverage beside the grade.",
+  "samplePolicy": "Each computed metric group needs a nonempty population. Use the listed sample arrays or positive integer case counts. For other groups supply a positive integer measuredCases from the capture. Empty or missing evidence earns U.",
+  "source": null,
+  "receiptPolicy": null,
+  "releaseBlockers": null,
+  "pillars": [
+    {
+      "id": "compile",
+      "name": "Compile",
+      "points": 20
+    },
+    {
+      "id": "parity",
+      "name": "Parity",
+      "points": 20
+    },
+    {
+      "id": "budget",
+      "name": "Budget",
+      "points": 20
+    },
+    {
+      "id": "variants",
+      "name": "Variants",
+      "points": 20
+    },
+    {
+      "id": "safety",
+      "name": "Safety",
+      "points": 20
+    }
+  ],
+  "lines": [
+    {
+      "id": "compile:1",
+      "pillar": "Compile",
+      "name": "Required shaders compile without failure",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Required shaders fail to compile",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Compile failures are zero for the required set",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line compile:1"
+      }
+    },
+    {
+      "id": "compile:2",
+      "pillar": "Compile",
+      "name": "Pre-warm stays inside the owner time budget",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Pre-warm is far past the budget, or required variants hitch on first use",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Pre-warm time is inside the owner-set budget",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line compile:2"
+      }
+    },
+    {
+      "id": "parity:1",
+      "pillar": "Parity",
+      "name": "Required backends were compared",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A required backend was skipped",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Every required backend was compared",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line parity:1"
+      }
+    },
+    {
+      "id": "parity:2",
+      "pillar": "Parity",
+      "name": "Backends match, with no silent fallback",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Backends disagree, or a backend silently dropped to a cheaper path",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Parity mismatches and silent fallbacks are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line parity:2"
+      }
+    },
+    {
+      "id": "budget:1",
+      "pillar": "Budget",
+      "name": "GPU time stays inside the owner budget",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "GPU time regularly exceeds the budget",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "p95 GPU time is inside the owner-set budget",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line budget:1"
+      }
+    },
+    {
+      "id": "budget:2",
+      "pillar": "Budget",
+      "name": "Shader memory stays inside the owner budget",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "trace",
+      "anchors": {
+        "0": "Shader memory is far past the budget",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Reported memory is inside the owner-set budget",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line budget:2"
+      }
+    },
+    {
+      "id": "variants:1",
+      "pillar": "Variants",
+      "name": "Required variants were built",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A required variant is missing",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Built variants meet the owner-set minimum",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line variants:1"
+      }
+    },
+    {
+      "id": "variants:2",
+      "pillar": "Variants",
+      "name": "Debug variants are not shipped",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "A debug variant shipped in the intended build",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Debug variants shipped in the build are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line variants:2"
+      }
+    },
+    {
+      "id": "safety:1",
+      "pillar": "Safety",
+      "name": "Shader sources and logs do not contain secrets",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "Keys or secrets appear in shader sources or logs",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "Secret leaks are zero",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line safety:1"
+      }
+    },
+    {
+      "id": "safety:2",
+      "pillar": "Safety",
+      "name": "The pack names its build",
+      "weight": 10,
+      "passAt": 3,
+      "evidence": "static",
+      "anchors": {
+        "0": "The pack is missing a git SHA or a live SHA",
+        "1": "Nominal success is unreliable or major supported cases fail.",
+        "2": "Common path works; material supported edge cases remain.",
+        "3": "All required cases and budgets pass; only minor defects remain.",
+        "4": "The pack records both a git SHA and a live SHA",
+        "U": "UNMEASURED: required evidence missing, stale or wrong build. Earns 0 points, never filed as a defect."
+      },
+      "automatedGate": true,
+      "negativeFixture": {
+        "cmd": "node tests/lens-negative-fixtures.mjs --line safety:2"
+      }
+    }
+  ],
+  "hash": "sha256:a05032c9377be207981311d5a4a4256ddd52e0360dd221c5d79239c3b4ac7cdb"
+}

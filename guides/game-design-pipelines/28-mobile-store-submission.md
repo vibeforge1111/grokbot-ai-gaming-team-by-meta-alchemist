@@ -4,8 +4,6 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Review target-specific evidence and draft a store readiness checklist for a human release owner.
 
-**Status: preview, not shipping.** The template works and its tests pass, but it is not held to the release standard. It still uses lens-kit 1.1.0, it has no pack producer with receipts, the second non-Capacitor example is still missing, and one line probes this template's own code. Use it to draft a checklist. The human submits the build. Do not treat the grade as a release gate. The template README lists the remaining ship blockers.
-
 Template folder: [templates/28-mobile-store-submission](../../templates/28-mobile-store-submission/). Install and prompts: [HOW-TO-USE.md](../../templates/28-mobile-store-submission/HOW-TO-USE.md), [PROMPTS.md](../../templates/28-mobile-store-submission/PROMPTS.md).
 
 ## When to use it

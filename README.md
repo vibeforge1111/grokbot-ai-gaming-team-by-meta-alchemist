@@ -30,14 +30,14 @@ The same paste steps work in any other chat that accepts a long file. More detai
 
 ## What else is in the repo
 
-- 100-point grading rubrics and a small local grader (`engine/lens.mjs`) you can run with Node 18 or newer. See [READINESS.md](READINESS.md) for what is shipping, preview, or still missing.
+- 100-point grading rubrics and a small local grader (`engine/lens.mjs`) you can run with Node 18 or newer. See [READINESS.md](READINESS.md) for what is shipping and what is still preview.
 - A [team map](docs/TEAM-MAP.md) of how helpers hand files to each other, plus shared memory under `.grokbot-team/` in your game project.
 - Engine tests, a kit validator (`npm run check`), versioning rules, and a synthetic worked example in [examples/pixel-pantry/](examples/pixel-pantry/).
 - An MIT license. Please keep the [@meta_alchemist](https://x.com/meta_alchemist) credit if you fork a template or a skill.
 
 ## Five minute quickstart
 
-You do not need all 24 bots. Start with five, in this order: **Game Feel**, **Game Loop**, **HUD**, **Bug Desk**, **Producer**. The reasons, the paste steps, and a first prompt for each one are in [Get started with your AI gaming team](GETTING-STARTED.md).
+You do not need every bot in the kit. Start with five, in this order: **Game Feel**, **Game Loop**, **HUD**, **Bug Desk**, **Producer**. The reasons, the paste steps, and a first prompt for each one are in [Get started with your AI gaming team](GETTING-STARTED.md).
 
 1. Download or clone this repo.
 2. If you have Node 18 or newer, grade the sample. It is synthetic, not your game. From this folder:
@@ -120,7 +120,7 @@ Already running a project and want the longer rollout? Read [ADOPTING.md](ADOPTI
 | [GETTING-STARTED.md](GETTING-STARTED.md) | The starter team, in order, with copy-paste prompts. |
 | [TEMPLATES.md](TEMPLATES.md) | Every bot: purpose, when to use it, and links. |
 | [FAQ.md](FAQ.md) | What to try when you get stuck. |
-| [templates/](templates/) | 23 shipping bots and 1 preview. Each README opens with what it does, setup, a first prompt, and a sample grade. Honest status for every bot, including ones not in the repo yet, is in [READINESS.md](READINESS.md). |
+| [templates/](templates/) | 23 shipping bots and 7 previews. Each README opens with what it does, setup, a first prompt, and a sample grade. Honest status for every bot is in [READINESS.md](READINESS.md). |
 | [docs/](docs/) | How bots share files, shared memory, versions, the skill format, and rubrics. |
 | [guides/](guides/) | Pipelines, using other AI tools, rubrics, and polish. |
 | [examples/pixel-pantry/](examples/pixel-pantry/) | A fictional cooking game, graded before and after fixes. Synthetic. |

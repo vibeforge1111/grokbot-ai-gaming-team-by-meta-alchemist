@@ -1,0 +1,100 @@
+{
+  "packId": "example-04-netcode-swarm-pack",
+  "status": "VALID",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "note": "Synthetic worked example. Not a measurement of any game.",
+  "profile": {
+    "predictionBudgetMs": 80,
+    "interpolationOvershootMax": 0,
+    "authorityOwnedMin": 1,
+    "desyncRateMax": 0.01,
+    "soakMinutesMin": 30,
+    "botScenariosMin": 3
+  },
+  "artifacts": [
+    {
+      "id": "art-prediction",
+      "kind": "trace",
+      "path": "traces/prediction.json",
+      "sha256": null
+    },
+    {
+      "id": "art-authority",
+      "kind": "trace",
+      "path": "traces/authority.json",
+      "sha256": null
+    },
+    {
+      "id": "art-sync",
+      "kind": "trace",
+      "path": "traces/sync.json",
+      "sha256": null
+    },
+    {
+      "id": "art-swarm",
+      "kind": "trace",
+      "path": "traces/swarm.json",
+      "sha256": null
+    },
+    {
+      "id": "art-safety",
+      "kind": "static",
+      "path": "static/safety.json",
+      "sha256": null
+    },
+    {
+      "id": "art-identity",
+      "kind": "static",
+      "path": "static/identity.json",
+      "sha256": null
+    }
+  ],
+  "metrics": {
+    "prediction": {
+      "artifact": "art-prediction",
+      "errorMs": [
+        20,
+        24,
+        30,
+        28,
+        22
+      ],
+      "maxOvershoot": 0,
+      "measuredCases": 5
+    },
+    "authority": {
+      "artifact": "art-authority",
+      "serverOwned": 4,
+      "missingOwned": 0,
+      "clientTrustedValuables": 0,
+      "measuredCases": 4
+    },
+    "sync": {
+      "artifact": "art-sync",
+      "desyncRate": 0.002,
+      "soakMinutes": 45,
+      "measuredCases": 1
+    },
+    "swarm": {
+      "artifact": "art-swarm",
+      "scenariosCompleted": 5,
+      "botsCountedAsPlayers": 0,
+      "botsFlagged": true,
+      "measuredCases": 5
+    },
+    "safety": {
+      "artifact": "art-safety",
+      "piiLeaks": 0,
+      "liveWrites": 0,
+      "measuredCases": 1
+    },
+    "identity": {
+      "artifact": "art-identity",
+      "gitShaPresent": true,
+      "liveShaPresent": true,
+      "measuredCases": 1
+    }
+  }
+}

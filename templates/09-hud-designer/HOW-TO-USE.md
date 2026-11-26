@@ -97,7 +97,7 @@ Before acting, look for these inputs:
 | Input | From | Where to look | If it is missing |
 |---|---|---|---|
 | `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
-| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest, 04 Netcode, 07 Shader, 08 World and Biome, 16 Splat Cleaner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
 | `feel-findings` (optional, ^1.0.0) | 01 Game Feel | `.grokbot-team/artifacts/feel-findings/` | Continue: review the HUD cues for the main actions yourself and write "ASSUMPTION: no feel-findings available" in the report. |
 | `atlas-manifest` (optional, ^1.0.0) | 17 Sprites | `.grokbot-team/artifacts/atlas-manifest/` | Continue without it. Start the report with "ASSUMPTION: no atlas-manifest available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
 | `loop-report` (optional, ^1.0.0) | 05 Game Loop | `.grokbot-team/artifacts/loop-report/` | Continue without it. Start the report with "ASSUMPTION: no loop-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
@@ -106,7 +106,7 @@ After acting, save these outputs as local files for the human to review:
 
 | Output | Format | Where | Read by |
 |---|---|---|---|
-| `hud-capture-set` 1.0.0 | JSON manifest plus lossless PNG screenshots and UI traces | `.grokbot-team/artifacts/hud-capture-set/` | 01 Game Feel, 02 Playtest, 10 Trailer, 11 Environment, 19 Store Page, 21 Access |
+| `hud-capture-set` 1.0.0 | JSON manifest plus lossless PNG screenshots and UI traces | `.grokbot-team/artifacts/hud-capture-set/` | 01 Game Feel, 02 Playtest, 10 Trailer, 11 Environment, 19 Store Page, 21 Access, 30 Clipmaker |
 | `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
 | `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
 

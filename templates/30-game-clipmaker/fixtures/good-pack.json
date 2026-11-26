@@ -1,0 +1,97 @@
+{
+  "packId": "example-30-game-clipmaker-pack",
+  "status": "VALID",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "note": "Synthetic worked example. Not a measurement of any game.",
+  "profile": {
+    "momentsMin": 3,
+    "durationSMin": 4,
+    "durationSMax": 30,
+    "overlapMax": 0,
+    "redactionMissesMax": 0,
+    "rightsMissingMax": 0,
+    "uploads": 0
+  },
+  "artifacts": [
+    {
+      "id": "art-detection",
+      "kind": "trace",
+      "path": "traces/detection.json",
+      "sha256": null
+    },
+    {
+      "id": "art-timing",
+      "kind": "trace",
+      "path": "traces/timing.json",
+      "sha256": null
+    },
+    {
+      "id": "art-clarity",
+      "kind": "static",
+      "path": "static/clarity.json",
+      "sha256": null
+    },
+    {
+      "id": "art-rights",
+      "kind": "static",
+      "path": "static/rights.json",
+      "sha256": null
+    },
+    {
+      "id": "art-safety",
+      "kind": "static",
+      "path": "static/safety.json",
+      "sha256": null
+    },
+    {
+      "id": "art-identity",
+      "kind": "static",
+      "path": "static/identity.json",
+      "sha256": null
+    }
+  ],
+  "metrics": {
+    "detection": {
+      "artifact": "art-detection",
+      "moments": 5,
+      "ranked": true,
+      "measuredCases": 5
+    },
+    "timing": {
+      "artifact": "art-timing",
+      "durationS": [
+        8,
+        12,
+        10,
+        9
+      ],
+      "overlaps": 0,
+      "measuredCases": 4
+    },
+    "clarity": {
+      "artifact": "art-clarity",
+      "unwatchable": 0,
+      "redactionMisses": 0,
+      "measuredCases": 5
+    },
+    "rights": {
+      "artifact": "art-rights",
+      "missing": 0,
+      "sourceBuildPresent": true,
+      "measuredCases": 5
+    },
+    "safety": {
+      "artifact": "art-safety",
+      "uploads": 0,
+      "measuredCases": 1
+    },
+    "identity": {
+      "artifact": "art-identity",
+      "gitShaPresent": true,
+      "liveShaPresent": true,
+      "measuredCases": 1
+    }
+  }
+}

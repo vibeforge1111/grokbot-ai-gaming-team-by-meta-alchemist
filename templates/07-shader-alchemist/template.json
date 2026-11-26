@@ -1,0 +1,87 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-07-shader-alchemist",
+  "slug": "07-shader-alchemist",
+  "name": "TSL and WebGPU Shader Alchemist",
+  "shortName": "Shader",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Grade shader compile, backend parity, and GPU budgets for any engine, then write a local evidence pack and ticket drafts.",
+  "stage": "Production, Polish",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "shader-alchemist-getting-started",
+  "skills": [
+    "shader-alchemist-getting-started",
+    "shader-graph-and-compile-check",
+    "cross-backend-shader-parity-gate",
+    "gpu-budget-and-shader-safety",
+    "shader-alchemist-lens-engine"
+  ],
+  "routines": [
+    "shader-alchemist-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-07-shader-alchemist",
+    "version": "0.1.0",
+    "hash": "sha256:a05032c9377be207981311d5a4a4256ddd52e0360dd221c5d79239c3b4ac7cdb"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "evidence-pack": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "evidence-pack",
+      "version": "1.0.0",
+      "format": "JSON evidence pack plus a local manifest",
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "evidence-pack",
+      "required": false,
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

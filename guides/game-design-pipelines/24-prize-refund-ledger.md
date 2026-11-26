@@ -4,8 +4,6 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Reconcile local claim histories against owner decisions and fulfillment evidence, then draft a review digest.
 
-**Status: preview, not shipping.** The template works and its tests pass, but it is not held to the release standard. It still uses lens-kit 1.1.0. The importer prints a pack without receipts and drops some groups on the real path, and one line probes this template's own code. Use it to reconcile records on your machine. Do not treat the grade as a release gate. The template README lists the remaining ship blockers.
-
 Template folder: [templates/24-prize-refund-ledger](../../templates/24-prize-refund-ledger/). Install and prompts: [HOW-TO-USE.md](../../templates/24-prize-refund-ledger/HOW-TO-USE.md), [PROMPTS.md](../../templates/24-prize-refund-ledger/PROMPTS.md).
 
 ## When to use it

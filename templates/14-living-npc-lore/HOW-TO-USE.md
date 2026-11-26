@@ -98,7 +98,7 @@ Before acting, look for these inputs:
 | Input | From | Where to look | If it is missing |
 |---|---|---|---|
 | `game-profile` (required, ^1.0.0) | the owner | `pack.profile` in the evidence pack, or `.grokbot-team/artifacts/game-profile/` | Ask the getting-started questions and write it with the owner. A missing threshold leaves its line unmeasured, never a default. |
-| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
+| `evidence-pack` (required, ^1.0.0) | the owner, 02 Playtest, 04 Netcode, 07 Shader, 08 World and Biome, 16 Splat Cleaner | the pack path the owner gives, or `.grokbot-team/artifacts/evidence-pack/` | Stop and ask the owner for a pack. Without one there is no grade; record NOT_RUN. |
 | `access-report` (optional, ^1.0.0) | 21 Access | `.grokbot-team/artifacts/access-report/` | Continue without it. Start the report with "ASSUMPTION: no access-report available" and say which checks it would have informed. Leave lines that need it unmeasured. Never invent the missing data. |
 
 After acting, save these outputs as local files for the human to review:

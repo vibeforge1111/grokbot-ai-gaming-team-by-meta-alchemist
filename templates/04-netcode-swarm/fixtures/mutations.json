@@ -1,0 +1,289 @@
+{
+  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+  "cases": [
+    {
+      "id": "prediction:1#empty-prediction.errorMs",
+      "line": "prediction:1",
+      "expect": "U",
+      "set": {
+        "metrics.prediction.errorMs": []
+      }
+    },
+    {
+      "id": "prediction:1#empty-prediction.measuredCases",
+      "line": "prediction:1",
+      "expect": "U",
+      "set": {
+        "metrics.prediction.measuredCases": 0
+      }
+    },
+    {
+      "id": "prediction:1#neg1",
+      "line": "prediction:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.prediction.errorMs": [
+          200,
+          240,
+          280
+        ]
+      }
+    },
+    {
+      "id": "prediction:1#missing",
+      "line": "prediction:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.prediction.errorMs"
+      ]
+    },
+    {
+      "id": "prediction:2#empty-prediction.measuredCases",
+      "line": "prediction:2",
+      "expect": "U",
+      "set": {
+        "metrics.prediction.measuredCases": 0
+      }
+    },
+    {
+      "id": "prediction:2#neg1",
+      "line": "prediction:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.prediction.maxOvershoot": 3
+      }
+    },
+    {
+      "id": "prediction:2#missing",
+      "line": "prediction:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.prediction.maxOvershoot"
+      ]
+    },
+    {
+      "id": "authority:1#empty-authority.measuredCases",
+      "line": "authority:1",
+      "expect": "U",
+      "set": {
+        "metrics.authority.measuredCases": 0
+      }
+    },
+    {
+      "id": "authority:1#neg1",
+      "line": "authority:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.authority.serverOwned": 0,
+        "metrics.authority.missingOwned": 2
+      }
+    },
+    {
+      "id": "authority:1#missing",
+      "line": "authority:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.authority.serverOwned"
+      ]
+    },
+    {
+      "id": "authority:2#empty-authority.measuredCases",
+      "line": "authority:2",
+      "expect": "U",
+      "set": {
+        "metrics.authority.measuredCases": 0
+      }
+    },
+    {
+      "id": "authority:2#neg1",
+      "line": "authority:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.authority.clientTrustedValuables": 2
+      }
+    },
+    {
+      "id": "authority:2#missing",
+      "line": "authority:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.authority.clientTrustedValuables"
+      ]
+    },
+    {
+      "id": "sync:1#empty-sync.measuredCases",
+      "line": "sync:1",
+      "expect": "U",
+      "set": {
+        "metrics.sync.measuredCases": 0
+      }
+    },
+    {
+      "id": "sync:1#neg1",
+      "line": "sync:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.sync.desyncRate": 0.2
+      }
+    },
+    {
+      "id": "sync:1#missing",
+      "line": "sync:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.sync.desyncRate"
+      ]
+    },
+    {
+      "id": "sync:2#empty-sync.measuredCases",
+      "line": "sync:2",
+      "expect": "U",
+      "set": {
+        "metrics.sync.measuredCases": 0
+      }
+    },
+    {
+      "id": "sync:2#neg1",
+      "line": "sync:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.sync.soakMinutes": 5
+      }
+    },
+    {
+      "id": "sync:2#missing",
+      "line": "sync:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.sync.soakMinutes"
+      ]
+    },
+    {
+      "id": "swarm:1#empty-swarm.measuredCases",
+      "line": "swarm:1",
+      "expect": "U",
+      "set": {
+        "metrics.swarm.measuredCases": 0
+      }
+    },
+    {
+      "id": "swarm:1#neg1",
+      "line": "swarm:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.swarm.scenariosCompleted": 0
+      }
+    },
+    {
+      "id": "swarm:1#missing",
+      "line": "swarm:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.swarm.scenariosCompleted"
+      ]
+    },
+    {
+      "id": "swarm:2#empty-swarm.measuredCases",
+      "line": "swarm:2",
+      "expect": "U",
+      "set": {
+        "metrics.swarm.measuredCases": 0
+      }
+    },
+    {
+      "id": "swarm:2#neg1",
+      "line": "swarm:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.swarm.botsCountedAsPlayers": 4,
+        "metrics.swarm.botsFlagged": false
+      }
+    },
+    {
+      "id": "swarm:2#missing",
+      "line": "swarm:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.swarm.botsCountedAsPlayers"
+      ]
+    },
+    {
+      "id": "safety:1#empty-safety.measuredCases",
+      "line": "safety:1",
+      "expect": "U",
+      "set": {
+        "metrics.safety.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:1#neg1",
+      "line": "safety:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.safety.piiLeaks": 2
+      }
+    },
+    {
+      "id": "safety:1#missing",
+      "line": "safety:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.safety.piiLeaks"
+      ]
+    },
+    {
+      "id": "safety:2#empty-identity.measuredCases",
+      "line": "safety:2",
+      "expect": "U",
+      "set": {
+        "metrics.identity.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:2#empty-safety.measuredCases",
+      "line": "safety:2",
+      "expect": "U",
+      "set": {
+        "metrics.safety.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:2#neg1",
+      "line": "safety:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.identity.gitShaPresent": false,
+        "metrics.identity.liveShaPresent": false,
+        "metrics.safety.liveWrites": 1
+      }
+    },
+    {
+      "id": "safety:2#missing",
+      "line": "safety:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.identity.gitShaPresent"
+      ]
+    }
+  ]
+}

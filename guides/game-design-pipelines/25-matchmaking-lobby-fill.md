@@ -4,8 +4,6 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Measure queue fill, wait times and bot representation and draft alternatives for a human queue owner.
 
-**Status: preview, not shipping.** The template works and its tests pass, but it is not held to the release standard. It still uses lens-kit 1.1.0, it has no pack producer with receipts, averages can ignore silent hours, and some lines probe this template's own code. Use it to draft queue options. Do not treat the grade as a release gate. The template README lists the remaining ship blockers.
-
 Template folder: [templates/25-matchmaking-lobby-fill](../../templates/25-matchmaking-lobby-fill/). Install and prompts: [HOW-TO-USE.md](../../templates/25-matchmaking-lobby-fill/HOW-TO-USE.md), [PROMPTS.md](../../templates/25-matchmaking-lobby-fill/PROMPTS.md).
 
 ## When to use it

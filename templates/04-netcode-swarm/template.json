@@ -1,0 +1,87 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-04-netcode-swarm",
+  "slug": "04-netcode-swarm",
+  "name": "Multiplayer Netcode and Bot-Swarm Director",
+  "shortName": "Netcode",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Grade prediction, authority, desync, and bot-swarm load for any multiplayer game, then write a local evidence pack and ticket drafts.",
+  "stage": "Production, Playtest",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "netcode-swarm-getting-started",
+  "skills": [
+    "netcode-swarm-getting-started",
+    "authoritative-prediction-and-interpolation-audit",
+    "headless-bot-swarm-load-tester",
+    "netcode-desync-and-soak-proof",
+    "netcode-swarm-lens-engine"
+  ],
+  "routines": [
+    "netcode-swarm-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-04-netcode-swarm",
+    "version": "0.1.0",
+    "hash": "sha256:d7b839256c87bd31331607986e3c31637529747f542495078c2beb8f7813eff4"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "fairness-findings": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "evidence-pack",
+      "version": "1.0.0",
+      "format": "JSON evidence pack plus a local manifest",
+      "schema": "spec/artifacts/evidence-pack.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "fairness-findings",
+      "required": false,
+      "schema": "spec/artifacts/fairness-findings.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

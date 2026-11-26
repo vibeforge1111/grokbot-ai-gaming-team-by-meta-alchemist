@@ -4,8 +4,6 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Measure mature return cohorts with uncertainty ranges and draft a privacy-preserving review.
 
-**Status: preview, not shipping.** The template works and its tests pass, but it is not held to the release standard. It still uses lens-kit 1.1.0, it has no pack producer with receipts, segment assignment can depend on row order, and some lines probe this template's own code or planted rows. Use it to draft a cohort read. Do not treat the grade as a release gate. The template README lists the remaining ship blockers.
-
 Template folder: [templates/27-retention-cohort-analytics](../../templates/27-retention-cohort-analytics/). Install and prompts: [HOW-TO-USE.md](../../templates/27-retention-cohort-analytics/HOW-TO-USE.md), [PROMPTS.md](../../templates/27-retention-cohort-analytics/PROMPTS.md).
 
 ## When to use it

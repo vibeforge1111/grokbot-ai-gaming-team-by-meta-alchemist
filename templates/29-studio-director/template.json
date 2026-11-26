@@ -1,0 +1,99 @@
+{
+  "$schema": "../../spec/template.schema.json",
+  "kitVersion": 1,
+  "id": "gbf-29-studio-director",
+  "slug": "29-studio-director",
+  "name": "Studio Director",
+  "shortName": "Studio",
+  "version": "0.1.0",
+  "status": "preview",
+  "summary": "Grade cinematic continuity, shot coverage, and a local export plan for any game, then write a work plan and ticket drafts. Trailer Director still covers trailer cuts; this bot plans the shoot or stills sequence.",
+  "stage": "Ship, Production",
+  "credit": "@meta_alchemist",
+  "creditUrl": "https://x.com/meta_alchemist",
+  "install": {
+    "grokBotShareLink": "pending review",
+    "shareLinkStatus": "pending review"
+  },
+  "gettingStarted": "studio-director-getting-started",
+  "skills": [
+    "studio-director-getting-started",
+    "continuity-and-coverage-board",
+    "runtime-and-rights-check",
+    "studio-export-plan-and-safety",
+    "studio-director-lens-engine"
+  ],
+  "routines": [
+    "studio-director-weekly-grade"
+  ],
+  "rubric": {
+    "path": "RUBRIC.json",
+    "id": "gbf-29-studio-director",
+    "version": "0.1.0",
+    "hash": "sha256:95c433ab89b6bb9eb8b5fcdedca04d4d155aa68af4da2573b50103967cad1eb4"
+  },
+  "engine": {
+    "cmd": "node engine/lens.mjs",
+    "goodPack": "fixtures/good-pack.json"
+  },
+  "teamSpec": "1.0.0",
+  "compat": {
+    "teamSpec": "^1.0.0",
+    "consumes": {
+      "game-profile": "^1.0.0",
+      "clip-list": "^1.0.0",
+      "pitch-draft": "^1.0.0"
+    }
+  },
+  "produces": [
+    {
+      "artifact": "work-plan",
+      "version": "1.0.0",
+      "format": "JSON work plan",
+      "schema": "spec/artifacts/work-plan.schema.json"
+    },
+    {
+      "artifact": "media-export-manifest",
+      "version": "1.0.0",
+      "format": "JSON manifest plus the exported video and still files",
+      "schema": "spec/artifacts/media-export-manifest.schema.json"
+    },
+    {
+      "artifact": "grade-record",
+      "version": "1.0.0",
+      "format": "JSON (the engine's grade record)",
+      "schema": "spec/artifacts/grade-record.schema.json"
+    },
+    {
+      "artifact": "ticket-draft",
+      "version": "1.0.0",
+      "format": "JSON or Markdown local draft",
+      "schema": "spec/artifacts/ticket-draft.schema.json"
+    }
+  ],
+  "consumes": [
+    {
+      "artifact": "game-profile",
+      "required": true,
+      "schema": "spec/artifacts/game-profile.schema.json"
+    },
+    {
+      "artifact": "clip-list",
+      "required": false,
+      "schema": "spec/artifacts/clip-list.schema.json"
+    },
+    {
+      "artifact": "pitch-draft",
+      "required": false,
+      "schema": "spec/artifacts/pitch-draft.schema.json"
+    }
+  ],
+  "memory": {
+    "reads": [
+      "decisions"
+    ],
+    "writes": [
+      "decisions"
+    ]
+  }
+}

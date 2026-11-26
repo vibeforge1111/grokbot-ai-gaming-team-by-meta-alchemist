@@ -57,7 +57,7 @@ After acting, save these outputs as local files for the human to review:
 
 | Output | Format | Where | Read by |
 |---|---|---|---|
-| `evidence-pack` 1.0.0 | JSON evidence pack plus a local manifest | `.grokbot-team/artifacts/evidence-pack/` | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 09 HUD, 10 Trailer, 11 Environment, 12 Producer, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 17 Sprites, 18 Bug Desk, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 00 Starter |
+| `evidence-pack` 1.0.0 | JSON evidence pack plus a local manifest | `.grokbot-team/artifacts/evidence-pack/` | 01 Game Feel, 03 Prop and Rig, 05 Game Loop, 06 Economy, 07 Shader, 09 HUD, 10 Trailer, 11 Environment, 12 Producer, 13 Audio, 14 NPC and Lore, 15 Server Fairness, 16 Splat Cleaner, 17 Sprites, 18 Bug Desk, 19 Store Page, 20 Patch Notes, 21 Access, 22 Live Service, 23 Support Desk, 24 Ledger, 25 Matchmaking, 26 Balance Patch, 27 Retention, 28 App Store, 30 Clipmaker, 00 Starter |
 | `grade-record` 1.0.0 | JSON (the engine's grade record) | `.grokbot-team/artifacts/grade-record/` | 12 Producer |
 | `ticket-draft` 1.0.0 | JSON or Markdown local draft | `.grokbot-team/artifacts/ticket-draft/` | 12 Producer, 18 Bug Desk |
 

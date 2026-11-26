@@ -1,0 +1,100 @@
+{
+  "packId": "example-08-world-biome-pack",
+  "status": "VALID",
+  "gitSha": "example-git-sha",
+  "liveSha": "example-live-sha",
+  "synthetic": true,
+  "note": "Synthetic worked example. Not a measurement of any game.",
+  "profile": {
+    "knownSeedsMin": 2,
+    "heldOutSeedsMin": 1,
+    "mismatchMax": 0,
+    "coverGapsMax": 0,
+    "unwalkableTrapsMax": 0,
+    "streamBudgetMsMax": 50,
+    "densityLow": 0.5,
+    "densityHigh": 2,
+    "unfairSpawnsMax": 0
+  },
+  "artifacts": [
+    {
+      "id": "art-seed",
+      "kind": "static",
+      "path": "static/seed.json",
+      "sha256": null
+    },
+    {
+      "id": "art-layout",
+      "kind": "static",
+      "path": "static/layout.json",
+      "sha256": null
+    },
+    {
+      "id": "art-traversal",
+      "kind": "trace",
+      "path": "traces/traversal.json",
+      "sha256": null
+    },
+    {
+      "id": "art-encounters",
+      "kind": "trace",
+      "path": "traces/encounters.json",
+      "sha256": null
+    },
+    {
+      "id": "art-safety",
+      "kind": "static",
+      "path": "static/safety.json",
+      "sha256": null
+    },
+    {
+      "id": "art-identity",
+      "kind": "static",
+      "path": "static/identity.json",
+      "sha256": null
+    }
+  ],
+  "metrics": {
+    "seed": {
+      "artifact": "art-seed",
+      "knownRun": 3,
+      "heldOutRun": 1,
+      "mismatches": 0,
+      "measuredCases": 3
+    },
+    "layout": {
+      "artifact": "art-layout",
+      "biomeGaps": 0,
+      "coverGaps": 0,
+      "measuredCases": 2
+    },
+    "traversal": {
+      "artifact": "art-traversal",
+      "unwalkableTraps": 0,
+      "streamMs": [
+        12,
+        16,
+        18,
+        14
+      ],
+      "measuredCases": 4
+    },
+    "encounters": {
+      "artifact": "art-encounters",
+      "density": 1.1,
+      "unfairSpawns": 0,
+      "measuredCases": 2
+    },
+    "safety": {
+      "artifact": "art-safety",
+      "piiLeaks": 0,
+      "measuredCases": 1
+    },
+    "identity": {
+      "artifact": "art-identity",
+      "gitShaPresent": true,
+      "liveShaPresent": true,
+      "measuredCases": 1
+    }
+  }
+}

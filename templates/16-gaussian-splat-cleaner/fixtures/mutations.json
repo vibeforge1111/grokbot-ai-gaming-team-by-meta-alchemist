@@ -1,0 +1,275 @@
+{
+  "note": "Generated from the lens spec. Measured failures drop below pass. Empty or missing samples give U. Release-blocker cases require BLOCKED and grade 0.",
+  "cases": [
+    {
+      "id": "cleanup:1#empty-cleanup.measuredCases",
+      "line": "cleanup:1",
+      "expect": "U",
+      "set": {
+        "metrics.cleanup.measuredCases": 0
+      }
+    },
+    {
+      "id": "cleanup:1#neg1",
+      "line": "cleanup:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.cleanup.floatersLeft": 12
+      }
+    },
+    {
+      "id": "cleanup:1#missing",
+      "line": "cleanup:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.cleanup.floatersLeft"
+      ]
+    },
+    {
+      "id": "cleanup:2#empty-cleanup.measuredCases",
+      "line": "cleanup:2",
+      "expect": "U",
+      "set": {
+        "metrics.cleanup.measuredCases": 0
+      }
+    },
+    {
+      "id": "cleanup:2#neg1",
+      "line": "cleanup:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.cleanup.beforeAfterReviewed": false
+      }
+    },
+    {
+      "id": "cleanup:2#missing",
+      "line": "cleanup:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.cleanup.beforeAfterReviewed"
+      ]
+    },
+    {
+      "id": "continuity:1#empty-continuity.measuredCases",
+      "line": "continuity:1",
+      "expect": "U",
+      "set": {
+        "metrics.continuity.measuredCases": 0
+      }
+    },
+    {
+      "id": "continuity:1#neg1",
+      "line": "continuity:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.continuity.seamBreaks": 4
+      }
+    },
+    {
+      "id": "continuity:1#missing",
+      "line": "continuity:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.continuity.seamBreaks"
+      ]
+    },
+    {
+      "id": "continuity:2#empty-continuity.measuredCases",
+      "line": "continuity:2",
+      "expect": "U",
+      "set": {
+        "metrics.continuity.measuredCases": 0
+      }
+    },
+    {
+      "id": "continuity:2#neg1",
+      "line": "continuity:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.continuity.sameCapture": false
+      }
+    },
+    {
+      "id": "continuity:2#missing",
+      "line": "continuity:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.continuity.sameCapture"
+      ]
+    },
+    {
+      "id": "budget:1#empty-budget.measuredCases",
+      "line": "budget:1",
+      "expect": "U",
+      "set": {
+        "metrics.budget.measuredCases": 0
+      }
+    },
+    {
+      "id": "budget:1#neg1",
+      "line": "budget:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.budget.splatCount": 20000000
+      }
+    },
+    {
+      "id": "budget:1#missing",
+      "line": "budget:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.budget.splatCount"
+      ]
+    },
+    {
+      "id": "budget:2#empty-budget.measuredCases",
+      "line": "budget:2",
+      "expect": "U",
+      "set": {
+        "metrics.budget.measuredCases": 0
+      }
+    },
+    {
+      "id": "budget:2#neg1",
+      "line": "budget:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.budget.measured": false
+      }
+    },
+    {
+      "id": "budget:2#missing",
+      "line": "budget:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.budget.measured"
+      ]
+    },
+    {
+      "id": "navigation:1#empty-navigation.measuredCases",
+      "line": "navigation:1",
+      "expect": "U",
+      "set": {
+        "metrics.navigation.measuredCases": 0
+      }
+    },
+    {
+      "id": "navigation:1#neg1",
+      "line": "navigation:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.navigation.holes": 3
+      }
+    },
+    {
+      "id": "navigation:1#missing",
+      "line": "navigation:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.navigation.holes"
+      ]
+    },
+    {
+      "id": "navigation:2#empty-navigation.measuredCases",
+      "line": "navigation:2",
+      "expect": "U",
+      "set": {
+        "metrics.navigation.measuredCases": 0
+      }
+    },
+    {
+      "id": "navigation:2#neg1",
+      "line": "navigation:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.navigation.proxyPresent": false
+      }
+    },
+    {
+      "id": "navigation:2#missing",
+      "line": "navigation:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.navigation.proxyPresent"
+      ]
+    },
+    {
+      "id": "safety:1#empty-safety.measuredCases",
+      "line": "safety:1",
+      "expect": "U",
+      "set": {
+        "metrics.safety.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:1#neg1",
+      "line": "safety:1",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.safety.sourceOverwrites": 1
+      }
+    },
+    {
+      "id": "safety:1#missing",
+      "line": "safety:1",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.safety.sourceOverwrites"
+      ]
+    },
+    {
+      "id": "safety:2#empty-identity.measuredCases",
+      "line": "safety:2",
+      "expect": "U",
+      "set": {
+        "metrics.identity.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:2#empty-safety.measuredCases",
+      "line": "safety:2",
+      "expect": "U",
+      "set": {
+        "metrics.safety.measuredCases": 0
+      }
+    },
+    {
+      "id": "safety:2#neg1",
+      "line": "safety:2",
+      "expect": "fail",
+      "areas": [],
+      "set": {
+        "metrics.identity.gitShaPresent": false,
+        "metrics.identity.liveShaPresent": false,
+        "metrics.safety.piiLeaks": 2
+      }
+    },
+    {
+      "id": "safety:2#missing",
+      "line": "safety:2",
+      "expect": "U",
+      "areas": [],
+      "del": [
+        "metrics.identity.gitShaPresent"
+      ]
+    }
+  ]
+}
