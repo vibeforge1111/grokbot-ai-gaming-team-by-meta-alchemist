@@ -6,6 +6,15 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-11-26
+
+### Added
+
+- First shipping release. `profile.bands.minCases` is now in the engine and in the getting-started profile. A line with fewer observed cases than that number reads U.
+- The synthetic worked example uses three cases per line and `minCases` 3. For generated dialogue, the getting-started skill asks for at least that many runs of each probe.
+- Vendored lens-kit 1.3.1.
+
+
 ## [0.1.0] - 2026-11-25
 
 ### Added

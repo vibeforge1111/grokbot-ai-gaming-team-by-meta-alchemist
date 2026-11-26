@@ -5,7 +5,7 @@
   "slug": "18-bug-desk-triage",
   "name": "Playtest Bug Desk & Repro Triage Director",
   "shortName": "Bug Desk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Turn playtest observations into reproducible local issue drafts, group duplicate reports and verify fixes against the affected build.",
   "stage": "Playtest, Live",

@@ -5,7 +5,7 @@
   "slug": "21-access-input-localization",
   "name": "Access, Input and Localization QA",
   "shortName": "Access",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Check whether players can navigate, read and control your game across supported inputs, languages and accessibility settings.",
   "stage": "Polish, Ship",

@@ -2,7 +2,7 @@
 
 Created by [@meta_alchemist](https://x.com/meta_alchemist).
 
-This is the page to read if you just found the kit and want an AI game-dev team in Grok Bot. You do not need every bot. You do not need to understand the rubric yet.
+This is the page to read if you just found the kit and want a small AI game-dev team. You do not need every bot. You do not need to understand the rubric yet. The same files work in Grok Bot, Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat that can paste a long file.
 
 Add four shipping bots, in order. Each one is a folder of skill files. Shipping means it is held to the release standard. A preview bot works, and its tests pass, but it is not held to that standard yet. Leave previews until you want them.
 
@@ -33,15 +33,15 @@ Pick at most one.
 | 2D art, sprites, or hitboxes | Sprites | [17-sprite-hitbox-packer](templates/17-sprite-hitbox-packer/) |
 | Rewards, currencies, or progression | Economy | [06-economy-director](templates/06-economy-director/) |
 | Sound is how the player knows an action worked | Audio | [13-audio-director](templates/13-audio-director/) |
-| The open question is "why take another turn?" | Game Loop (preview) | [05-game-loop-alchemist](templates/05-game-loop-alchemist/) |
+| The open question is "why take another turn?" | Game Loop | [05-game-loop-alchemist](templates/05-game-loop-alchemist/) |
 
-Game Loop is a preview. Use it to try the question. Do not treat its grade as a release gate.
+Game Loop is now shipping. Use it when that is the open question. Set `minCases` in the profile so a thin sample reads U.
 
 Wait on Server Fairness, store pages, trailers, matchmaking, retention, and app store submission. They are in the [catalog](TEMPLATES.md) for later.
 
 ## What you need
 
-- Grok Bot, and a chat where you can paste a long file.
+- A chat where you can paste a long file. Grok Bot is one option. Claude, ChatGPT, Codex, Cursor, Gemini, and other chats work with the same files. See the table in [README.md](README.md#works-with-any-ai-not-just-grok-bot) and [INSTALL.md](INSTALL.md) Option C.
 - This repo on your computer (a download or a git clone).
 - One game, even a rough one. A title, a genre, and one action the player repeats are enough.
 - Node 18 or newer, only if you want to print a sample grade yourself. The bots do not require it for the first conversation.
@@ -58,7 +58,9 @@ The getting-started skill is named `game-vibes-getting-started`. It is not named
 
 ### Paste the skills
 
-Open `templates/01-game-feel/skills/`. For each skill, copy the whole `SKILL.md` into a Grok Bot chat and say:
+If you are not using Grok Bot, put or paste the same `SKILL.md` files where your tool reads skills or instructions. The order below is the same. Grok Bot phrases such as "Save this as a skill." are the confirmed chat phrases for that app. In another tool, follow [INSTALL.md](INSTALL.md) Option C or the README table, then paste the first prompt.
+
+If you are using Grok Bot, open `templates/01-game-feel/skills/`. For each skill, copy the whole `SKILL.md` into a chat and say:
 
 > Save this as a skill.
 
@@ -88,6 +90,18 @@ Run the game-vibes-getting-started skill. Ask me one question at a time. My game
 Replace the angle brackets, or leave them and answer when the bot asks.
 
 A rubric profile is a switch for a line that does not fit your game. Game Feel can set aside aiming, off-screen hazards, or online prediction. It asks you before it turns one on. If you do not have a number yet, say so. A missing measurement is marked unmeasured. It is not filled in with a guess.
+
+### A filled example
+
+You might paste this (Pixel Pantry is the kit's fictional cooking game; you can swap in your own title):
+
+```
+Run the game-vibes-getting-started skill. Ask me one question at a time. My game is Pixel Pantry, a browser cooking game. The build to grade is a local folder called builds/pixel-pantry-0.3, and evidence packs come from a manual capture. I do not have aiming, off-screen hazards, or online play.
+```
+
+The bot should ask one question, then wait. A first question might be which build testers actually play, or which rubric profiles apply. If you do not know a number, say so. The bot must not invent a measurement.
+
+The sample grade below is from Game Feel's synthetic pack. It is not a grade of Pixel Pantry and it is not a grade of your game.
 
 ### Sample grade
 
@@ -200,7 +214,7 @@ A worked example of HUD and Bug Desk on a fictional cooking game is [examples/pi
 
 | Word | Plain meaning |
 |---|---|
-| Template, bot | The same thing: one folder you add to Grok Bot. |
+| Template, bot | The same thing: one folder of skills and prompts you add to your chat. |
 | Skill | One `SKILL.md` file. You paste it and ask the bot to save it. |
 | Short name | What the rest of the kit calls the bot (Game Feel, HUD, Bug Desk, Producer). |
 | Full name | The title at the top of the folder (for example Game Vibes Director). |
@@ -215,6 +229,7 @@ A worked example of HUD and Bug Desk on a fictional cooking game is [examples/pi
 
 ## Where to go next
 
+- What is ready, preview, or missing: [READINESS.md](READINESS.md)
 - Every bot, with when to use it: [TEMPLATES.md](TEMPLATES.md)
 - Paste steps written once, for any bot: [INSTALL.md](INSTALL.md)
 - Stuck on a grade or a name: [FAQ.md](FAQ.md)

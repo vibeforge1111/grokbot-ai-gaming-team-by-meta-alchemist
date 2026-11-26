@@ -12,7 +12,8 @@
     "bands": {
       "floor": 0.5,
       "pass": 0.75,
-      "target": 1
+      "target": 1,
+      "minCases": 3
     },
     "role": "route guide",
     "memoryBoundary": "chapter close",
@@ -192,6 +193,16 @@
           "caseId": "recall-1",
           "expected": "heard signal",
           "recalled": "heard signal"
+        },
+        {
+          "caseId": "recall-1-x2",
+          "expected": "heard signal",
+          "recalled": "heard signal"
+        },
+        {
+          "caseId": "recall-1-x3",
+          "expected": "heard signal",
+          "recalled": "heard signal"
         }
       ]
     },
@@ -200,6 +211,14 @@
       "samples": [
         {
           "caseId": "expiry-1",
+          "forgotten": true
+        },
+        {
+          "caseId": "expiry-1-x2",
+          "forgotten": true
+        },
+        {
+          "caseId": "expiry-1-x3",
           "forgotten": true
         }
       ]
@@ -210,6 +229,14 @@
         {
           "caseId": "knowledge-1",
           "withheld": true
+        },
+        {
+          "caseId": "knowledge-1-x2",
+          "withheld": true
+        },
+        {
+          "caseId": "knowledge-1-x3",
+          "withheld": true
         }
       ]
     },
@@ -218,6 +245,16 @@
       "samples": [
         {
           "caseId": "belief-1",
+          "expected": "route uncertain",
+          "asserted": "route uncertain"
+        },
+        {
+          "caseId": "belief-1-x2",
+          "expected": "route uncertain",
+          "asserted": "route uncertain"
+        },
+        {
+          "caseId": "belief-1-x3",
           "expected": "route uncertain",
           "asserted": "route uncertain"
         }
@@ -230,6 +267,16 @@
           "caseId": "intent-1",
           "expected": "point to inlet",
           "actual": "point to inlet"
+        },
+        {
+          "caseId": "intent-1-x2",
+          "expected": "point to inlet",
+          "actual": "point to inlet"
+        },
+        {
+          "caseId": "intent-1-x3",
+          "expected": "point to inlet",
+          "actual": "point to inlet"
         }
       ]
     },
@@ -240,6 +287,16 @@
           "caseId": "repair-1",
           "expected": "ask for direction",
           "actual": "ask for direction"
+        },
+        {
+          "caseId": "repair-1-x2",
+          "expected": "ask for direction",
+          "actual": "ask for direction"
+        },
+        {
+          "caseId": "repair-1-x3",
+          "expected": "ask for direction",
+          "actual": "ask for direction"
         }
       ]
     },
@@ -248,6 +305,16 @@
       "samples": [
         {
           "caseId": "version-1",
+          "expected": "inlet open",
+          "claim": "inlet open"
+        },
+        {
+          "caseId": "version-1-x2",
+          "expected": "inlet open",
+          "claim": "inlet open"
+        },
+        {
+          "caseId": "version-1-x3",
           "expected": "inlet open",
           "claim": "inlet open"
         }
@@ -263,6 +330,10 @@
         {
           "caseId": "after-signal",
           "legal": true
+        },
+        {
+          "caseId": "before-signal-x3",
+          "legal": true
         }
       ]
     },
@@ -276,6 +347,22 @@
           "firstRef": "run-A/turn-A3",
           "secondRef": "run-C/turn-C3",
           "seed": "route-a"
+        },
+        {
+          "caseId": "replay-1-x2",
+          "first": "point to inlet",
+          "second": "point to inlet",
+          "firstRef": "run-A/turn-A3",
+          "secondRef": "run-C/turn-C3",
+          "seed": "route-a"
+        },
+        {
+          "caseId": "replay-1-x3",
+          "first": "point to inlet",
+          "second": "point to inlet",
+          "firstRef": "run-A/turn-A3",
+          "secondRef": "run-C/turn-C3",
+          "seed": "route-a"
         }
       ]
     },
@@ -284,6 +371,26 @@
       "samples": [
         {
           "caseId": "heldout-1",
+          "expected": "route ahead",
+          "readback": "route ahead",
+          "reviewRole": "channel reviewer",
+          "turnRef": "held-out/H2",
+          "reason": "The hand points down the route.",
+          "scenario": "unvisited inlet",
+          "channel": "gesture"
+        },
+        {
+          "caseId": "heldout-1-x2",
+          "expected": "route ahead",
+          "readback": "route ahead",
+          "reviewRole": "channel reviewer",
+          "turnRef": "held-out/H2",
+          "reason": "The hand points down the route.",
+          "scenario": "unvisited inlet",
+          "channel": "gesture"
+        },
+        {
+          "caseId": "heldout-1-x3",
           "expected": "route ahead",
           "readback": "route ahead",
           "reviewRole": "channel reviewer",

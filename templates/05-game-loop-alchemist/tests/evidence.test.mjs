@@ -122,3 +122,17 @@ test("offline producer receipt binds profile, observations and artifact bytes", 
     rmSync(dir, {recursive: true, force: true});
   }
 });
+
+test("a line with fewer observed cases than profile.bands.minCases reads U", () => {
+  const pack = fresh();
+  assert.equal(pack.profile.bands.minCases, 3);
+  const [id, spec] = Object.entries(LENS.lines)[0];
+  const group = Object.keys(spec.neg[0])[0].split(".")[1];
+  pack.metrics[group].samples = pack.metrics[group].samples.slice(0, 1);
+  const thin = grade(LENS, pack).lines.find(line => line.id === id);
+  assert.equal(thin.level, "U");
+  assert.match(thin.reason, /minCases/);
+  const bad = grade(LENS, {...pack, profile: {...pack.profile, bands: {...pack.profile.bands, minCases: 0}}});
+  assert.equal(bad.verdict, "INVALID");
+  assert.match(bad.reason, /minCases/);
+});

@@ -20,9 +20,9 @@ const dirs = [
   ...starters.map((name) => path.join(ROOT, "starter", name)),
 ];
 
-test("release contains exactly the 15 shipping and 8 preview template IDs and the starter", () => {
-  const shipping = ["01", "03", "06", "09", "10", "11", "12", "13", "15", "17", "18", "19", "20", "21", "22"];
-  const preview = ["05", "14", "23", "24", "25", "26", "27", "28"];
+test("release contains exactly the 17 shipping and 6 preview template IDs and the starter", () => {
+  const shipping = ["01", "03", "05", "06", "09", "10", "11", "12", "13", "14", "15", "17", "18", "19", "20", "21", "22"];
+  const preview = ["23", "24", "25", "26", "27", "28"];
   const byStatus = { shipping: [], preview: [] };
   for (const name of templates) {
     const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "templates", name, "template.json"), "utf8"));

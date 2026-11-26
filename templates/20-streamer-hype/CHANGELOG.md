@@ -6,6 +6,13 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-26
+
+### Changed
+
+- Vendored lens-kit 1.3.1, which can treat a line as unmeasured when `profile.bands.minCases` is set and the line has fewer observed cases than that number. Templates that do not set `minCases` grade as before.
+
+
 ## [1.0.0] - 2026-11-25
 
 ### Added

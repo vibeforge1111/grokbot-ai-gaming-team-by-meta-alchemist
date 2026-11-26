@@ -2,11 +2,7 @@
 
 Created by @meta_alchemist (https://x.com/meta_alchemist).
 
-**Status: preview, not shipping.** This template works and its tests pass, but it is not yet held to the kit's release standard.
-
-Before it can ship:
-
-- **Minimum sample size.** Today one observed case can earn level 4 on a line. The engine needs a profile setting (`profile.bands.minCases`) so a line backed by fewer observed cases reads U. This matters most for generated (AI) dialogue, where one good run proves little. Until then, treat any line with fewer cases than your test plan calls for as provisional, and say so in the report.
+A line with fewer observed cases than `profile.bands.minCases` reads U, even if those cases would have passed. The getting-started skill asks you to set this number. The synthetic example uses 3. For generated dialogue, run each probe at least that many times.
 
 Design what an NPC can remember, how it responds and which version of a world fact it may reveal. Audit those decisions against scoped transcripts and traces. The narrative lead gets a local memory policy, a branching dialogue draft, a canon exception list and a replay report.
 

@@ -12,12 +12,21 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 - A Start here block on every template README: what it does, when to use it, setup, a first prompt, and the synthetic sample grade. `npm run catalog` refreshes that block and the catalog.
 - README sections for what the kit helps with, how the same plain files work in Grok Bot, Claude, ChatGPT, Codex, Cursor, and Gemini, and what else is in the repo (rubrics, team map, shared memory, validator, versioning, MIT license).
 - A single "set up my AI gaming team" prompt on the README, plus a small starter-four handoff diagram that points at the full team map.
-- A README hero banner (`docs/images/hero-banner.png`) and a GitHub social preview image (`docs/images/social-preview.png`). Set the social preview in the repository Settings page; the API cannot do that.
+- [READINESS.md](READINESS.md), an honest status line for every shipping, preview, and missing template.
+- Pipeline pages for preview templates 23 to 28.
+- lens-kit 1.3.1: optional `profile.bands.minCases`. A line with fewer observed cases than that number reads U.
 
 ### Changed
 
 - The template catalog now shows the short name, the full name, and when to use each bot, and it points newcomers at the starter team before the full table.
 - Human-facing docs now say **Share link coming soon** when no live `grokbot://` id exists. Setup always leads with the paste steps. Importing `recipe.json` is mentioned only as an optional alternative if you see that action.
+- Game Loop Alchemist (05) and Living AI NPC and Lore (14) are now 1.0.0 shipping. The engine honors `minCases`, the getting-started skills ask for it, and the synthetic examples use three cases per line.
+- GETTING-STARTED.md is written for any chat, not only Grok Bot, and includes a filled first-prompt example.
+- Shipping templates and the starter vendor lens-kit 1.3.1 as a patch release. Templates that do not set `minCases` grade as before.
+
+### Removed
+
+- The README hero banner and the unused `docs/images/` files. The visuals were not a good fit. This pass focuses on content and readiness.
 
 ## [1.0.1] - 2026-11-25
 

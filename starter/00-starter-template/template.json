@@ -5,7 +5,7 @@
   "slug": "00-starter-template",
   "name": "First Session Director (starter)",
   "shortName": "Starter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Starter example: grades the first session of a game for time to fun, clarity, friction, stability and a reason to return.",
   "stage": "Prototype, Playtest",

@@ -20,6 +20,16 @@
       "caseId": "recall-1",
       "expected": "heard signal",
       "recalled": "unknown"
+     },
+     {
+      "caseId": "recall-1-x2",
+      "expected": "heard signal",
+      "recalled": "unknown"
+     },
+     {
+      "caseId": "recall-1-x3",
+      "expected": "heard signal",
+      "recalled": "unknown"
      }
     ]
    }
@@ -50,6 +60,14 @@
     "metrics.expiry.samples": [
      {
       "caseId": "expiry-1",
+      "forgotten": false
+     },
+     {
+      "caseId": "expiry-1-x2",
+      "forgotten": false
+     },
+     {
+      "caseId": "expiry-1-x3",
       "forgotten": false
      }
     ]
@@ -82,6 +100,14 @@
      {
       "caseId": "knowledge-1",
       "withheld": false
+     },
+     {
+      "caseId": "knowledge-1-x2",
+      "withheld": false
+     },
+     {
+      "caseId": "knowledge-1-x3",
+      "withheld": false
      }
     ]
    }
@@ -112,6 +138,16 @@
     "metrics.belief.samples": [
      {
       "caseId": "belief-1",
+      "expected": "route uncertain",
+      "asserted": "route clear"
+     },
+     {
+      "caseId": "belief-1-x2",
+      "expected": "route uncertain",
+      "asserted": "route clear"
+     },
+     {
+      "caseId": "belief-1-x3",
       "expected": "route uncertain",
       "asserted": "route clear"
      }
@@ -146,6 +182,16 @@
       "caseId": "intent-1",
       "expected": "point to inlet",
       "actual": "end exchange"
+     },
+     {
+      "caseId": "intent-1-x2",
+      "expected": "point to inlet",
+      "actual": "end exchange"
+     },
+     {
+      "caseId": "intent-1-x3",
+      "expected": "point to inlet",
+      "actual": "end exchange"
      }
     ]
    }
@@ -176,6 +222,16 @@
     "metrics.repair.samples": [
      {
       "caseId": "repair-1",
+      "expected": "ask for direction",
+      "actual": "repeat unknown"
+     },
+     {
+      "caseId": "repair-1-x2",
+      "expected": "ask for direction",
+      "actual": "repeat unknown"
+     },
+     {
+      "caseId": "repair-1-x3",
       "expected": "ask for direction",
       "actual": "repeat unknown"
      }
@@ -210,6 +266,16 @@
       "caseId": "version-1",
       "expected": "inlet open",
       "claim": "inlet sealed"
+     },
+     {
+      "caseId": "version-1-x2",
+      "expected": "inlet open",
+      "claim": "inlet sealed"
+     },
+     {
+      "caseId": "version-1-x3",
+      "expected": "inlet open",
+      "claim": "inlet sealed"
      }
     ]
    }
@@ -241,6 +307,14 @@
      {
       "caseId": "reveal-1",
       "legal": false
+     },
+     {
+      "caseId": "reveal-1-x2",
+      "legal": false
+     },
+     {
+      "caseId": "reveal-1-x3",
+      "legal": false
      }
     ]
    }
@@ -271,6 +345,22 @@
     "metrics.replay.samples": [
      {
       "caseId": "replay-1",
+      "first": "point to inlet",
+      "second": "warn away",
+      "firstRef": "run-A/turn-A3",
+      "secondRef": "run-C/turn-C3",
+      "seed": "route-a"
+     },
+     {
+      "caseId": "replay-1-x2",
+      "first": "point to inlet",
+      "second": "warn away",
+      "firstRef": "run-A/turn-A3",
+      "secondRef": "run-C/turn-C3",
+      "seed": "route-a"
+     },
+     {
+      "caseId": "replay-1-x3",
       "first": "point to inlet",
       "second": "warn away",
       "firstRef": "run-A/turn-A3",
@@ -313,6 +403,26 @@
       "reason": "The hand points down the route.",
       "scenario": "unvisited inlet",
       "channel": "gesture"
+     },
+     {
+      "caseId": "heldout-1-x2",
+      "expected": "route ahead",
+      "readback": "cannot proceed",
+      "reviewRole": "channel reviewer",
+      "turnRef": "held-out/H2",
+      "reason": "The hand points down the route.",
+      "scenario": "unvisited inlet",
+      "channel": "gesture"
+     },
+     {
+      "caseId": "heldout-1-x3",
+      "expected": "route ahead",
+      "readback": "cannot proceed",
+      "reviewRole": "channel reviewer",
+      "turnRef": "held-out/H2",
+      "reason": "The hand points down the route.",
+      "scenario": "unvisited inlet",
+      "channel": "gesture"
      }
     ]
    }
@@ -335,6 +445,14 @@
      {
       "caseId": "expiry-1",
       "forgotten": false
+     },
+     {
+      "caseId": "expiry-1-x2",
+      "forgotten": false
+     },
+     {
+      "caseId": "expiry-1-x3",
+      "forgotten": false
      }
     ]
    }
@@ -348,6 +466,14 @@
      {
       "caseId": "knowledge-1",
       "withheld": false
+     },
+     {
+      "caseId": "knowledge-1-x2",
+      "withheld": false
+     },
+     {
+      "caseId": "knowledge-1-x3",
+      "withheld": false
      }
     ]
    }
@@ -360,6 +486,14 @@
     "metrics.reveal.samples": [
      {
       "caseId": "reveal-1",
+      "legal": false
+     },
+     {
+      "caseId": "reveal-1-x2",
+      "legal": false
+     },
+     {
+      "caseId": "reveal-1-x3",
       "legal": false
      }
     ]

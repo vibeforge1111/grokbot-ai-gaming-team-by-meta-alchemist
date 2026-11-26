@@ -5,7 +5,7 @@
   "slug": "13-audio-director",
   "name": "Sound Effects & Adaptive Music Director",
   "shortName": "Audio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "status": "shipping",
   "summary": "Review sound effects, music transitions and mix levels against your game's feedback needs and device budgets.",
   "stage": "Polish",

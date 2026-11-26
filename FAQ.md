@@ -6,7 +6,7 @@ Short answers for the first afternoon. The starter path is [Get started with you
 
 ## Which bots should I add first?
 
-Four, in this order: Game Feel (01), HUD (09), Bug Desk (18), Producer (12). They are all shipping bots. Reasons and first prompts are in the getting started guide.
+Four, in this order: Game Feel (01), HUD (09), Bug Desk (18), Producer (12). They are all shipping bots. Reasons and first prompts are in the getting started guide. What is shipping, preview, or missing is listed in [READINESS.md](READINESS.md).
 
 Do not install all 23 on day one.
 
@@ -125,5 +125,5 @@ These stay generic until a maintainer confirms them. The pages do not invent Gro
 1. The exact app labels for saving a skill, saving memory, and creating a routine. The docs use the chat phrases from [INSTALL.md](INSTALL.md).
 2. Whether preview bots can import `recipe.json` in a bot editor, and what "leave connectors off" refers to. Newcomers are told to paste skills if they do not see an import action.
 3. Live `grokbot://` share links. All 23 bots still say Share link coming soon.
-4. Whether Game Loop (05, a preview) should replace Producer in the starter four. This pass keeps Producer, because it is shipping and it reads the other three. Game Loop is the optional fifth when the question is the core loop.
+4. Whether Game Loop (05, now shipping) should replace Producer in the starter four. This pass keeps Producer, because it reads the other three and plans the week. Game Loop stays the optional fifth when the question is the core loop.
 5. Pipeline pages for bots 23 through 28. They are not written here, because the repo does not have them yet.

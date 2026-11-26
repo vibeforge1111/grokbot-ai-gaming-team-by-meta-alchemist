@@ -123,7 +123,8 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
     "bands": {
       "floor": 0.5,
       "pass": 0.75,
-      "target": 1
+      "target": 1,
+      "minCases": 3
     },
     "cohort": "first phrase",
     "window": "optional phrase offered before practice closes",
@@ -293,6 +294,16 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
           "caseId": "phrase-goal",
           "expected": "answer phrase",
           "readback": "answer phrase"
+        },
+        {
+          "caseId": "phrase-goal-x2",
+          "expected": "answer phrase",
+          "readback": "answer phrase"
+        },
+        {
+          "caseId": "phrase-goal-x3",
+          "expected": "answer phrase",
+          "readback": "answer phrase"
         }
       ]
     },
@@ -301,6 +312,16 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
       "samples": [
         {
           "caseId": "phrase-action",
+          "startS": 2,
+          "actionS": 3
+        },
+        {
+          "caseId": "phrase-action-x2",
+          "startS": 2,
+          "actionS": 3
+        },
+        {
+          "caseId": "phrase-action-x3",
           "startS": 2,
           "actionS": 3
         }
@@ -313,6 +334,16 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
           "caseId": "phrase-state",
           "expected": "answered",
           "actual": "answered"
+        },
+        {
+          "caseId": "phrase-state-x2",
+          "expected": "answered",
+          "actual": "answered"
+        },
+        {
+          "caseId": "phrase-state-x3",
+          "expected": "answered",
+          "actual": "answered"
         }
       ]
     },
@@ -321,6 +352,16 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
       "samples": [
         {
           "caseId": "phrase-feedback",
+          "expected": "phrase echoed",
+          "readback": "phrase echoed"
+        },
+        {
+          "caseId": "phrase-feedback-x2",
+          "expected": "phrase echoed",
+          "readback": "phrase echoed"
+        },
+        {
+          "caseId": "phrase-feedback-x3",
           "expected": "phrase echoed",
           "readback": "phrase echoed"
         }
@@ -333,6 +374,16 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
           "caseId": "phrase-beat",
           "resolvedS": 3,
           "choiceS": 5
+        },
+        {
+          "caseId": "phrase-beat-x2",
+          "resolvedS": 3,
+          "choiceS": 5
+        },
+        {
+          "caseId": "phrase-beat-x3",
+          "resolvedS": 3,
+          "choiceS": 5
         }
       ]
     },
@@ -341,6 +392,16 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
       "samples": [
         {
           "caseId": "phrase-recovery",
+          "setbackS": 5,
+          "controlS": 8
+        },
+        {
+          "caseId": "phrase-recovery-x2",
+          "setbackS": 5,
+          "controlS": 8
+        },
+        {
+          "caseId": "phrase-recovery-x3",
           "setbackS": 5,
           "controlS": 8
         }
@@ -353,6 +414,16 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
           "caseId": "phrase-choice",
           "expected": "alternate echo",
           "actual": "alternate echo"
+        },
+        {
+          "caseId": "phrase-choice-x2",
+          "expected": "alternate echo",
+          "actual": "alternate echo"
+        },
+        {
+          "caseId": "phrase-choice-x3",
+          "expected": "alternate echo",
+          "actual": "alternate echo"
         }
       ]
     },
@@ -362,6 +433,14 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
         {
           "caseId": "phrase-exit",
           "honored": true
+        },
+        {
+          "caseId": "phrase-exit-x2",
+          "honored": true
+        },
+        {
+          "caseId": "phrase-exit-x3",
+          "honored": true
         }
       ]
     },
@@ -370,6 +449,14 @@ Puzzle opportunity `offer-board` was accepted before closure. Rhythm offers `off
       "samples": [
         {
           "caseId": "phrase-reason",
+          "intrinsic": true
+        },
+        {
+          "caseId": "phrase-reason-x2",
+          "intrinsic": true
+        },
+        {
+          "caseId": "phrase-reason-x3",
           "intrinsic": true
         }
       ]

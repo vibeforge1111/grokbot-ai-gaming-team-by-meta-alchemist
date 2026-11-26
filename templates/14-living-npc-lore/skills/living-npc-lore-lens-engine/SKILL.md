@@ -17,14 +17,14 @@ For a real pack set synthetic to false. Store artifact files under the pack dire
 ## engine/lens-kit.mjs
 
 ```js
-// lens-kit v1.3.0: turns an evidence pack into contract v1 line levels. Zero dependencies, Node 18+.
+// lens-kit v1.3.1: turns an evidence pack into contract v1 line levels. Zero dependencies, Node 18+.
 // Created by @meta_alchemist (https://x.com/meta_alchemist). Vendored byte for byte into each template as engine/lens-kit.mjs.
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
-export const KIT_VERSION = "1.3.0";
+export const KIT_VERSION = "1.3.1";
 const LEVEL_FOR_FAIL = { zero: 0, h: 1, d: 2, 4: 3 };
 
 // ---------- numeric and perceptual helpers (all pure) ----------
@@ -244,6 +244,15 @@ export function evalComputed(spec, pack, profile, sampleFields = {}, line, evide
       const value = group?.[field];
       const count = Array.isArray(value) && observed(value) ? value.length : value;
       if (!Number.isSafeInteger(count) || count <= 0) missing ||= `metrics.${g}.${field} needs a nonempty sample or positive case count`;
+      const minCases = profile?.bands?.minCases;
+      if (Number.isSafeInteger(minCases) && minCases >= 1) {
+        const observedCount = Array.isArray(value)
+          ? value.filter(row => typeof row?.caseId === "string" && row.caseId.trim() && row.status !== "NOT_RUN").length
+          : (Number.isSafeInteger(count) ? count : 0);
+        if (observedCount < minCases) {
+          missing ||= `metrics.${g}.${field} has ${observedCount} observed case(s); profile.bands.minCases requires ${minCases}`;
+        }
+      }
     }
     const artifact = group?.artifactsByLine?.[line] ?? group?.artifact;
     if (ids.has(artifact)) ev.push(artifact);
@@ -484,6 +493,14 @@ export function grade(LENS, pack, profileOverride, directory) {
         verdict: "INVALID", reason: "profile.bands requires 0 < floor < pass < target <= 1" };
     }
   }
+  // Optional. When set, a line with fewer observed cases than minCases reads U.
+  if (profile.bands != null && profile.bands.minCases != null) {
+    const minCases = profile.bands.minCases;
+    if (!Number.isSafeInteger(minCases) || minCases < 1) {
+      return { ...base, applicable: true, lines: [], supportedPoints: 0, coverage: 0, grade: null,
+        verdict: "INVALID", reason: "profile.bands.minCases must be a positive integer when set" };
+    }
+  }
   const levels = {}, lines = [], tickets = [];
   // Approved rubric profile (for example single-language): reweights lines; a weight-0 line is N/A by profile and never a defect.
   // Several profiles may be combined (for example ["no-aiming", "offline-only"]); see profileWeights.
@@ -535,8 +552,30 @@ export function grade(LENS, pack, profileOverride, directory) {
 }
 
 // ---------- fixtures ----------
+// When a pack sets minCases, a one-row failure would read U. Repeat the provided rows so the fixture stays a measured miss.
+function padMutationSet(set, minCases) {
+  if (!(minCases >= 1) || !set) return set;
+  const out = { ...set };
+  for (const [key, value] of Object.entries(out)) {
+    if (!Array.isArray(value) || value.length === 0 || value.length >= minCases) continue;
+    if (!value.every(row => row && typeof row.caseId === "string" && row.caseId.trim())) continue;
+    const padded = [...value];
+    let i = 0;
+    while (padded.length < minCases) {
+      const src = value[i % value.length];
+      i += 1;
+      const row = { ...src, caseId: `${src.caseId}-x${padded.length + 1}` };
+      if (typeof src.offerRef === "string" && src.offerRef) row.offerRef = `${src.offerRef}-x${padded.length + 1}`;
+      padded.push(row);
+    }
+    out[key] = padded;
+  }
+  return out;
+}
+
 export function mutations(LENS, good) {
   const cases = [];
+  const minCases = good?.profile?.bands?.minCases;
   const all = [...Object.entries(LENS.lines).map(([id, s]) => [id, s]), ...Object.entries(LENS.checks || {}).map(([id, s]) => [id, s])];
   for (const [id, s] of all) {
     if (s.kind === "judged") {
@@ -551,7 +590,7 @@ export function mutations(LENS, good) {
       empty.set(path, Array.isArray(getPath(good.metrics, path)) ? [] : 0);
     }
     for (const [path, value] of empty) cases.push({ id: `${id}#empty-${path}`, line: id, expect: "U", set: { [`metrics.${path}`]: value } });
-    for (const [i, n] of (s.neg || []).entries()) cases.push({ id: `${id}#neg${i + 1}`, line: id, expect: "fail", areas: s.areas || [], set: n });
+    for (const [i, n] of (s.neg || []).entries()) cases.push({ id: `${id}#neg${i + 1}`, line: id, expect: "fail", areas: s.areas || [], set: padMutationSet(n, minCases) });
     const first = s.miss || s.conds.map((c) => String(c[0]).match(/(?<![\w.])(?!P\.)[a-zA-Z]\w*\.[\w.]+/)?.[0]).find(Boolean);
     if (first) cases.push({ id: `${id}#missing`, line: id, expect: "U", areas: [], del: [`metrics.${first}`] });
   }
@@ -564,7 +603,7 @@ export function mutations(LENS, good) {
   }
   for (const line of Object.keys(LENS.lines)) for (const fixture of LENS.lines[line].cases || []) cases.push({ ...fixture, line });
   for (const rule of LENS.rubric.releaseBlockers || []) {
-    cases.push({ id: rule.id, line: rule.line, expect: "BLOCKED", set: rule.fixture });
+    cases.push({ id: rule.id, line: rule.line, expect: "BLOCKED", set: padMutationSet(rule.fixture, minCases) });
   }
   if (LENS.rubric.receiptPolicy === "build-scope-line-v1") {
     cases.push({ id: "open-p0", line: null, expect: "BLOCKED", set: { openP0: 1 } });
@@ -916,7 +955,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     "bands": {
       "floor": 0.5,
       "pass": 0.75,
-      "target": 1
+      "target": 1,
+      "minCases": 3
     },
     "role": "route guide",
     "memoryBoundary": "chapter close",
@@ -1096,6 +1136,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "caseId": "recall-1",
           "expected": "heard signal",
           "recalled": "heard signal"
+        },
+        {
+          "caseId": "recall-1-x2",
+          "expected": "heard signal",
+          "recalled": "heard signal"
+        },
+        {
+          "caseId": "recall-1-x3",
+          "expected": "heard signal",
+          "recalled": "heard signal"
         }
       ]
     },
@@ -1104,6 +1154,14 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "expiry-1",
+          "forgotten": true
+        },
+        {
+          "caseId": "expiry-1-x2",
+          "forgotten": true
+        },
+        {
+          "caseId": "expiry-1-x3",
           "forgotten": true
         }
       ]
@@ -1114,6 +1172,14 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         {
           "caseId": "knowledge-1",
           "withheld": true
+        },
+        {
+          "caseId": "knowledge-1-x2",
+          "withheld": true
+        },
+        {
+          "caseId": "knowledge-1-x3",
+          "withheld": true
         }
       ]
     },
@@ -1122,6 +1188,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "belief-1",
+          "expected": "route uncertain",
+          "asserted": "route uncertain"
+        },
+        {
+          "caseId": "belief-1-x2",
+          "expected": "route uncertain",
+          "asserted": "route uncertain"
+        },
+        {
+          "caseId": "belief-1-x3",
           "expected": "route uncertain",
           "asserted": "route uncertain"
         }
@@ -1134,6 +1210,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "caseId": "intent-1",
           "expected": "point to inlet",
           "actual": "point to inlet"
+        },
+        {
+          "caseId": "intent-1-x2",
+          "expected": "point to inlet",
+          "actual": "point to inlet"
+        },
+        {
+          "caseId": "intent-1-x3",
+          "expected": "point to inlet",
+          "actual": "point to inlet"
         }
       ]
     },
@@ -1144,6 +1230,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "caseId": "repair-1",
           "expected": "ask for direction",
           "actual": "ask for direction"
+        },
+        {
+          "caseId": "repair-1-x2",
+          "expected": "ask for direction",
+          "actual": "ask for direction"
+        },
+        {
+          "caseId": "repair-1-x3",
+          "expected": "ask for direction",
+          "actual": "ask for direction"
         }
       ]
     },
@@ -1152,6 +1248,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "version-1",
+          "expected": "inlet open",
+          "claim": "inlet open"
+        },
+        {
+          "caseId": "version-1-x2",
+          "expected": "inlet open",
+          "claim": "inlet open"
+        },
+        {
+          "caseId": "version-1-x3",
           "expected": "inlet open",
           "claim": "inlet open"
         }
@@ -1167,6 +1273,10 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         {
           "caseId": "after-signal",
           "legal": true
+        },
+        {
+          "caseId": "before-signal-x3",
+          "legal": true
         }
       ]
     },
@@ -1180,6 +1290,22 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "firstRef": "run-A/turn-A3",
           "secondRef": "run-C/turn-C3",
           "seed": "route-a"
+        },
+        {
+          "caseId": "replay-1-x2",
+          "first": "point to inlet",
+          "second": "point to inlet",
+          "firstRef": "run-A/turn-A3",
+          "secondRef": "run-C/turn-C3",
+          "seed": "route-a"
+        },
+        {
+          "caseId": "replay-1-x3",
+          "first": "point to inlet",
+          "second": "point to inlet",
+          "firstRef": "run-A/turn-A3",
+          "secondRef": "run-C/turn-C3",
+          "seed": "route-a"
         }
       ]
     },
@@ -1188,6 +1314,26 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "heldout-1",
+          "expected": "route ahead",
+          "readback": "route ahead",
+          "reviewRole": "channel reviewer",
+          "turnRef": "held-out/H2",
+          "reason": "The hand points down the route.",
+          "scenario": "unvisited inlet",
+          "channel": "gesture"
+        },
+        {
+          "caseId": "heldout-1-x2",
+          "expected": "route ahead",
+          "readback": "route ahead",
+          "reviewRole": "channel reviewer",
+          "turnRef": "held-out/H2",
+          "reason": "The hand points down the route.",
+          "scenario": "unvisited inlet",
+          "channel": "gesture"
+        },
+        {
+          "caseId": "heldout-1-x3",
           "expected": "route ahead",
           "readback": "route ahead",
           "reviewRole": "channel reviewer",

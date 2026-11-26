@@ -17,14 +17,14 @@ For a real pack set synthetic to false. Store artifact files under the pack dire
 ## engine/lens-kit.mjs
 
 ```js
-// lens-kit v1.3.0: turns an evidence pack into contract v1 line levels. Zero dependencies, Node 18+.
+// lens-kit v1.3.1: turns an evidence pack into contract v1 line levels. Zero dependencies, Node 18+.
 // Created by @meta_alchemist (https://x.com/meta_alchemist). Vendored byte for byte into each template as engine/lens-kit.mjs.
 import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
-export const KIT_VERSION = "1.3.0";
+export const KIT_VERSION = "1.3.1";
 const LEVEL_FOR_FAIL = { zero: 0, h: 1, d: 2, 4: 3 };
 
 // ---------- numeric and perceptual helpers (all pure) ----------
@@ -244,6 +244,15 @@ export function evalComputed(spec, pack, profile, sampleFields = {}, line, evide
       const value = group?.[field];
       const count = Array.isArray(value) && observed(value) ? value.length : value;
       if (!Number.isSafeInteger(count) || count <= 0) missing ||= `metrics.${g}.${field} needs a nonempty sample or positive case count`;
+      const minCases = profile?.bands?.minCases;
+      if (Number.isSafeInteger(minCases) && minCases >= 1) {
+        const observedCount = Array.isArray(value)
+          ? value.filter(row => typeof row?.caseId === "string" && row.caseId.trim() && row.status !== "NOT_RUN").length
+          : (Number.isSafeInteger(count) ? count : 0);
+        if (observedCount < minCases) {
+          missing ||= `metrics.${g}.${field} has ${observedCount} observed case(s); profile.bands.minCases requires ${minCases}`;
+        }
+      }
     }
     const artifact = group?.artifactsByLine?.[line] ?? group?.artifact;
     if (ids.has(artifact)) ev.push(artifact);
@@ -484,6 +493,14 @@ export function grade(LENS, pack, profileOverride, directory) {
         verdict: "INVALID", reason: "profile.bands requires 0 < floor < pass < target <= 1" };
     }
   }
+  // Optional. When set, a line with fewer observed cases than minCases reads U.
+  if (profile.bands != null && profile.bands.minCases != null) {
+    const minCases = profile.bands.minCases;
+    if (!Number.isSafeInteger(minCases) || minCases < 1) {
+      return { ...base, applicable: true, lines: [], supportedPoints: 0, coverage: 0, grade: null,
+        verdict: "INVALID", reason: "profile.bands.minCases must be a positive integer when set" };
+    }
+  }
   const levels = {}, lines = [], tickets = [];
   // Approved rubric profile (for example single-language): reweights lines; a weight-0 line is N/A by profile and never a defect.
   // Several profiles may be combined (for example ["no-aiming", "offline-only"]); see profileWeights.
@@ -535,8 +552,30 @@ export function grade(LENS, pack, profileOverride, directory) {
 }
 
 // ---------- fixtures ----------
+// When a pack sets minCases, a one-row failure would read U. Repeat the provided rows so the fixture stays a measured miss.
+function padMutationSet(set, minCases) {
+  if (!(minCases >= 1) || !set) return set;
+  const out = { ...set };
+  for (const [key, value] of Object.entries(out)) {
+    if (!Array.isArray(value) || value.length === 0 || value.length >= minCases) continue;
+    if (!value.every(row => row && typeof row.caseId === "string" && row.caseId.trim())) continue;
+    const padded = [...value];
+    let i = 0;
+    while (padded.length < minCases) {
+      const src = value[i % value.length];
+      i += 1;
+      const row = { ...src, caseId: `${src.caseId}-x${padded.length + 1}` };
+      if (typeof src.offerRef === "string" && src.offerRef) row.offerRef = `${src.offerRef}-x${padded.length + 1}`;
+      padded.push(row);
+    }
+    out[key] = padded;
+  }
+  return out;
+}
+
 export function mutations(LENS, good) {
   const cases = [];
+  const minCases = good?.profile?.bands?.minCases;
   const all = [...Object.entries(LENS.lines).map(([id, s]) => [id, s]), ...Object.entries(LENS.checks || {}).map(([id, s]) => [id, s])];
   for (const [id, s] of all) {
     if (s.kind === "judged") {
@@ -551,7 +590,7 @@ export function mutations(LENS, good) {
       empty.set(path, Array.isArray(getPath(good.metrics, path)) ? [] : 0);
     }
     for (const [path, value] of empty) cases.push({ id: `${id}#empty-${path}`, line: id, expect: "U", set: { [`metrics.${path}`]: value } });
-    for (const [i, n] of (s.neg || []).entries()) cases.push({ id: `${id}#neg${i + 1}`, line: id, expect: "fail", areas: s.areas || [], set: n });
+    for (const [i, n] of (s.neg || []).entries()) cases.push({ id: `${id}#neg${i + 1}`, line: id, expect: "fail", areas: s.areas || [], set: padMutationSet(n, minCases) });
     const first = s.miss || s.conds.map((c) => String(c[0]).match(/(?<![\w.])(?!P\.)[a-zA-Z]\w*\.[\w.]+/)?.[0]).find(Boolean);
     if (first) cases.push({ id: `${id}#missing`, line: id, expect: "U", areas: [], del: [`metrics.${first}`] });
   }
@@ -564,7 +603,7 @@ export function mutations(LENS, good) {
   }
   for (const line of Object.keys(LENS.lines)) for (const fixture of LENS.lines[line].cases || []) cases.push({ ...fixture, line });
   for (const rule of LENS.rubric.releaseBlockers || []) {
-    cases.push({ id: rule.id, line: rule.line, expect: "BLOCKED", set: rule.fixture });
+    cases.push({ id: rule.id, line: rule.line, expect: "BLOCKED", set: padMutationSet(rule.fixture, minCases) });
   }
   if (LENS.rubric.receiptPolicy === "build-scope-line-v1") {
     cases.push({ id: "open-p0", line: null, expect: "BLOCKED", set: { openP0: 1 } });
@@ -916,7 +955,8 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     "bands": {
       "floor": 0.5,
       "pass": 0.75,
-      "target": 1
+      "target": 1,
+      "minCases": 3
     },
     "cohort": "first session",
     "window": "next optional board offered before the session closes",
@@ -1086,6 +1126,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "caseId": "goal-1",
           "expected": "connect exits",
           "readback": "connect exits"
+        },
+        {
+          "caseId": "goal-1-x2",
+          "expected": "connect exits",
+          "readback": "connect exits"
+        },
+        {
+          "caseId": "goal-1-x3",
+          "expected": "connect exits",
+          "readback": "connect exits"
         }
       ]
     },
@@ -1094,6 +1144,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "action-1",
+          "startS": 3,
+          "actionS": 15
+        },
+        {
+          "caseId": "action-1-x2",
+          "startS": 3,
+          "actionS": 15
+        },
+        {
+          "caseId": "action-1-x3",
           "startS": 3,
           "actionS": 15
         }
@@ -1106,6 +1166,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "caseId": "state-1",
           "expected": "connected",
           "actual": "connected"
+        },
+        {
+          "caseId": "state-1-x2",
+          "expected": "connected",
+          "actual": "connected"
+        },
+        {
+          "caseId": "state-1-x3",
+          "expected": "connected",
+          "actual": "connected"
         }
       ]
     },
@@ -1114,6 +1184,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "feedback-1",
+          "expected": "route opened",
+          "readback": "route opened"
+        },
+        {
+          "caseId": "feedback-1-x2",
+          "expected": "route opened",
+          "readback": "route opened"
+        },
+        {
+          "caseId": "feedback-1-x3",
           "expected": "route opened",
           "readback": "route opened"
         }
@@ -1126,6 +1206,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "caseId": "beat-1",
           "resolvedS": 12,
           "choiceS": 18
+        },
+        {
+          "caseId": "beat-1-x2",
+          "resolvedS": 12,
+          "choiceS": 18
+        },
+        {
+          "caseId": "beat-1-x3",
+          "resolvedS": 12,
+          "choiceS": 18
         }
       ]
     },
@@ -1134,6 +1224,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "recovery-1",
+          "setbackS": 14,
+          "controlS": 23
+        },
+        {
+          "caseId": "recovery-1-x2",
+          "setbackS": 14,
+          "controlS": 23
+        },
+        {
+          "caseId": "recovery-1-x3",
           "setbackS": 14,
           "controlS": 23
         }
@@ -1146,6 +1246,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
           "caseId": "choice-1",
           "expected": "alternate route",
           "actual": "alternate route"
+        },
+        {
+          "caseId": "choice-1-x2",
+          "expected": "alternate route",
+          "actual": "alternate route"
+        },
+        {
+          "caseId": "choice-1-x3",
+          "expected": "alternate route",
+          "actual": "alternate route"
         }
       ]
     },
@@ -1154,6 +1264,14 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       "samples": [
         {
           "caseId": "exit-1",
+          "honored": true
+        },
+        {
+          "caseId": "exit-1-x2",
+          "honored": true
+        },
+        {
+          "caseId": "exit-1-x3",
           "honored": true
         }
       ]
@@ -1164,6 +1282,14 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         {
           "caseId": "reason-1",
           "intrinsic": true
+        },
+        {
+          "caseId": "reason-1-x2",
+          "intrinsic": true
+        },
+        {
+          "caseId": "reason-1-x3",
+          "intrinsic": true
         }
       ]
     },
@@ -1173,6 +1299,22 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
         {
           "caseId": "offer-board",
           "offerRef": "offer-board",
+          "cohort": "first session",
+          "window": "next optional board offered before the session closes",
+          "windowClosed": true,
+          "returned": true
+        },
+        {
+          "caseId": "offer-board-x2",
+          "offerRef": "offer-board-x2",
+          "cohort": "first session",
+          "window": "next optional board offered before the session closes",
+          "windowClosed": true,
+          "returned": true
+        },
+        {
+          "caseId": "offer-board-x3",
+          "offerRef": "offer-board-x3",
           "cohort": "first session",
           "window": "next optional board offered before the session closes",
           "windowClosed": true,

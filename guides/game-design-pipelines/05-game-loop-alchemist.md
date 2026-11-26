@@ -4,7 +4,7 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 Map what the player chooses, what changes, and why the next turn is worth taking. Measure the core loop, its pace and the freedom to stop.
 
-**Status: preview, not shipping.** The template works and its tests pass, but one observed case can still earn level 4 on a line until the engine gains a minimum case count. Read thin lines as provisional.
+A line with fewer observed cases than `profile.bands.minCases` reads U, even if those cases would have passed. The getting-started skill asks for this number. The synthetic example uses 3.
 
 A *core loop* is the short cycle a player repeats: act, see what changed, choose again. It fits any genre: placing a tile in a puzzle game, a jump and a respawn in a 2D platformer, a turn in a strategy game, a race and its rematch, a day in a farming sim, a choice in a narrative adventure.
 
