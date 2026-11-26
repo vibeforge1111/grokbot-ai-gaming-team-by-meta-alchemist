@@ -8,7 +8,7 @@ The short name of this template is Audio Director (13). It reviews any game's so
 
 Rubric: `gbf-13-audio-director` v1.3.0, 100-point scale (5 pillars of 20 points, 10 lines, levels 0 to 4 or U). Contribution per line is weight x level / 4 and a line passes at level 3. U (UNMEASURED) earns 0 and is never filed as a defect.
 
-Evidence comes from a CI run, a test harness or a manual capture of your build. Playtest QA (template 02) is coming later.
+Evidence comes from a CI run, a test harness or a manual capture of your build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 
 Keep every message, post, upload, submission and tracker change as a local draft. Only the human reviews and sends, publishes, uploads or files it.
 

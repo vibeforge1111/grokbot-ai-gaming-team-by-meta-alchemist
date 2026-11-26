@@ -9,7 +9,7 @@ It is for solo developers and small teams, in any genre, on any engine. A platfo
 ## What this helps with
 
 - Grade a playable build with a 100-point rubric, using captures you already have. Missing evidence scores zero, never a guess.
-- Start with four helpers: Game Feel, HUD, Bug Desk, and Producer. Add more only when you need them.
+- Start with five helpers: Game Feel, Game Loop, HUD, Bug Desk, and Producer. Add more only when you need them.
 - Get local drafts of fixes, tickets, and plans. You decide what to file or ship.
 - Keep several helpers in sync through files in your game project, so you do not retype the same notes.
 
@@ -37,7 +37,7 @@ The same paste steps work in any other chat that accepts a long file. More detai
 
 ## Five minute quickstart
 
-You do not need all 23 bots. Start with four, in this order: **Game Feel**, **HUD**, **Bug Desk**, **Producer**. The reasons, the paste steps, and a first prompt for each one are in [Get started with your AI gaming team](GETTING-STARTED.md).
+You do not need all 24 bots. Start with five, in this order: **Game Feel**, **Game Loop**, **HUD**, **Bug Desk**, **Producer**. The reasons, the paste steps, and a first prompt for each one are in [Get started with your AI gaming team](GETTING-STARTED.md).
 
 1. Download or clone this repo.
 2. If you have Node 18 or newer, grade the sample. It is synthetic, not your game. From this folder:
@@ -55,7 +55,7 @@ Or paste this into Grok Bot, or into any other AI, to start the whole starter te
 ```
 I have the Grok Bot AI Gaming Team repo on my computer. Help me set up my AI gaming team.
 
-Start with four templates, in this order: Game Feel (templates/01-game-feel), HUD (templates/09-hud-designer), Bug Desk (templates/18-bug-desk-triage), and Producer (templates/12-parallel-game-producer). Ask me one question at a time about my game.
+Start with five templates, in this order: Game Feel (templates/01-game-feel), Game Loop (templates/05-game-loop-alchemist), HUD (templates/09-hud-designer), Bug Desk (templates/18-bug-desk-triage), and Producer (templates/12-parallel-game-producer). Ask me one question at a time about my game.
 
 For each template, load every SKILL.md in its skills/ folder (the skill whose name ends in -lens-engine first, then the one that ends in -getting-started, then the rest) and the facts in MEMORY.md. Then run the getting-started skill named in that template's README. Use the first prompt in the README after the skills are loaded.
 
@@ -64,23 +64,28 @@ Do not post, file, email, or send anything until I say so.
 
 Stuck? Read the [FAQ](FAQ.md). The full list of bots is the [catalog](TEMPLATES.md).
 
-## The four bots to start with
+## The five bots to start with
 
 | Order | Bot | Add it when | Folder |
 |---|---|---|---|
 | 1 | Game Feel | The game responds to a button, a key, or a tap | [01 Game Feel](templates/01-game-feel/) |
-| 2 | HUD | Players have to read the screen | [09 HUD](templates/09-hud-designer/) |
-| 3 | Bug Desk | You have notes, or something broke | [18 Bug Desk](templates/18-bug-desk-triage/) |
-| 4 | Producer | The task list is bigger than the week | [12 Producer](templates/12-parallel-game-producer/) |
+| 2 | Game Loop | The open question is why a player takes another turn | [05 Game Loop](templates/05-game-loop-alchemist/) |
+| 3 | HUD | Players have to read the screen | [09 HUD](templates/09-hud-designer/) |
+| 4 | Bug Desk | You have notes, or something broke | [18 Bug Desk](templates/18-bug-desk-triage/) |
+| 5 | Producer | The task list is bigger than the week | [12 Producer](templates/12-parallel-game-producer/) |
 
-Add them in that order. Game Feel and HUD write notes the later bots can read. Every bot can write a local ticket draft. Producer reads grades and drafts when you want a plan.
+Add them in that order. Game Feel writes notes that Game Loop and the later bots can read. Game Loop writes a loop report. Every bot can write a local ticket draft. Producer reads grades and drafts when you want a plan.
 
 ```mermaid
 flowchart LR
-  GF[1 Game Feel] --> HUD[2 HUD]
-  GF --> BD[3 Bug Desk]
+  GF[1 Game Feel] --> GL[2 Game Loop]
+  GF --> HUD[3 HUD]
+  GL --> HUD
+  GF --> BD[4 Bug Desk]
+  GL --> BD
   HUD --> BD
-  GF --> PD[4 Producer]
+  GF --> PD[5 Producer]
+  GL --> PD
   HUD --> PD
   BD --> PD
 ```
@@ -115,7 +120,7 @@ Already running a project and want the longer rollout? Read [ADOPTING.md](ADOPTI
 | [GETTING-STARTED.md](GETTING-STARTED.md) | The starter team, in order, with copy-paste prompts. |
 | [TEMPLATES.md](TEMPLATES.md) | Every bot: purpose, when to use it, and links. |
 | [FAQ.md](FAQ.md) | What to try when you get stuck. |
-| [templates/](templates/) | 17 shipping bots and 6 previews. Each README opens with what it does, setup, a first prompt, and a sample grade. Honest status for every bot, including ones not in the repo yet, is in [READINESS.md](READINESS.md). |
+| [templates/](templates/) | 17 shipping bots and 7 previews. Each README opens with what it does, setup, a first prompt, and a sample grade. Honest status for every bot, including ones not in the repo yet, is in [READINESS.md](READINESS.md). |
 | [docs/](docs/) | How bots share files, shared memory, versions, the skill format, and rubrics. |
 | [guides/](guides/) | Pipelines, using other AI tools, rubrics, and polish. |
 | [examples/pixel-pantry/](examples/pixel-pantry/) | A fictional cooking game, graded before and after fixes. Synthetic. |

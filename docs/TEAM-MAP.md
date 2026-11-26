@@ -13,6 +13,7 @@ flowchart LR
   OWNER(["Owner: game profile, evidence packs, tracker export, change list"])
   ALL["Every template: grade records and ticket drafts"]
   T01["01 Game Feel"]
+  T02["02 Playtest (preview)"]
   T03["03 Prop and Rig"]
   T05["05 Game Loop"]
   T06["06 Economy"]
@@ -47,18 +48,44 @@ flowchart LR
   OWNER -- tracker-export --> T18
   OWNER -- tracker-export --> T21
   OWNER -- tracker-export --> T22
+  T01 -- feel-findings --> T02
   T01 -- feel-findings --> T05
   T01 -- feel-findings --> T09
   T01 -- feel-findings --> T13
   T01 -- feel-findings --> T17
+  T02 -- evidence-pack --> T01
+  T02 -- evidence-pack --> T03
+  T02 -- evidence-pack --> T05
+  T02 -- evidence-pack --> T06
+  T02 -- evidence-pack --> T09
+  T02 -- evidence-pack --> T10
+  T02 -- evidence-pack --> T11
+  T02 -- evidence-pack --> T12
+  T02 -- evidence-pack --> T13
+  T02 -- evidence-pack --> T14
+  T02 -- evidence-pack --> T15
+  T02 -- evidence-pack --> T17
+  T02 -- evidence-pack --> T18
+  T02 -- evidence-pack --> T19
+  T02 -- evidence-pack --> T20
+  T02 -- evidence-pack --> T21
+  T02 -- evidence-pack --> T22
+  T02 -- evidence-pack --> T23
+  T02 -- evidence-pack --> T24
+  T02 -- evidence-pack --> T25
+  T02 -- evidence-pack --> T26
+  T02 -- evidence-pack --> T27
+  T02 -- evidence-pack --> T28
   T03 -- asset-budget-report --> T11
   T05 -- loop-report --> T01
+  T05 -- loop-report --> T02
   T05 -- loop-report --> T06
   T05 -- loop-report --> T09
   T06 -- economy-change-list --> T20
   T06 -- economy-change-list --> T22
   T06 -- economy-change-list --> T26
   T09 -- hud-capture-set --> T01
+  T09 -- hud-capture-set --> T02
   T09 -- hud-capture-set --> T10
   T09 -- hud-capture-set --> T11
   T09 -- hud-capture-set --> T19
@@ -135,16 +162,16 @@ flowchart LR
 | 06 Economy | [`economy-change-list`](../spec/artifacts/economy-change-list.schema.json) | 20 Patch Notes, 22 Live Service, 26 Balance Patch | JSON plus a Markdown proposal draft |
 | 15 Server Fairness | [`enforcement-policy-draft`](../spec/artifacts/enforcement-policy-draft.schema.json) | 22 Live Service, 24 Ledger | Markdown local draft plus a JSON rule list |
 | 24 Ledger | [`entitlement-ledger`](../spec/artifacts/entitlement-ledger.schema.json) | 06 Economy, 22 Live Service, 23 Support Desk, 28 App Store | JSON plus a text digest draft |
-| Owner | [`evidence-pack`](../spec/artifacts/evidence-pack.schema.json) | Every template | JSON |
+| Owner, 02 Playtest | [`evidence-pack`](../spec/artifacts/evidence-pack.schema.json) | Every template | JSON evidence pack plus a local manifest |
 | 15 Server Fairness | [`fairness-findings`](../spec/artifacts/fairness-findings.schema.json) | 17 Sprites, 20 Patch Notes, 22 Live Service | JSON plus a Markdown summary |
-| 01 Game Feel | [`feel-findings`](../spec/artifacts/feel-findings.schema.json) | 05 Game Loop, 09 HUD, 13 Audio, 17 Sprites | JSON |
+| 01 Game Feel | [`feel-findings`](../spec/artifacts/feel-findings.schema.json) | 02 Playtest, 05 Game Loop, 09 HUD, 13 Audio, 17 Sprites | JSON |
 | Owner | [`game-profile`](../spec/artifacts/game-profile.schema.json) | Every template | JSON |
 | Every template | [`grade-record`](../spec/artifacts/grade-record.schema.json) | 12 Producer | JSON (the engine's grade record) |
-| 09 HUD | [`hud-capture-set`](../spec/artifacts/hud-capture-set.schema.json) | 01 Game Feel, 10 Trailer, 11 Environment, 19 Store Page, 21 Access | JSON manifest plus lossless PNG screenshots and UI traces |
+| 09 HUD | [`hud-capture-set`](../spec/artifacts/hud-capture-set.schema.json) | 01 Game Feel, 02 Playtest, 10 Trailer, 11 Environment, 19 Store Page, 21 Access | JSON manifest plus lossless PNG screenshots and UI traces |
 | 22 Live Service | [`incident-report`](../spec/artifacts/incident-report.schema.json) | 15 Server Fairness, 18 Bug Desk, 23 Support Desk | Markdown local draft plus JSON |
 | 11 Environment | [`layout-brief`](../spec/artifacts/layout-brief.schema.json) | 03 Prop and Rig, 15 Server Fairness | JSON plus a Markdown draft |
 | 25 Matchmaking | [`lobby-fill-proposal`](../spec/artifacts/lobby-fill-proposal.schema.json) | 27 Retention | JSON plan plus a Markdown proposal draft |
-| 05 Game Loop | [`loop-report`](../spec/artifacts/loop-report.schema.json) | 01 Game Feel, 06 Economy, 09 HUD | JSON plus a Markdown loop map draft |
+| 05 Game Loop | [`loop-report`](../spec/artifacts/loop-report.schema.json) | 01 Game Feel, 02 Playtest, 06 Economy, 09 HUD | JSON plus a Markdown loop map draft |
 | 10 Trailer | [`media-export-manifest`](../spec/artifacts/media-export-manifest.schema.json) | 19 Store Page, 20 Patch Notes | JSON manifest plus the exported video and still files |
 | 20 Patch Notes | [`patch-notes-draft`](../spec/artifacts/patch-notes-draft.schema.json) | 23 Support Desk | Markdown draft plus a JSON map from each line to its change |
 | 12 Producer | [`pitch-draft`](../spec/artifacts/pitch-draft.schema.json) | 10 Trailer, 19 Store Page | Markdown slide draft plus a JSON claim list |

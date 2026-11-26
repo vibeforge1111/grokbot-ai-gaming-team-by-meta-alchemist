@@ -4,38 +4,37 @@ Created by [@meta_alchemist](https://x.com/meta_alchemist).
 
 This is the page to read if you just found the kit and want a small AI game-dev team. You do not need every bot. You do not need to understand the rubric yet. The same files work in Grok Bot, Claude, ChatGPT, Codex, Cursor, Gemini, or any other chat that can paste a long file.
 
-Add four shipping bots, in order. Each one is a folder of skill files. Shipping means it is held to the release standard. A preview bot works, and its tests pass, but it is not held to that standard yet. Leave previews until you want them.
+Add five shipping bots, in order. Each one is a folder of skill files. Shipping means it is held to the release standard. A preview bot works, and its tests pass, but it is not held to that standard yet. Leave previews until you want them. Game Loop joins this team. It does not replace Producer.
 
 ## The starter team
 
 | Order | Short name | Full name | Add it when | Folder |
 |---|---|---|---|---|
 | 1 | Game Feel | Game Vibes Director | The game responds to a button, a key, or a tap | [01-game-feel](templates/01-game-feel/) |
-| 2 | HUD | HUD and Game UI Designer | Players have to read a score, a timer, a button, or a line of dialogue | [09-hud-designer](templates/09-hud-designer/) |
-| 3 | Bug Desk | Playtest Bug Desk & Repro Triage Director | You have notes from a play session, or something broke | [18-bug-desk-triage](templates/18-bug-desk-triage/) |
-| 4 | Producer | Parallel Game Producer and Pitch Architect | The task list is bigger than the week, or you need a go or hold call | [12-parallel-game-producer](templates/12-parallel-game-producer/) |
+| 2 | Game Loop | Game Loop Alchemist | The open question is why a player takes another turn | [05-game-loop-alchemist](templates/05-game-loop-alchemist/) |
+| 3 | HUD | HUD and Game UI Designer | Players have to read a score, a timer, a button, or a line of dialogue | [09-hud-designer](templates/09-hud-designer/) |
+| 4 | Bug Desk | Playtest Bug Desk & Repro Triage Director | You have notes from a play session, or something broke | [18-bug-desk-triage](templates/18-bug-desk-triage/) |
+| 5 | Producer | Parallel Game Producer and Pitch Architect | The task list is bigger than the week, or you need a go or hold call | [12-parallel-game-producer](templates/12-parallel-game-producer/) |
 
-These four are the starter team because a first game usually needs them in that order, and they already know how to hand work to each other:
+These five are the starter team because a first game usually needs them in that order, and they already know how to hand work to each other:
 
-- Game Feel writes what it noticed about feedback. HUD and Audio can read that later.
+- Game Feel writes what it noticed about feedback. Game Loop, HUD, and Audio can read that later.
+- Game Loop writes a loop map and a grade for the repeating turn. Set `minCases` in the profile so a thin sample reads U.
 - HUD writes screen captures the other bots can use.
 - Every bot can write a local ticket draft. Bug Desk and Producer read those drafts. They do not file them. You do.
 - Producer reads the grades when you want a plan.
 
-Finish bot 1 before you paste bot 2. A working grade teaches you the pattern. The next three are the same pattern with different files.
+Finish bot 1 before you paste bot 2. A working grade teaches you the pattern. The next four are the same pattern with different files.
 
-### A fifth bot, only if you need it
+### Another bot, only if you need it
 
-Pick at most one.
+After the five are running, pick at most one of these if it matches your game.
 
 | Your game | Add | Folder |
 |---|---|---|
 | 2D art, sprites, or hitboxes | Sprites | [17-sprite-hitbox-packer](templates/17-sprite-hitbox-packer/) |
 | Rewards, currencies, or progression | Economy | [06-economy-director](templates/06-economy-director/) |
 | Sound is how the player knows an action worked | Audio | [13-audio-director](templates/13-audio-director/) |
-| The open question is "why take another turn?" | Game Loop | [05-game-loop-alchemist](templates/05-game-loop-alchemist/) |
-
-Game Loop is now shipping. Use it when that is the open question. Set `minCases` in the profile so a thin sample reads U.
 
 Wait on Server Fairness, store pages, trailers, matchmaking, retention, and app store submission. They are in the [catalog](TEMPLATES.md) for later.
 
@@ -115,7 +114,34 @@ The synthetic file prints verdict **PASS** and grade **100/100**, with every lin
 
 More prompts (a weekly grade, an audit, a fix loop) are in [PROMPTS.md](templates/01-game-feel/PROMPTS.md).
 
-## 2. HUD
+
+## 2. Game Loop
+
+Folder: `templates/05-game-loop-alchemist`.
+
+Add this when you want to know why a player takes another turn. Same paste pattern. Say "Save this as a skill." for each file, in this order:
+
+1. `game-loop-alchemist-lens-engine`
+2. `game-loop-alchemist-getting-started`
+3. `opening-playtest`
+4. `loop-consequence`
+5. `decision-pacing`
+6. `loop-agency`
+7. `voluntary-replay`
+
+Paste each fact from `MEMORY.md` and say "Remember this for this project."
+
+### First prompt
+
+```
+Run the game-loop-alchemist-getting-started skill. Ask me one question at a time. My game is <name or code name, genre, engine, platforms>. The build to grade is <commit and build id>. The loop change I want to check is <for example a new opening, a faster retry or a new invitation to play again>. Evidence comes from <playtest sessions, a CI run or a manual capture>.
+```
+
+The bot will also ask for time budgets, the stop point, the cohort, the bands, and how many observed cases a line needs (`minCases`). If a line has fewer cases than that number, it reads U.
+
+Sample grade, from this folder: `node engine/lens.mjs fixtures/good-pack.json` prints verdict **PASS** and grade **100/100** on the synthetic example. The synthetic pack uses three cases per line and `minCases` 3.
+
+## 3. HUD
 
 Folder: `templates/09-hud-designer`.
 
@@ -140,7 +166,7 @@ Those profiles cover no touch, touch only, one screen orientation, and one langu
 
 Sample grade, from this folder: `node engine/lens.mjs fixtures/good-pack.json` prints verdict **PASS** and grade **100/100** on the synthetic example.
 
-## 3. Bug Desk
+## 4. Bug Desk
 
 Folder: `templates/18-bug-desk-triage`.
 
@@ -167,7 +193,7 @@ The bot will also ask which bugs may block a release, and how many clean runs a 
 
 Sample grade: verdict **PASS**, grade **100/100**, on `fixtures/good-pack.json`. Synthetic.
 
-## 4. Producer
+## 5. Producer
 
 Folder: `templates/12-parallel-game-producer`.
 
@@ -197,7 +223,7 @@ Its routine is not weekly by default. When you want one, open section 2 of [PROM
 
 Sample grade: verdict **PASS**, grade **100/100**, on `fixtures/good-pack.json`. Synthetic. The folder can also print a sample plan with `node engine/plan.mjs fixtures/project.json --plan`.
 
-## After the four are running
+## After the five are running
 
 Each bot works alone. When you want them to share notes, the files live in the game project:
 
@@ -216,7 +242,7 @@ A worked example of HUD and Bug Desk on a fictional cooking game is [examples/pi
 |---|---|
 | Template, bot | The same thing: one folder of skills and prompts you add to your chat. |
 | Skill | One `SKILL.md` file. You paste it and ask the bot to save it. |
-| Short name | What the rest of the kit calls the bot (Game Feel, HUD, Bug Desk, Producer). |
+| Short name | What the rest of the kit calls the bot (Game Feel, Game Loop, HUD, Bug Desk, Producer). |
 | Full name | The title at the top of the folder (for example Game Vibes Director). |
 | Evidence pack | One JSON file of measurements for one build. |
 | Grade | A score out of 100. |

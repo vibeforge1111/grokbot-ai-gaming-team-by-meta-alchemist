@@ -4,13 +4,13 @@ Created by @meta_alchemist (https://x.com/meta_alchemist).
 
 This guide is for a team or a solo developer bringing these templates into a real project. It covers picking templates, setting up bots and skills, routines, the rubric loop, and outside judges. A full worked example lives in [examples/pixel-pantry/](examples/pixel-pantry/).
 
-For a first game, use the four bot starter team in [Get started with your AI gaming team](GETTING-STARTED.md#the-starter-team). Come back here when that team is running and you are fitting the kit to a real build.
+For a first game, use the five bot starter team in [Get started with your AI gaming team](GETTING-STARTED.md#the-starter-team). Come back here when that team is running and you are fitting the kit to a real build.
 
 ## 1. Pick templates
 
 Start small. Pick one template for a question you want to answer about the next build.
 
-1. **Collect evidence for one build.** Use a manual capture or CI run. Playtest QA (template 02) is coming later.
+1. **Collect evidence for one build.** Use a manual capture or CI run. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 2. **Add Bug Desk** ([18](templates/18-bug-desk-triage/)) once anyone outside the team plays. It groups local finding drafts for human review and filing.
 3. **Add one lens for your biggest risk.** Ask: what do players complain about most, or what blocks the next milestone?
 

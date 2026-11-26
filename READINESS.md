@@ -11,30 +11,30 @@ This page is the scorecard. The [catalog](TEMPLATES.md) is the index of folders 
 | State | Count |
 |---|---|
 | Ready (shipping) | 17 |
-| Preview | 6 |
-| Missing | 7 |
+| Preview | 7 |
+| Missing | 6 |
 
 The starter template (`starter/00-starter-template`) is a scaffold for a new bot, not a game-dev helper, so it is not in these counts.
 
 ## Ready
 
-These are held to the release standard. Start with Game Feel, HUD, Bug Desk, and Producer, in that order. See [GETTING-STARTED.md](GETTING-STARTED.md).
+These are held to the release standard. Start with Game Feel, Game Loop, HUD, Bug Desk, and Producer, in that order. See [GETTING-STARTED.md](GETTING-STARTED.md).
 
 | # | Template | Status line |
 |---|---|---|
 | 01 | [Game Feel](templates/01-game-feel/) | Ready. Starter team, first bot. |
 | 03 | [Prop and Rig](templates/03-prop-rig/) | Ready. Use for 3D props and rigs. |
-| 05 | [Game Loop](templates/05-game-loop-alchemist/) | Ready. Set `profile.bands.minCases` so a thin sample reads U. Optional fifth bot after the starter four. |
+| 05 | [Game Loop](templates/05-game-loop-alchemist/) | Ready. Set `profile.bands.minCases` so a thin sample reads U. Starter team, second bot. |
 | 06 | [Economy](templates/06-economy-director/) | Ready. Rewards, currencies, and progression. |
-| 09 | [HUD](templates/09-hud-designer/) | Ready. Starter team, second bot. |
+| 09 | [HUD](templates/09-hud-designer/) | Ready. Starter team, third bot. |
 | 10 | [Trailer](templates/10-trailer-director/) | Ready. Clip selection and cuts from your own captures. |
 | 11 | [Environment Design](templates/11-environment-design/) | Ready. Spaces, routes, and readable staging. |
-| 12 | [Producer](templates/12-parallel-game-producer/) | Ready. Starter team, fourth bot. Plans and go or hold calls. |
+| 12 | [Producer](templates/12-parallel-game-producer/) | Ready. Starter team, fifth bot. Plans and go or hold calls. |
 | 13 | [Audio](templates/13-audio-director/) | Ready. Sound cues and adaptive music. |
 | 14 | [Living NPC and Lore](templates/14-living-npc-lore/) | Ready. Set `profile.bands.minCases`. For generated dialogue, run each probe at least that many times. |
 | 15 | [Server Fairness](templates/15-mcp-anticheat/) | Ready. Wait until you have a multiplayer build to grade. |
 | 17 | [Sprite and Hitbox](templates/17-sprite-hitbox-packer/) | Ready. 2D art, atlases, and hitboxes. |
-| 18 | [Bug Desk](templates/18-bug-desk-triage/) | Ready. Starter team, third bot. Local ticket drafts only. |
+| 18 | [Bug Desk](templates/18-bug-desk-triage/) | Ready. Starter team, fourth bot. Local ticket drafts only. |
 | 19 | [Store Page and Presskit](templates/19-presskit-director/) | Ready. Use when you are preparing store art and a press kit. |
 | 20 | [Streamer and Patch Notes](templates/20-streamer-hype/) | Ready. Local outreach and notes drafts. You send them. |
 | 21 | [Access, Input and Localization](templates/21-access-input-localization/) | Ready. Journeys, captions, motion, and locale checks. |
@@ -46,6 +46,7 @@ These work, and their tests pass, but they are not held to the release standard.
 
 | # | Template | Status line |
 |---|---|---|
+| 02 | [Playtest and Performance](templates/02-playtest-performance/) | Preview. First draft. No bundled Playwright or GPU sampler. Needs more real-game examples, build-scope receipts, and grades from a live capture, not only the synthetic pack. |
 | 23 | [Support Desk](templates/23-support-moderation-desk/) | Preview. Still on lens-kit 1.1.0. Needs a pack producer with receipts, worked examples in the evidence skills, and grades that come from the game's support system, not hand-declared counts. |
 | 24 | [Ledger](templates/24-prize-refund-ledger/) | Preview. Still on lens-kit 1.1.0. The importer prints a pack without receipts, drops some groups on the real path, and one line probes this template's own code. |
 | 25 | [Matchmaking](templates/25-matchmaking-lobby-fill/) | Preview. Still on lens-kit 1.1.0. Needs receipts, a full-window average that counts silent hours, and grades from observed lobbies, not this template's own code. |
@@ -59,7 +60,6 @@ There is no folder for these in this release. Template numbers that already exis
 
 | Name | Status line |
 |---|---|
-| 02 Playtest and Performance | Missing. Held back after outside review. Planned as the next preview if one is added. |
 | 04 Multiplayer Netcode and Bot-Swarm | Missing. Held back after outside review. |
 | 07 TSL and WebGPU Shader | Missing. Held back after outside review. |
 | 08 Procedural World and Biome | Missing. Held back after outside review. |

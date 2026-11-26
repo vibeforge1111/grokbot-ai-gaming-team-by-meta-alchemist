@@ -25,7 +25,7 @@ Template folder: [templates/20-streamer-hype](../../templates/20-streamer-hype/)
 ## Recommended process
 
 1. **Set up once:** run `streamer-hype-getting-started`; answer its questions one at a time (how you update, which stream features your game has, the capture budget); write the values into your game profile. It also asks which rubric profiles apply (`no-spectator-mode`, `no-share-links`); you approve them before scoring and they go in `rubricProfile`.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **git-diff-patch-notes-hype-compiler:** write patch notes where every line maps to a commit and every claim matches the shipped build. A single-player game writes a short note per version; a game with seasons writes a headline note per season.
 4. **stream-and-replay-features-review:** check recording, capture cost, streamer mode, share links and fairness, plus the spectator view and stream delay only if your game has a spectator or streaming mode.
 5. **creator-shortlist-scout:** shortlist creators who already play games like yours (story games for a narrative game, relaxed long sessions for a farming sim, campaign series for a strategy game) and draft outreach for the owner to send.

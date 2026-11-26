@@ -28,7 +28,7 @@ Template folder: [templates/13-audio-director](../../templates/13-audio-director
 ## Recommended process
 
 1. **Set up once:** run `audio-director-getting-started`; answer its questions one at a time; write the answers into your game profile. It also asks which rubric profiles apply (`no-music`, `no-spoken-lines`, `no-spatial-audio`); you approve them before scoring and they go in `rubricProfile` in the game profile.
-2. **Get a pack:** use your CI run, a test harness or a manual capture of this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** use your CI run, a test harness or a manual capture of this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **sound-effect-bus-and-voice-limits:** Route recorded or generated sound effects through a mixer bus in your engine or audio middleware, set voice limits and stealing, and verify playback, loudness and lifecycle on target hardware.
 4. **adaptive-music-stem-crossfader** (when music changes with the game): test transition timing, level jumps, ducking and interrupted transitions.
 5. **optional-microphone-input** (only if the game uses the microphone): keep it off by default, ask the player's consent, never record or send audio, and always offer an equal non-microphone control.

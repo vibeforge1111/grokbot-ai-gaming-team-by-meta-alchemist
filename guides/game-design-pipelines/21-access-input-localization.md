@@ -25,7 +25,7 @@ Template folder: [templates/21-access-input-localization](../../templates/21-acc
 ## Recommended process
 
 1. **Set up once:** run `access-input-localization-getting-started`; answer its questions about devices, journey tasks, text and flash limits and languages; write the answers into your game profile. It also asks which rubric profiles apply (`single-language`, `single-input`); you approve them before scoring and they go in `rubricProfile`.
-2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **input-navigation-and-device-switch-audit:** check that every supported input finishes every required journey task, and that remapping, button prompts, disconnects and menu focus recover.
 4. **readability-and-caption-evidence:** measure text size and contrast over real scenes, check meaning without colour, match each required sound to an on-time caption, and check menus and error messages.
 5. **motion-flash-comfort-check:** check reduced motion in paired captures, count flashes against your safety limit (a release blocker under every profile), and check hold or toggle alternatives.

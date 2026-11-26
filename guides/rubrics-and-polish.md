@@ -52,7 +52,7 @@ measure ──> grade ──> pick two lowest measured lines ──> brief ─�
    └──────── regrade + regression gate <── before/after proof <──────────┘
 ```
 
-1. **Measure:** Collect a valid pack from CI or a manual capture. Playtest QA (template 02) is coming later.
+1. **Measure:** Collect a valid pack from CI or a manual capture. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 2. **Grade:** each adopted template grades it. Lead with verdict, grade, coverage.
 3. **Pick:** the two lowest measured lines across templates, weighted by player impact. U lines become capture tasks, not fixes.
 4. **Brief:** Grok Bot writes the brief with done criteria.

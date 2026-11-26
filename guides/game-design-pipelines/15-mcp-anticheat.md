@@ -30,7 +30,7 @@ Template folder: [templates/15-mcp-anticheat](../../templates/15-mcp-anticheat/)
 ## Recommended process
 
 1. **Set up once:** run `mcp-anticheat-getting-started`. It first asks whether the game has a server that decides outcomes, then which test server you authorize, which features the game has, and the targets for those features. A game that judges turns, not real-time hits, selects the `turn-based` profile, and a game with no input assist selects `no-input-assist`, each approved by the owner before scoring and set as `rubricProfile` in the game profile. That line reads N/A, its partner line takes the pillar's 20 points, and the verdict can reach PASS.
-2. **Get a pack:** Use your CI run or a manual capture from your test server for this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** Use your CI run or a manual capture from your test server for this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **cross-editor-scene-parity (games with level geometry):** after a scene moves between editors or is edited over MCP, convert axes and units, hash the server collision set and prove client and server agree.
 4. **server-authority-fairness-audit (every server game):** review the server's decisions for actions, input bounds, timing, visibility, floods, duplicate joins and any automatic detector. Mark other lines for features the game does not have as "does not apply": they have no profile, stay U and keep the verdict CONDITIONAL.
 5. **Grade:** `node engine/lens.mjs <pack.json>`. Lead with verdict, grade and coverage, and name the rubric profiles used.

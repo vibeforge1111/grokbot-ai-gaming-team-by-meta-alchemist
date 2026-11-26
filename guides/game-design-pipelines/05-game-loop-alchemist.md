@@ -30,7 +30,7 @@ Template folder: [templates/05-game-loop-alchemist](../../templates/05-game-loop
 ## Recommended process
 
 1. **Set up once:** run `game-loop-alchemist-getting-started`; answer its questions one at a time (the first meaningful action, the decision beat, the setback, the stop point, the cohort and window, the coding keys, the budgets and the bands); write the answers into your game profile.
-2. **Get a pack:** run a playtest with a fresh cohort, or use a CI run or manual capture of this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** run a playtest with a fresh cohort, or use a CI run or manual capture of this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **opening-playtest:** before any hint, ask testers what they are trying to do, and time the first meaningful action.
 4. **loop-consequence:** check that the core action makes the intended change and that testers can say what changed.
 5. **decision-pacing:** time the gap between decisions and the time to act again after a setback, leaving out only the pauses you approved.

@@ -28,7 +28,7 @@ Template folder: [templates/09-hud-designer](../../templates/09-hud-designer/). 
 ## Recommended process
 
 1. **Set up once:** run `hud-designer-getting-started`; answer its questions one at a time; write the answers into your game profile. It also asks which rubric profiles apply (`no-touch` or `touch-only`, `fixed-orientation`, `single-language`); you approve them before scoring and they go in `rubricProfile` in the game profile.
-2. **Get a pack:** use your CI run, a test harness or a manual capture of this build. Playtest QA (template 02) is coming later.
+2. **Get a pack:** use your CI run, a test harness or a manual capture of this build. Playtest and Performance (template 02) is a preview if you want a first pass on journeys and frame time. It is not required.
 3. **live-hud-updates-and-cost:** Keep HUD elements that change often (score, timer, health, resources, lap time) readable during the busiest moment, and measure what updating them costs on each target device, in any engine.
 4. **event-cues-and-recaps** (when players miss important events): show what just happened and where, with a direction cue or a short recap after a fail, a turn or a choice.
 5. **wcag-luminance-and-ui-frame-gate:** Measure text and icon contrast (the WCAG contrast ratio) in real gameplay captures, and compare UI frame cost with each target device's budget.
